@@ -1,10 +1,26 @@
+import { useRef } from 'react';
+import { useFrame } from '@react-three/fiber';
 import { Html, Sparkles } from '@react-three/drei';
+import type { Group } from 'three';
+import { useScrollProgress } from '../store/scrollProgress';
 
 const DOORWAY_Z = 7;
 const DOORWAY_WIDTH = 3;
 const DOORWAY_HEIGHT = 3.2;
+// Sparkles drift over time and can wander noticeably past their spawn
+// volume — gate them off shortly after the doorway so a stray drifting
+// particle never lingers into the lobby as an unexplained floating blob.
+const SPARKLES_VISIBLE_UNTIL = 0.07;
 
 export default function Entrance() {
+  const sparklesRef = useRef<Group>(null);
+
+  useFrame(() => {
+    if (!sparklesRef.current) return;
+    const progress = useScrollProgress.getState().progress;
+    sparklesRef.current.visible = progress < SPARKLES_VISIBLE_UNTIL;
+  });
+
   return (
     <group position={[0, 0, DOORWAY_Z]}>
       {/* Doorway frame — left post, right post, lintel */}
@@ -33,15 +49,17 @@ export default function Entrance() {
         </div>
       </Html>
 
-      <Sparkles
-        count={60}
-        scale={[DOORWAY_WIDTH + 1, DOORWAY_HEIGHT + 1, 2]}
-        position={[0, DOORWAY_HEIGHT / 2, 0]}
-        size={2}
-        speed={0.15}
-        opacity={0.5}
-        color="#a5b4fc"
-      />
+      <group ref={sparklesRef}>
+        <Sparkles
+          count={60}
+          scale={[DOORWAY_WIDTH + 1, DOORWAY_HEIGHT + 1, 2]}
+          position={[0, DOORWAY_HEIGHT / 2, 0]}
+          size={2}
+          speed={0.15}
+          opacity={0.5}
+          color="#a5b4fc"
+        />
+      </group>
     </group>
   );
 }

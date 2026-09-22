@@ -69,37 +69,11 @@ function ElevatorDoors({ z, side }: { z: number; side: 1 | -1 }) {
   );
 }
 
-function WallClock({ z, side }: { z: number; side: 1 | -1 }) {
-  const faceX = WALL_X * side - side * 0.075;
-  const rotY = side > 0 ? -Math.PI / 2 : Math.PI / 2;
-  return (
-    <group position={[faceX, 2.15, z]} rotation={[0, rotY, 0]}>
-      <mesh rotation={[Math.PI / 2, 0, 0]}>
-        <cylinderGeometry args={[0.16, 0.16, 0.02, 32]} />
-        <meshStandardMaterial color="#e8e4da" roughness={0.5} />
-      </mesh>
-      <mesh position={[0, 0.05, 0.015]} rotation={[0, 0, 0.3]}>
-        <boxGeometry args={[0.018, 0.11, 0.004]} />
-        <meshStandardMaterial color="#12131d" />
-      </mesh>
-      <mesh position={[0, 0.02, 0.016]} rotation={[0, 0, -0.9]}>
-        <boxGeometry args={[0.014, 0.07, 0.004]} />
-        <meshStandardMaterial color="#12131d" />
-      </mesh>
-      <mesh position={[0, 0, 0.017]}>
-        <circleGeometry args={[0.014, 12]} />
-        <meshStandardMaterial color="#2dd4bf" emissive="#2dd4bf" emissiveIntensity={1} />
-      </mesh>
-    </group>
-  );
-}
-
 export default function HotelProps() {
   return (
     <group>
       <LuggageCart position={[-1.8, 0, 3.6]} rotationY={0.5} />
       <ElevatorDoors z={0.1} side={1} />
-      <WallClock z={-2.4} side={-1} />
     </group>
   );
 }
