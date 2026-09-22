@@ -1,6 +1,6 @@
-import { ContactShadows, Html } from '@react-three/drei';
+import { ContactShadows } from '@react-three/drei';
 import { useMemo } from 'react';
-import { getWoodFloorTexture } from '../lib/textures';
+import { getDashboardTexture, getWoodFloorTexture } from '../lib/textures';
 import { PlantModel, ReceptionistModel, RubberFigModel, SofaModel } from './Models';
 
 // Matches Walls.tsx's WALL_X — wall-mounted like the paintings/clock, so it
@@ -11,6 +11,8 @@ const WALL_X = 4.2;
 function DashboardPanel({ z, side }: { z: number; side: 1 | -1 }) {
   const x = WALL_X * side - side * 0.09;
   const rotY = side > 0 ? -Math.PI / 2 : Math.PI / 2;
+  const dashboardTexture = useMemo(() => getDashboardTexture(), []);
+
   return (
     <group position={[x, 1.6, z]} rotation={[0, rotY, 0]}>
       {/* bezel, like a wall-mounted monitor */}
@@ -24,48 +26,14 @@ function DashboardPanel({ z, side }: { z: number; side: 1 | -1 }) {
         <meshStandardMaterial color="#0c0d16" metalness={0.5} roughness={0.5} />
       </mesh>
 
+      {/* Real dashboard content baked into a static texture (not a live
+          Html overlay — that flickered as the camera moved, fighting
+          other Html labels for depth-sort order). A plain textured mesh
+          has no per-frame recompute, so it's genuinely static. */}
       <mesh position={[0, 0, 0.005]}>
         <planeGeometry args={[1.5, 0.95]} />
-        <meshStandardMaterial color="#0f2f2a" emissive="#0f2f2a" emissiveIntensity={0.15} roughness={0.5} />
+        <meshBasicMaterial map={dashboardTexture} />
       </mesh>
-
-      {/* Real dashboard content — readable stats + a labeled chart, not
-          abstract colored bars with no meaning. */}
-      <Html center transform position={[0, 0, 0.02]} distanceFactor={0.66} occlude={false} style={{ pointerEvents: 'none' }}>
-        <div className="w-[230px] select-none rounded-md p-3 font-mono">
-          <div className="mb-2 flex items-center justify-between border-b border-teal/25 pb-1.5">
-            <span className="font-display text-[11px] font-semibold uppercase tracking-[0.25em] text-headline">
-              Presence
-            </span>
-            <span className="rounded-full bg-teal/20 px-1.5 py-0.5 text-[7px] font-semibold uppercase tracking-widest text-teal">
-              Live
-            </span>
-          </div>
-          <div className="space-y-1.5 text-[9px]">
-            <div className="flex items-center justify-between">
-              <span className="text-white/50">Occupancy</span>
-              <span className="font-semibold text-headline">92%</span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-white/50">Check-ins today</span>
-              <span className="font-semibold text-headline">14</span>
-            </div>
-            <div className="flex items-center justify-between">
-              <span className="text-white/50">Open requests</span>
-              <span className="font-semibold text-headline">2</span>
-            </div>
-          </div>
-          <div className="mt-2.5 flex h-10 items-end gap-1.5 border-t border-white/10 pt-2">
-            {[0.5, 0.8, 0.35, 0.95, 0.6, 0.75].map((h, i) => (
-              <div
-                key={i}
-                className="flex-1 rounded-sm bg-gradient-to-t from-teal to-violet"
-                style={{ height: `${h * 100}%`, opacity: 0.55 + h * 0.35 }}
-              />
-            ))}
-          </div>
-        </div>
-      </Html>
 
       <pointLight position={[0, 0, 0.6]} intensity={0.5} color="#2dd4bf" distance={2.2} decay={2} />
     </group>
