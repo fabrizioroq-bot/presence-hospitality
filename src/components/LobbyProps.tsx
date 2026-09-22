@@ -71,8 +71,8 @@ function DashboardPanel({ position }: { position: [number, number, number] }) {
 export default function LobbyProps() {
   return (
     <group>
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, 1]}>
-        <planeGeometry args={[14, 16]} />
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, -1]}>
+        <planeGeometry args={[8.2, 22]} />
         <MeshReflectorMaterial
           blur={[300, 100]}
           resolution={1024}
@@ -84,6 +84,11 @@ export default function LobbyProps() {
           color="#171826"
           metalness={0.35}
         />
+      </mesh>
+
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[2.1, 0.011, 1.4]}>
+        <planeGeometry args={[2.4, 2]} />
+        <meshStandardMaterial color="#2a1f2e" roughness={1} />
       </mesh>
 
       <Sofa position={[2.4, 0, 1.4]} />
