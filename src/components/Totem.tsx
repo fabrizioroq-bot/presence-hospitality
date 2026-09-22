@@ -92,11 +92,12 @@ export default function Totem() {
 
       {/* Everything below is in real-world units, aligned to the model's
           screen recess (computed from its local bounding box * scale).
-          Screen is sized closer to the contact form's own aspect ratio,
-          with a thin header bar as UI chrome so the space above the form
-          reads as intentional framing, not dead padding. */}
-      <mesh position={[0, 1.55, 0.33]}>
-        <planeGeometry args={[0.62, 0.84]} />
+          Screen is sized to exactly match the contact form's own rendered
+          footprint at this camera position (measured directly via
+          camera.project() against the form's actual DOM bounding box —
+          not eyeballed), so there's no dead space around it. */}
+      <mesh position={[0, 1.5, 0.33]}>
+        <planeGeometry args={[0.333, 0.481]} />
         <meshStandardMaterial
           ref={screenMatRef}
           color="#0f2f2a"
@@ -105,21 +106,8 @@ export default function Totem() {
           roughness={0.35}
         />
       </mesh>
-      <mesh position={[0, 1.9, 0.335]}>
-        <planeGeometry args={[0.62, 0.09]} />
-        <meshStandardMaterial color="#123a34" emissive="#2dd4bf" emissiveIntensity={0.4} roughness={0.4} />
-      </mesh>
-      <mesh position={[0, 1.865, 0.336]}>
-        <planeGeometry args={[0.62, 0.006]} />
-        <meshStandardMaterial color="#2dd4bf" emissive="#2dd4bf" emissiveIntensity={0.9} />
-      </mesh>
-      <Html center position={[0, 1.9, 0.34]} transform distanceFactor={0.45} occlude={false}>
-        <div className="pointer-events-none select-none whitespace-nowrap font-display text-[11px] font-semibold uppercase tracking-[0.4em] text-headline">
-          Presence
-        </div>
-      </Html>
 
-      <pointLight position={[0, 1.55, 0.5]} intensity={0.8} color="#2dd4bf" distance={3} />
+      <pointLight position={[0, 1.5, 0.5]} intensity={0.8} color="#2dd4bf" distance={3} />
 
       {/* "Check in here" signage above the kiosk */}
       <Html center position={[0, 2.3, 0.1]} occlude distanceFactor={2.6} transform>
@@ -131,7 +119,7 @@ export default function Totem() {
       <Html
         transform
         center
-        position={[0, 1.42, 0.36]}
+        position={[0, 1.5, 0.36]}
         distanceFactor={0.45}
         occlude={false}
         style={{ pointerEvents: 'none' }}
