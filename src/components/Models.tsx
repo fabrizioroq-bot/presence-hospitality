@@ -169,11 +169,24 @@ interface ReceptionistMaterials {
   Eye: THREE.MeshStandardMaterial;
 }
 
-export function ReceptionistModel(props: ThreeElements['group']) {
+type PersonProps = ThreeElements['group'] & {
+  animation?: string;
+  suitColor?: string;
+  tieColor?: string;
+};
+
+export function ReceptionistModel({
+  animation = 'CharacterArmature|Idle_Neutral',
+  suitColor = '#1c2430',
+  tieColor = '#2dd4bf',
+  ...props
+}: PersonProps) {
   const group = useRef<THREE.Group>(null);
   const { scene, animations } = useGLTF('/models/receptionist.glb');
   // Skinned meshes share a skeleton with the cached source scene — clone it
-  // so this instance gets its own, independently posable, skeleton.
+  // so this instance gets its own, independently posable, skeleton (also
+  // lets us reuse this one model file for several differently-dressed,
+  // differently-posed background people).
   const clone = useMemo(() => SkeletonUtils.clone(scene), [scene]);
   const { nodes, materials } = useGraph(clone) as unknown as {
     nodes: ReceptionistNodes;
@@ -182,20 +195,20 @@ export function ReceptionistModel(props: ThreeElements['group']) {
   const { actions } = useAnimations(animations, group);
 
   useLayoutEffect(() => {
-    materials.Suit.color.set('#1c2430');
+    materials.Suit.color.set(suitColor);
     materials.Suit.roughness = 0.75;
-    materials.Tie.color.set('#2dd4bf');
-    materials.Tie.emissive.set('#2dd4bf');
+    materials.Tie.color.set(tieColor);
+    materials.Tie.emissive.set(tieColor);
     materials.Tie.emissiveIntensity = 0.25;
-  }, [materials]);
+  }, [materials, suitColor, tieColor]);
 
   useEffect(() => {
-    const idle = actions['CharacterArmature|Idle_Neutral'] ?? actions['CharacterArmature|Idle'];
-    idle?.reset().fadeIn(0.3).play();
+    const clip = actions[animation] ?? actions['CharacterArmature|Idle_Neutral'] ?? actions['CharacterArmature|Idle'];
+    clip?.reset().fadeIn(0.3).play();
     return () => {
-      idle?.fadeOut(0.2);
+      clip?.fadeOut(0.2);
     };
-  }, [actions]);
+  }, [actions, animation]);
 
   return (
     <group ref={group} {...props} dispose={null}>
@@ -234,7 +247,39 @@ export function ReceptionistModel(props: ThreeElements['group']) {
   );
 }
 
+// --- Framed art: "Wall Art 03/05/06" by Jarlan Perez (CC-BY) ---
+// Real printed canvas art with a proper frame + mat, not an emissive
+// primitive composition — see public/models/CREDITS.md for attribution.
+
+const PAINTING_FILES = {
+  a: '/models/painting-a.glb',
+  b: '/models/painting-b.glb',
+  c: '/models/painting-c.glb',
+} as const;
+type PaintingVariant = keyof typeof PAINTING_FILES;
+
+export function PaintingModel({
+  variant,
+  ...props
+}: ThreeElements['group'] & { variant: PaintingVariant }) {
+  const { scene } = useGLTF(PAINTING_FILES[variant]);
+  const clone = useMemo(() => scene.clone(), [scene]);
+  return <primitive object={clone} {...props} />;
+}
+
+// --- Rubber fig: "Rubber fig potted plant" by Poly by Google (CC-BY) ---
+
+export function RubberFigModel(props: ThreeElements['group']) {
+  const { scene } = useGLTF('/models/rubberfig.glb');
+  const clone = useMemo(() => scene.clone(), [scene]);
+  return <primitive object={clone} {...props} />;
+}
+
 useGLTF.preload('/models/sofa.glb');
 useGLTF.preload('/models/plant.glb');
 useGLTF.preload('/models/desk.glb');
 useGLTF.preload('/models/receptionist.glb');
+useGLTF.preload('/models/painting-a.glb');
+useGLTF.preload('/models/painting-b.glb');
+useGLTF.preload('/models/painting-c.glb');
+useGLTF.preload('/models/rubberfig.glb');

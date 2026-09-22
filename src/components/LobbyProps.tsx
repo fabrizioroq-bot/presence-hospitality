@@ -1,7 +1,7 @@
 import { ContactShadows } from '@react-three/drei';
 import { useMemo } from 'react';
 import { getWoodFloorTexture } from '../lib/textures';
-import { PlantModel, SofaModel } from './Models';
+import { PlantModel, ReceptionistModel, RubberFigModel, SofaModel } from './Models';
 
 function DashboardPanel({ position }: { position: [number, number, number] }) {
   return (
@@ -48,9 +48,26 @@ export default function LobbyProps() {
       <ContactShadows position={[2.6, 0.015, 1.2]} width={5} height={4} blur={1.6} opacity={0.55} far={2} />
 
       <SofaModel position={[3.5, 0, 0.2]} rotation={[0, -Math.PI / 2, 0]} scale={1.5} />
-      <PlantModel position={[-2.6, 0, 2.2]} scale={1.9} />
+      <RubberFigModel position={[-2.6, 0, 2.4]} scale={0.15} />
       <PlantModel position={[-2.5, 0, -0.6]} scale={1.9} />
       <DashboardPanel position={[-2.7, 1.5, 0.6]} />
+
+      {/* guest checking out the dashboard panel */}
+      <ReceptionistModel
+        position={[-1.7, 0, 0.4]}
+        rotation={[0, -Math.PI / 3, 0]}
+        animation="CharacterArmature|Idle"
+        suitColor="#2b2540"
+        tieColor="#a855f7"
+      />
+      {/* guest relaxing near the sofa */}
+      <ReceptionistModel
+        position={[2.9, 0, 1.3]}
+        rotation={[0, Math.PI / 5, 0]}
+        animation="CharacterArmature|Interact"
+        suitColor="#243328"
+        tieColor="#ffb877"
+      />
     </group>
   );
 }

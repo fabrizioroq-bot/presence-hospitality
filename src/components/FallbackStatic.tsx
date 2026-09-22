@@ -35,6 +35,9 @@ export default function FallbackStatic() {
           Remote, holographic front-office management for boutique hotels — run from a central
           hub.
         </p>
+        <p className="font-mono text-[10px] uppercase tracking-[0.35em] text-teal/60">
+          A pilot for RB Horeca
+        </p>
       </section>
 
       <section className="mx-auto flex max-w-2xl flex-col gap-6 px-6 pb-24">

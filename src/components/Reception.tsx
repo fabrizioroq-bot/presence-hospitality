@@ -69,9 +69,14 @@ function SignageWall() {
         <boxGeometry args={[3.4, 2.6, 0.1]} />
         <meshStandardMaterial color="#161826" roughness={0.7} />
       </mesh>
-      <Html center position={[0.55, 2.15, 0.06]} occlude distanceFactor={6} transform>
-        <div className="pointer-events-none select-none whitespace-nowrap font-display text-[11px] font-semibold uppercase tracking-[0.4em] text-headline">
-          Presence Hospitality
+      <Html center position={[0.55, 2.2, 0.06]} occlude distanceFactor={6} transform>
+        <div className="pointer-events-none flex select-none flex-col items-center whitespace-nowrap">
+          <span className="font-display text-[11px] font-semibold uppercase tracking-[0.4em] text-headline">
+            Presence Hospitality
+          </span>
+          <span className="mt-1 font-mono text-[7px] uppercase tracking-[0.35em] text-teal/70">
+            A pilot for RB Horeca
+          </span>
         </div>
       </Html>
       <mesh position={[0.55, 1.7, 0.055]}>
