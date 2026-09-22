@@ -3,19 +3,37 @@ import { useMemo } from 'react';
 import { getWoodFloorTexture } from '../lib/textures';
 import { PlantModel, ReceptionistModel, RubberFigModel, SofaModel } from './Models';
 
-function DashboardPanel({ position }: { position: [number, number, number] }) {
+// Matches Walls.tsx's WALL_X — wall-mounted like the paintings/clock, so it
+// reads as an actual monitor fixed to the wall instead of an unexplained
+// panel floating in the middle of the room.
+const WALL_X = 4.2;
+
+function DashboardPanel({ z, side }: { z: number; side: 1 | -1 }) {
+  const x = WALL_X * side - side * 0.09;
+  const rotY = side > 0 ? -Math.PI / 2 : Math.PI / 2;
   return (
-    <group position={position} rotation={[0, Math.PI / 10, 0]}>
-      <mesh>
+    <group position={[x, 1.6, z]} rotation={[0, rotY, 0]}>
+      {/* bezel, like a wall-mounted monitor */}
+      <mesh position={[0, 0, -0.02]}>
+        <boxGeometry args={[1.62, 1.05, 0.05]} />
+        <meshStandardMaterial color="#0c0d16" metalness={0.4} roughness={0.5} />
+      </mesh>
+      {/* short mounting arm back to the wall */}
+      <mesh position={[0, 0, -0.06]}>
+        <boxGeometry args={[0.1, 0.1, 0.07]} />
+        <meshStandardMaterial color="#0c0d16" metalness={0.5} roughness={0.5} />
+      </mesh>
+
+      <mesh position={[0, 0, 0.005]}>
         <planeGeometry args={[1.5, 0.95]} />
         <meshStandardMaterial color="#0f2f2a" roughness={0.5} />
       </mesh>
-      <mesh position={[0, 0.28, 0.01]}>
+      <mesh position={[0, 0.28, 0.015]}>
         <planeGeometry args={[1.3, 0.18]} />
         <meshStandardMaterial color="#2dd4bf" emissive="#2dd4bf" emissiveIntensity={1.1} />
       </mesh>
-      {[-0.4, 0, 0.4].map((x, i) => (
-        <mesh key={i} position={[x, -0.05, 0.01]}>
+      {[-0.4, 0, 0.4].map((barX, i) => (
+        <mesh key={i} position={[barX, -0.05, 0.015]}>
           <planeGeometry args={[0.32, 0.55]} />
           <meshStandardMaterial
             color="#a855f7"
@@ -26,6 +44,7 @@ function DashboardPanel({ position }: { position: [number, number, number] }) {
           />
         </mesh>
       ))}
+      <pointLight position={[0, 0, 0.6]} intensity={0.6} color="#2dd4bf" distance={2.2} decay={2} />
     </group>
   );
 }
@@ -50,12 +69,12 @@ export default function LobbyProps() {
       <SofaModel position={[3.5, 0, 0.2]} rotation={[0, -Math.PI / 2, 0]} scale={1.5} />
       <RubberFigModel position={[-2.6, 0, 2.4]} scale={0.15} />
       <PlantModel position={[-2.5, 0, -0.6]} scale={1.9} />
-      <DashboardPanel position={[-2.7, 1.5, 0.6]} />
+      <DashboardPanel z={0.6} side={-1} />
 
       {/* guest checking out the dashboard panel */}
       <ReceptionistModel
         position={[-1.7, 0, 0.4]}
-        rotation={[0, -Math.PI / 3, 0]}
+        rotation={[0, -Math.PI / 2.1, 0]}
         animation="CharacterArmature|Idle_Neutral"
         suitColor="#2b2540"
         tieColor="#a855f7"
