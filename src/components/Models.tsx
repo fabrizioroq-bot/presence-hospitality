@@ -1,8 +1,9 @@
-import { useGLTF } from '@react-three/drei';
-import type { ThreeElements } from '@react-three/fiber';
-import { useLayoutEffect } from 'react';
+import { useAnimations, useGLTF } from '@react-three/drei';
+import { useGraph, type ThreeElements } from '@react-three/fiber';
+import { useEffect, useLayoutEffect, useMemo, useRef } from 'react';
 import * as THREE from 'three';
 import type { GLTF } from 'three-stdlib';
+import { SkeletonUtils } from 'three-stdlib';
 
 // Free, properly-licensed low-poly .glb models from poly.pizza, downloaded
 // into public/models/. See public/models/CREDITS.md for sources/licenses.
@@ -139,6 +140,101 @@ export function DeskModel(props: ThreeElements['group']) {
   );
 }
 
+// --- Receptionist: "Business Man" by Quaternius (CC0) ---
+// A full rigged/animated character (Quaternius's animated-character rig) —
+// far more than we need, but it means a real idle animation is available
+// instead of a static pose.
+
+interface ReceptionistNodes {
+  Suit_Legs: THREE.SkinnedMesh;
+  Suit_Feet: THREE.SkinnedMesh;
+  Suit_Body_1: THREE.SkinnedMesh;
+  Suit_Body_2: THREE.SkinnedMesh;
+  Suit_Body_3: THREE.SkinnedMesh;
+  Suit_Body_4: THREE.SkinnedMesh;
+  Suit_Head_1: THREE.SkinnedMesh;
+  Suit_Head_2: THREE.SkinnedMesh;
+  Suit_Head_3: THREE.SkinnedMesh;
+  Suit_Head_4: THREE.SkinnedMesh;
+  Root: THREE.Bone;
+}
+interface ReceptionistMaterials {
+  Suit: THREE.MeshStandardMaterial;
+  Black: THREE.MeshStandardMaterial;
+  White: THREE.MeshStandardMaterial;
+  Tie: THREE.MeshStandardMaterial;
+  Skin: THREE.MeshStandardMaterial;
+  Hair: THREE.MeshStandardMaterial;
+  Eyebrows: THREE.MeshStandardMaterial;
+  Eye: THREE.MeshStandardMaterial;
+}
+
+export function ReceptionistModel(props: ThreeElements['group']) {
+  const group = useRef<THREE.Group>(null);
+  const { scene, animations } = useGLTF('/models/receptionist.glb');
+  // Skinned meshes share a skeleton with the cached source scene — clone it
+  // so this instance gets its own, independently posable, skeleton.
+  const clone = useMemo(() => SkeletonUtils.clone(scene), [scene]);
+  const { nodes, materials } = useGraph(clone) as unknown as {
+    nodes: ReceptionistNodes;
+    materials: ReceptionistMaterials;
+  };
+  const { actions } = useAnimations(animations, group);
+
+  useLayoutEffect(() => {
+    materials.Suit.color.set('#1c2430');
+    materials.Suit.roughness = 0.75;
+    materials.Tie.color.set('#2dd4bf');
+    materials.Tie.emissive.set('#2dd4bf');
+    materials.Tie.emissiveIntensity = 0.25;
+  }, [materials]);
+
+  useEffect(() => {
+    const idle = actions['CharacterArmature|Idle_Neutral'] ?? actions['CharacterArmature|Idle'];
+    idle?.reset().fadeIn(0.3).play();
+    return () => {
+      idle?.fadeOut(0.2);
+    };
+  }, [actions]);
+
+  return (
+    <group ref={group} {...props} dispose={null}>
+      <group name="CharacterArmature" rotation={[-Math.PI / 2, 0, 0]} scale={100}>
+        <primitive object={nodes.Root} />
+      </group>
+      <skinnedMesh
+        geometry={nodes.Suit_Legs.geometry}
+        material={materials.Suit}
+        skeleton={nodes.Suit_Legs.skeleton}
+        rotation={[-Math.PI / 2, 0, 0]}
+        scale={100}
+        castShadow
+      />
+      <skinnedMesh
+        geometry={nodes.Suit_Feet.geometry}
+        material={materials.Black}
+        skeleton={nodes.Suit_Feet.skeleton}
+        rotation={[-Math.PI / 2, 0, 0]}
+        scale={100}
+        castShadow
+      />
+      <group position={[0, 0.007, 0]} rotation={[-Math.PI / 2, 0, 0]} scale={100}>
+        <skinnedMesh geometry={nodes.Suit_Body_1.geometry} material={materials.Suit} skeleton={nodes.Suit_Body_1.skeleton} castShadow />
+        <skinnedMesh geometry={nodes.Suit_Body_2.geometry} material={materials.White} skeleton={nodes.Suit_Body_2.skeleton} castShadow />
+        <skinnedMesh geometry={nodes.Suit_Body_3.geometry} material={materials.Tie} skeleton={nodes.Suit_Body_3.skeleton} castShadow />
+        <skinnedMesh geometry={nodes.Suit_Body_4.geometry} material={materials.Skin} skeleton={nodes.Suit_Body_4.skeleton} castShadow />
+      </group>
+      <group rotation={[-Math.PI / 2, 0, 0]} scale={100}>
+        <skinnedMesh geometry={nodes.Suit_Head_1.geometry} material={materials.Skin} skeleton={nodes.Suit_Head_1.skeleton} castShadow />
+        <skinnedMesh geometry={nodes.Suit_Head_2.geometry} material={materials.Hair} skeleton={nodes.Suit_Head_2.skeleton} castShadow />
+        <skinnedMesh geometry={nodes.Suit_Head_3.geometry} material={materials.Eyebrows} skeleton={nodes.Suit_Head_3.skeleton} castShadow />
+        <skinnedMesh geometry={nodes.Suit_Head_4.geometry} material={materials.Eye} skeleton={nodes.Suit_Head_4.skeleton} castShadow />
+      </group>
+    </group>
+  );
+}
+
 useGLTF.preload('/models/sofa.glb');
 useGLTF.preload('/models/plant.glb');
 useGLTF.preload('/models/desk.glb');
+useGLTF.preload('/models/receptionist.glb');

@@ -1,5 +1,5 @@
 import { ContactShadows, Html } from '@react-three/drei';
-import { DeskModel } from './Models';
+import { DeskModel, ReceptionistModel } from './Models';
 import { TOTEM_Z } from './Totem';
 
 const DESK_POSITION: [number, number, number] = [1.45, 0, TOTEM_Z + 0.2];
@@ -93,39 +93,12 @@ function Rug() {
   );
 }
 
-function Receptionist({ position }: { position: [number, number, number] }) {
-  return (
-    <group position={position}>
-      <mesh position={[0, 1.05, 0]}>
-        <cylinderGeometry args={[0.16, 0.2, 0.7, 16]} />
-        <meshStandardMaterial color="#1f2937" roughness={0.6} />
-      </mesh>
-      <mesh position={[0, 1.38, 0]}>
-        <torusGeometry args={[0.17, 0.028, 8, 24]} />
-        <meshStandardMaterial color="#2dd4bf" emissive="#2dd4bf" emissiveIntensity={0.5} />
-      </mesh>
-      <mesh position={[0, 1.48, 0]}>
-        <cylinderGeometry args={[0.06, 0.07, 0.1, 12]} />
-        <meshStandardMaterial color="#d8ab84" roughness={0.7} />
-      </mesh>
-      <mesh position={[0, 1.62, 0]}>
-        <sphereGeometry args={[0.13, 16, 16]} />
-        <meshStandardMaterial color="#d8ab84" roughness={0.7} />
-      </mesh>
-      <mesh position={[0, 1.685, -0.02]}>
-        <sphereGeometry args={[0.135, 16, 16, 0, Math.PI * 2, 0, Math.PI / 1.7]} />
-        <meshStandardMaterial color="#2a1e16" roughness={0.85} />
-      </mesh>
-    </group>
-  );
-}
-
 export default function Reception() {
   return (
     <group>
       <SignageWall />
       <DeskCounter />
-      <Receptionist position={[1.45, 0, TOTEM_Z - 0.15]} />
+      <ReceptionistModel position={[1.45, 0, TOTEM_Z - 0.15]} />
       <Rug />
       <ContactShadows position={[0.7, 0.015, TOTEM_Z]} width={4.5} height={3.5} blur={1.6} opacity={0.5} far={2} />
       <pointLight position={[0.5, 2.4, TOTEM_Z]} intensity={1.5} color="#ffe3c2" distance={6} decay={2} />
