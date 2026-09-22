@@ -258,12 +258,36 @@ const PAINTING_FILES = {
 } as const;
 type PaintingVariant = keyof typeof PAINTING_FILES;
 
+// The source art ships in bright, saturated primary colors that clash with
+// our teal/violet/periwinkle identity. Frame (mat23, near-black) and mat
+// board (mat21, white) already read as neutral, so they're left alone —
+// only the colored shape materials are remapped to a muted palette drawn
+// from the site's own accent colors.
+const MUTED_PALETTE = ['#5b7d78', '#6b5f8a', '#7d84b8', '#8a7f74', '#4a4e5c'];
+const PAINTING_RECOLOR: Record<PaintingVariant, string[]> = {
+  a: ['mat7', 'mat6', 'mat17'],
+  b: ['mat12', 'mat9'],
+  c: ['mat0', 'mat9', 'mat6', 'mat13', 'mat12', 'mat4', 'mat16', 'mat14', 'mat1', 'mat5', 'mat8', 'mat7', 'mat15', 'mat10'],
+};
+
 export function PaintingModel({
   variant,
   ...props
 }: ThreeElements['group'] & { variant: PaintingVariant }) {
-  const { scene } = useGLTF(PAINTING_FILES[variant]);
+  const { scene, materials } = useGLTF(PAINTING_FILES[variant]);
   const clone = useMemo(() => scene.clone(), [scene]);
+
+  useLayoutEffect(() => {
+    const keys = PAINTING_RECOLOR[variant];
+    const mats = materials as Record<string, THREE.MeshStandardMaterial>;
+    keys.forEach((key, i) => {
+      const mat = mats[key];
+      if (!mat) return;
+      mat.color.set(MUTED_PALETTE[i % MUTED_PALETTE.length]);
+      mat.roughness = 0.85;
+    });
+  }, [materials, variant]);
+
   return <primitive object={clone} {...props} />;
 }
 

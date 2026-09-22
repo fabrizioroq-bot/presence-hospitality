@@ -15,7 +15,7 @@ export default function Scene3D() {
     <Canvas
       dpr={Math.min(window.devicePixelRatio, 2)}
       camera={{ fov: 60, near: 0.1, far: 60 }}
-      gl={{ antialias: true, toneMappingExposure: 1.7 }}
+      gl={{ antialias: true, toneMappingExposure: 1.2 }}
       shadows
     >
       <color attach="background" args={['#0a0a12']} />
@@ -23,7 +23,7 @@ export default function Scene3D() {
 
       {/* Procedural environment (no external HDRI fetch) — gives materials soft
           IBL reflections/highlights instead of flat, direct-light-only shading. */}
-      <Environment resolution={64} environmentIntensity={0.45}>
+      <Environment resolution={64} environmentIntensity={0.6}>
         <Lightformer form="rect" color="#ffcf9e" intensity={3} position={[-3, 3, 2]} scale={[3, 2, 1]} />
         <Lightformer form="rect" color="#ffcf9e" intensity={2.5} position={[3, 3, -3]} scale={[3, 2, 1]} />
         <Lightformer form="rect" color="#2dd4bf" intensity={2} position={[0, 2, -10]} scale={[4, 2, 1]} />
@@ -31,8 +31,12 @@ export default function Scene3D() {
         <Lightformer form="circle" color="#4b4a6a" intensity={1} position={[0, -2, 0]} rotation={[Math.PI / 2, 0, 0]} scale={10} />
       </Environment>
 
-      <ambientLight intensity={0.55} color="#c9c2ff" />
-      <hemisphereLight args={['#8c8cb8', '#0c0c16', 0.6]} />
+      <ambientLight intensity={0.85} color="#c9c2ff" />
+      <hemisphereLight args={['#9d9dc8', '#141428', 0.85]} />
+      {/* soft overhead fill along the whole corridor run, so walls/columns
+          read clearly instead of falling into near-black between the warm
+          pools of light */}
+      <directionalLight position={[0, 8, -2]} intensity={0.45} color="#cdd2ff" />
 
       {/* Warm boutique-lobby point lights (~2800K) */}
       <pointLight position={[-2.5, 3, 2]} intensity={3.6} color="#ffb877" distance={14} decay={2} />

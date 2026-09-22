@@ -69,7 +69,7 @@ function SignageWall() {
         <boxGeometry args={[3.4, 2.6, 0.1]} />
         <meshStandardMaterial color="#161826" roughness={0.7} />
       </mesh>
-      <Html center position={[0.55, 2.2, 0.06]} occlude distanceFactor={6} transform>
+      <Html center position={[0.05, 2.2, 0.06]} occlude distanceFactor={3.4} transform>
         <div className="pointer-events-none flex select-none flex-col items-center whitespace-nowrap">
           <span className="font-display text-[11px] font-semibold uppercase tracking-[0.4em] text-headline">
             Presence Hospitality
@@ -79,7 +79,7 @@ function SignageWall() {
           </span>
         </div>
       </Html>
-      <mesh position={[0.55, 1.7, 0.055]}>
+      <mesh position={[0.05, 1.7, 0.055]}>
         <planeGeometry args={[2.2, 0.03]} />
         <meshStandardMaterial color="#a855f7" emissive="#a855f7" emissiveIntensity={1} />
       </mesh>
@@ -103,7 +103,7 @@ export default function Reception() {
     <group>
       <SignageWall />
       <DeskCounter />
-      <ReceptionistModel position={[1.45, 0, TOTEM_Z - 0.15]} />
+      <ReceptionistModel position={[1.45, 0, TOTEM_Z - 0.42]} />
       <Rug />
       <ContactShadows position={[0.7, 0.015, TOTEM_Z]} width={4.5} height={3.5} blur={1.6} opacity={0.5} far={2} />
       <pointLight position={[0.5, 2.4, TOTEM_Z]} intensity={1.5} color="#ffe3c2" distance={6} decay={2} />

@@ -56,15 +56,15 @@ export default function LobbyProps() {
       <ReceptionistModel
         position={[-1.7, 0, 0.4]}
         rotation={[0, -Math.PI / 3, 0]}
-        animation="CharacterArmature|Idle"
+        animation="CharacterArmature|Idle_Neutral"
         suitColor="#2b2540"
         tieColor="#a855f7"
       />
-      {/* guest relaxing near the sofa */}
+      {/* guest near the sofa */}
       <ReceptionistModel
         position={[2.9, 0, 1.3]}
         rotation={[0, Math.PI / 5, 0]}
-        animation="CharacterArmature|Interact"
+        animation="CharacterArmature|Idle_Neutral"
         suitColor="#243328"
         tieColor="#ffb877"
       />

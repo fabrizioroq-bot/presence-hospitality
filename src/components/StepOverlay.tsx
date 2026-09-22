@@ -74,13 +74,13 @@ export default function StepOverlay() {
           ref={(el) => {
             refs.current[i] = el;
           }}
-          className="absolute w-full max-w-lg px-6 opacity-0 transition-opacity duration-300 ease-out md:px-0"
+          className="absolute w-full max-w-2xl px-6 opacity-0 transition-opacity duration-300 ease-out md:px-0"
         >
-          <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-panel/80 px-7 py-6 shadow-[0_20px_60px_-15px_rgba(45,212,191,0.25)] backdrop-blur-md">
+          <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-panel/90 px-7 py-6 shadow-[0_20px_60px_-15px_rgba(45,212,191,0.25)] backdrop-blur-lg">
             <div className="absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-teal via-violet to-teal" />
             <span
               aria-hidden
-              className="pointer-events-none absolute -right-3 -top-8 select-none font-display text-[110px] font-bold leading-none text-white/[0.05]"
+              className="pointer-events-none absolute right-2 -top-6 select-none font-display text-[100px] font-bold leading-none text-white/[0.04]"
             >
               {step.eyebrow}
             </span>
