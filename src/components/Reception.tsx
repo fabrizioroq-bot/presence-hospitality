@@ -29,6 +29,28 @@ function DeskCounter() {
   );
 }
 
+function KeySlots() {
+  const cols = 4;
+  const rows = 3;
+  const cell = 0.15;
+  const gap = 0.035;
+  return (
+    <group position={[-1.15, 1.55, 0.065]}>
+      {Array.from({ length: rows }).flatMap((_, r) =>
+        Array.from({ length: cols }).map((_, c) => (
+          <mesh
+            key={`${r}-${c}`}
+            position={[(c - (cols - 1) / 2) * (cell + gap), (r - (rows - 1) / 2) * (cell + gap), 0]}
+          >
+            <boxGeometry args={[cell, cell, 0.05]} />
+            <meshStandardMaterial color="#0d0e16" roughness={0.5} metalness={0.4} />
+          </mesh>
+        )),
+      )}
+    </group>
+  );
+}
+
 function SignageWall() {
   return (
     <group position={[0, 0, SIGNAGE_Z]}>
@@ -36,15 +58,16 @@ function SignageWall() {
         <boxGeometry args={[3.4, 2.6, 0.1]} />
         <meshStandardMaterial color="#161826" roughness={0.7} />
       </mesh>
-      <Html center position={[0, 2.15, 0.06]} occlude distanceFactor={6} transform>
+      <Html center position={[0.55, 2.15, 0.06]} occlude distanceFactor={6} transform>
         <div className="pointer-events-none select-none whitespace-nowrap font-display text-[11px] font-semibold uppercase tracking-[0.4em] text-headline">
           Presence Hospitality
         </div>
       </Html>
-      <mesh position={[0, 1.7, 0.055]}>
-        <planeGeometry args={[2.6, 0.03]} />
+      <mesh position={[0.55, 1.7, 0.055]}>
+        <planeGeometry args={[2.2, 0.03]} />
         <meshStandardMaterial color="#a855f7" emissive="#a855f7" emissiveIntensity={1} />
       </mesh>
+      <KeySlots />
       <pointLight position={[0, 2.6, 0.8]} intensity={2.2} color="#ffffff" distance={5} decay={2} />
     </group>
   );
@@ -59,11 +82,39 @@ function Rug() {
   );
 }
 
+function Receptionist({ position }: { position: [number, number, number] }) {
+  return (
+    <group position={position}>
+      <mesh position={[0, 1.05, 0]}>
+        <cylinderGeometry args={[0.16, 0.2, 0.7, 16]} />
+        <meshStandardMaterial color="#1f2937" roughness={0.6} />
+      </mesh>
+      <mesh position={[0, 1.38, 0]}>
+        <torusGeometry args={[0.17, 0.028, 8, 24]} />
+        <meshStandardMaterial color="#2dd4bf" emissive="#2dd4bf" emissiveIntensity={0.5} />
+      </mesh>
+      <mesh position={[0, 1.48, 0]}>
+        <cylinderGeometry args={[0.06, 0.07, 0.1, 12]} />
+        <meshStandardMaterial color="#d8ab84" roughness={0.7} />
+      </mesh>
+      <mesh position={[0, 1.62, 0]}>
+        <sphereGeometry args={[0.13, 16, 16]} />
+        <meshStandardMaterial color="#d8ab84" roughness={0.7} />
+      </mesh>
+      <mesh position={[0, 1.685, -0.02]}>
+        <sphereGeometry args={[0.135, 16, 16, 0, Math.PI * 2, 0, Math.PI / 1.7]} />
+        <meshStandardMaterial color="#2a1e16" roughness={0.85} />
+      </mesh>
+    </group>
+  );
+}
+
 export default function Reception() {
   return (
     <group>
       <SignageWall />
       <DeskCounter />
+      <Receptionist position={[1.45, 0, TOTEM_Z - 0.15]} />
       <Rug />
       <pointLight position={[0.5, 2.4, TOTEM_Z]} intensity={1.5} color="#ffe3c2" distance={6} decay={2} />
     </group>

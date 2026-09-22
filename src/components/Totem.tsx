@@ -69,6 +69,13 @@ export default function Totem() {
 
       <pointLight position={[0, 1.55, 0.6]} intensity={0.8} color="#2dd4bf" distance={3} />
 
+      {/* "Check in here" signage above the kiosk */}
+      <Html center position={[0, 2.38, 0.04]} occlude distanceFactor={2.6} transform>
+        <div className="pointer-events-none select-none whitespace-nowrap rounded-full border border-teal/40 bg-black/50 px-4 py-1.5 font-display text-xs font-semibold uppercase tracking-[0.3em] text-teal shadow-[0_0_20px_rgba(45,212,191,0.35)]">
+          Check in here
+        </div>
+      </Html>
+
       <Html
         transform
         center

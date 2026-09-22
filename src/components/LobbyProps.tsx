@@ -1,4 +1,6 @@
-import { MeshReflectorMaterial, RoundedBox } from '@react-three/drei';
+import { RoundedBox } from '@react-three/drei';
+import { useMemo } from 'react';
+import { getWoodFloorTexture } from '../lib/textures';
 
 function Sofa({ position }: { position: [number, number, number] }) {
   return (
@@ -69,21 +71,13 @@ function DashboardPanel({ position }: { position: [number, number, number] }) {
 }
 
 export default function LobbyProps() {
+  const woodTexture = useMemo(() => getWoodFloorTexture(), []);
+
   return (
     <group>
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, -1]}>
+      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, 0, -1]} receiveShadow>
         <planeGeometry args={[8.2, 22]} />
-        <MeshReflectorMaterial
-          blur={[300, 100]}
-          resolution={1024}
-          mixBlur={1}
-          mixStrength={40}
-          roughness={1}
-          depthScale={1}
-          minDepthThreshold={0.85}
-          color="#171826"
-          metalness={0.35}
-        />
+        <meshStandardMaterial map={woodTexture} roughness={0.58} metalness={0.04} />
       </mesh>
 
       <mesh rotation={[-Math.PI / 2, 0, 0]} position={[2.1, 0.011, 1.4]}>

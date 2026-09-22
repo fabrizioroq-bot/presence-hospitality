@@ -6,6 +6,7 @@ import LobbyProps from './LobbyProps';
 import Corridor from './Corridor';
 import Walls from './Walls';
 import Reception from './Reception';
+import HotelProps from './HotelProps';
 import Totem from './Totem';
 
 export default function Scene3D() {
@@ -32,6 +33,7 @@ export default function Scene3D() {
       <LobbyProps />
       <Corridor />
       <Walls />
+      <HotelProps />
       <Reception />
       <Totem />
 

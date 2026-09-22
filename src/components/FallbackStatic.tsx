@@ -38,16 +38,35 @@ export default function FallbackStatic() {
       </section>
 
       <section className="mx-auto flex max-w-2xl flex-col gap-6 px-6 pb-24">
-        {STEPS.map((step) => (
+        {STEPS.map((step, i) => (
           <div
             key={step.eyebrow}
-            className="rounded-2xl border border-teal/20 bg-panel/60 px-6 py-6"
+            className="relative overflow-hidden rounded-3xl border border-white/10 bg-panel/70 px-6 py-6 shadow-[0_20px_60px_-15px_rgba(45,212,191,0.2)]"
           >
-            <span className="font-mono text-xs tracking-[0.35em] text-teal">{step.eyebrow}</span>
-            <h2 className="mt-2 font-display text-xl font-semibold text-headline md:text-2xl">
+            <div className="absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-teal via-violet to-teal" />
+            <span
+              aria-hidden
+              className="pointer-events-none absolute -right-2 -top-6 select-none font-display text-8xl font-bold leading-none text-white/[0.05]"
+            >
+              {step.eyebrow}
+            </span>
+            <div className="relative flex items-center gap-3">
+              <span className="font-mono text-xs tracking-[0.35em] text-teal">{step.eyebrow}</span>
+              <div className="flex gap-1.5">
+                {STEPS.map((_, dotIndex) => (
+                  <span
+                    key={dotIndex}
+                    className={`h-1 w-4 rounded-full ${
+                      dotIndex === i ? 'bg-gradient-to-r from-teal to-violet' : 'bg-white/15'
+                    }`}
+                  />
+                ))}
+              </div>
+            </div>
+            <h2 className="relative mt-2 font-display text-xl font-semibold text-headline md:text-2xl">
               {step.title}
             </h2>
-            <p className="mt-2 text-sm text-white/70 md:text-base">{step.body}</p>
+            <p className="relative mt-2 text-sm text-white/70 md:text-base">{step.body}</p>
           </div>
         ))}
       </section>

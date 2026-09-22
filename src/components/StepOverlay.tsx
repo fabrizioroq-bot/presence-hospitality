@@ -60,6 +60,7 @@ export default function StepOverlay() {
         if (!el) return;
         const o = opacityFor(p, step.range);
         el.style.opacity = String(o);
+        el.style.transform = `translateY(${(1 - o) * 14}px) scale(${0.97 + o * 0.03})`;
       });
     });
     return unsub;
@@ -73,13 +74,37 @@ export default function StepOverlay() {
           ref={(el) => {
             refs.current[i] = el;
           }}
-          className="absolute flex w-full max-w-md flex-col gap-2 rounded-2xl border border-teal/20 bg-panel/80 px-6 py-5 text-center opacity-0 shadow-[0_0_40px_rgba(45,212,191,0.08)] backdrop-blur-md transition-opacity duration-300 ease-out"
+          className="absolute w-full max-w-lg px-6 opacity-0 transition-opacity duration-300 ease-out md:px-0"
         >
-          <span className="font-mono text-xs tracking-[0.35em] text-teal">{step.eyebrow}</span>
-          <h2 className="font-display text-2xl font-semibold text-headline md:text-3xl">
-            {step.title}
-          </h2>
-          <p className="text-sm text-white/70 md:text-base">{step.body}</p>
+          <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-panel/80 px-7 py-6 shadow-[0_20px_60px_-15px_rgba(45,212,191,0.25)] backdrop-blur-md">
+            <div className="absolute inset-x-0 top-0 h-[3px] bg-gradient-to-r from-teal via-violet to-teal" />
+            <span
+              aria-hidden
+              className="pointer-events-none absolute -right-3 -top-8 select-none font-display text-[110px] font-bold leading-none text-white/[0.05]"
+            >
+              {step.eyebrow}
+            </span>
+
+            <div className="relative flex flex-col gap-3">
+              <div className="flex items-center gap-3">
+                <span className="font-mono text-xs tracking-[0.35em] text-teal">{step.eyebrow}</span>
+                <div className="flex gap-1.5">
+                  {STEPS.map((_, dotIndex) => (
+                    <span
+                      key={dotIndex}
+                      className={`h-1 w-4 rounded-full ${
+                        dotIndex === i ? 'bg-gradient-to-r from-teal to-violet' : 'bg-white/15'
+                      }`}
+                    />
+                  ))}
+                </div>
+              </div>
+              <h2 className="font-display text-2xl font-semibold text-headline md:text-3xl">
+                {step.title}
+              </h2>
+              <p className="text-sm text-white/70 md:text-base">{step.body}</p>
+            </div>
+          </div>
         </div>
       ))}
     </div>
