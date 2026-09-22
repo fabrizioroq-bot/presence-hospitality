@@ -48,11 +48,13 @@ interface PaintingSpec {
 
 // Real framed canvas art ("Wall Art 03/05/06" by Jarlan Perez, CC-BY) —
 // actual printed pieces with a frame and mat, not glowing primitives.
+// z: -0.2, side: -1 intentionally omitted — that's where the lobby
+// dashboard panel is wall-mounted (see LobbyProps.tsx), and the two
+// were overlapping.
 const PAINTINGS: PaintingSpec[] = [
   { z: 6.2, side: -1, variant: 'a' },
   { z: 5.4, side: 1, variant: 'b' },
   { z: 2.6, side: 1, variant: 'c' },
-  { z: -0.2, side: -1, variant: 'b' },
   { z: -2.4, side: 1, variant: 'a' },
   { z: -4.6, side: -1, variant: 'c' },
 ];
