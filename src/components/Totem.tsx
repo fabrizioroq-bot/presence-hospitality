@@ -1,18 +1,46 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import { useFrame } from '@react-three/fiber';
-import { Html } from '@react-three/drei';
+import { Html, useGLTF } from '@react-three/drei';
 import * as THREE from 'three';
+import type { GLTF } from 'three-stdlib';
 import { useScrollProgress } from '../store/scrollProgress';
 import ContactForm from './ContactForm';
 
 const TOTEM_Z = -9.5;
+// "Voting machine" by jeremy (CC-BY, poly.pizza) — a podium-with-recessed-
+// screen shape close enough to a check-in kiosk to reskin. See
+// public/models/CREDITS.md for the attribution this license requires.
+const TOTEM_SCALE = 0.21;
 const SCREEN_LIGHT_START = 0.82;
 const FORM_VISIBLE_FROM = 0.88;
 
+interface TotemNodes {
+  ['Voting_machine_Cube028-Mesh']: THREE.Mesh;
+  ['Voting_machine_Cube028-Mesh_1']: THREE.Mesh;
+  ['Voting_machine_Cube028-Mesh_2']: THREE.Mesh;
+}
+interface TotemMaterials {
+  FFFFFF: THREE.MeshStandardMaterial;
+  ['455A64']: THREE.MeshStandardMaterial;
+  ['1A1A1A']: THREE.MeshStandardMaterial;
+}
+type TotemGLTF = GLTF & { nodes: TotemNodes; materials: TotemMaterials };
+
 export default function Totem() {
-  const screenRef = useRef<THREE.Mesh>(null);
+  const { nodes, materials } = useGLTF('/models/totem.glb') as unknown as TotemGLTF;
   const screenMatRef = useRef<THREE.MeshStandardMaterial>(null);
   const formWrapRef = useRef<HTMLDivElement>(null);
+
+  useLayoutEffect(() => {
+    materials.FFFFFF.color.set('#262a42');
+    materials.FFFFFF.roughness = 0.5;
+    materials.FFFFFF.metalness = 0.15;
+    materials['455A64'].color.set('#181a28');
+    materials['455A64'].roughness = 0.6;
+    materials['455A64'].metalness = 0.1;
+    materials['1A1A1A'].color.set('#0d0e16');
+    materials['1A1A1A'].roughness = 0.5;
+  }, [materials]);
 
   useFrame(() => {
     const progress = useScrollProgress.getState().progress;
@@ -43,21 +71,29 @@ export default function Totem() {
 
   return (
     <group position={[0, 0, TOTEM_Z]}>
-      {/* Base */}
-      <mesh position={[0, 0.5, 0]} castShadow>
-        <cylinderGeometry args={[0.32, 0.38, 1, 20]} />
-        <meshStandardMaterial color="#282b45" metalness={0.35} roughness={0.3} />
-      </mesh>
+      {/* Kiosk body, scaled from the sourced model's local units */}
+      <group scale={TOTEM_SCALE}>
+        <mesh
+          geometry={nodes['Voting_machine_Cube028-Mesh'].geometry}
+          material={materials.FFFFFF}
+          castShadow
+          receiveShadow
+        />
+        <mesh
+          geometry={nodes['Voting_machine_Cube028-Mesh_1'].geometry}
+          material={materials['455A64']}
+          castShadow
+          receiveShadow
+        />
+        <mesh geometry={nodes['Voting_machine_Cube028-Mesh_2'].geometry} material={materials['1A1A1A']} />
+        {/* the model's own baked-in screen graphic (red/blue) is skipped —
+            replaced below with our own scroll-reactive screen */}
+      </group>
 
-      {/* Bezel behind the screen */}
-      <mesh position={[0, 1.55, -0.02]}>
-        <boxGeometry args={[0.75, 1.15, 0.08]} />
-        <meshStandardMaterial color="#1d1f30" metalness={0.4} roughness={0.4} />
-      </mesh>
-
-      {/* Screen */}
-      <mesh ref={screenRef} position={[0, 1.55, 0.03]}>
-        <planeGeometry args={[0.66, 1.02]} />
+      {/* Everything below is in real-world units, aligned to the model's
+          screen recess (computed from its local bounding box * scale). */}
+      <mesh position={[0, 1.556, 0.33]}>
+        <planeGeometry args={[0.66, 0.53]} />
         <meshStandardMaterial
           ref={screenMatRef}
           color="#0f2f2a"
@@ -67,10 +103,10 @@ export default function Totem() {
         />
       </mesh>
 
-      <pointLight position={[0, 1.55, 0.6]} intensity={0.8} color="#2dd4bf" distance={3} />
+      <pointLight position={[0, 1.556, 0.5]} intensity={0.8} color="#2dd4bf" distance={3} />
 
       {/* "Check in here" signage above the kiosk */}
-      <Html center position={[0, 2.38, 0.04]} occlude distanceFactor={2.6} transform>
+      <Html center position={[0, 2.3, 0.1]} occlude distanceFactor={2.6} transform>
         <div className="pointer-events-none select-none whitespace-nowrap rounded-full border border-teal/40 bg-black/50 px-4 py-1.5 font-display text-xs font-semibold uppercase tracking-[0.3em] text-teal shadow-[0_0_20px_rgba(45,212,191,0.35)]">
           Check in here
         </div>
@@ -79,7 +115,7 @@ export default function Totem() {
       <Html
         transform
         center
-        position={[0, 1.55, 0.07]}
+        position={[0, 1.5, 0.36]}
         distanceFactor={0.45}
         occlude={false}
         style={{ pointerEvents: 'none' }}
@@ -95,5 +131,7 @@ export default function Totem() {
     </group>
   );
 }
+
+useGLTF.preload('/models/totem.glb');
 
 export { TOTEM_Z };

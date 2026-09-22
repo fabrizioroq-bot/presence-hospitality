@@ -1,27 +1,38 @@
-import { Html, RoundedBox } from '@react-three/drei';
+import { ContactShadows, Html } from '@react-three/drei';
+import { DeskModel } from './Models';
 import { TOTEM_Z } from './Totem';
 
 const DESK_POSITION: [number, number, number] = [1.45, 0, TOTEM_Z + 0.2];
 const SIGNAGE_Z = TOTEM_Z - 0.55;
+const DESK_SCALE = 2.32;
 
 function DeskCounter() {
   return (
     <group position={DESK_POSITION}>
-      <RoundedBox args={[1.7, 0.95, 0.55]} radius={0.05} position={[0, 0.475, 0]} castShadow>
-        <meshStandardMaterial color="#1d2a34" roughness={0.5} metalness={0.3} />
-      </RoundedBox>
-      <mesh position={[0, 0.975, 0]}>
-        <boxGeometry args={[1.72, 0.03, 0.57]} />
+      {/* sourced desk model, offset so its (off-center) bounding box lands
+          centered at this group's origin */}
+      <DeskModel scale={DESK_SCALE} position={[0.828, 0, -0.427]} castShadow receiveShadow />
+
+      {/* guest-facing modesty panel — the sourced desk is open-legged like
+          a home-office desk, this closes the front like a real reception
+          counter, on the side that faces arriving guests */}
+      <mesh position={[0, 0.4, 0.42]} castShadow receiveShadow>
+        <boxGeometry args={[1.6, 0.8, 0.05]} />
+        <meshStandardMaterial color="#1d2a34" roughness={0.5} metalness={0.2} />
+      </mesh>
+      <mesh position={[0, 0.82, 0.42]}>
+        <boxGeometry args={[1.62, 0.03, 0.07]} />
         <meshStandardMaterial color="#2dd4bf" emissive="#2dd4bf" emissiveIntensity={0.7} />
       </mesh>
+
       {/* countertop lamp */}
-      <mesh position={[0.6, 1.12, 0]}>
+      <mesh position={[0.6, 1.0, 0]}>
         <sphereGeometry args={[0.06, 10, 10]} />
         <meshStandardMaterial color="#3a3020" emissive="#ffcf9e" emissiveIntensity={2.2} />
       </mesh>
-      <pointLight position={[0.6, 1.18, 0]} intensity={1.4} color="#ffcf9e" distance={3} decay={2} />
+      <pointLight position={[0.6, 1.05, 0]} intensity={1.4} color="#ffcf9e" distance={3} decay={2} />
       {/* small welcome plant */}
-      <mesh position={[-0.6, 1.08, 0]}>
+      <mesh position={[-0.6, 0.96, 0]}>
         <sphereGeometry args={[0.13, 10, 10]} />
         <meshStandardMaterial color="#1f6f5c" roughness={0.8} />
       </mesh>
@@ -116,6 +127,7 @@ export default function Reception() {
       <DeskCounter />
       <Receptionist position={[1.45, 0, TOTEM_Z - 0.15]} />
       <Rug />
+      <ContactShadows position={[0.7, 0.015, TOTEM_Z]} width={4.5} height={3.5} blur={1.6} opacity={0.5} far={2} />
       <pointLight position={[0.5, 2.4, TOTEM_Z]} intensity={1.5} color="#ffe3c2" distance={6} decay={2} />
     </group>
   );
