@@ -26,7 +26,11 @@ export type FrameInput = {
   pointer: PointerState;
   scroll: number;
   setDpr: (dpr: number) => void;
+  /** Extra yaw from drag-to-rotate (stage variant), radians. */
+  yaw?: number;
 };
+
+export type SceneVariant = "hero" | "stage";
 
 const FORMATION_S = 2.4;
 const easeOutExpo = (x: number) => (x >= 1 ? 1 : 1 - Math.pow(2, -10 * x));
@@ -97,7 +101,10 @@ export class HeroScene {
   private radiusCss = 48;
   private disposed = false;
 
-  constructor(tier: Tier, onLoaded: () => void) {
+  private variant: SceneVariant;
+
+  constructor(tier: Tier, onLoaded: () => void, variant: SceneVariant = "hero") {
+    this.variant = variant;
     this.cfg = tierConfig[tier];
     this.reduced = tier === "reduced";
     const { cfg, shared, reduced } = this;
@@ -209,6 +216,12 @@ export class HeroScene {
     return this.agent !== null;
   }
 
+  /** Re-run the formation (the agent re-forms from the emitter beam). */
+  reform() {
+    this.formationStart = null;
+    this.agentMat.uniforms.uProgress.value = this.reduced ? 1 : 0;
+  }
+
   /** Call when the portal is resized (border radius may change between breakpoints). */
   measure(portal: HTMLElement) {
     this.radiusCss = parseFloat(getComputedStyle(portal).borderTopLeftRadius) || 48;
@@ -247,19 +260,28 @@ export class HeroScene {
     if (live) fu.uMousePx.value.set((p.x - cr.left) * pr, (cr.bottom - p.y) * pr);
     else fu.uMousePx.value.set(-9999, -9999);
 
-    // Frame the full figure for the portal's aspect.
+    // Hero: full figure. Stage: waist-up, offset right on wide stages (copy sits on the left).
     const aspect = w / Math.max(h, 1);
     if (Math.abs(aspect - this.aspect) > 0.001) {
       this.aspect = aspect;
       const tanHalf = Math.tan(THREE.MathUtils.degToRad(16));
       this.camera.aspect = aspect;
-      this.camera.position.set(0, 1.0, Math.max(4.1, 0.62 / (tanHalf * aspect)));
-      this.camera.lookAt(0, 0.93, 0);
+      if (this.variant === "stage") {
+        const dist = Math.max(2.7, 0.5 / (tanHalf * aspect));
+        this.camera.position.set(0, 1.3, dist);
+        this.camera.lookAt(0, 1.24, 0);
+        const visibleW = 2 * dist * tanHalf * aspect;
+        this.group.position.x = aspect > 1.2 ? visibleW * 0.17 : 0;
+      } else {
+        this.camera.position.set(0, 1.0, Math.max(4.1, 0.62 / (tanHalf * aspect)));
+        this.camera.lookAt(0, 0.93, 0);
+      }
       this.camera.updateProjectionMatrix();
     }
 
     const u = this.agentMat.uniforms;
-    u.uDissolve.value = reduced ? 0 : THREE.MathUtils.smoothstep(f.scroll, 0.3, 0.85);
+    u.uDissolve.value =
+      reduced || this.variant === "stage" ? 0 : THREE.MathUtils.smoothstep(f.scroll, 0.3, 0.85);
     if (this.agent && !reduced) {
       if (this.formationStart === null) this.formationStart = time;
       u.uProgress.value = easeOutExpo(Math.min(1, (time - this.formationStart) / FORMATION_S));
@@ -277,6 +299,7 @@ export class HeroScene {
         tY = Math.sin((time * Math.PI * 2) / 9) * 0.12;
       }
     }
+    tY += f.yaw ?? 0;
     this.rotY += (tY - this.rotY) * 0.06;
     this.rotX += (tX - this.rotX) * 0.06;
     this.group.rotation.set(this.rotX, this.rotY, 0);

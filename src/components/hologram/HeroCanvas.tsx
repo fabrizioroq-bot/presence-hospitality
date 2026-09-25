@@ -4,7 +4,7 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import type { MotionValue } from "motion/react";
 import { useEffect, useRef, type RefObject } from "react";
 import { tierConfig, type Tier } from "@/lib/perf-tier";
-import { HeroScene, type PointerState } from "./hero-scene";
+import { HeroScene, type PointerState, type SceneVariant } from "./hero-scene";
 
 export type { PointerState };
 
@@ -15,23 +15,35 @@ type Props = {
   scroll: MotionValue<number>;
   active: boolean;
   onReady: () => void;
+  variant?: SceneVariant;
+  /** Drag-to-rotate yaw in radians (stage). */
+  yaw?: RefObject<number>;
+  /** Increment to make the agent re-form from the beam. */
+  reformKey?: number;
 };
 
-function SceneDriver({ tier, portal, pointer, scroll, active, onReady }: Props) {
+function SceneDriver({ tier, portal, pointer, scroll, active, onReady, variant = "hero", yaw, reformKey = 0 }: Props) {
   const scene = useRef<HeroScene | null>(null);
   const readySent = useRef(false);
   const invalidate = useThree((s) => s.invalidate);
   const size = useThree((s) => s.size);
 
   useEffect(() => {
-    const s = new HeroScene(tier, () => invalidate());
+    const s = new HeroScene(tier, () => invalidate(), variant);
     scene.current = s;
     if (portal.current) s.measure(portal.current);
     return () => {
       s.dispose();
       scene.current = null;
     };
-  }, [tier, portal, invalidate]);
+  }, [tier, portal, invalidate, variant]);
+
+  useEffect(() => {
+    if (reformKey > 0) {
+      scene.current?.reform();
+      invalidate();
+    }
+  }, [reformKey, invalidate]);
 
   // Re-measure (radius) and, for reduced motion, re-render on resize.
   useEffect(() => {
@@ -57,6 +69,7 @@ function SceneDriver({ tier, portal, pointer, scroll, active, onReady }: Props) 
       pointer: pointer.current,
       scroll: scroll.get(),
       setDpr: state.setDpr,
+      yaw: yaw?.current ?? 0,
     });
     if (!readySent.current && s.loaded) {
       readySent.current = true;

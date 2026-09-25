@@ -2,7 +2,7 @@ import { splitHeadline } from "@/lib/headline";
 import { cn } from "@/lib/cn";
 import { AnimatedWords } from "./AnimatedWords";
 
-type Tag = "h1" | "h2" | "h3";
+type Tag = "h1" | "h2" | "h3" | "p";
 
 /** Static headline with one italic emphasis phrase. `raw` uses `<em>…</em>`. */
 export function Headline({

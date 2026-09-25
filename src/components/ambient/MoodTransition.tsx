@@ -1,8 +1,10 @@
 import { cn } from "@/lib/cn";
 
 /** 160px (240px desktop) gradient band between a mist and a night section, so the page never has a hard cut. */
-export function MoodTransition({ from, to, className }: { from: "mist" | "night"; to: "mist" | "night"; className?: string }) {
-  const c = { mist: "var(--mist-bg)", night: "var(--charcoal-700)" };
+type Mood = "mist" | "night" | "deep";
+
+export function MoodTransition({ from, to, className }: { from: Mood; to: Mood; className?: string }) {
+  const c = { mist: "var(--mist-bg)", night: "var(--charcoal-700)", deep: "var(--night-900)" };
   return (
     <div
       aria-hidden

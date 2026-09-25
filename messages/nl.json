@@ -100,5 +100,39 @@
     "lTap": "Tik om te bellen",
     "lLive": "Agent live",
     "sceneDesc": "Illustratie van een hotellobby met een ingang, een kiosk om zelf in te checken en een Holobox. Bij elke stap van de gastreis verandert de scène."
+  },
+  "experience": {
+    "eyebrow": "De Holobox",
+    "title": "Geen videogesprek. <em>Echte aanwezigheid.</em>",
+    "body": "Echte, getrainde receptionisten zorgen voor een hoogwaardige 4K-telepresence-ervaring op al je locaties. Ze werken vanuit een eigen studio in onze hub, zodat het voor je gast voelt alsof er echt iemand staat.",
+    "fFormatLabel": "Formaat",
+    "fFormat": "Mini- of full-size Holobox, in je lobby of bij de receptie.",
+    "fLiveLabel": "Live",
+    "fLive": "Echte mensen, nooit een opname of een chatbot.",
+    "fLangLabel": "Talen",
+    "fLang": "Meertalige medewerkers; taalprofielen per hotel afgestemd.",
+    "drag": "Sleep om rond te kijken",
+    "media": "Echte Holobox-beelden — binnenkort",
+    "stageAlt": "Illustratie: een receptionist die als levensgroot hologram in de Holobox verschijnt.",
+    "hudOnline": "Agent online",
+    "hudRoute": "Studio → Lobby",
+    "hudLive": "Live · 4K telepresence"
+  },
+  "behind": {
+    "eyebrow": "Hoe het draait",
+    "title": "Achter de <em>box</em>",
+    "c1Title": "Holobox-installatie",
+    "c1Body": "In je lobby of bij de receptie, mini of full-size, met een redundante internetverbinding.",
+    "c2Title": "Beveiligde verbinding",
+    "c2Body": "Versleutelde verbinding (VPN) met de hub van Presence Hospitality, met monitoring en privacyborden ter plekke.",
+    "c3Title": "Live service",
+    "c3Body": "Inchecken en uitchecken, ID-verificatie, sleutels resetten, betalingen, vragen en upsell.",
+    "c4Title": "Terugval & incidenten",
+    "c4Body": "SLA-playbooks, een lokaal aanspreekpunt en een duidelijk escalatiepad voor beveiliging.",
+    "c5Title": "Dashboards & rapportage",
+    "c5Body": "KPI's zoals wachttijden, first contact resolution en NPS, plus auditlogs en kwaliteitsreviews."
+  },
+  "welcome": {
+    "line": "<em>Welkom bij je Presence.</em>"
   }
 }

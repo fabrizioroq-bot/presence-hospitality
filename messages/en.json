@@ -100,5 +100,39 @@
     "lTap": "Tap to call",
     "lLive": "Agent live",
     "sceneDesc": "Illustration of a hotel lobby with an entrance, a self check-in kiosk and a Holobox. It changes with each step of the guest journey."
+  },
+  "experience": {
+    "eyebrow": "The Holobox",
+    "title": "Not a video call. <em>A presence.</em>",
+    "body": "Real, trained receptionists deliver a high-end 4K telepresence experience across all your locations. They work from a dedicated studio at our hub, so to your guest it feels like someone is really there.",
+    "fFormatLabel": "Format",
+    "fFormat": "Mini or full-size Holobox, in your lobby or at reception.",
+    "fLiveLabel": "Live",
+    "fLive": "Real people, never a recording or a chatbot.",
+    "fLangLabel": "Languages",
+    "fLang": "Multilingual agents; language profiles agreed per hotel.",
+    "drag": "Drag to look around",
+    "media": "Real Holobox footage — coming soon",
+    "stageAlt": "Illustration: a receptionist appearing as a life-size hologram inside the Holobox.",
+    "hudOnline": "Agent online",
+    "hudRoute": "Studio → Lobby",
+    "hudLive": "Live · 4K telepresence"
+  },
+  "behind": {
+    "eyebrow": "How it runs",
+    "title": "Behind the <em>box</em>",
+    "c1Title": "Holobox installation",
+    "c1Body": "In your lobby or at reception, Mini or full-size, with a redundant internet connection.",
+    "c2Title": "Secure connection",
+    "c2Body": "Encrypted link (VPN) to the Presence Hospitality hub, with monitoring and privacy signage on site.",
+    "c3Title": "Live service",
+    "c3Body": "Check-in and check-out, ID verification, key resets, payments, questions and upsell.",
+    "c4Title": "Fallback & incidents",
+    "c4Body": "SLA playbooks, a local contact and a clear security escalation path.",
+    "c5Title": "Dashboards & reporting",
+    "c5Body": "KPIs such as wait times, first contact resolution and NPS, plus audit logs and quality reviews."
+  },
+  "welcome": {
+    "line": "<em>Welcome to your presence.</em>"
   }
 }

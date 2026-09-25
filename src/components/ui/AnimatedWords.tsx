@@ -4,7 +4,7 @@ import * as m from "motion/react-m";
 import type { HeadlineWord } from "@/lib/headline";
 import { ease } from "@/lib/motion";
 
-type Tag = "h1" | "h2" | "h3";
+type Tag = "h1" | "h2" | "h3" | "p";
 
 /**
  * Word-by-word rise + unblur (adapted from React Bits "Blur Text", Motion only).
