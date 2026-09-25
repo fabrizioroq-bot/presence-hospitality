@@ -1,0 +1,10 @@
+import { chromium } from "playwright";
+const b = await chromium.launch({ channel: "chrome" });
+const p = await b.newPage({ viewport: { width: 1440, height: 900 } });
+p.on("console", (m) => console.log("console", m.type(), m.text().slice(0, 300)));
+p.on("pageerror", (e) => console.log("pageerror", e.message.slice(0, 300)));
+await p.goto(process.argv[2], { waitUntil: "networkidle" });
+await p.evaluate(() => document.querySelector("h2:nth-of-type(1)") && window.scrollTo(0, 3000));
+await p.waitForTimeout(1500);
+console.log(await p.evaluate(() => [...document.querySelectorAll('.grid.gap-4 > div')].map(d => d.getAttribute('style')).join(' | ')));
+await b.close();

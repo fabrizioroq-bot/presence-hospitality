@@ -1,0 +1,60 @@
+/* Presence Hospitality — design tokens (source of truth: src/styles/globals.css mirrors this block) */
+:root {
+  /* Mist (light surfaces) */
+  --mist-bg: #d3dae1;
+  --mist-surface: #e4e9ee;
+  --mist-raised: #f2f5f8;
+  --ink-900: #1d1f23;
+  --ink-700: #3e4046;
+  --ink-500: #5a5e66;
+  --line-mist: #636870;
+  --link-mist: #1c5aa0;
+
+  /* Night (dark surfaces) */
+  --night-900: #121417;
+  --night-800: #1b1d21;
+  --charcoal-700: #2f3136;
+  --paper-50: #f4f6f8;
+  --paper-300: #c5cad1;
+  --paper-500: #a3aab4;
+  --line-night: #7c838e;
+
+  /* Holo (technology) */
+  --holo-100: #e6f2ff;
+  --holo-300: #bfe0ff;
+  --holo-400: #8cc4ff;
+  --holo-500: #5aa8f5;
+  --holo-600: #2f7fd0;
+  --holo-gradient: linear-gradient(100deg, #9dc9ff 0%, #e6f2ff 100%);
+
+  /* Warm accent */
+  --amber-300: #f8c98b;
+  --amber-400: #f5a94a;
+
+  /* Orbs (decorative, always blurred) */
+  --orb-sky: #8db3df;
+  --orb-mint: #bee6da;
+  --orb-lavender: #d6c6e4;
+  --orb-peach: #f1c7a3;
+
+  /* Feedback */
+  --danger-mist: #a8321f;
+  --danger-night: #ff8a75;
+  --success-mist: #1e6b45;
+  --success-night: #7fd9a8;
+
+  --focus: #1c5aa0;
+
+  /* Radii */
+  --r-sm: 8px;
+  --r-md: 16px;
+  --r-lg: 32px;
+  --r-xl: 48px;
+  --r-pill: 999px;
+
+  /* Elevation */
+  --shadow-soft: 0 24px 60px -30px rgba(29, 31, 35, 0.35);
+  --glow-holo: 0 0 0 1px rgba(140, 196, 255, 0.35), 0 0 32px rgba(140, 196, 255, 0.28),
+    0 0 96px rgba(140, 196, 255, 0.14);
+  --glow-amber: 0 0 12px rgba(245, 169, 74, 0.6);
+}
