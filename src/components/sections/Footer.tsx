@@ -1,8 +1,9 @@
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { Logo } from "@/components/brand/Logo";
-import { MistOrbs } from "@/components/brand/MistOrbs";
+import { ParallaxOrbs } from "@/components/ambient/ParallaxOrbs";
+import { AmbientDust } from "@/components/ambient/AmbientDust";
+import { LightSweep } from "@/components/ambient/LightSweep";
 import { site } from "@/content/site";
-import { Link } from "@/i18n/navigation";
 
 const icon = {
   phone: "M3 3.5C3 2.7 3.7 2 4.5 2h1.3c.4 0 .8.3.9.7l.7 2.4c.1.4 0 .8-.3 1l-1 .9a8 8 0 0 0 3.9 3.9l.9-1c.3-.3.7-.4 1-.3l2.4.7c.4.1.7.5.7.9v1.3c0 .8-.7 1.5-1.5 1.5A11.5 11.5 0 0 1 3 3.5Z",
@@ -31,17 +32,19 @@ export async function Footer() {
   const t = await getTranslations("footer");
   const c = await getTranslations("common");
   const n = await getTranslations("nav");
+  const locale = await getLocale();
   const year = new Date().getFullYear();
 
   return (
     <footer data-mood="night" className="relative isolate overflow-hidden bg-charcoal-700 text-paper-50">
-      <MistOrbs
-        className="-z-10"
+      <ParallaxOrbs
         orbs={[
           { color: "sky", size: "min(60vw, 820px)", top: "-30%", right: "-20%", opacity: 0.18 },
           { color: "peach", size: "min(30vw, 420px)", bottom: "-20%", left: "5%", opacity: 0.12, dur: 25 },
         ]}
       />
+      <LightSweep />
+      <AmbientDust mood="night" density={0.8} />
       <div className="container-site pt-24 lg:pt-32">
         {/* Giant wordmark, like the pitch's closing "Thank You" */}
         <div className="relative">
@@ -104,7 +107,7 @@ export async function Footer() {
             <h2 className="text-label text-paper-500">{t("legal")}</h2>
             <ul className="flex flex-col gap-3 text-body-sm text-paper-300">
               <li>
-                <Link href="/privacy" className="text-paper-50 hover:text-holo-300">{t("privacy")}</Link>
+                <a href={`/${locale}/privacy`} className="text-paper-50 hover:text-holo-300">{t("privacy")}</a>
               </li>
               <li>© {year} {site.legalName}</li>
               {site.kvk && <li>{t("kvk")} {site.kvk}</li>}

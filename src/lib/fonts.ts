@@ -1,7 +1,7 @@
 import { Hanken_Grotesk, JetBrains_Mono } from "next/font/google";
 
 export const hanken = Hanken_Grotesk({
-  subsets: ["latin", "latin-ext"],
+  subsets: ["latin"], // Latin-1 covers Dutch diacritics (é, ë, ï)
   weight: ["300", "400", "600", "800"],
   style: ["normal"],
   display: "swap",
@@ -11,7 +11,7 @@ export const hanken = Hanken_Grotesk({
 
 // Italic is only used for the single emphasised phrase in headlines (800 italic).
 export const hankenItalic = Hanken_Grotesk({
-  subsets: ["latin", "latin-ext"],
+  subsets: ["latin"], // Latin-1 covers Dutch diacritics (é, ë, ï)
   weight: ["800"],
   style: ["italic"],
   display: "swap",

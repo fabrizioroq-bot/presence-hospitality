@@ -1,5 +1,5 @@
 import { setRequestLocale } from "next-intl/server";
-import { Navbar } from "@/components/sections/Navbar";
+import { NavbarServer } from "@/components/sections/NavbarServer";
 import { Hero } from "@/components/sections/Hero";
 import { Footer } from "@/components/sections/Footer";
 
@@ -8,7 +8,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
   setRequestLocale(locale);
   return (
     <>
-      <Navbar />
+      <NavbarServer />
       <main id="main">
         <Hero />
       </main>

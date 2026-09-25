@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { notFound } from "next/navigation";
-import { hasLocale, NextIntlClientProvider } from "next-intl";
+import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { hanken, hankenItalic, jetbrains } from "@/lib/fonts";
@@ -46,9 +46,8 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
       className={`${hanken.variable} ${hankenItalic.variable} ${jetbrains.variable}`}
     >
       <body>
-        <NextIntlClientProvider>
-          <MotionProvider>{children}</MotionProvider>
-        </NextIntlClientProvider>
+        {/* No NextIntlClientProvider: client components receive their strings as props. */}
+        <MotionProvider>{children}</MotionProvider>
         <Grain />
       </body>
     </html>

@@ -15,24 +15,24 @@ export function HoloboxPortal({
 }) {
   return (
     <figure
-      className={cn(
-        "relative isolate overflow-hidden rounded-xl bg-night-900 shadow-soft ring-1 ring-white/5",
-        className,
-      )}
+      data-portal
+      className={cn("relative isolate overflow-hidden rounded-xl shadow-soft ring-1 ring-white/5", className)}
     >
+      {/* DOM fill + poster: visible until the WebGL scene paints the same panel. */}
+      <div aria-hidden className="portal-fill absolute inset-0 -z-10 bg-night-900" />
       <div
         aria-hidden
-        className="absolute inset-0 -z-10"
+        className="portal-fill absolute inset-0 -z-10"
         style={{
           background:
             "radial-gradient(60% 45% at 50% 100%, rgba(47,127,208,0.28) 0%, rgba(47,127,208,0) 70%), radial-gradient(80% 60% at 50% 40%, rgba(140,196,255,0.08) 0%, rgba(18,20,23,0) 70%)",
         }}
       />
       {/* Glass-case edges */}
-      <div aria-hidden className="absolute inset-y-10 left-[14%] w-px bg-linear-to-b from-transparent via-holo-400/15 to-transparent" />
-      <div aria-hidden className="absolute inset-y-10 right-[14%] w-px bg-linear-to-b from-transparent via-holo-400/15 to-transparent" />
+      <div aria-hidden className="portal-fill absolute inset-y-10 left-[14%] w-px bg-linear-to-b from-transparent via-holo-400/15 to-transparent" />
+      <div aria-hidden className="portal-fill absolute inset-y-10 right-[14%] w-px bg-linear-to-b from-transparent via-holo-400/15 to-transparent" />
 
-      <div className="absolute inset-x-0 top-[9%] bottom-[5%]">
+      <div className="portal-fill absolute inset-x-0 top-[9%] bottom-[5%]">
         <HologramPoster />
       </div>
 

@@ -151,3 +151,26 @@ export const stagger = (s = 0.07) => ({ show: { transition: { staggerChildren: s
 
 ---
 
+
+### 4.9 Ambient motion & depth (added in phase 3)
+The page must never feel static, but motion stays calm: nothing faster than ~15 px/s, no loops shorter than 4 s (except the live dot), nothing that competes with reading.
+
+**Hero: one WebGL canvas** (`src/components/hologram/hero-scene.ts`), behind the hero content:
+- Pass 1 (full canvas): light fog (FBM noise tinted with the orb colours, ≤ 0.34 alpha, calmer behind the text column), a soft light that follows the mouse, far drifting particles in three depth layers (discarded inside the Holobox), and the **Holobox panel itself**, drawn as a rounded rect aligned to the DOM `[data-portal]` element.
+- Pass 2 (portal viewport + rounded-rect clip): the hologram agent, light cone and emitter rings.
+- Pass 3: a few large, very soft bokeh dots in front (depth).
+- The DOM portal keeps its fill + SVG poster until the scene paints (`data-webgl="ready"` on the hero), then fades them out.
+- **Loads on first interaction** (pointer, wheel, scroll, touch, key) or after 7 s. Never during initial load (keeps TBT ≈ 0 and LCP on the H1/lead).
+- No post-processing: glow comes from additive soft sprites.
+
+**Depth / parallax** (`HeroShell` + `Parallax`): text moves least (mouse ±6/4 px, scroll −70 px), the Holobox more (mouse ±14/10 px, scroll +60 px), and the background most (in shader). Springs: stiffness 40, damping 18. Mouse parallax only for fine pointers.
+
+**Other sections (no WebGL):**
+- `AmbientDust` (2D canvas): 30–64 motes rising at 4–14 px/s with a gentle sway; cool holo + ~8% amber; only animates while on screen; half density and 30 fps on touch. Use `mood="night"` on dark sections.
+- `ParallaxOrbs`: MistOrbs that shift ±70 px across the section's scroll range.
+- `LightSweep`: a 38 s diagonal band of light, night sections only.
+- Every section gets `ParallaxOrbs`, and night sections also get `AmbientDust` + `LightSweep`. Mist sections may use `AmbientDust` at `density ≤ 0.6`.
+
+**Reduced motion:** the hero renders one static frame; dust, sweep and parallax are off; orbs are static.
+
+**Performance rules:** client components receive strings as props (no client i18n runtime); the navbar uses CSS transitions, not Motion; Motion is used for reveals and parallax only; above-the-fold reveals must not animate opacity (use `RevealItem soft`).

@@ -1,14 +1,9 @@
 "use client";
 
-import { AnimatePresence, useMotionValueEvent, useReducedMotion, useScroll } from "motion/react";
-import * as m from "motion/react-m";
-import { useLocale, useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Logo } from "@/components/brand/Logo";
 import { buttonClass, Arrow } from "@/components/ui/Button";
-import { Link } from "@/i18n/navigation";
 import { cn } from "@/lib/cn";
-import { ease } from "@/lib/motion";
 
 const LINKS = [
   { id: "how-it-works", key: "howItWorks" },
@@ -20,12 +15,22 @@ const LINKS = [
 
 type Mood = "mist" | "night";
 
-export function Navbar() {
-  const t = useTranslations("nav");
-  const c = useTranslations("common");
-  const locale = useLocale();
+export type NavbarLabels = {
+  links: Record<(typeof LINKS)[number]["key"], string>;
+  skip: string;
+  bookDemo: string;
+  switchLocale: string;
+  menuOpen: string;
+  menuClose: string;
+  primaryNav: string;
+  mobileMenu: string;
+};
+
+/** Client navbar. Strings come in as props so the i18n runtime stays on the server. */
+export function Navbar({ locale, labels }: { locale: "en" | "nl"; labels: NavbarLabels }) {
+  const t = (k: keyof NavbarLabels["links"]) => labels.links[k];
+  const c = (k: Exclude<keyof NavbarLabels, "links">) => labels[k];
   const other = locale === "en" ? "nl" : "en";
-  const reduce = useReducedMotion();
 
   const [scrolled, setScrolled] = useState(false);
   const [hidden, setHidden] = useState(false);
@@ -38,14 +43,33 @@ export function Navbar() {
   const toggleRef = useRef<HTMLButtonElement>(null);
 
   // Scroll state: background after 24px, hide on scroll down, show on scroll up.
-  const { scrollY } = useScroll();
-  useMotionValueEvent(scrollY, "change", (y) => {
-    const prev = scrollY.getPrevious() ?? 0;
-    setScrolled(y > 24);
-    if (open) return;
-    if (y - prev > 8 && y > 240) setHidden(true);
-    else if (prev - y > 8) setHidden(false);
-  });
+  // Plain listener (no Motion) keeps the navbar out of the animation bundle.
+  const openRef = useRef(open);
+  useEffect(() => {
+    openRef.current = open;
+  }, [open]);
+  useEffect(() => {
+    let prev = window.scrollY;
+    let raf = 0;
+    const onScroll = () => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const y = window.scrollY;
+        setScrolled(y > 24);
+        if (!openRef.current) {
+          if (y - prev > 8 && y > 240) setHidden(true);
+          else if (prev - y > 8) setHidden(false);
+        }
+        prev = y;
+      });
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
 
   // Mood: read the data-mood of whatever section sits under the nav bar.
   const detectMood = useCallback(() => {
@@ -134,13 +158,11 @@ export function Navbar() {
       >
         {c("skip")}
       </a>
-      <m.header
+      <header
         ref={headerRef}
-        initial={false}
-        animate={{ y: hidden && !open ? "-100%" : "0%" }}
-        transition={{ duration: reduce ? 0 : 0.25, ease: ease.out }}
         className={cn(
-          "fixed inset-x-0 top-0 z-50 h-(--nav-h) transition-[background-color,color,box-shadow] duration-300",
+          "fixed inset-x-0 top-0 z-50 h-(--nav-h) transition-[transform,background-color,color,box-shadow] duration-300 ease-[cubic-bezier(0.16,1,0.3,1)]",
+          hidden && !open ? "-translate-y-full" : "translate-y-0",
           surface,
           night ? "text-paper-50" : "text-ink-900",
         )}
@@ -177,9 +199,8 @@ export function Navbar() {
           </nav>
 
           <div className="flex items-center gap-2">
-            <Link
-              href="/"
-              locale={other}
+            <a
+              href={`/${other}`}
               hrefLang={other}
               aria-label={c("switchLocale")}
               className="hidden min-h-11 items-center gap-1 rounded-pill px-3 text-label sm:inline-flex"
@@ -187,7 +208,7 @@ export function Navbar() {
               <span className={locale === "en" ? "opacity-100" : "opacity-55"}>EN</span>
               <span aria-hidden className="opacity-40">|</span>
               <span className={locale === "nl" ? "opacity-100" : "opacity-55"}>NL</span>
-            </Link>
+            </a>
             <a
               href="#demo"
               className={buttonClass({ mood: night ? "night" : "mist", className: "hidden sm:inline-flex" })}
@@ -221,38 +242,22 @@ export function Navbar() {
             </button>
           </div>
         </div>
-      </m.header>
+      </header>
 
-      <AnimatePresence>
-        {open && (
-          <m.div
+      {open && (
+          <div
             id="mobile-menu"
             ref={sheetRef}
             role="dialog"
             aria-modal="true"
             aria-label={c("mobileMenu")}
             data-mood="night"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-40 flex flex-col bg-night-900 pt-(--nav-h) text-paper-50 lg:hidden"
+            className="sheet-in fixed inset-0 z-40 flex flex-col bg-night-900 pt-(--nav-h) text-paper-50 lg:hidden"
           >
             <nav aria-label={c("primaryNav")} className="container-site flex-1 overflow-y-auto pt-10">
-              <m.ul
-                className="flex flex-col gap-2"
-                initial="hidden"
-                animate="show"
-                variants={{ hidden: {}, show: { transition: { staggerChildren: 0.06, delayChildren: 0.05 } } }}
-              >
-                {LINKS.map((l) => (
-                  <m.li
-                    key={l.id}
-                    variants={{
-                      hidden: { opacity: 0, y: 16 },
-                      show: { opacity: 1, y: 0, transition: { duration: 0.4, ease: ease.out } },
-                    }}
-                  >
+              <ul className="flex flex-col gap-2">
+                {LINKS.map((l, i) => (
+                  <li key={l.id} className="sheet-item" style={{ animationDelay: `${50 + i * 60}ms` }}>
                     <a
                       href={`#${l.id}`}
                       onClick={() => setOpen(false)}
@@ -260,14 +265,13 @@ export function Navbar() {
                     >
                       {t(l.key)}
                     </a>
-                  </m.li>
+                  </li>
                 ))}
-              </m.ul>
+              </ul>
             </nav>
             <div className="container-site flex items-center justify-between gap-4 border-t border-line-night/40 py-6">
-              <Link
-                href="/"
-                locale={other}
+              <a
+                href={`/${other}`}
                 hrefLang={other}
                 aria-label={c("switchLocale")}
                 className="inline-flex min-h-11 items-center gap-2 text-label"
@@ -275,15 +279,14 @@ export function Navbar() {
                 <span className={locale === "en" ? "" : "opacity-55"}>EN</span>
                 <span aria-hidden className="opacity-40">|</span>
                 <span className={locale === "nl" ? "" : "opacity-55"}>NL</span>
-              </Link>
+              </a>
               <a href="#demo" onClick={() => setOpen(false)} className={buttonClass({ mood: "night" })}>
                 {c("bookDemo")}
                 <Arrow />
               </a>
             </div>
-          </m.div>
-        )}
-      </AnimatePresence>
+          </div>
+      )}
     </>
   );
 }

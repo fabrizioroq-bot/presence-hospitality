@@ -6,13 +6,14 @@ import { AnimatedWords } from "@/components/ui/AnimatedWords";
 import { ButtonLink } from "@/components/ui/Button";
 import { RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { splitHeadline } from "@/lib/headline";
+import { HeroShell, Parallax } from "@/components/hero/HeroShell";
 
 export async function Hero() {
   const t = await getTranslations("hero");
   const c = await getTranslations("common");
 
   return (
-    <section
+    <HeroShell
       id="top"
       data-mood="mist"
       aria-labelledby="hero-title"
@@ -38,7 +39,7 @@ export async function Hero() {
       </p>
 
       <div className="container-site grid items-center gap-12 lg:min-h-[calc(100svh-var(--nav-h)-60px)] lg:grid-cols-12 lg:gap-6">
-        <div className="flex min-w-0 flex-col gap-8 lg:col-span-7 lg:pr-6">
+        <Parallax className="flex min-w-0 flex-col gap-8 lg:col-span-7 lg:pr-6" mouse={[-6, -4]} scroll={-70}>
           <p className="text-label text-ink-700">{t("eyebrow")}</p>
           <AnimatedWords
             as="h1"
@@ -47,11 +48,11 @@ export async function Hero() {
             words={splitHeadline(t.raw("title") as string)}
             className="text-display-2xl text-balance"
           />
-          <RevealGroup className="flex flex-col gap-8" gap={0.08}>
-            <RevealItem>
+          <RevealGroup className="flex flex-col gap-8" gap={0.08} delay={0.25} onLoad>
+            <RevealItem soft>
               <p className="max-w-[52ch] text-body-lg text-ink-700">{t("lead")}</p>
             </RevealItem>
-            <RevealItem className="flex flex-col gap-3 sm:flex-row sm:items-center">
+            <RevealItem soft className="flex flex-col gap-3 sm:flex-row sm:items-center">
               <ButtonLink href="#demo" arrow>
                 {c("bookDemo")}
               </ButtonLink>
@@ -59,23 +60,23 @@ export async function Hero() {
                 {t("ctaSecondary")}
               </ButtonLink>
             </RevealItem>
-            <RevealItem>
+            <RevealItem soft>
               <p className="text-body-sm text-ink-500">{t("note")}</p>
               <p className="mt-2 text-body-sm text-ink-500 lg:hidden">
                 {c("companyOf")} <span className="font-semibold text-ink-900">[partner]</span>
               </p>
             </RevealItem>
           </RevealGroup>
-        </div>
+        </Parallax>
 
-        <div className="min-w-0 lg:col-span-5 lg:col-start-8">
+        <Parallax className="min-w-0 lg:col-span-5 lg:col-start-8" mouse={[14, 10]} scroll={60}>
           <HoloboxPortal
             className="mx-auto h-[62svh] min-h-[420px] w-full lg:aspect-[3/4.4] lg:h-auto lg:max-h-[78svh] lg:min-h-0 lg:w-auto"
             hud={{ online: t("hudOnline"), route: t("hudRoute"), live: t("hudLive") }}
             description={t("portalAlt")}
           />
-        </div>
+        </Parallax>
       </div>
-    </section>
+    </HeroShell>
   );
 }

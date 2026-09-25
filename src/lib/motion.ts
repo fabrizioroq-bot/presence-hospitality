@@ -19,6 +19,12 @@ export const reveal: Variants = {
   },
 };
 
+/** Rise + unblur without opacity — the element is painted from the first frame. */
+export const revealSoft: Variants = {
+  hidden: { y: 16, filter: "blur(6px)" },
+  show: { y: 0, filter: "blur(0px)", transition: { duration: dur.reveal, ease: ease.out } },
+};
+
 export const stagger = (s = 0.07): Variants => ({
   hidden: {},
   show: { transition: { staggerChildren: s } },

@@ -1,11 +1,10 @@
 "use client";
 
 import * as m from "motion/react-m";
-import { useReducedMotion } from "motion/react";
 import type { CSSProperties } from "react";
 
 // Adapted from Magic UI "Border Beam": uses `m` (LazyMotion strict), token colours, and
-// stays hidden for reduced-motion users.
+// is hidden for reduced-motion users via CSS (identical SSR/client markup).
 export function BorderBeam({
   size = 120,
   duration = 8,
@@ -21,12 +20,10 @@ export function BorderBeam({
   colorTo?: string;
   borderWidth?: number;
 }) {
-  const reduce = useReducedMotion();
-  if (reduce) return null;
   return (
     <div
       aria-hidden
-      className="pointer-events-none absolute inset-0 rounded-[inherit] border-(length:--beam-w) border-transparent mask-[linear-gradient(transparent,transparent),linear-gradient(#000,#000)] mask-intersect [mask-clip:padding-box,border-box]"
+      className="pointer-events-none absolute inset-0 rounded-[inherit] motion-reduce:hidden border-(length:--beam-w) border-transparent mask-[linear-gradient(transparent,transparent),linear-gradient(#000,#000)] mask-intersect [mask-clip:padding-box,border-box]"
       style={{ "--beam-w": `${borderWidth}px` } as CSSProperties}
     >
       <m.div

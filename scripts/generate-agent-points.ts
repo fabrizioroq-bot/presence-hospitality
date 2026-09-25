@@ -77,36 +77,41 @@ function body(p: V3): number {
   // mirror for symmetric limbs
   const m: V3 = [Math.abs(p[0]), p[1], p[2]];
 
-  const head = sdEllipsoid(p, [0, 1.625, 0.005], [0.083, 0.108, 0.098]);
-  const hair = sdEllipsoid(p, [0, 1.66, -0.02], [0.092, 0.095, 0.1]);
-  const bun = sdEllipsoid(p, [0, 1.63, -0.105], [0.05, 0.05, 0.045]);
-  const neck = sdCapsule(p, [0, 1.46, -0.005], [0, 1.54, 0], 0.045);
+  // Head: cranium + jaw, hair cap and a low bun.
+  const cranium = sdEllipsoid(p, [0, 1.645, 0.0], [0.074, 0.092, 0.088]);
+  const jaw = sdEllipsoid(p, [0, 1.585, 0.022], [0.056, 0.058, 0.066]);
+  const hair = sdEllipsoid(p, [0, 1.672, -0.014], [0.082, 0.078, 0.094]);
+  const bun = sdEllipsoid(p, [0, 1.64, -0.1], [0.044, 0.042, 0.04]);
+  const neck = sdCapsule(p, [0, 1.47, -0.008], [0, 1.555, 0.004], 0.037);
 
-  const chest = sdRoundBox(p, [0, 1.3, 0], [0.19, 0.12, 0.095], 0.07);
-  const waist = sdRoundBox(p, [0, 1.08, 0], [0.145, 0.13, 0.08], 0.06);
-  const hips = sdRoundBox(p, [0, 0.9, 0], [0.165, 0.08, 0.095], 0.06);
-  const shoulders = sdCapsule(m, [0.1, 1.405, -0.01], [0.2, 1.39, -0.01], 0.055);
+  // Blazer torso: sloped shoulders, fitted waist, hem at the hips.
+  const shoulders = sdCapsule(m, [0.04, 1.455, -0.01], [0.175, 1.41, -0.012], 0.052);
+  const chest = sdRoundBox(p, [0, 1.3, 0.006], [0.15, 0.12, 0.088], 0.075);
+  const waist = sdRoundBox(p, [0, 1.11, 0], [0.118, 0.1, 0.074], 0.066);
+  const hips = sdRoundBox(p, [0, 0.95, 0], [0.152, 0.085, 0.088], 0.07);
 
-  const upperArm = sdCapsule(m, [0.205, 1.38, -0.01], [0.23, 1.12, 0.02], 0.045);
-  const foreArm = sdCapsule(m, [0.23, 1.12, 0.02], [0.07, 0.97, 0.12], 0.038);
-  const hand = sdEllipsoid(m, [0.035, 0.955, 0.13], [0.05, 0.035, 0.045]);
+  // Arms: elbows slightly out, forearms folding in, hands clasped at the front.
+  const upperArm = sdCapsule(m, [0.18, 1.395, -0.012], [0.198, 1.13, 0.004], 0.04);
+  const foreArm = sdCapsule(m, [0.198, 1.13, 0.004], [0.062, 0.99, 0.1], 0.032);
+  const hand = sdEllipsoid(m, [0.022, 0.975, 0.112], [0.046, 0.034, 0.036]);
 
-  const thigh = sdCapsule(m, [0.09, 0.86, 0], [0.105, 0.48, 0.01], 0.066);
-  const shin = sdCapsule(m, [0.105, 0.48, 0.01], [0.1, 0.09, -0.005], 0.048);
-  const shoe = sdRoundBox(m, [0.1, 0.035, 0.035], [0.045, 0.035, 0.1], 0.03);
+  // Trousers + shoes, feet close together.
+  const thigh = sdCapsule(m, [0.078, 0.9, 0], [0.072, 0.49, 0.008], 0.068);
+  const shin = sdCapsule(m, [0.072, 0.49, 0.008], [0.068, 0.09, -0.008], 0.047);
+  const shoe = sdRoundBox(m, [0.07, 0.034, 0.03], [0.04, 0.034, 0.088], 0.028);
 
-  let d = smin(head, hair, 0.03);
+  let d = smin(cranium, jaw, 0.04);
+  d = smin(d, hair, 0.025);
   d = smin(d, bun, 0.02);
-  d = smin(d, neck, 0.04);
-  let torso = smin(chest, waist, 0.08);
-  torso = smin(torso, hips, 0.06);
-  torso = smin(torso, shoulders, 0.06);
-  d = smin(d, torso, 0.04);
-  d = smin(d, upperArm, 0.04);
-  d = smin(d, foreArm, 0.03);
-  d = smin(d, hand, 0.02);
-  d = smin(d, thigh, 0.05);
-  d = smin(d, shin, 0.04);
+  d = smin(d, neck, 0.035);
+  let torso = smin(chest, waist, 0.09);
+  torso = smin(torso, hips, 0.07);
+  torso = smin(torso, shoulders, 0.07);
+  d = smin(d, torso, 0.045);
+  d = smin(d, upperArm, 0.03);
+  d = smin(d, foreArm, 0.025);
+  d = smin(d, hand, 0.018);
+  d = smin(d, smin(thigh, shin, 0.04), 0.05);
   d = smin(d, shoe, 0.02);
   return d;
 }
@@ -124,7 +129,7 @@ function normal(p: V3): V3 {
 type Pt = { p: V3; flags: number };
 const TOTAL = 60000;
 const N_ORBIT = Math.round(TOTAL * 0.03);
-const N_INTERIOR = Math.round(TOTAL * 0.06);
+const N_INTERIOR = Math.round(TOTAL * 0.09);
 const N_SURFACE = TOTAL - N_ORBIT - N_INTERIOR;
 
 const box = { min: [-0.34, 0, -0.2] as V3, max: [0.34, 1.8, 0.24] as V3 };
@@ -145,7 +150,7 @@ while (pts.length < N_SURFACE) {
   const j = (rand() - 0.5) * 0.006;
   const q: V3 = [p[0] - n[0] * (d - j), p[1] - n[1] * (d - j), p[2] - n[2] * (d - j)];
   // Name badge on the wearer's left chest, plus a sprinkle of warm rim points.
-  const badge = len(q[0] - 0.09, q[1] - 1.34, q[2] - 0.1) < 0.028 && n[2] > 0.4;
+  const badge = len(q[0] - 0.085, q[1] - 1.33, q[2] - 0.095) < 0.024 && n[2] > 0.4;
   const warm = badge || rand() < 0.012;
   pts.push({ p: q, flags: warm ? 1 : 0 });
 }
