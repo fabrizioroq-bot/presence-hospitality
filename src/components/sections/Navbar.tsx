@@ -4,6 +4,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { Logo } from "@/components/brand/Logo";
 import { buttonClass, Arrow } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
+import { getLenis } from "@/lib/smooth-scroll";
 
 const LINKS = [
   { id: "how-it-works", key: "howItWorks" },
@@ -115,6 +116,7 @@ export function Navbar({ locale, labels }: { locale: "en" | "nl"; labels: Navbar
     if (!open) return;
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
+    getLenis()?.stop();
     const toggle = toggleRef.current;
     const focusables = () =>
       Array.from(
@@ -138,6 +140,7 @@ export function Navbar({ locale, labels }: { locale: "en" | "nl"; labels: Navbar
     document.addEventListener("keydown", onKey);
     return () => {
       document.body.style.overflow = prevOverflow;
+      getLenis()?.start();
       document.removeEventListener("keydown", onKey);
       toggle?.focus();
     };

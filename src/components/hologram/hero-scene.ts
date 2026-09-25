@@ -159,6 +159,7 @@ export class HeroScene {
         uPointer: { value: new THREE.Vector3(99, 99, 0) },
         uPointerOn: { value: 0 },
         uMotion: { value: reduced ? 0 : 1 },
+        uDissolve: { value: 0 },
       },
       ...additive,
     });
@@ -182,7 +183,7 @@ export class HeroScene {
       new THREE.ShaderMaterial({
         vertexShader: ringsVertex,
         fragmentShader: ringsFragment,
-        uniforms: { ...shared, uMotion: { value: reduced ? 0 : 1 } },
+        uniforms: { ...shared, uMotion: { value: reduced ? 0 : 1 }, uIntensity: { value: 1 } },
         ...additive,
       }),
     );
@@ -258,6 +259,7 @@ export class HeroScene {
     }
 
     const u = this.agentMat.uniforms;
+    u.uDissolve.value = reduced ? 0 : THREE.MathUtils.smoothstep(f.scroll, 0.3, 0.85);
     if (this.agent && !reduced) {
       if (this.formationStart === null) this.formationStart = time;
       u.uProgress.value = easeOutExpo(Math.min(1, (time - this.formationStart) / FORMATION_S));

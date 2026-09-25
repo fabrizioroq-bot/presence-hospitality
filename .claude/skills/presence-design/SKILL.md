@@ -174,3 +174,12 @@ The page must never feel static, but motion stays calm: nothing faster than ~15 
 **Reduced motion:** the hero renders one static frame; dust, sweep and parallax are off; orbs are static.
 
 **Performance rules:** client components receive strings as props (no client i18n runtime); the navbar uses CSS transitions, not Motion; Motion is used for reveals and parallax only; above-the-fold reveals must not animate opacity (use `RevealItem soft`).
+
+### 4.10 Scroll & scroll-driven storytelling (added in phase 5)
+- **Lenis** smooth scroll site-wide (`SmoothScroll` in the layout, `lerp 0.1`). Off for reduced motion; touch keeps native momentum. In-page `#links` go through `scrollToHash` (Lenis already honours `scroll-padding-top`, so don't add an offset). It moves focus to the target and updates the URL. Pause Lenis (`getLenis()?.stop()`) whenever the body is scroll-locked.
+- **Pinned stories:** the track height is steps × 100svh (+40svh) and the stage is `sticky top-0 h-svh`. Drive everything from one scroll value `s` through a pure `timeline(s)` shared by WebGL, SVG and DOM. Step copy crossfades sequentially (never overlapping). The progress rail fills with scroll.
+- **Desktop-only scenes load through a gate** (`StoryGate`): phones never download them. The server still renders the same content as a mobile/reduced list, and a same-height placeholder prevents layout shift.
+- **Particle continuity:** scenes assemble from dust (`uForm`) and leave as rising dust (`uDissolve`). The hero agent dissolves as you scroll away; the next WebGL scene rebuilds from the same dust. Warm dots = human guest; cool holo = agent/technology.
+- **CursorGlow:** one soft 520px radial light following the mouse (`soft-light` blend), fine pointers only.
+- **Depth:** `Depth range={±30..40}` on large blocks (statements, panels, charts). Positive = further away. Never on body text inside cards.
+- **Mood transitions:** always a `MoodTransition` band between mist and night (160px, 240px on desktop).

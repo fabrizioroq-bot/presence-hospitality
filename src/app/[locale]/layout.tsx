@@ -6,6 +6,8 @@ import { routing } from "@/i18n/routing";
 import { hanken, hankenItalic, jetbrains } from "@/lib/fonts";
 import { MotionProvider } from "@/components/providers/MotionProvider";
 import { Grain } from "@/components/brand/Grain";
+import { SmoothScroll } from "@/components/providers/SmoothScroll";
+import { CursorGlow } from "@/components/ambient/CursorGlow";
 import { site } from "@/content/site";
 import "@/styles/globals.css";
 
@@ -49,6 +51,8 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
         {/* No NextIntlClientProvider: client components receive their strings as props. */}
         <MotionProvider>{children}</MotionProvider>
         <Grain />
+        <CursorGlow />
+        <SmoothScroll />
       </body>
     </html>
   );

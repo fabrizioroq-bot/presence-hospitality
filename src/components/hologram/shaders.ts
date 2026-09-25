@@ -175,6 +175,7 @@ uniform float uSweep;
 uniform vec3 uPointer;
 uniform float uPointerOn;
 uniform float uMotion; // 0 when reduced motion
+uniform float uDissolve; // 0..1 as the hero scrolls away
 varying vec3 vColor;
 varying float vAlpha;
 void main() {
@@ -205,6 +206,10 @@ void main() {
   // Glitch slice.
   p.x += step(abs(p.y - uGlitchY), 0.03) * uGlitchAmt;
 
+  // Dissolve into rising dust (carried into the next scenes).
+  float dz = smoothstep(0.0, 1.0, uDissolve * (0.6 + aRandom * 0.8));
+  p += dz * vec3(sin(aRandom * 91.0) * 0.6, 0.9 + aRandom * 1.2, cos(aRandom * 57.0) * 0.4);
+
   // Pointer repel.
   vec2 dp = p.xy - uPointer.xy;
   float f = uPointerOn * smoothstep(0.2, 0.0, length(dp));
@@ -231,6 +236,7 @@ void main() {
   float scan = 0.78 + 0.22 * sin(p.y * 140.0 + uTime * 3.0 * uMotion);
   float alpha = (0.5 + 0.2 * rim) * scan * uFlicker * (0.35 + 0.65 * t) + band * 0.5;
   alpha += f * 0.35;
+  alpha *= 1.0 - dz;
   alpha *= interior > 0.5 ? 0.6 : 1.0;
   alpha *= orbit > 0.5 ? 0.3 * t : 1.0;
   vAlpha = alpha;
@@ -300,6 +306,7 @@ void main() {
 export const ringsFragment = /* glsl */ `
 uniform float uTime;
 uniform float uMotion;
+uniform float uIntensity;
 varying vec2 vUv;
 ${clip}
 void main() {
@@ -317,7 +324,112 @@ void main() {
   float amber = smoothstep(0.008, 0.0, abs(r - 0.965));
   col = mix(col, vec3(0.961, 0.663, 0.290), amber);
   a += amber * 0.5;
-  a *= smoothstep(1.0, 0.97, r);
+  a *= smoothstep(1.0, 0.97, r) * uIntensity;
   gl_FragColor = vec4(col, a);
+}
+`;
+
+// ---------------------------------------------------------------------------
+// Story: morphing points (lobby lines + guest). Assemble from dust (uForm), dissolve upward.
+// ---------------------------------------------------------------------------
+export const morphVertex = /* glsl */ `
+attribute vec3 aScatter;
+attribute float aRand;
+attribute float aTone;
+attribute float aFade;
+uniform float uForm;
+uniform float uDissolve;
+uniform float uTime;
+uniform float uSize;
+uniform float uPR;
+uniform float uAlpha;
+uniform vec3 uColorA;
+uniform vec3 uColorB;
+varying vec3 vColor;
+varying float vAlpha;
+void main() {
+  float d = aRand * 0.45;
+  float t = smoothstep(d, d + 0.55, uForm);
+  vec3 p = position + aScatter * (1.0 - t);
+  p += (1.0 - t) * 0.25 * vec3(sin(uTime * 0.7 + aRand * 40.0), cos(uTime * 0.6 + aRand * 30.0), 0.0);
+  p += 0.012 * vec3(sin(uTime * 1.3 + aRand * 60.0), cos(uTime * 1.1 + aRand * 70.0), 0.0);
+  float dz = smoothstep(0.0, 1.0, uDissolve * (0.6 + aRand * 0.8));
+  p += dz * vec3(sin(aRand * 91.0) * 1.2, 1.2 + aRand * 2.5, 0.0);
+  gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);
+  gl_PointSize = uSize * uPR * (0.8 + aRand * 0.5);
+  vColor = mix(uColorA, uColorB, aTone);
+  vAlpha = uAlpha * aFade * (0.25 + 0.75 * t) * (1.0 - dz) * (0.85 + 0.15 * sin(uTime * 2.0 + aRand * 20.0));
+}
+`;
+
+export const morphFragment = /* glsl */ `
+varying vec3 vColor;
+varying float vAlpha;
+void main() {
+  float d = length(gl_PointCoord - 0.5);
+  gl_FragColor = vec4(vColor, vAlpha * smoothstep(0.5, 0.1, d));
+}
+`;
+
+// Call stream: particles travelling along a quadratic curve from the Holobox to the hub.
+export const flowVertex = /* glsl */ `
+attribute float aT;
+attribute float aRand;
+uniform float uTime;
+uniform float uFlow;
+uniform float uPR;
+uniform vec2 uFrom;
+uniform vec2 uCtrl;
+uniform vec2 uTo;
+varying float vAlpha;
+varying float vWarm;
+void main() {
+  float t = fract(aT + uTime * 0.22);
+  vec2 a = mix(uFrom, uCtrl, t);
+  vec2 b = mix(uCtrl, uTo, t);
+  vec2 p = mix(a, b, t);
+  vec2 tan = normalize(b - a);
+  p += vec2(-tan.y, tan.x) * (aRand - 0.5) * 0.18;
+  gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 0.0, 1.0);
+  gl_PointSize = (2.0 + aRand * 3.0) * uPR;
+  vAlpha = uFlow * sin(3.14159 * t) * (0.5 + 0.5 * aRand);
+  vWarm = step(0.86, aRand);
+}
+`;
+
+export const flowFragment = /* glsl */ `
+varying float vAlpha;
+varying float vWarm;
+void main() {
+  float d = length(gl_PointCoord - 0.5);
+  vec3 col = mix(vec3(0.749, 0.878, 1.0), vec3(0.961, 0.663, 0.290), vWarm);
+  gl_FragColor = vec4(col, vAlpha * smoothstep(0.5, 0.1, d));
+}
+`;
+
+// Holobox interior glow (rounded rect, brighter as the agent appears).
+export const glowVertex = /* glsl */ `
+varying vec2 vUv;
+void main() {
+  vUv = uv;
+  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+}
+`;
+
+export const glowFragment = /* glsl */ `
+uniform float uLevel;
+uniform vec2 uSize;
+varying vec2 vUv;
+float sdRoundRect(vec2 p, vec2 b, float r) {
+  vec2 q = abs(p) - b + r;
+  return length(max(q, 0.0)) + min(max(q.x, q.y), 0.0) - r;
+}
+void main() {
+  vec2 p = (vUv - 0.5) * uSize;
+  float d = sdRoundRect(p, uSize * 0.5, 0.4);
+  float inside = 1.0 - smoothstep(-0.02, 0.02, d);
+  float g = exp(-pow((vUv.y) * 1.6, 2.0)) * 0.55 + 0.12;
+  float edge = smoothstep(0.12, 0.0, abs(d)) * 0.25;
+  gl_FragColor = vec4(vec3(0.184, 0.498, 0.816), (g * inside + edge) * uLevel);
 }
 `;
