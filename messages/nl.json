@@ -10,7 +10,10 @@
     "switchLocale": "Schakel naar Engels",
     "menuOpen": "Menu openen",
     "menuClose": "Menu sluiten",
-    "backToTop": "Terug naar boven"
+    "backToTop": "Terug naar boven",
+    "primaryNav": "Hoofdmenu",
+    "language": "Taal",
+    "mobileMenu": "Menu"
   },
   "nav": {
     "howItWorks": "Hoe het werkt",
@@ -21,15 +24,22 @@
   },
   "hero": {
     "eyebrow": "Front office as a service",
-    "titleA": "Stop met het werven van",
-    "titleEm": "receptie",
-    "titleB": "personeel.",
     "lead": "Presence Hospitality runt je receptie vanuit één centrale hub. Gasten checken zelf in, en als ze iemand nodig hebben, verschijnt er een getrainde receptionist als levensgroot hologram in je lobby. Overdag, 's nachts, of allebei.",
     "ctaSecondary": "Zo werkt het",
     "note": "Voor onafhankelijke hotels en hostels · Live in Nederland",
     "hudOnline": "Agent online",
     "hudRoute": "Hub → Lobby",
     "hudLive": "Live · 4K telepresence",
-    "portalAlt": "Illustratie: een receptionist die als hologram in de Holobox verschijnt."
+    "portalAlt": "Illustratie: een receptionist die als hologram in de Holobox verschijnt.",
+    "title": "Stop met het werven van <em>receptie</em>personeel."
+  },
+  "footer": {
+    "tagline": "Klaar wanneer je gasten dat zijn.",
+    "contact": "Contact",
+    "explore": "Ontdek",
+    "legal": "Juridisch",
+    "privacy": "Privacybeleid",
+    "kvk": "KvK",
+    "rights": "Alle rechten voorbehouden."
   }
 }

@@ -27,6 +27,8 @@ for (const width of [390, 1440]) {
       window.scrollTo(0, 0);
     });
     await page.waitForTimeout(Number(process.env.WAIT ?? 1200));
+    const overflow = await page.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
+    if (overflow > 0) console.warn(`OVERFLOW ${overflow}px at ${width}px on ${p}`);
     const name = p.replace(/\//g, "_").replace(/^_/, "") || "root";
     await page.screenshot({ path: `${out}/${name}-${width}.png`, fullPage: process.env.FULL !== "0" });
     console.log(`${out}/${name}-${width}.png`);
