@@ -4,6 +4,8 @@ export type Claim = {
   en: string;
   nl: string;
   source: string | null;
+  /** Optional numeric range for animated display (e.g. 40–65). */
+  range?: [number, number];
   enabled: boolean;
   status: "OK" | "CONFIRM";
 };
@@ -14,6 +16,7 @@ export const claims: Record<Claim["id"], Claim> = {
     en: "Up to 40–65% savings on front office costs",
     nl: "Tot 40–65% besparing op front-office-kosten",
     source: "Presence Hospitality Pitch V1.0, slide 5",
+    range: [40, 65],
     enabled: true,
     status: "CONFIRM",
   },

@@ -6,6 +6,8 @@ import { MarketProblem } from "@/components/sections/MarketProblem";
 import { HowItWorks } from "@/components/sections/HowItWorks";
 import { Experience } from "@/components/sections/Experience";
 import { WelcomeBand } from "@/components/sections/WelcomeBand";
+import { Benefits } from "@/components/sections/Benefits";
+import { Integrations } from "@/components/sections/Integrations";
 
 export default async function HomePage({ params }: PageProps<"/[locale]">) {
   const { locale } = await params;
@@ -19,6 +21,8 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
         <HowItWorks />
         <Experience />
         <WelcomeBand />
+        <Benefits />
+        <Integrations />
       </main>
       <Footer />
     </>

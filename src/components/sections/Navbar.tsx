@@ -95,14 +95,15 @@ export function Navbar({ locale, labels }: { locale: "en" | "nl"; labels: Navbar
     };
   }, [detectMood]);
 
-  // Active section indicator.
+  // Active section indicator: observe every page section; highlight only the ones in the menu.
   useEffect(() => {
-    const els = LINKS.map((l) => document.getElementById(l.id)).filter(Boolean) as HTMLElement[];
+    const els = Array.from(document.querySelectorAll<HTMLElement>("main section[id]"));
     if (!els.length) return;
+    const ids = new Set<string>(LINKS.map((l) => l.id));
     const io = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
-          if (e.isIntersecting) setActive(e.target.id);
+          if (e.isIntersecting) setActive(ids.has(e.target.id) ? e.target.id : null);
         });
       },
       { rootMargin: "-45% 0px -50% 0px" },
