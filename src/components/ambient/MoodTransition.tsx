@@ -1,0 +1,25 @@
+import { cn } from "@/lib/cn";
+
+/** 160px (240px desktop) gradient band between a mist and a night section, so the page never has a hard cut. */
+export function MoodTransition({ from, to, className }: { from: "mist" | "night"; to: "mist" | "night"; className?: string }) {
+  const c = { mist: "var(--mist-bg)", night: "var(--charcoal-700)" };
+  return (
+    <div
+      aria-hidden
+      className={cn("relative h-40 overflow-hidden lg:h-60", className)}
+      style={{ background: `linear-gradient(180deg, ${c[from]} 0%, ${c[to]} 100%)` }}
+    >
+      <span
+        className="orb"
+        style={{
+          width: "min(50vw, 640px)",
+          height: "min(50vw, 640px)",
+          left: "55%",
+          top: "-60%",
+          opacity: 0.35,
+          background: "radial-gradient(circle, var(--orb-sky) 0%, transparent 65%)",
+        }}
+      />
+    </div>
+  );
+}

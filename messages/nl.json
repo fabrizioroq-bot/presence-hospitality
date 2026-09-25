@@ -41,5 +41,30 @@
     "privacy": "Privacybeleid",
     "kvk": "KvK",
     "rights": "Alle rechten voorbehouden."
+  },
+  "market": {
+    "eyebrow": "De markt",
+    "line1": "De loonkosten stijgen.",
+    "line2": "De belastingen stijgen.",
+    "line3": "<em>Gasten verwachten nog steeds</em> een warm welkom om 3 uur 's nachts.",
+    "body": "Hotels staan onder druk om het serviceniveau hoog te houden en tegelijk hun marges te beschermen. Presence Hospitality helpt je je aan te passen door de receptie te centraliseren, zonder in te leveren op de gastbeleving.",
+    "source": "Bron"
+  },
+  "problem": {
+    "eyebrow": "Het probleem",
+    "title": "Het <em>probleem</em>",
+    "sub": "De traditionele receptie is gebouwd voor een andere arbeidsmarkt.",
+    "c1Title": "Structurele kostendruk",
+    "c1Body": "Stijgende loonkosten en een toenemende belastingdruk (toeristenbelasting + btw) drukken de marges. Een volledig bemande 24/7-receptie wordt financieel inefficiënt, vooral voor kleinere hotels.",
+    "c2Title": "Inefficiënt personeelsmodel",
+    "c2Body": "'s Nachts en buiten de piekuren staat de receptie lang stil, maar moet toch volledig bezet zijn. De personeelskosten sluiten niet meer aan op de werkelijke vraag van gasten.",
+    "c3Title": "Operationele versnippering",
+    "c3Body": "Personeelstekort, hoog verloop en de complexiteit van meerdere locaties maken consistente service lastig. De gastbeleving verschilt per dienst en per locatie.",
+    "chartTitle": "24 uur aan de receptie",
+    "chartStaffed": "Bemande uren",
+    "chartDemand": "Vraag van gasten",
+    "chartIdle": "Betaalde stilstand",
+    "chartCaption": "Illustratieve vorm, geen gemeten data.",
+    "chartDesc": "Illustratieve grafiek: de receptie is alle 24 uur even zwaar bemand, terwijl de vraag van gasten piekt rond het uitchecken in de ochtend en het inchecken aan het eind van de middag, en 's nachts bijna nul is. Het verschil 's nachts is betaalde stilstand."
   }
 }

@@ -48,13 +48,21 @@ export async function Footer() {
       <div className="container-site pt-24 lg:pt-32">
         {/* Giant wordmark, like the pitch's closing "Thank You" */}
         <div className="relative">
-          <p
-            aria-hidden
-            className="font-extrabold leading-[0.8] tracking-[-0.06em] text-paper-50/10 select-none"
-            style={{ fontSize: "clamp(5rem, 1rem + 21vw, 22rem)" }}
-          >
-            Presence
-          </p>
+          {/* Decorative wordmark as SVG (not body text, so it isn't subject to text contrast rules). */}
+          <svg aria-hidden viewBox="0 0 1000 205" className="block h-auto w-full select-none">
+            <text
+              x="-6"
+              y="190"
+              fill="var(--paper-50)"
+              fillOpacity={0.1}
+              fontFamily="var(--font-hanken), sans-serif"
+              fontWeight={800}
+              fontSize={262}
+              letterSpacing="-15"
+            >
+              Presence
+            </text>
+          </svg>
           <p className="mt-6 text-body-lg text-paper-300 lg:absolute lg:right-0 lg:bottom-[12%] lg:mt-0">
             {t("tagline")}
           </p>

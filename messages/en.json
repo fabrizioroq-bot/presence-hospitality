@@ -41,5 +41,30 @@
     "privacy": "Privacy policy",
     "kvk": "KvK",
     "rights": "All rights reserved."
+  },
+  "market": {
+    "eyebrow": "The market",
+    "line1": "Labour costs are rising.",
+    "line2": "Taxes are rising.",
+    "line3": "<em>Guests still expect</em> a warm welcome at 3 a.m.",
+    "body": "Hotels are under pressure to keep service levels high while protecting margins. Presence Hospitality helps you adapt by centralising reception, without sacrificing the guest experience.",
+    "source": "Source"
+  },
+  "problem": {
+    "eyebrow": "The problem",
+    "title": "The <em>problem</em>",
+    "sub": "The traditional front desk was built for a different labour market.",
+    "c1Title": "Structural cost pressure",
+    "c1Body": "Rising labour costs and increasing tax pressure (city tax + VAT) squeeze margins. A fully staffed 24/7 desk becomes financially inefficient, especially for smaller properties.",
+    "c2Title": "Inefficient staffing model",
+    "c2Body": "Nights and off-peak hours bring long idle time, yet the desk still needs full coverage. Staffing costs stop matching actual guest demand.",
+    "c3Title": "Operational fragmentation",
+    "c3Body": "Staff shortages, high turnover and multi-location complexity make consistent service hard. The guest experience changes from shift to shift and property to property.",
+    "chartTitle": "24 hours at the desk",
+    "chartStaffed": "Staffed hours",
+    "chartDemand": "Guest demand",
+    "chartIdle": "Paid idle time",
+    "chartCaption": "Illustrative shape, not measured data.",
+    "chartDesc": "Illustrative chart: the desk is staffed at the same level for all 24 hours, while guest demand peaks around check-out in the morning and check-in in the late afternoon and drops close to zero at night. The gap at night is paid idle time."
   }
 }
