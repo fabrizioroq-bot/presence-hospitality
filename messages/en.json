@@ -171,5 +171,103 @@
     "nPayments": "Payments",
     "nAccess": "Access systems & keys",
     "desc": "Diagram: the Holobox, the self check-in kiosk and chat & phone connect to the Presence hub, which connects to Mews (PMS), GauVendi (booking engine), Hotek, payments and access systems."
+  },
+  "who": {
+    "eyebrow": "Who it's for",
+    "lead": "Built for",
+    "roles": [
+      "owners.",
+      "general managers.",
+      "operations managers."
+    ],
+    "rolesSr": "owners, general managers and operations managers.",
+    "r1Title": "Owners",
+    "r1Body": "Predictable monthly costs, and no more staffing a desk that is empty half the night.",
+    "r2Title": "General managers",
+    "r2Body": "No more gaps in the rota. Consistent service across every shift and property.",
+    "r3Title": "Operations managers",
+    "r3Body": "Standardised workflows, clear escalation paths and dashboards you can review.",
+    "fitTitle": "Good fit if…",
+    "fit": [
+      "Independent hotel or hostel, especially under 50 rooms",
+      "Quiet nights or off-peak hours that still need coverage",
+      "Hard-to-fill reception shifts",
+      "More than one property to keep consistent",
+      "Ready for self check-in, or already using it"
+    ]
+  },
+  "packages": {
+    "eyebrow": "Packages",
+    "title": "Start with nights. <em>Grow into 24/7.</em>",
+    "sub": "Pick the coverage that fits your hotel today. Switch as you grow.",
+    "note": "We'll recommend a package after a short intake.",
+    "tabsLabel": "Packages",
+    "items": [
+      {
+        "name": "Night-Only",
+        "points": [
+          "Remote handling of all late arrivals, guest questions and incidents",
+          "No on-site night staff required",
+          "Security escalation framework with clear protocols",
+          "Coordination with your local contact or security partner when needed",
+          "Ideal for smaller hotels or quiet nights"
+        ]
+      },
+      {
+        "name": "Day + Evening",
+        "points": [
+          "Full coverage during peak guest hours",
+          "Check-in, check-out, guest support and communication",
+          "Multilingual agents",
+          "Structured upsell flows: upgrades, late check-out, extras",
+          "Reduces front desk staffing while keeping your service level"
+        ]
+      },
+      {
+        "name": "24/7 Premium",
+        "points": [
+          "Fully managed, always-on reception",
+          "Dedicated SLA and priority routing",
+          "A consistent agent team that knows your hotel",
+          "Quarterly business reviews and performance tracking",
+          "Continuous optimisation of operations and guest experience"
+        ]
+      },
+      {
+        "name": "Add-ons",
+        "points": [
+          "Additional language profiles",
+          "On-site assistance",
+          "Revenue management",
+          "Full-stack tech support",
+          "Advanced analytics & reporting"
+        ]
+      }
+    ]
+  },
+  "pricing": {
+    "eyebrow": "Pricing",
+    "title": "Pricing <em>structure</em>",
+    "sub": "Clear, predictable, and built around your property. No hidden setup surprises.",
+    "c1Title": "One-time setup",
+    "c1": [
+      "Holobox hardware (or lease model)",
+      "Installation and network setup",
+      "Integration with your PMS, access systems and payments"
+    ],
+    "c2Title": "Monthly service fee",
+    "c2Lead": "Based on:",
+    "c2": [
+      "Number of rooms",
+      "Service hours (Night / Day / 24/7)",
+      "Expected volume (arrivals, departures, interactions)"
+    ],
+    "c3Title": "Variable component",
+    "optional": "Optional",
+    "c3": [
+      "Per-interaction or per-check-in model",
+      "Performance-based pricing linked to KPIs or savings"
+    ],
+    "cta": "Get a proposal for your hotel"
   }
 }

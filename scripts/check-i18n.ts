@@ -1,10 +1,10 @@
 /* Fails if messages/en.json and messages/nl.json do not have identical key sets. */
 import { readFileSync } from "node:fs";
 
-type Json = { [k: string]: string | Json };
+type Json = { [k: string]: string | Json | Json[] | string[] };
 const load = (l: string) => JSON.parse(readFileSync(`messages/${l}.json`, "utf8")) as Json;
 const keys = (o: Json, p = ""): string[] =>
-  Object.entries(o).flatMap(([k, v]) => (typeof v === "string" ? [p + k] : keys(v, `${p}${k}.`)));
+  Object.entries(o).flatMap(([k, v]) => (typeof v === "string" ? [p + k] : keys(v as Json, `${p}${k}.`)));
 
 const en = new Set(keys(load("en")));
 const nl = new Set(keys(load("nl")));

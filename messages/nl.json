@@ -171,5 +171,103 @@
     "nPayments": "Betalingen",
     "nAccess": "Toegang & sleutels",
     "desc": "Schema: de Holobox, de kiosk voor zelf inchecken en chat & telefoon zijn verbonden met de Presence hub, die weer is gekoppeld aan Mews (PMS), GauVendi (boekingsmodule), Hotek, betalingen en toegangssystemen."
+  },
+  "who": {
+    "eyebrow": "Voor wie",
+    "lead": "Gemaakt voor",
+    "roles": [
+      "eigenaren.",
+      "general managers.",
+      "operationeel managers."
+    ],
+    "rolesSr": "eigenaren, general managers en operationeel managers.",
+    "r1Title": "Eigenaren",
+    "r1Body": "Voorspelbare maandelijkse kosten, en geen receptie meer bemensen die de halve nacht leeg is.",
+    "r2Title": "General managers",
+    "r2Body": "Geen gaten meer in het rooster. Consistente service in elke dienst en op elke locatie.",
+    "r3Title": "Operationeel managers",
+    "r3Body": "Gestandaardiseerde werkwijzen, duidelijke escalatiepaden en dashboards die je kunt inzien.",
+    "fitTitle": "Een goede match als…",
+    "fit": [
+      "Je een onafhankelijk hotel of hostel hebt, vooral met minder dan 50 kamers",
+      "Je rustige nachten of daluren hebt die toch bezet moeten zijn",
+      "Je receptiediensten moeilijk kunt vullen",
+      "Je meerdere locaties consistent wilt houden",
+      "Je klaar bent voor zelf inchecken, of het al doet"
+    ]
+  },
+  "packages": {
+    "eyebrow": "Pakketten",
+    "title": "Begin met de nacht. <em>Groei naar 24/7.</em>",
+    "sub": "Kies de bezetting die nu bij je hotel past. Schakel om wanneer je groeit.",
+    "note": "Na een korte intake adviseren we het pakket dat bij je past.",
+    "tabsLabel": "Pakketten",
+    "items": [
+      {
+        "name": "Night-Only",
+        "points": [
+          "Alle late aankomsten, gastvragen en incidenten op afstand afgehandeld",
+          "Geen nachtpersoneel op locatie nodig",
+          "Escalatieprotocol voor beveiliging met duidelijke afspraken",
+          "Afstemming met je lokale contactpersoon of beveiligingspartner waar nodig",
+          "Ideaal voor kleinere hotels of rustige nachten"
+        ]
+      },
+      {
+        "name": "Day + Evening",
+        "points": [
+          "Volledige bezetting tijdens de piekuren",
+          "Inchecken, uitchecken, gastenservice en communicatie",
+          "Meertalige receptionisten",
+          "Gestructureerde upselling: upgrades, late check-out, extra's",
+          "Minder receptiepersoneel, met behoud van je serviceniveau"
+        ]
+      },
+      {
+        "name": "24/7 Premium",
+        "points": [
+          "Volledig verzorgde receptie, altijd bereikbaar",
+          "Eigen SLA en voorrang bij routering",
+          "Een vast team van receptionisten dat je hotel kent",
+          "Kwartaalreviews en prestatiemonitoring",
+          "Continue verbetering van operatie en gastbeleving"
+        ]
+      },
+      {
+        "name": "Add-ons",
+        "points": [
+          "Extra taalprofielen",
+          "Ondersteuning op locatie",
+          "Revenue management",
+          "Volledige technische support",
+          "Uitgebreide analyses & rapportage"
+        ]
+      }
+    ]
+  },
+  "pricing": {
+    "eyebrow": "Prijzen",
+    "title": "Prijs<em>opbouw</em>",
+    "sub": "Helder, voorspelbaar en afgestemd op je hotel. Geen verrassingen bij de opstart.",
+    "c1Title": "Eenmalige opstart",
+    "c1": [
+      "Holobox-hardware (of leasemodel)",
+      "Installatie en netwerkinrichting",
+      "Koppeling met je PMS, toegangssystemen en betalingen"
+    ],
+    "c2Title": "Maandelijkse servicefee",
+    "c2Lead": "Op basis van:",
+    "c2": [
+      "Aantal kamers",
+      "Servicetijden (nacht / dag / 24/7)",
+      "Verwacht volume (aankomsten, vertrekken, interacties)"
+    ],
+    "c3Title": "Variabel deel",
+    "optional": "Optioneel",
+    "c3": [
+      "Per interactie of per check-in",
+      "Prestatiegebonden prijs, gekoppeld aan KPI's of besparing"
+    ],
+    "cta": "Vraag een voorstel aan voor je hotel"
   }
 }

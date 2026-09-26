@@ -8,6 +8,8 @@ import { Experience } from "@/components/sections/Experience";
 import { WelcomeBand } from "@/components/sections/WelcomeBand";
 import { Benefits } from "@/components/sections/Benefits";
 import { Integrations } from "@/components/sections/Integrations";
+import { WhoPackages } from "@/components/sections/WhoPackages";
+import { Pricing } from "@/components/sections/Pricing";
 
 export default async function HomePage({ params }: PageProps<"/[locale]">) {
   const { locale } = await params;
@@ -23,6 +25,8 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
         <WelcomeBand />
         <Benefits />
         <Integrations />
+        <WhoPackages />
+        <Pricing />
       </main>
       <Footer />
     </>
