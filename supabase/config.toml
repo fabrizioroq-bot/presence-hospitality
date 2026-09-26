@@ -155,7 +155,7 @@ max_indexes = 5
 enabled = true
 # The base URL of your website. Used as an allow-list for redirects and for constructing URLs used
 # in emails.
-site_url = "http://localhost:3000"
+site_url = "https://presence-hospitality-mr7uab994-agus-horeca.vercel.app"
 # The public URL that Auth serves on. Defaults to the API external URL with `/auth/v1` appended.
 # external_url = ""
 # A list of *exact* URLs that auth providers are permitted to redirect to post authentication.
@@ -233,14 +233,24 @@ otp_length = 6
 otp_expiry = 86400
 
 # Use a production-ready SMTP server
-# TEMPLATES-ON-HOLD (needs custom SMTP on the free plan)
-# [auth.email.template.invite]
-# subject = "You're invited to the Presence Hospitality dashboard"
-# content_path = "./supabase/templates/invite.html"
-#
-# [auth.email.template.recovery]
-# subject = "Reset your Presence Hospitality dashboard password"
-# content_path = "./supabase/templates/recovery.html"
+[auth.email.template.invite]
+subject = "You're invited to the Presence Hospitality dashboard"
+content_path = "./supabase/templates/invite.html"
+
+[auth.email.template.recovery]
+subject = "Reset your Presence Hospitality dashboard password"
+content_path = "./supabase/templates/recovery.html"
+
+# Auth emails go through Resend (required on the free plan for custom templates).
+# Until presencehospitality.com is verified in Resend, only the account owner's address receives mail.
+[auth.email.smtp]
+enabled = true
+host = "smtp.resend.com"
+port = 465
+user = "resend"
+pass = "env(RESEND_API_KEY)"
+admin_email = "onboarding@resend.dev"
+sender_name = "Presence Hospitality"
 
 # [auth.email.smtp]
 # enabled = true
