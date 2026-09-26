@@ -9,7 +9,9 @@ import { hasWebGL2 } from "@/lib/perf-tier";
 import { FLOOR, DOOR, HOLOBOX, KIOSK, STEPS, pctX, pctY, timeline } from "./layout";
 import { LobbySketch } from "./LobbySketch";
 
-const StoryCanvas = dynamic(() => import("./StoryCanvas"), { ssr: false });
+const loadStoryCanvas = () => import("./StoryCanvas");
+const StoryCanvas = dynamic(loadStoryCanvas, { ssr: false });
+const STORY_ASSETS = ["/hologram/guest-9k.bin", "/hologram/agent-12k.bin"];
 
 export type StoryLabels = {
   step: string;
@@ -61,6 +63,8 @@ export function StoryPinned({ labels }: { labels: StoryLabels }) {
   const stageOpacity = useTransform(enter, [0, 0.6], [0.4, 1]);
 
   const [step, setStep] = useState(0);
+  const [posterS, setPosterS] = useState(0);
+  const readyRef = useRef(false);
   const [phase, setPhase] = useState<Phase>("welcome");
   const [flags, setFlags] = useState({ tap: false, live: false, hub: false });
   useMotionValueEvent(s, "change", (v) => {
@@ -71,9 +75,13 @@ export function StoryPinned({ labels }: { labels: StoryLabels }) {
     const t = timeline(v);
     const next = { tap: v > 2.5 && v < 3.95, live: t.agent > 0.95, hub: t.flow > 0.3 };
     setFlags((f) => (f.tap === next.tap && f.live === next.live && f.hub === next.hub ? f : next));
+    // Until WebGL paints, the SVG poster follows the scroll too (no frozen or unstyled frame).
+    if (!readyRef.current) setPosterS(Math.round(v * 40) / 40);
   });
 
-  // WebGL: load when the section approaches (desktop, WebGL2, no reduced motion); render only while visible.
+  // WebGL (desktop, WebGL2, motion allowed). Assets are prefetched right after the first
+  // interaction, the canvas mounts well before the section (or instantly on a navbar jump),
+  // and it only renders while visible.
   const [load, setLoad] = useState(false);
   const [active, setActive] = useState(false);
   const [ready, setReady] = useState(false);
@@ -82,21 +90,60 @@ export function StoryPinned({ labels }: { labels: StoryLabels }) {
     if (!el) return;
     const ok =
       window.matchMedia("(min-width: 1024px) and (prefers-reduced-motion: no-preference)").matches && hasWebGL2();
+    if (!ok) return;
+
+    let prefetched = false;
+    const prefetch = () => {
+      if (prefetched) return;
+      prefetched = true;
+      loadStoryCanvas();
+      STORY_ASSETS.forEach((url) => fetch(url).catch(() => {}));
+    };
+    const events = ["pointermove", "wheel", "touchstart", "keydown", "scroll"] as const;
+    const onFirst = () => {
+      events.forEach((ev) => window.removeEventListener(ev, onFirst));
+      if ("requestIdleCallback" in window) window.requestIdleCallback(prefetch, { timeout: 1500 });
+      else setTimeout(prefetch, 300);
+    };
+    events.forEach((ev) => window.addEventListener(ev, onFirst, { passive: true }));
+
+    // Navbar / in-page links to this section: start immediately.
+    const onClick = (e: MouseEvent) => {
+      const a = (e.target as Element | null)?.closest?.('a[href$="#how-it-works"]');
+      if (a) {
+        prefetch();
+        setLoad(true);
+      }
+    };
+    document.addEventListener("click", onClick, true);
+
     const near = new IntersectionObserver(
       ([e]) => {
-        if (e.isIntersecting && ok) setLoad(true);
+        if (e.isIntersecting) {
+          prefetch();
+          setLoad(true);
+        }
       },
-      { rootMargin: "100% 0px" },
+      { rootMargin: "150% 0px" },
     );
-    const vis = new IntersectionObserver(([e]) => setActive(e.isIntersecting && !document.hidden));
     near.observe(el);
-    vis.observe(el);
     return () => {
+      events.forEach((ev) => window.removeEventListener(ev, onFirst));
+      document.removeEventListener("click", onClick, true);
       near.disconnect();
-      vis.disconnect();
     };
   }, []);
-  const onReady = useCallback(() => setReady(true), []);
+  useEffect(() => {
+    const el = track.current;
+    if (!el) return;
+    const vis = new IntersectionObserver(([e]) => setActive(e.isIntersecting && !document.hidden));
+    vis.observe(el);
+    return () => vis.disconnect();
+  }, []);
+  const onReady = useCallback(() => {
+    readyRef.current = true;
+    setReady(true);
+  }, []);
 
   const k = labels.kiosk;
   const scr = KIOSK.screen;
@@ -143,7 +190,7 @@ export function StoryPinned({ labels }: { labels: StoryLabels }) {
               />
               {/* SVG poster / fallback until WebGL paints */}
               <div className={cn("absolute inset-0 transition-opacity duration-700", ready ? "opacity-0" : "opacity-100")}>
-                <LobbySketch s={step + 0.9} />
+                <LobbySketch s={posterS} />
               </div>
               {load && <StoryCanvas s={s} active={active} onReady={onReady} />}
 

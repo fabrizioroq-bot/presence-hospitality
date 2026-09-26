@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* Pinned scroll scenes only where the whole scene fits and motion is allowed. */
+@custom-variant pin (@media (min-width: 1024px) and (min-height: 860px) and (prefers-reduced-motion: no-preference));
+
 /* ------------------------------------------------------------------ */
 /* Tokens — mirror of .claude/skills/presence-design/tokens.css        */
 /* ------------------------------------------------------------------ */
@@ -544,6 +547,14 @@ select.demo-input option {
   .success-burst {
     display: none;
   }
+}
+
+/* Horizontal carousels: keep swipe, hide the scrollbar. */
+.no-scrollbar {
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
 /* Holobox: the DOM fill + poster fade out once the WebGL scene paints the panel. */

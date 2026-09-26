@@ -1,5 +1,6 @@
 import { POSTER_COOL, POSTER_WARM } from "@/components/hologram/poster-points";
 import { cn } from "@/lib/cn";
+import { GUEST_BODY, GUEST_CASE } from "./guest-points";
 import { DOOR, FLOOR, HOLOBOX, HUB, KIOSK, PERSON_SCALE, timeline } from "./layout";
 
 // World → SVG units (viewBox 1600 × 1000).
@@ -24,6 +25,8 @@ export function LobbySketch({ s, labels, className }: { s: number; labels?: Sket
   const sy0 = Y(scr.y1);
   const sy1 = Y(scr.y0);
   const posterScale = personH / 580;
+  const guestScale = (100 * PERSON_SCALE) / 300; // guest poster: 300 units per world unit
+  const bob = t.walking * Math.abs(Math.sin(t.guestX * 3.4)) * 6;
 
   return (
     <svg viewBox="0 0 1600 1000" className={cn("h-auto w-full", className)} aria-hidden fill="none">
@@ -93,11 +96,14 @@ export function LobbySketch({ s, labels, className }: { s: number; labels?: Sket
         opacity={t.flow}
       />
 
-      {/* Guest (warm, human) */}
-      <g opacity={guestOpacity} transform={`translate(${gx} ${floorY})`} stroke="#F4F6F8" strokeWidth="2.5" fill="#F8C98B" fillOpacity="0.12">
-        <circle cx="0" cy={-personH + 30} r="26" />
-        <path d={`M-48 ${-personH + 88} Q0 ${-personH + 70} 48 ${-personH + 88} L40 ${-personH * 0.47} L-40 ${-personH * 0.47} Z`} />
-        <path d={`M-34 ${-personH * 0.47} L-30 -4 M34 ${-personH * 0.47} L30 -4 M-18 ${-personH * 0.47} L-14 -4 M18 ${-personH * 0.47} L14 -4`} />
+      {/* Guest: the dotted traveller with a rolling suitcase (same points as the 3D scene). */}
+      <g
+        opacity={guestOpacity}
+        transform={`translate(${gx - 120 * guestScale} ${floorY - 590 * guestScale - bob}) scale(${guestScale})`}
+        strokeLinecap="round"
+      >
+        <path d={GUEST_BODY} stroke="#F4F6F8" strokeWidth="7" />
+        <path d={GUEST_CASE} stroke="#F8C98B" strokeWidth="7" />
       </g>
 
       {labels && (

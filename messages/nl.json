@@ -100,7 +100,12 @@
     "lHub": "Presence hub",
     "lTap": "Tik om te bellen",
     "lLive": "Agent live",
-    "sceneDesc": "Illustratie van een hotellobby met een ingang, een kiosk om zelf in te checken en een Holobox. Bij elke stap van de gastreis verandert de scène."
+    "sceneDesc": "Illustratie van een hotellobby met een ingang, een kiosk om zelf in te checken en een Holobox. Bij elke stap van de gastreis verandert de scène.",
+    "carousel": "De gastreis, stap voor stap",
+    "prev": "Vorige stap",
+    "next": "Volgende stap",
+    "goTo": "Ga naar stap {n}",
+    "swipe": "Swipe"
   },
   "experience": {
     "eyebrow": "De Holobox",

@@ -30,17 +30,19 @@ export async function Onboarding() {
       <AmbientDust mood="mist" density={0.4} />
 
       <div className="container-site">
-        <div className="flex flex-col gap-6">
-          <p className="text-label text-ink-700">{t("eyebrow")}</p>
-          <Headline id="onboarding-title" raw={t.raw("title") as string} className="text-display-xl" />
-          <Reveal>
-            <p className="max-w-[52ch] text-body-lg text-ink-700">{t("sub")}</p>
-          </Reveal>
-        </div>
-
-        <div className="mt-12 lg:mt-16">
-          <OnboardingTimeline steps={steps} youGet={t("youGet")} />
-        </div>
+        <OnboardingTimeline
+          steps={steps}
+          youGet={t("youGet")}
+          header={
+            <div className="flex flex-col gap-6 pin:gap-4">
+              <p className="text-label text-ink-700">{t("eyebrow")}</p>
+              <Headline id="onboarding-title" raw={t.raw("title") as string} className="text-display-xl pin:text-display-lg" />
+              <Reveal>
+                <p className="max-w-[52ch] text-body-lg text-ink-700">{t("sub")}</p>
+              </Reveal>
+            </div>
+          }
+        />
 
         <Depth range={24} className="mt-16 lg:mt-24">
           <RevealGroup className="grid gap-6 lg:grid-cols-2" gap={0.1}>

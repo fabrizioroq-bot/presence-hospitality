@@ -100,7 +100,12 @@
     "lHub": "Presence hub",
     "lTap": "Tap to call",
     "lLive": "Agent live",
-    "sceneDesc": "Illustration of a hotel lobby with an entrance, a self check-in kiosk and a Holobox. It changes with each step of the guest journey."
+    "sceneDesc": "Illustration of a hotel lobby with an entrance, a self check-in kiosk and a Holobox. It changes with each step of the guest journey.",
+    "carousel": "The guest journey, step by step",
+    "prev": "Previous step",
+    "next": "Next step",
+    "goTo": "Go to step {n}",
+    "swipe": "Swipe"
   },
   "experience": {
     "eyebrow": "The Holobox",

@@ -91,6 +91,10 @@ function morphMaterial(colorA: string, colorB: string, size: number, alpha: numb
       uAlpha: { value: alpha },
       uColorA: { value: col(colorA) },
       uColorB: { value: col(colorB) },
+      uWalk: { value: 0 },
+      uWalking: { value: 0 },
+      uHipY: { value: 0.8 * PERSON_SCALE },
+      uLegX: { value: 0.2 * PERSON_SCALE },
     },
     ...additive,
   });
@@ -109,7 +113,8 @@ export class StoryScene {
   private scene = new THREE.Scene();
   private camera = new THREE.OrthographicCamera(-WORLD.w / 2, WORLD.w / 2, WORLD.h / 2, -WORLD.h / 2, 0.1, 50);
   private lobbyMat = morphMaterial("#C5CAD1", "#8CC4FF", 2.2, 0.75);
-  private guestMat = morphMaterial("#F4F6F8", "#F8C98B", 2.0, 0.55);
+  // Guest: warm paper dots, suitcase in amber.
+  private guestMat = morphMaterial("#F4F6F8", "#F8C98B", 2.0, 0.6);
   private flowMat: THREE.ShaderMaterial;
   private glowMat: THREE.ShaderMaterial;
   private agentMat: THREE.ShaderMaterial;
@@ -207,7 +212,7 @@ export class StoryScene {
     this.scene.add(this.agentGroup);
 
     Promise.all([
-      loadAgentGeometry("/hologram/agent-12k.bin", 5000),
+      loadAgentGeometry("/hologram/guest-9k.bin", 9000),
       loadAgentGeometry("/hologram/agent-12k.bin", 12000),
     ]).then(([guestGeo, agentGeo]) => {
       if (this.disposed) {
@@ -215,15 +220,16 @@ export class StoryScene {
         agentGeo.dispose();
         return;
       }
-      // Guest: scale the silhouette, add morph attributes (scatter offsets, warm tone ~15%).
+      // Guest (traveller + suitcase): scale to scene units, add morph attributes.
       const n = guestGeo.getAttribute("position").count;
       const pos = guestGeo.getAttribute("position") as THREE.BufferAttribute;
+      const flags = guestGeo.getAttribute("aFlags") as THREE.BufferAttribute;
       for (let i = 0; i < n; i++) {
         pos.setXYZ(i, pos.getX(i) * PERSON_SCALE, pos.getY(i) * PERSON_SCALE, pos.getZ(i) * PERSON_SCALE);
       }
       const rnd = Array.from({ length: n }, () => Math.random());
       guestGeo.setAttribute("aRand", new THREE.Float32BufferAttribute(rnd, 1));
-      guestGeo.setAttribute("aTone", new THREE.Float32BufferAttribute(rnd.map((r) => (r > 0.85 ? 1 : 0)), 1));
+      guestGeo.setAttribute("aTone", new THREE.Float32BufferAttribute(Array.from({ length: n }, (_, i) => flags.getX(i) % 2), 1));
       guestGeo.setAttribute("aFade", new THREE.Float32BufferAttribute(new Array(n).fill(1), 1));
       guestGeo.setAttribute(
         "aScatter",
@@ -257,8 +263,12 @@ export class StoryScene {
     this.lobbyMat.uniforms.uDissolve.value = Math.max(0, (s - 5.85) / 0.15) * 0.6;
 
     if (this.guest) {
-      const bob = t.walking * Math.abs(Math.sin(t.guestX * 3.4)) * 0.07;
+      // Gait driven by distance travelled, so it stays in step when scrolling backwards too.
+      const phase = t.guestX * 3.4;
+      const bob = t.walking * Math.abs(Math.sin(phase)) * 0.06;
       this.guest.position.set(t.guestX, FLOOR + bob, 0.2);
+      this.guestMat.uniforms.uWalk.value = phase;
+      this.guestMat.uniforms.uWalking.value += (t.walking - this.guestMat.uniforms.uWalking.value) * 0.2;
       this.guestMat.uniforms.uForm.value = t.guestIn;
       this.guestMat.uniforms.uDissolve.value = t.guestOut;
     }

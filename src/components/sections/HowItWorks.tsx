@@ -2,15 +2,11 @@ import { getTranslations } from "next-intl/server";
 import { AmbientDust } from "@/components/ambient/AmbientDust";
 import { MoodTransition } from "@/components/ambient/MoodTransition";
 import { ParallaxOrbs } from "@/components/ambient/ParallaxOrbs";
-import { LobbySketch } from "@/components/story/LobbySketch";
-import type { StoryLabels } from "@/components/story/StoryPinned";
-import { StoryGate } from "@/components/story/StoryGate";
+import { StoryCarousel } from "@/components/story/StoryCarousel";
+import { StoryPinned, type StoryLabels } from "@/components/story/StoryPinned";
 import { ButtonLink } from "@/components/ui/Button";
 import { Headline } from "@/components/ui/Headline";
 import { Reveal } from "@/components/ui/Reveal";
-
-// Representative scroll positions for the static step illustrations (mobile / reduced motion).
-const STILL = [0.42, 1.9, 2.6, 3.8, 4.95, 5.4];
 
 export async function HowItWorks() {
   const t = await getTranslations("how");
@@ -69,28 +65,25 @@ export async function HowItWorks() {
 
         {/* Desktop, motion allowed: pinned scroll story */}
         <div className="hidden lg:block motion-reduce:!hidden">
-          <StoryGate labels={labels} />
+          <StoryPinned labels={labels} />
         </div>
 
-        {/* Mobile / reduced motion: vertical list with a still of each step */}
-        <ol className="container-site mt-12 grid gap-10 sm:grid-cols-2 lg:hidden motion-reduce:!grid lg:motion-reduce:grid-cols-3">
-          {labels.steps.map((st, i) => (
-            <li key={i}>
-              <Reveal className="flex flex-col gap-4">
-                <div className="overflow-hidden rounded-lg bg-night-900 ring-1 ring-white/5">
-                  <LobbySketch s={STILL[i]} labels={sketchLabels} />
-                </div>
-                <span className="text-label text-ink-500">
-                  {t("step")} {String(i + 1).padStart(2, "0")}
-                </span>
-                <h3 className="text-heading-md">{st.title}</h3>
-                <p className="text-body text-ink-700">{st.body}</p>
-              </Reveal>
-            </li>
-          ))}
-        </ol>
+        {/* Mobile / reduced motion: one animated lobby scene + swipeable steps */}
+        <div className="container-site mt-10 lg:hidden motion-reduce:!block lg:motion-reduce:max-w-3xl">
+          <StoryCarousel
+            labels={{
+              region: t("carousel"),
+              step: t("step"),
+              prev: t("prev"),
+              next: t("next"),
+              goTo: t.raw("goTo") as string,
+              steps: labels.steps,
+              sketch: sketchLabels,
+            }}
+          />
+        </div>
 
-        <div className="container-site flex flex-col items-start gap-4 pt-16 pb-24 sm:flex-row sm:items-center lg:pt-8 lg:pb-32">
+        <div className="container-site flex flex-col items-start gap-4 pt-10 pb-20 sm:flex-row sm:items-center lg:pt-8 lg:pb-32">
           <p className="text-heading-md">{t("ctaLead")}</p>
           <ButtonLink href="#demo" arrow>
             {c("bookDemo")}

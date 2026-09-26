@@ -16,7 +16,7 @@ export const HUB = { from: [1.5, 2.8] as const, ctrl: [3.2, 4.9] as const, to: [
 
 /** Body height is 1.75 in the point file; guests and agents are scaled to ~3.6 world units. */
 export const PERSON_SCALE = 2.05;
-export const GUEST_X = { door: 5.9, kiosk: -1.5, holobox: -0.55, exit: -1.9 };
+export const GUEST_X = { door: 5.9, kiosk: -1.5, holobox: -0.95, exit: -2.1 };
 
 /** World → CSS percentage inside the 16:10 stage. */
 export const pctX = (x: number) => ((x + WORLD.w / 2) / WORLD.w) * 100;

@@ -345,12 +345,25 @@ uniform float uPR;
 uniform float uAlpha;
 uniform vec3 uColorA;
 uniform vec3 uColorB;
+uniform float uWalk;    // gait phase (radians)
+uniform float uWalking; // 0..1
+uniform float uHipY;    // hip height in local units (legs below it swing)
+uniform float uLegX;    // half-width that counts as a leg
 varying vec3 vColor;
 varying float vAlpha;
 void main() {
   float d = aRand * 0.45;
   float t = smoothstep(d, d + 0.55, uForm);
-  vec3 p = position + aScatter * (1.0 - t);
+  vec3 base = position;
+  // Walking: legs swing around the hip (skip the suitcase, tone 1).
+  if (uWalking > 0.0 && aTone < 0.5 && base.y < uHipY && abs(base.x) < uLegX) {
+    float side = base.x < 0.0 ? -1.0 : 1.0;
+    float a = sin(uWalk) * 0.34 * side * uWalking;
+    vec2 hip = vec2(side * uLegX * 0.45, uHipY);
+    vec2 q = base.xy - hip;
+    base.xy = hip + vec2(q.x * cos(a) - q.y * sin(a), q.x * sin(a) + q.y * cos(a));
+  }
+  vec3 p = base + aScatter * (1.0 - t);
   p += (1.0 - t) * 0.25 * vec3(sin(uTime * 0.7 + aRand * 40.0), cos(uTime * 0.6 + aRand * 30.0), 0.0);
   p += 0.012 * vec3(sin(uTime * 1.3 + aRand * 60.0), cos(uTime * 1.1 + aRand * 70.0), 0.0);
   float dz = smoothstep(0.0, 1.0, uDissolve * (0.6 + aRand * 0.8));
