@@ -10,6 +10,8 @@ import { Benefits } from "@/components/sections/Benefits";
 import { Integrations } from "@/components/sections/Integrations";
 import { WhoPackages } from "@/components/sections/WhoPackages";
 import { Pricing } from "@/components/sections/Pricing";
+import { Onboarding } from "@/components/sections/Onboarding";
+import { Faq } from "@/components/sections/Faq";
 
 export default async function HomePage({ params }: PageProps<"/[locale]">) {
   const { locale } = await params;
@@ -27,6 +29,8 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
         <Integrations />
         <WhoPackages />
         <Pricing />
+        <Onboarding />
+        <Faq />
       </main>
       <Footer />
     </>

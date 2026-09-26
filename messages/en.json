@@ -269,5 +269,103 @@
       "Performance-based pricing linked to KPIs or savings"
     ],
     "cta": "Get a proposal for your hotel"
+  },
+  "onboarding": {
+    "eyebrow": "Onboarding",
+    "title": "From first call to <em>go-live</em>",
+    "sub": "A structured handover. We only take over the desk once everything has been tested.",
+    "youGet": "You get",
+    "steps": [
+      {
+        "title": "Intake & site survey",
+        "body": "We learn how your hotel runs today (rooms, team, systems, service hours) and walk the full guest journey with you: booking, pre-arrival, check-in, stay and check-out.",
+        "get": "A clear picture of your current front office"
+      },
+      {
+        "title": "Service design",
+        "body": "Together we agree the scope: hours, languages, channels and service levels, what stays on site, and who is called when something escalates.",
+        "get": "A service scope you sign off on"
+      },
+      {
+        "title": "Holobox installation",
+        "body": "We install the Mini or full-size Holobox and set up a redundant, secure network connection to our hub.",
+        "get": "Hardware live in your lobby"
+      },
+      {
+        "title": "Integration",
+        "body": "We connect your PMS, access systems, payment processing and ID verification, with the right roles and permissions.",
+        "get": "Systems tested end to end"
+      },
+      {
+        "title": "Playbook & training",
+        "body": "We write your scripts, templates, escalation rules and agent knowledge base, and train our agents and your on-site team.",
+        "get": "A service playbook tailored to your hotel"
+      },
+      {
+        "title": "Pilot & go-live",
+        "body": "We run a controlled pilot with test scenarios and KPI tracking, then the hub takes over the desk. Regular reviews keep improving the service.",
+        "get": "Your front office, run by Presence"
+      }
+    ],
+    "readyTitle": "Before we go live",
+    "ready": [
+      "Critical integrations tested",
+      "Escalation contacts confirmed",
+      "Hub and on-site teams trained",
+      "Guest communication and fallback procedures ready"
+    ],
+    "kpiTitle": "What we monitor from day one",
+    "kpis": [
+      "Service levels (SLA)",
+      "Pre-arrival completion",
+      "Check-in success rate",
+      "Incidents per 100 stays",
+      "Guest satisfaction",
+      "First contact resolution"
+    ]
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "Good <em>questions</em>",
+    "still": "Still have questions?",
+    "stillBody": "Call or email us, we're happy to walk you through it.",
+    "items": {
+      "pms": {
+        "q": "Do we need to replace our PMS?",
+        "a": "No. We work with your existing systems and connect to them. Mews is supported today; using something else? Tell us in your demo request and we'll check compatibility."
+      },
+      "kiosk": {
+        "q": "What happens if the kiosk can't solve a guest's problem?",
+        "a": "The guest calls from the Holobox and a trained receptionist answers live, as a life-size hologram. The agent resolves it directly in your systems: payments, bookings, key resets."
+      },
+      "night": {
+        "q": "Is someone really available at 3 a.m.?",
+        "a": "Yes. Our hub runs 24/7. With the Night-Only package, every late arrival, question and incident is handled remotely, and security escalation follows clear protocols with your local contact."
+      },
+      "agents": {
+        "q": "Who are the agents?",
+        "a": "Trained hospitality professionals: our own core team plus certified hospitality partners, all trained to the same standards and SOPs."
+      },
+      "staff": {
+        "q": "Do we still need staff on site?",
+        "a": "That's your choice. During onboarding we agree exactly what stays on site and what the hub handles. Many hotels start with nights only."
+      },
+      "channels": {
+        "q": "Which channels do you cover?",
+        "a": "The Holobox in your lobby, plus chat and telephone."
+      },
+      "pricing": {
+        "q": "How is pricing structured?",
+        "a": "A one-time setup (Holobox hardware or lease, installation, integrations), a monthly fee based on rooms, service hours and volume, and an optional variable component. Book a demo for a proposal."
+      },
+      "timeline": {
+        "q": "How long does onboarding take?",
+        "a": "It depends on your systems and scope. You'll get a concrete timeline after the intake and site survey."
+      },
+      "where": {
+        "q": "Where do you operate?",
+        "a": "We're live in the Netherlands and expanding across Europe."
+      }
+    }
   }
 }

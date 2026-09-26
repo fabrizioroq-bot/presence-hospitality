@@ -269,5 +269,103 @@
       "Prestatiegebonden prijs, gekoppeld aan KPI's of besparing"
     ],
     "cta": "Vraag een voorstel aan voor je hotel"
+  },
+  "onboarding": {
+    "eyebrow": "Onboarding",
+    "title": "Van eerste gesprek tot <em>go-live</em>",
+    "sub": "Een zorgvuldige overdracht. We nemen de receptie pas over als alles getest is.",
+    "youGet": "Dit krijg je",
+    "steps": [
+      {
+        "title": "Intake & locatiebezoek",
+        "body": "We brengen in kaart hoe je hotel nu draait (kamers, team, systemen, servicetijden) en lopen samen de hele gastreis door: boeking, pre-arrival, inchecken, verblijf en uitchecken.",
+        "get": "Een helder beeld van je huidige front office"
+      },
+      {
+        "title": "Serviceontwerp",
+        "body": "Samen leggen we de scope vast: tijden, talen, kanalen en serviceniveaus, wat op locatie blijft en wie er gebeld wordt als er iets escaleert.",
+        "get": "Een servicescope die je zelf goedkeurt"
+      },
+      {
+        "title": "Holobox-installatie",
+        "body": "We installeren de mini of full-size Holobox en zorgen voor een redundante, beveiligde netwerkverbinding met onze hub.",
+        "get": "Hardware live in je lobby"
+      },
+      {
+        "title": "Integratie",
+        "body": "We koppelen je PMS, toegangssystemen, betalingsverwerking en ID-verificatie, met de juiste rollen en rechten.",
+        "get": "Systemen van begin tot eind getest"
+      },
+      {
+        "title": "Playbook & training",
+        "body": "We schrijven je scripts, sjablonen, escalatieregels en kennisbank, en trainen onze receptionisten en je team op locatie.",
+        "get": "Een servicehandboek op maat van je hotel"
+      },
+      {
+        "title": "Pilot & go-live",
+        "body": "We draaien een gecontroleerde pilot met testscenario's en KPI-monitoring, daarna neemt de hub de receptie over. Met regelmatige reviews wordt de service steeds beter.",
+        "get": "Je front office, verzorgd door Presence"
+      }
+    ],
+    "readyTitle": "Voordat we live gaan",
+    "ready": [
+      "Kritieke koppelingen getest",
+      "Escalatiecontacten bevestigd",
+      "Hub en team op locatie getraind",
+      "Gastcommunicatie en terugvalprocedures klaar"
+    ],
+    "kpiTitle": "Wat we vanaf dag één meten",
+    "kpis": [
+      "Serviceniveaus (SLA)",
+      "Pre-arrival voltooid",
+      "Succesvolle check-ins",
+      "Incidenten per 100 verblijven",
+      "Gasttevredenheid",
+      "First contact resolution"
+    ]
+  },
+  "faq": {
+    "eyebrow": "FAQ",
+    "title": "Goede <em>vragen</em>",
+    "still": "Nog vragen?",
+    "stillBody": "Bel of mail ons, we lichten het graag toe.",
+    "items": {
+      "pms": {
+        "q": "Moeten we ons PMS vervangen?",
+        "a": "Nee. We werken met je bestaande systemen en koppelen daarop aan. Mews wordt nu al ondersteund; gebruik je iets anders? Laat het weten in je demo-aanvraag, dan bekijken we de mogelijkheden."
+      },
+      "kiosk": {
+        "q": "Wat gebeurt er als de kiosk het probleem van een gast niet oplost?",
+        "a": "De gast belt via de Holobox en een getrainde receptionist neemt live op, als levensgroot hologram. De receptionist lost het direct op in je systemen: betalingen, boekingen, sleutels resetten."
+      },
+      "night": {
+        "q": "Is er om 3 uur 's nachts echt iemand bereikbaar?",
+        "a": "Ja. Onze hub draait 24/7. Met het Night-Only-pakket wordt elke late aankomst, vraag en elk incident op afstand afgehandeld, en bij beveiligingskwesties volgen we duidelijke afspraken met je lokale contactpersoon."
+      },
+      "agents": {
+        "q": "Wie zijn de receptionisten?",
+        "a": "Getrainde hospitalityprofessionals: ons eigen kernteam plus gecertificeerde partners uit de hospitality, allemaal getraind volgens dezelfde standaarden en SOP's."
+      },
+      "staff": {
+        "q": "Hebben we nog personeel op locatie nodig?",
+        "a": "Dat bepaal je zelf. Tijdens de onboarding spreken we precies af wat op locatie blijft en wat de hub doet. Veel hotels beginnen met alleen de nacht."
+      },
+      "channels": {
+        "q": "Welke kanalen verzorgen jullie?",
+        "a": "De Holobox in je lobby, plus chat en telefoon."
+      },
+      "pricing": {
+        "q": "Hoe is de prijs opgebouwd?",
+        "a": "Een eenmalige opstart (Holobox-hardware of lease, installatie, koppelingen), een maandelijkse fee op basis van kamers, servicetijden en volume, en een optioneel variabel deel. Plan een demo voor een voorstel."
+      },
+      "timeline": {
+        "q": "Hoe lang duurt de onboarding?",
+        "a": "Dat hangt af van je systemen en de scope. Na de intake en het locatiebezoek krijg je een concrete planning."
+      },
+      "where": {
+        "q": "Waar zijn jullie actief?",
+        "a": "We zijn live in Nederland en breiden uit binnen Europa."
+      }
+    }
   }
 }
