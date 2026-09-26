@@ -1,0 +1,10 @@
+# Never upload secrets, internal documents or local artefacts.
+.env*
+!.env.example
+docs/
+screenshots/
+reports/
+supabase/.temp/
+.next/
+node_modules/
+.DS_Store

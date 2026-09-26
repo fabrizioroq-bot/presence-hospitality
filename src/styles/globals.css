@@ -405,6 +405,147 @@
   }
 }
 
+/* ---------------- Demo form (night) ---------------- */
+.demo-input {
+  width: 100%;
+  min-height: 48px;
+  border-radius: var(--r-sm);
+  background: rgba(18, 20, 23, 0.6);
+  color: var(--paper-50);
+  padding: 12px 16px;
+  font-size: 1rem;
+  line-height: 1.4;
+  box-shadow: inset 0 0 0 1px var(--line-night);
+  transition: box-shadow 200ms, background-color 200ms;
+}
+.demo-input::placeholder {
+  color: var(--paper-500);
+  opacity: 0.8;
+}
+.demo-input:hover {
+  background: rgba(18, 20, 23, 0.8);
+}
+.demo-input:focus-visible {
+  outline: none;
+  background: var(--night-900);
+  box-shadow: inset 0 0 0 1px var(--holo-300), 0 0 0 3px rgba(191, 224, 255, 0.25);
+}
+.demo-input.is-invalid {
+  box-shadow: inset 0 0 0 1px var(--danger-night);
+}
+select.demo-input option {
+  background: var(--night-800);
+  color: var(--paper-50);
+}
+.demo-check {
+  appearance: none;
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  box-shadow: inset 0 0 0 1px var(--line-night);
+  background: rgba(18, 20, 23, 0.6);
+  display: grid;
+  place-content: center;
+  cursor: pointer;
+}
+.demo-check::after {
+  content: "";
+  width: 11px;
+  height: 6px;
+  border: solid var(--ink-900);
+  border-width: 0 0 2px 2px;
+  transform: rotate(-45deg) translate(1px, -1px) scale(0);
+  transition: transform 150ms;
+}
+.demo-check:checked {
+  background: var(--holo-300);
+  box-shadow: none;
+}
+.demo-check:checked::after {
+  transform: rotate(-45deg) translate(1px, -1px) scale(1);
+}
+.demo-check[aria-invalid="true"] {
+  box-shadow: inset 0 0 0 1px var(--danger-night);
+}
+/* Form card: a slow shine travels around the border while any field has focus. */
+@property --shine-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+@keyframes shine-rotate {
+  to {
+    --shine-angle: 360deg;
+  }
+}
+.shine-focus {
+  position: relative;
+}
+.shine-focus::before {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  padding: 1px;
+  background: conic-gradient(from var(--shine-angle), transparent 0 70%, var(--holo-300) 82%, var(--amber-300) 90%, transparent 100%);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 300ms;
+  animation: shine-rotate 5s linear infinite;
+  pointer-events: none;
+}
+.shine-focus:focus-within::before {
+  opacity: 1;
+}
+/* Success: title blurs in, 12 particles burst out. */
+@keyframes success-in {
+  from {
+    filter: blur(10px);
+    opacity: 0;
+    transform: translateY(8px);
+  }
+}
+.success-title {
+  animation: success-in 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes burst {
+  from {
+    transform: rotate(var(--a)) translateX(0) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: rotate(var(--a)) translateX(90px) scale(0.3);
+    opacity: 0;
+  }
+}
+.success-burst {
+  position: absolute;
+  left: 24px;
+  top: 50%;
+}
+.success-burst i {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--holo-300);
+  box-shadow: var(--glow-holo);
+  animation: burst 900ms cubic-bezier(0.16, 1, 0.3, 1) var(--d) both;
+}
+.success-burst i.warm {
+  background: var(--amber-400);
+  box-shadow: var(--glow-amber);
+}
+@media (prefers-reduced-motion: reduce) {
+  .shine-focus::before,
+  .success-burst {
+    display: none;
+  }
+}
+
 /* Holobox: the DOM fill + poster fade out once the WebGL scene paints the panel. */
 .portal-fill {
   transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1);

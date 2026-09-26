@@ -12,6 +12,7 @@ import { WhoPackages } from "@/components/sections/WhoPackages";
 import { Pricing } from "@/components/sections/Pricing";
 import { Onboarding } from "@/components/sections/Onboarding";
 import { Faq } from "@/components/sections/Faq";
+import { Demo } from "@/components/sections/Demo";
 
 export default async function HomePage({ params }: PageProps<"/[locale]">) {
   const { locale } = await params;
@@ -31,6 +32,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
         <Pricing />
         <Onboarding />
         <Faq />
+        <Demo />
       </main>
       <Footer />
     </>

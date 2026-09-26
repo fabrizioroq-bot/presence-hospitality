@@ -40,7 +40,8 @@
     "legal": "Juridisch",
     "privacy": "Privacybeleid",
     "kvk": "KvK",
-    "rights": "Alle rechten voorbehouden."
+    "rights": "Alle rechten voorbehouden.",
+    "cookies": "Cookiebeleid"
   },
   "market": {
     "eyebrow": "De markt",
@@ -367,5 +368,63 @@
         "a": "We zijn live in Nederland en breiden uit binnen Europa."
       }
     }
+  },
+  "demo": {
+    "eyebrow": "Plan een demo",
+    "title": "Zie de receptie <em>van de toekomst.</em>",
+    "sub": "Vertel ons over je hotel. We nemen contact met je op om een live demo van de Holobox in te plannen.",
+    "reassure": [
+      "Live demo met een echte receptionist",
+      "Een pakketadvies voor jouw hotel",
+      "Vrijblijvend"
+    ],
+    "contactLead": "Liever eerst even bellen?",
+    "f": {
+      "first_name": "Voornaam",
+      "last_name": "Achternaam",
+      "email": "E-mail",
+      "phone": "Telefoonnummer",
+      "position": "Functie",
+      "hotel_name": "Naam hotel",
+      "pms": "Gebruikt PMS",
+      "pmsOptional": "Optioneel",
+      "description": "Vertel over je hotel",
+      "consent": "Ik ga ermee akkoord dat Presence Hospitality mijn gegevens opslaat om contact met mij op te nemen over een demo. Zie ons <link>privacybeleid</link>."
+    },
+    "ph": {
+      "first_name": "Anna",
+      "last_name": "de Vries",
+      "email": "anna@jouwhotel.nl",
+      "phone": "+31 6 1234 5678",
+      "hotel_name": "Hotel Canal House",
+      "pms": "bijv. Mews",
+      "description": "Aantal kamers, huidige receptietijden, wat je wilt oplossen…"
+    },
+    "positions": {
+      "placeholder": "Kies je functie",
+      "owner": "Eigenaar",
+      "general_manager": "General manager",
+      "operations_manager": "Operationeel manager",
+      "front_office_manager": "Front office manager",
+      "other": "Anders"
+    },
+    "pmsNotSure": "Weet ik niet",
+    "chars": "{count} / {max} tekens",
+    "submit": "Vraag mijn demo aan",
+    "sending": "Versturen…",
+    "errors": {
+      "required": "Dit veld is verplicht.",
+      "tooLong": "Dit is te lang.",
+      "tooShort": "Schrijf minimaal {min} tekens.",
+      "email": "Vul een geldig e-mailadres in.",
+      "phone": "Vul een geldig telefoonnummer in.",
+      "position": "Kies een functie uit de lijst.",
+      "consent": "Geef toestemming zodat we contact met je kunnen opnemen."
+    },
+    "summary": "Controleer deze velden:",
+    "server": "Er ging iets mis aan onze kant. Probeer het opnieuw, of mail ons via {email}.",
+    "rate": "Je hebt in korte tijd meerdere aanvragen verstuurd. Probeer het over een paar minuten opnieuw.",
+    "successTitle": "Aanvraag ontvangen.",
+    "successBody": "Bedankt, {name}. We nemen snel contact met je op om je demo in te plannen."
   }
 }

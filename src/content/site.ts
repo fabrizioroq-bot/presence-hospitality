@@ -3,7 +3,10 @@ export const site = {
   name: "Presence Hospitality",
   legalName: "Presence Hospitality B.V.",
   parent: "[partner]",
-  url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.presencehospitality.com",
+  // Custom domain once DNS is live; on Vercel previews fall back to the deployment URL.
+  url:
+    process.env.NEXT_PUBLIC_SITE_URL ??
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://www.presencehospitality.com"),
   displayUrl: "www.presencehospitality.com",
   phone: {
     display: "[removed]",

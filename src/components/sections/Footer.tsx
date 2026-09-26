@@ -3,7 +3,6 @@ import { Logo } from "@/components/brand/Logo";
 import { ParallaxOrbs } from "@/components/ambient/ParallaxOrbs";
 import { AmbientDust } from "@/components/ambient/AmbientDust";
 import { LightSweep } from "@/components/ambient/LightSweep";
-import { MoodTransition } from "@/components/ambient/MoodTransition";
 import { site } from "@/content/site";
 
 const icon = {
@@ -47,7 +46,6 @@ export async function Footer() {
 
   return (
     <>
-      <MoodTransition from="mist" to="night" />
       <footer
         data-mood="night"
         className="relative isolate overflow-hidden bg-charcoal-700 text-paper-50"
@@ -171,6 +169,11 @@ export async function Footer() {
                     className="text-paper-50 hover:text-holo-300"
                   >
                     {t("privacy")}
+                  </a>
+                </li>
+                <li>
+                  <a href={`/${locale}/cookies`} className="text-paper-50 hover:text-holo-300">
+                    {t("cookies")}
                   </a>
                 </li>
                 <li>

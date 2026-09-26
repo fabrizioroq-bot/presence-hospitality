@@ -40,7 +40,8 @@
     "legal": "Legal",
     "privacy": "Privacy policy",
     "kvk": "KvK",
-    "rights": "All rights reserved."
+    "rights": "All rights reserved.",
+    "cookies": "Cookie policy"
   },
   "market": {
     "eyebrow": "The market",
@@ -367,5 +368,63 @@
         "a": "We're live in the Netherlands and expanding across Europe."
       }
     }
+  },
+  "demo": {
+    "eyebrow": "Book a demo",
+    "title": "See the front desk <em>of the future.</em>",
+    "sub": "Tell us about your hotel. We'll get back to you to schedule a live demo of the Holobox.",
+    "reassure": [
+      "Live demo with a real agent",
+      "A package recommendation for your property",
+      "No commitment"
+    ],
+    "contactLead": "Prefer to talk first?",
+    "f": {
+      "first_name": "First name",
+      "last_name": "Last name",
+      "email": "Email",
+      "phone": "Phone number",
+      "position": "Position",
+      "hotel_name": "Hotel name",
+      "pms": "PMS used",
+      "pmsOptional": "Optional",
+      "description": "Tell us about your hotel",
+      "consent": "I agree that Presence Hospitality stores my details to contact me about a demo. See our <link>privacy policy</link>."
+    },
+    "ph": {
+      "first_name": "Anna",
+      "last_name": "de Vries",
+      "email": "anna@yourhotel.nl",
+      "phone": "+31 6 1234 5678",
+      "hotel_name": "Hotel Canal House",
+      "pms": "e.g. Mews",
+      "description": "Rooms, current reception hours, what you'd like to solve…"
+    },
+    "positions": {
+      "placeholder": "Select your position",
+      "owner": "Owner",
+      "general_manager": "General manager",
+      "operations_manager": "Operations manager",
+      "front_office_manager": "Front office manager",
+      "other": "Other"
+    },
+    "pmsNotSure": "Not sure",
+    "chars": "{count} / {max} characters",
+    "submit": "Request my demo",
+    "sending": "Sending…",
+    "errors": {
+      "required": "This field is required.",
+      "tooLong": "This is too long.",
+      "tooShort": "Please write at least {min} characters.",
+      "email": "Enter a valid email address.",
+      "phone": "Enter a valid phone number.",
+      "position": "Choose a position from the list.",
+      "consent": "Please agree so we can contact you."
+    },
+    "summary": "Please check these fields:",
+    "server": "Something went wrong on our side. Please try again, or email us at {email}.",
+    "rate": "You've sent several requests in a short time. Please try again in a few minutes.",
+    "successTitle": "Request received.",
+    "successBody": "Thanks, {name}. We'll be in touch soon to schedule your demo."
   }
 }
