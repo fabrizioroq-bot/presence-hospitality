@@ -15,13 +15,15 @@ const intro = (P: { n: number; aspect: number; b64: string }, caption: string) =
   const el = document.createElement("ph-intro");
   el.id = "ph-intro";
   el.setAttribute("aria-hidden", "true");
-  const cv = document.createElement("canvas");
   const cap = document.createElement("span");
   cap.className = "ph-intro-caption";
   cap.textContent = caption;
-  el.append(cv, cap);
+  el.append(cap);
   document.body.prepend(el);
-  const g = cv.getContext("2d");
+  // The canvas (and its 2D context) is created only when the animation starts, after the page's
+  // first contentful paint: creating it during parsing stalled the first frame in headless Chrome.
+  const cv = document.createElement("canvas");
+  let g: CanvasRenderingContext2D | null = null;
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   // The veil (CSS) is up from the first frame; the particles start once the page underneath has
   // had its first contentful paint, so the animation never delays FCP/LCP.
@@ -113,6 +115,7 @@ const intro = (P: { n: number; aspect: number; b64: string }, caption: string) =
     ending = performance.now();
     el.classList.add("out");
     el.style.transitionDuration = OUT + "ms";
+    if (!started) setTimeout(finish, OUT); // skipped before the particles started
   };
   const finish = () => {
     cancelAnimationFrame(raf);
@@ -125,8 +128,11 @@ const intro = (P: { n: number; aspect: number; b64: string }, caption: string) =
   ["pointerdown", "keydown", "wheel", "touchstart"].forEach((e) => addEventListener(e, skip, { once: true, passive: true }));
   let started = false;
   const start = () => {
-    if (started) return;
+    if (started || ending) return;
     started = true;
+    el.prepend(cv);
+    g = cv.getContext("2d");
+    size();
     t0 = performance.now();
     raf = requestAnimationFrame(draw);
   };
