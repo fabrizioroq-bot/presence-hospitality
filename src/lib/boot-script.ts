@@ -14,6 +14,8 @@ const boot = () => {
   const motion = !matchMedia("(prefers-reduced-motion: reduce)").matches;
   if (motion) h.classList.add("rv");
   try {
+    // `?nointro` (tests and audits) marks the intro as already seen for this tab.
+    if (location.search.includes("nointro")) sessionStorage.setItem("ph-intro", "1");
     if (!sessionStorage.getItem("ph-intro")) {
       h.classList.add("intro");
       sessionStorage.setItem("ph-intro", "1");
