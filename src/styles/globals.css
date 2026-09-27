@@ -1089,7 +1089,7 @@ html.intro #ph-intro {
     backdrop-filter: none;
     background:
       radial-gradient(55% 45% at 72% 18%, rgba(141, 179, 223, 0.35), transparent 70%),
-      rgba(211, 218, 225, 0.9);
+      rgba(211, 218, 225, 0.95);
   }
 }
 html.intro #ph-intro.out {
