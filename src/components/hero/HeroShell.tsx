@@ -6,7 +6,7 @@ import type { PointerState } from "@/components/hologram/hero-scene";
 import { spring, trackScroll, Value } from "@/lib/anim";
 import { useNear, useReducedMotion } from "@/lib/hooks";
 import { detectTier, hasWebGL2, type Tier } from "@/lib/perf-tier";
-import { afterLoadIdle, interacted, introActive, loadHeroCanvas, preloadHologram } from "@/lib/preload";
+import { afterLoadIdle, interacted, introActive, loadHeroCanvas, prefetchHologramData } from "@/lib/preload";
 
 const HeroCanvas = dynamic(loadHeroCanvas, { ssr: false });
 
@@ -73,8 +73,10 @@ export function HeroShell({ children, ...props }: ComponentProps<"section"> & { 
     if (!hasWebGL2()) return;
     portalRef.current = ref.current?.querySelector<HTMLElement>("[data-portal]") ?? null;
     const t = detectTier();
-    if (introActive()) preloadHologram(t);
-    else afterLoadIdle(() => preloadHologram(t));
+    // Point cloud: during the intro (first visit) or right after load. The scene code loads on the
+    // first interaction (which usually happens during the intro).
+    if (introActive()) prefetchHologramData(t);
+    else afterLoadIdle(() => prefetchHologramData(t));
 
     let done = false;
     const go = () => {
@@ -91,8 +93,7 @@ export function HeroShell({ children, ...props }: ComponentProps<"section"> & { 
     const schedule = () => {
       timer = setTimeout(go, 7000);
     };
-    // During the intro the scene loads behind it (first visit), so it's there at the handover.
-    if (interacted() || introActive()) go();
+    if (interacted()) go();
     else {
       window.addEventListener("ph:interact", go, { once: true });
       if (document.readyState === "complete") schedule();

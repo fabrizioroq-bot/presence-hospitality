@@ -5,7 +5,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { interp, trackScroll, Value } from "@/lib/anim";
 import { cx as cn } from "@/lib/cx";
 import { useNear } from "@/lib/hooks";
-import { afterLoadIdle, loadStoryCanvas, preloadStory } from "@/lib/preload";
+import { afterLoadIdle, loadStoryCanvas, onFirstInteraction, prefetchStoryData, preloadStory } from "@/lib/preload";
 import { hasWebGL2 } from "@/lib/perf-tier";
 import { FLOOR, DOOR, HOLOBOX, KIOSK, STEPS, pctX, pctY, timeline } from "./layout";
 import { LobbySketch } from "./LobbySketch";
@@ -132,10 +132,11 @@ export function StoryPinned({ labels }: { labels: StoryLabels }) {
       window.matchMedia("(min-width: 1024px) and (prefers-reduced-motion: no-preference)").matches && hasWebGL2();
     if (!ok) return;
 
-    // Assets download while the hero is still on screen (right after load), so the scene is
-    // ready before the reader reaches the story.
+    // Data downloads while the hero is still on screen (right after load); the scene code on the
+    // first interaction — both well before the reader reaches the story.
     const prefetch = preloadStory;
-    afterLoadIdle(prefetch);
+    afterLoadIdle(prefetchStoryData);
+    const offFirst = onFirstInteraction(() => afterLoadIdle(preloadStory));
 
     // Navbar / in-page links to this section: start immediately.
     const onClick = (e: MouseEvent) => {
@@ -158,6 +159,7 @@ export function StoryPinned({ labels }: { labels: StoryLabels }) {
     );
     near.observe(el);
     return () => {
+      offFirst();
       document.removeEventListener("click", onClick, true);
       near.disconnect();
     };

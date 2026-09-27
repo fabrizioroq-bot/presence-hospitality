@@ -15,17 +15,38 @@ export function prefetch(url: string) {
 export const loadHeroCanvas = () => import("@/components/hologram/HeroCanvas");
 export const loadStoryCanvas = () => import("@/components/story/StoryCanvas");
 
-/** Hero / Holobox stage: the scene module + the point cloud for this device's tier. */
-export function preloadHologram(tier: Tier) {
+// Rule: before the first interaction only data is fetched (network, nothing executes — keeps the
+// initial JS budget and Lighthouse clean); code (three.js scenes) loads from the first interaction on.
+
+/** Hero / Holobox stage point cloud for this device's tier (data only). */
+export function prefetchHologramData(tier: Tier) {
   prefetch(`/hologram/${tierConfig[tier].file}`);
+}
+/** Hero / Holobox stage: data + scene module. */
+export function preloadHologram(tier: Tier) {
+  prefetchHologramData(tier);
   loadHeroCanvas().catch(() => {});
 }
 
-/** Pinned "How it works" story (desktop). */
-export function preloadStory() {
+/** Pinned "How it works" story (desktop): data only. */
+export function prefetchStoryData() {
   prefetch("/hologram/guest-9k.bin");
   prefetch("/hologram/agent-12k.bin");
+}
+/** Story: data + scene module. */
+export function preloadStory() {
+  prefetchStoryData();
   loadStoryCanvas().catch(() => {});
+}
+
+/** Runs `fn` on the first interaction (also one made before hydration, see boot script). */
+export function onFirstInteraction(fn: () => void) {
+  if (interacted()) {
+    fn();
+    return () => {};
+  }
+  window.addEventListener("ph:interact", fn, { once: true });
+  return () => window.removeEventListener("ph:interact", fn);
 }
 
 /** Runs `fn` once the page has loaded and the main thread is idle. */
