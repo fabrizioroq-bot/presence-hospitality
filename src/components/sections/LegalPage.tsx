@@ -12,6 +12,7 @@ export async function LegalPage({
   locale: "en" | "nl";
 }) {
   const f = await getTranslations("footer");
+  const c = await getTranslations("common");
   return (
     <div
       data-mood="mist"
@@ -70,13 +71,15 @@ export async function LegalPage({
           >
             {site.email}
           </a>{" "}
-          ·{" "}
-          <a
-            href={site.phone.href}
-            className="text-link-mist underline underline-offset-4"
-          >
-            {site.phone.display}
-          </a>
+          {site.phones.map((ph) => (
+            <span key={ph.key}>
+              {" "}
+              · {c(ph.key === "sales" ? "phoneSales" : "phoneSupport")}{" "}
+              <a href={ph.href} className="text-link-mist underline underline-offset-4">
+                {ph.display}
+              </a>
+            </span>
+          ))}
         </p>
       </article>
     </div>

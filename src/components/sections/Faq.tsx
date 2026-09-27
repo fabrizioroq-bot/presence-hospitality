@@ -5,6 +5,7 @@ import { Headline } from "@/components/ui/Headline";
 import { Reveal } from "@/components/ui/Reveal";
 import { faq } from "@/content/faq";
 import { site } from "@/content/site";
+import { PhoneLinks } from "@/components/ui/PhoneLinks";
 
 /** FAQ: sticky intro + contact on the left, single-open accordion on the right. Mist. */
 export async function Faq({ asPage = false }: { asPage?: boolean } = {}) {
@@ -35,9 +36,10 @@ export async function Faq({ asPage = false }: { asPage?: boolean } = {}) {
               <p className="text-heading-sm">{t("still")}</p>
               <p className="max-w-[32ch] text-body text-ink-700">{t("stillBody")}</p>
               <p className="flex flex-col gap-1 text-body">
-                <a href={site.phone.href} className="w-fit text-link-mist underline decoration-1 underline-offset-4 hover:decoration-2">
-                  {site.phone.display}
-                </a>
+                <PhoneLinks
+                  labelClassName="text-ink-700"
+                  linkClassName="w-fit text-link-mist underline decoration-1 underline-offset-4 hover:decoration-2"
+                />
                 <a href={`mailto:${site.email}`} className="w-fit break-all text-link-mist underline decoration-1 underline-offset-4 hover:decoration-2">
                   {site.email}
                 </a>

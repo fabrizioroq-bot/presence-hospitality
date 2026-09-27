@@ -30,6 +30,8 @@
   /* Warm accent */
   --amber-300: #f8c98b;
   --amber-400: #f5a94a;
+  --amber-600: #a85200; /* large text on mist (≥3:1) */
+  --amber-700: #8f4500; /* small text on mist (≥4.5:1) */
 
   /* Orbs (decorative, always blurred) */
   --orb-sky: #8db3df;

@@ -41,7 +41,9 @@ export async function notifyNewLead(lead: LeadInput & { id: string }) {
       method: "POST",
       headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
       body: JSON.stringify({
-        from: process.env.LEADS_NOTIFY_FROM ?? "Presence Hospitality <onboarding@resend.dev>",
+        // Until presence-hospitality.com is verified in Resend, LEADS_NOTIFY_FROM overrides this with
+        // Resend's test sender (see PENDING.md).
+        from: process.env.LEADS_NOTIFY_FROM ?? "Presence Hospitality <noreply@presence-hospitality.com>",
         to: [to],
         reply_to: lead.email,
         subject: `New demo request: ${lead.hotel_name} (${lead.first_name} ${lead.last_name})`,

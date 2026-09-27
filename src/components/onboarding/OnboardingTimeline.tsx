@@ -141,8 +141,9 @@ export function OnboardingTimeline({
 
   const node = (i: number, reached: number) => (
     <span
+      data-lit={i < reached ? "" : undefined}
       className={cn(
-        "relative z-10 grid h-12 w-12 place-items-center rounded-pill text-label transition-colors duration-500",
+        "step-node relative z-10 grid h-12 w-12 place-items-center rounded-pill text-label transition-[color,background-color,box-shadow] duration-500",
         i < reached
           ? "bg-ink-900 text-paper-50"
           : "bg-mist-surface text-ink-700 ring-1 ring-line-mist",

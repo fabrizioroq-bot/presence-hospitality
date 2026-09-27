@@ -15,7 +15,9 @@
     "language": "Taal",
     "mobileMenu": "Menu",
     "stickyCta": "Plan een demo",
-    "swipeHint": "Swipe voor meer"
+    "swipeHint": "Swipe voor meer",
+    "phoneSales": "Verkoop",
+    "phoneSupport": "Support"
   },
   "nav": {
     "howItWorks": "Hoe het werkt",
@@ -43,7 +45,8 @@
     "privacy": "Privacybeleid",
     "kvk": "KvK",
     "rights": "Alle rechten voorbehouden.",
-    "cookies": "Cookiebeleid"
+    "cookies": "Cookiebeleid",
+    "credit": "Ontwerp en bouw door Agustín Roque"
   },
   "market": {
     "eyebrow": "De markt",

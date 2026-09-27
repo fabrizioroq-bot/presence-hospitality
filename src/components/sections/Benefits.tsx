@@ -45,7 +45,7 @@ export async function Benefits() {
         </div>
 
         <RevealGroup id="solution-benefits" tabIndex={0} className="swipe-row mt-10 lg:mt-16 lg:grid lg:grid-cols-12 lg:grid-rows-[auto_auto_auto] lg:gap-6" gap={0.09}>
-          {/* A — dominant, with a small live Holobox */}
+          {/* A — dominant, with a small live Holobox (from sm: on phones it would stretch every card in the swipe row) */}
           <RevealItem className="swipe-item lg:col-span-7 lg:row-span-2">
             <Depth range={20} className="h-full">
               <SpotlightCard tone="ink" className={cn(tile, "justify-between border border-line-mist bg-mist-surface/80 lg:flex-row lg:gap-10")}>
@@ -53,7 +53,7 @@ export async function Benefits() {
                   <h3 className="text-display-lg">{t("aTitle")}</h3>
                   <p className="text-body-lg text-ink-700">{t("aBody")}</p>
                 </div>
-                <div aria-hidden className="relative mx-auto aspect-[3/4.4] w-44 shrink-0 overflow-hidden rounded-lg bg-night-900 sm:w-52 lg:mx-0 lg:w-60">
+                <div aria-hidden className="relative mx-auto hidden aspect-[3/4.4] w-44 shrink-0 overflow-hidden rounded-lg bg-night-900 sm:block sm:w-52 lg:mx-0 lg:w-60">
                   <div className="absolute inset-x-0 top-[8%] bottom-[4%]">
                     <HologramPoster />
                   </div>
@@ -71,12 +71,10 @@ export async function Benefits() {
               {showSavings ? (
                 <p className="flex flex-col gap-2">
                   <span className="text-label text-paper-300">{t("bUpTo")}</span>
-                  <span className="text-display-xl">
-                    <RangeTicker from={savings.range![0]} to={savings.range![1]} />
-                    <sup className="ml-1 align-super text-body text-holo-300">
-                      <a href="#benefits-footnote" aria-label={t("footnote")}>
-                        ¹
-                      </a>
+                  <span className="text-display-lg lg:text-display-xl">
+                    <RangeTicker className="key-figure" from={savings.range![0]} to={savings.range![1]} />
+                    <sup aria-hidden className="ml-1 align-super text-body text-holo-300">
+                      ¹
                     </sup>
                   </span>
                   <span className="text-body-lg text-paper-300">{t("bSuffix")}</span>
@@ -90,7 +88,7 @@ export async function Benefits() {
           {/* C — 24/7, holo gradient */}
           <RevealItem className="swipe-item lg:col-span-5">
             <div className={cn(tile, "bg-holo-gradient text-ink-900")}>
-              <span className="text-display-xl">{claims.coverage[locale]}</span>
+              <span className="key-figure text-display-lg lg:text-display-xl">{claims.coverage[locale]}</span>
               <p className="max-w-[32ch] text-body-lg text-ink-700">{t("cBody")}</p>
             </div>
           </RevealItem>

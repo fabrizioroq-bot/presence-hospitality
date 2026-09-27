@@ -39,8 +39,8 @@ export async function KeyBenefits() {
               <p className="flex flex-col gap-2">
                 <span className="text-label text-paper-300">{t("bUpTo")}</span>
                 <span className="text-display-lg">
-                  <RangeTicker from={savings.range![0]} to={savings.range![1]} />
-                  <sup className="ml-1 align-super text-body text-holo-300">¹</sup>
+                  <RangeTicker className="key-figure" from={savings.range![0]} to={savings.range![1]} />
+                  <sup aria-hidden className="ml-1 align-super text-body text-holo-300">¹</sup>
                 </span>
                 <span className="text-body text-paper-300">{t("bSuffix")}</span>
               </p>
@@ -49,10 +49,10 @@ export async function KeyBenefits() {
             )}
           </RevealItem>
           <RevealItem className={cn(tile, "bg-holo-gradient text-ink-900")}>
-            <span className="text-display-lg">{claims.coverage[locale]}</span>
+            <span className="key-figure text-display-lg">{claims.coverage[locale]}</span>
             <p className="text-body-lg text-ink-700">{t("cBody")}</p>
           </RevealItem>
-          <RevealItem className={cn(tile, "border border-line-mist bg-mist-surface/60")}>
+          <RevealItem className={cn(tile, "bg-mist-raised/80")}>
             <h3 className="text-heading-md">{t("eTitle")}</h3>
             <p className="text-body text-ink-700">{t("eBody")}</p>
           </RevealItem>

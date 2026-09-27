@@ -45,7 +45,7 @@ export async function MarketProblem() {
         <div className="container-site pt-6 pb-12 lg:pt-16 lg:pb-40">
           <div className="grid gap-5 lg:grid-cols-12 lg:gap-10">
             <p className="text-label text-paper-500 lg:col-span-12">{p("eyebrow")}</p>
-            <Depth range={-30} className="lg:col-span-8">
+            <Depth range={-30} lgOnly className="lg:col-span-8">
               <h2 id="problem-title" className="sr-only">
                 {p("eyebrow")}
               </h2>
@@ -54,7 +54,7 @@ export async function MarketProblem() {
                 lines={[t.raw("line1") as string, t.raw("line2") as string, t.raw("line3") as string]}
               />
             </Depth>
-            <Depth range={40} className="self-end lg:col-span-4">
+            <Depth range={40} lgOnly className="self-end lg:col-span-4">
               <Reveal className="flex flex-col gap-6">
                 <p className="max-w-[52ch] text-body-lg text-paper-300">{t("body")}</p>
                 {tax.enabled && tax.source && (

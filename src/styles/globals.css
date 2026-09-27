@@ -33,6 +33,9 @@
 
   --amber-300: #f8c98b;
   --amber-400: #f5a94a;
+  /* Deeper ambers for text on light (mist) surfaces: 600 for large text (≥3:1), 700 for small (≥4.5:1). */
+  --amber-600: #a85200;
+  --amber-700: #8f4500;
 
   --orb-sky: #8db3df;
   --orb-mint: #bee6da;
@@ -89,6 +92,8 @@
   --color-holo-600: var(--holo-600);
   --color-amber-300: var(--amber-300);
   --color-amber-400: var(--amber-400);
+  --color-amber-600: var(--amber-600);
+  --color-amber-700: var(--amber-700);
   --color-danger-mist: var(--danger-mist);
   --color-danger-night: var(--danger-night);
   --color-success-mist: var(--success-mist);
@@ -573,8 +578,11 @@ select.demo-input option {
   .swipe-row::-webkit-scrollbar {
     display: none;
   }
+  /* Every card in a row matches the tallest one (items stretch; inner cards use h-full). */
   .swipe-row > .swipe-item {
     flex: 0 0 min(84%, 420px);
+    align-self: stretch;
+    height: auto;
     scroll-snap-align: start;
   }
 }
@@ -637,4 +645,93 @@ select.demo-input option {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+/* ---------------------------------------------------------------------------------------------
+   Amber accent — two candidate treatments, switched by <html data-accent="a|b"> (preview: ?accent=a
+   or ?accent=b). Without the attribute the site renders exactly as before. Hooks:
+   .btn-cta (conversion buttons) · em.emph (headline highlight) · .key-figure (figures) ·
+   .step-num / .step-num-dark (step counters on light / dark) · .step-node[data-lit] (reached
+   timeline nodes). Text on mist uses amber-600/700 for AA.
+   --------------------------------------------------------------------------------------------- */
+
+/* A — solid amber */
+html[data-accent="a"] .btn-cta {
+  background: var(--amber-400);
+  color: var(--ink-900);
+  transition: background-color 0.2s, box-shadow 0.25s;
+}
+html[data-accent="a"] .btn-cta:hover {
+  background: var(--amber-300);
+  box-shadow: 0 0 0 1px rgba(245, 169, 74, 0.5), 0 10px 32px -6px rgba(245, 169, 74, 0.7);
+}
+html[data-accent="a"] [data-mood="mist"] em.emph,
+html[data-accent="a"] [data-mood="mist"] .key-figure {
+  color: var(--amber-600);
+}
+html[data-accent="a"] [data-mood="night"] em.emph,
+html[data-accent="a"] [data-mood="night"] .key-figure,
+html[data-accent="a"] .bg-ink-900 .key-figure {
+  color: var(--amber-400);
+}
+html[data-accent="a"] .step-num {
+  color: var(--amber-700);
+}
+html[data-accent="a"] .step-num-dark {
+  color: var(--amber-400);
+}
+html[data-accent="a"] .step-node[data-lit] {
+  background: var(--amber-400);
+  color: var(--ink-900);
+  box-shadow: var(--glow-amber);
+}
+
+/* B — holo → amber gradient */
+html[data-accent="b"] .btn-cta {
+  background: linear-gradient(100deg, var(--amber-300) 0%, var(--amber-400) 100%);
+  color: var(--ink-900);
+  box-shadow: 0 0 0 1px rgba(245, 169, 74, 0.35);
+  transition: box-shadow 0.25s, filter 0.2s;
+}
+html[data-accent="b"] .btn-cta:hover {
+  filter: brightness(1.04);
+  box-shadow: 0 0 0 1px rgba(245, 169, 74, 0.6), 0 10px 36px -6px rgba(245, 169, 74, 0.75), 0 0 60px -20px rgba(141, 196, 255, 0.6);
+}
+html[data-accent="b"] [data-mood="mist"] em.emph,
+html[data-accent="b"] [data-mood="mist"] .key-figure {
+  background-image: linear-gradient(100deg, var(--link-mist) 0%, var(--amber-600) 85%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+/* Short figures (e.g. 24/7) reach amber sooner so the warm end shows. */
+html[data-accent="b"] [data-mood="mist"] .key-figure {
+  background-image: linear-gradient(100deg, var(--link-mist) 0%, var(--amber-600) 55%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+html[data-accent="b"] [data-mood="night"] em.emph,
+html[data-accent="b"] [data-mood="night"] .key-figure,
+html[data-accent="b"] .bg-ink-900 .key-figure {
+  background-image: linear-gradient(100deg, var(--holo-300) 0%, var(--amber-400) 80%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+html[data-accent="b"] .step-num {
+  color: var(--amber-700);
+}
+html[data-accent="b"] .step-num-dark {
+  color: var(--amber-400);
+}
+html[data-accent="b"] .step-node[data-lit] {
+  color: var(--amber-400);
+  box-shadow: 0 0 0 1px rgba(245, 169, 74, 0.55), var(--glow-amber);
 }

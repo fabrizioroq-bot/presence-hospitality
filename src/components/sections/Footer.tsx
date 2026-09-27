@@ -73,7 +73,7 @@ export async function Footer() {
         />
         <LightSweep />
         <AmbientDust mood="night" density={0.8} />
-        <div className="container-site pt-14 lg:pt-32">
+        <div className="container-site pt-12 lg:pt-32">
           {/* Giant wordmark, like the pitch's closing "Thank You" */}
           <div className="relative">
             {/* Decorative wordmark as SVG (not body text, so it isn't subject to text contrast rules). */}
@@ -100,7 +100,7 @@ export async function Footer() {
             </p>
           </div>
 
-          <div className="mt-8 grid grid-cols-2 gap-x-6 gap-y-8 border-t border-line-night/40 pt-8 lg:mt-16 lg:grid-cols-4 lg:gap-12 lg:pt-12">
+          <div className="mt-6 grid grid-cols-2 gap-x-6 gap-y-8 border-t border-line-night/40 pt-8 lg:mt-16 lg:grid-cols-4 lg:gap-12 lg:pt-12">
             <div className="col-span-2 flex flex-col gap-4 lg:col-span-1">
               <Logo onNight />
               <p className="text-body-sm text-paper-300">
@@ -114,15 +114,20 @@ export async function Footer() {
             <div className="col-span-2 flex flex-col gap-4 lg:col-span-1">
               <h2 className="text-label text-paper-500">{t("contact")}</h2>
               <ul className="flex flex-col gap-3 text-body-sm">
-                <li className="flex gap-3">
-                  <Icon d={icon.phone} />
-                  <a href={site.phone.href} className="hover:text-holo-300">
-                    {site.phone.display}
-                  </a>
-                </li>
+                {site.phones.map((ph) => (
+                  <li key={ph.key} className="flex gap-3">
+                    <Icon d={icon.phone} />
+                    <span>
+                      <span className="text-paper-300">{c(ph.key === "sales" ? "phoneSales" : "phoneSupport")}</span>{" "}
+                      <a href={ph.href} className="hover:text-holo-300">
+                        {ph.display}
+                      </a>
+                    </span>
+                  </li>
+                ))}
                 <li className="flex gap-3">
                   <Icon d={icon.web} />
-                  <a href={site.url} className="hover:text-holo-300">
+                  <a href={site.domainUrl} className="hover:text-holo-300">
                     {site.displayUrl}
                   </a>
                 </li>
@@ -195,11 +200,15 @@ export async function Footer() {
             </div>
           </div>
 
-          <div className="mt-8 flex flex-row items-center justify-between gap-4 border-t border-line-night/40 py-4 pb-24 text-body-sm text-paper-300 lg:mt-16 lg:py-8">
-            <span>{t("rights")}</span>
+          <div className="mt-8 flex flex-row items-center justify-between gap-4 border-t border-line-night/40 pt-4 pb-24 text-body-sm text-paper-300 lg:mt-16 lg:py-8">
+            <div className="flex flex-col gap-1">
+              <span>{t("rights")}</span>
+              {/* Credit: deliberately small and quiet. */}
+              <span className="text-[0.75rem] text-paper-500">{t("credit")}</span>
+            </div>
             <a
               href="#top"
-              className="inline-flex min-h-11 items-center gap-2 hover:text-holo-300"
+              className="inline-flex min-h-11 shrink-0 items-center gap-2 hover:text-holo-300"
             >
               {c("backToTop")} <span aria-hidden>↑</span>
             </a>

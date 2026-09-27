@@ -3,7 +3,14 @@
 // Items marked PENDING in PENDING.md: KvK/VAT, confirmed retention period, legal review.
 
 export type LegalSection = { h: string; p?: string[]; list?: string[] };
-export type LegalDoc = { title: string; updated: string; intro: string; sections: LegalSection[] };
+export type LegalDoc = {
+  title: string;
+  /** Meta description (search results + link previews). */
+  description: string;
+  updated: string;
+  intro: string;
+  sections: LegalSection[];
+};
 
 const UPDATED = { en: "Last updated: 26 September 2026", nl: "Laatst bijgewerkt: 26 september 2026" };
 
@@ -11,6 +18,8 @@ export const legal: Record<"en" | "nl", { privacy: LegalDoc; cookies: LegalDoc }
   en: {
     privacy: {
       title: "Privacy policy",
+      description:
+        "How Presence Hospitality handles the details you share when you request a demo: what we collect, why, who processes it, how long we keep it and your GDPR rights.",
       updated: UPDATED.en,
       intro:
         "This policy explains what personal data Presence Hospitality processes when you visit this website or request a demo, why we do so, and what rights you have.",
@@ -76,6 +85,8 @@ export const legal: Record<"en" | "nl", { privacy: LegalDoc; cookies: LegalDoc }
     },
     cookies: {
       title: "Cookie policy",
+      description:
+        "Presence Hospitality uses no analytics, advertising or tracking cookies. Only a functional language cookie and, for staff, a sign-in cookie.",
       updated: UPDATED.en,
       intro:
         "This website uses as few cookies as possible. We don't use analytics, advertising or tracking cookies, so we don't ask for cookie consent.",
@@ -105,6 +116,8 @@ export const legal: Record<"en" | "nl", { privacy: LegalDoc; cookies: LegalDoc }
   nl: {
     privacy: {
       title: "Privacybeleid",
+      description:
+        "Hoe Presence Hospitality omgaat met de gegevens die je deelt bij een demo-aanvraag: wat we verzamelen, waarom, wie ze verwerkt, hoe lang we ze bewaren en je rechten onder de AVG.",
       updated: UPDATED.nl,
       intro:
         "In dit beleid lees je welke persoonsgegevens Presence Hospitality verwerkt als je deze website bezoekt of een demo aanvraagt, waarom we dat doen en welke rechten je hebt.",
@@ -170,6 +183,8 @@ export const legal: Record<"en" | "nl", { privacy: LegalDoc; cookies: LegalDoc }
     },
     cookies: {
       title: "Cookiebeleid",
+      description:
+        "Presence Hospitality gebruikt geen analytische, advertentie- of trackingcookies. Alleen een functionele taalcookie en, voor medewerkers, een inlogcookie.",
       updated: UPDATED.nl,
       intro:
         "Deze website gebruikt zo min mogelijk cookies. We gebruiken geen analytische, advertentie- of trackingcookies en vragen daarom geen cookietoestemming.",

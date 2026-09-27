@@ -41,7 +41,7 @@ function StepText({ s, i, step, label, title, body }: { s: MotionValue<number>; 
   const y = useTransform(s, input, first ? [0, 0, -24] : last ? [24, 0, 0] : [24, 0, 0, -24]);
   return (
     <m.li style={{ opacity, y }} aria-current={step === i ? "step" : undefined} className="absolute inset-x-0 top-0 flex flex-col gap-4">
-      <span className="text-label text-ink-500">
+      <span className="step-num text-label text-ink-500">
         {label} {String(i + 1).padStart(2, "0")} / {String(STEPS).padStart(2, "0")}
       </span>
       <h3 className="text-display-lg text-ink-900">{title}</h3>
@@ -161,8 +161,9 @@ export function StoryPinned({ labels }: { labels: StoryLabels }) {
               {labels.steps.map((_, i) => (
                 <span
                   key={i}
+                  data-lit={i <= step ? "" : undefined}
                   className={cn(
-                    "relative grid h-9 w-9 place-items-center rounded-pill text-label transition-colors duration-300",
+                    "step-node relative grid h-9 w-9 place-items-center rounded-pill text-label transition-colors duration-300",
                     i <= step ? "bg-ink-900 text-paper-50" : "bg-mist-surface text-ink-700 ring-1 ring-line-mist",
                   )}
                 >

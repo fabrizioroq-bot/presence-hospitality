@@ -38,6 +38,8 @@ export async function generateMetadata({
   };
 }
 
+const ACCENT_PREVIEW = `try{var q=new URLSearchParams(location.search).get("accent"),s=sessionStorage;if(q==="off")s.removeItem("accent");else if(q==="a"||q==="b")s.setItem("accent",q);var a=s.getItem("accent");if(a)document.documentElement.dataset.accent=a}catch(e){}`;
+
 export default async function LocaleLayout({
   children,
   params,
@@ -50,7 +52,14 @@ export default async function LocaleLayout({
     <html
       lang={locale}
       className={`${hanken.variable} ${hankenItalic.variable} ${jetbrains.variable}`}
+      // The accent preview script below sets data-accent before hydration.
+      suppressHydrationWarning
     >
+      <head>
+        {/* Accent preview (client choosing between two amber treatments): ?accent=a|b, kept for the
+            tab session; ?accent=off resets. Remove once a variant is chosen. */}
+        <script dangerouslySetInnerHTML={{ __html: ACCENT_PREVIEW }} />
+      </head>
       <body>
         {/* No NextIntlClientProvider: client components receive their strings as props. */}
         <MotionProvider>{children}</MotionProvider>

@@ -3,17 +3,20 @@ export const site = {
   name: "Presence Hospitality",
   legalName: "Presence Hospitality B.V.",
   parent: "[partner]",
-  // Custom domain once DNS is live; on Vercel previews fall back to the deployment URL.
+  // Canonical base: NEXT_PUBLIC_SITE_URL (set to the custom domain in production); previews fall
+  // back to the deployment URL.
   url:
     process.env.NEXT_PUBLIC_SITE_URL ??
-    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://www.presencehospitality.com"),
-  displayUrl: "www.presencehospitality.com",
-  phone: {
-    display: "[removed]",
-    href: "tel:[removed]",
-  },
-  // CONFIRM: spelling as supplied by the client (pitch domain is presencehospitality.com).
-  email: "[removed]",
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://www.presence-hospitality.com"),
+  // The public domain, shown and linked in the footer on every environment.
+  domainUrl: "https://www.presence-hospitality.com",
+  displayUrl: "www.presence-hospitality.com",
+  // Labels come from messages (`common.phoneSales`, `common.phoneSupport`).
+  phones: [
+    { key: "sales", display: "[removed]", href: "tel:[removed]" },
+    { key: "support", display: "[removed]", href: "tel:[removed]" },
+  ],
+  email: "info@presence-hospitality.com",
   address: {
     // CONFIRM: street spelling and postcode.
     street: "Korte Leidsedwarsstraat 92-1",

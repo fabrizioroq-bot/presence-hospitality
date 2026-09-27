@@ -36,14 +36,15 @@ export function HoloboxPortal({
         <HologramPoster />
       </div>
 
-      <div className="absolute inset-x-5 top-5 flex items-center justify-between gap-3 text-label text-paper-300 lg:inset-x-6 lg:top-6">
+      {/* HUD labels are decorative (the figcaption describes the portal), so screen readers skip them. */}
+      <div aria-hidden className="absolute inset-x-5 top-5 flex items-center justify-between gap-3 text-label text-paper-300 lg:inset-x-6 lg:top-6">
         <span className="inline-flex items-center gap-2">
           <span className="live-dot" aria-hidden />
           <DecryptedText text={hud.online} delay={300} />
         </span>
         <DecryptedText text={hud.route} delay={600} className="hidden sm:inline" />
       </div>
-      <div className="absolute inset-x-5 bottom-5 text-label text-paper-300 lg:inset-x-6 lg:bottom-6">
+      <div aria-hidden className="absolute inset-x-5 bottom-5 text-label text-paper-300 lg:inset-x-6 lg:bottom-6">
         <DecryptedText text={hud.live} delay={900} />
       </div>
 

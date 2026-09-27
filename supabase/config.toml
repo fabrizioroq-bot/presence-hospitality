@@ -242,7 +242,7 @@ subject = "Reset your Presence Hospitality dashboard password"
 content_path = "./supabase/templates/recovery.html"
 
 # Auth emails go through Resend (required on the free plan for custom templates).
-# Until presencehospitality.com is verified in Resend, only the account owner's address receives mail.
+# Until presence-hospitality.com is verified in Resend, only the account owner's address receives mail.
 [auth.email.smtp]
 enabled = true
 host = "smtp.resend.com"

@@ -302,7 +302,7 @@ export function DemoForm({
         type="submit"
         disabled={pending}
         aria-busy={pending || undefined}
-        className="group inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-pill bg-paper-50 px-7 py-3 text-[0.9375rem] font-semibold text-ink-900 transition-[background-color,opacity] hover:bg-holo-100 disabled:cursor-wait disabled:opacity-70 sm:w-auto sm:self-start"
+        className="btn-cta group inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-pill bg-paper-50 px-7 py-3 text-[0.9375rem] font-semibold text-ink-900 transition-[background-color,opacity] hover:bg-holo-100 disabled:cursor-wait disabled:opacity-70 sm:w-auto sm:self-start"
       >
         {pending ? (
           <>

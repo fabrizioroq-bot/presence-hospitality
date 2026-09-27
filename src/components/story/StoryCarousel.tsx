@@ -211,7 +211,7 @@ export function StoryCarousel({ labels }: { labels: CarouselLabels }) {
           }}
         />
         <LobbySketch s={s} labels={labels.sketch} className="relative" />
-        <span className="absolute top-3 left-4 text-label text-paper-300">
+        <span className="step-num-dark absolute top-3 left-4 text-label text-paper-300">
           {String(i + 1).padStart(2, "0")} / {String(n).padStart(2, "0")}
         </span>
       </div>
@@ -232,7 +232,7 @@ export function StoryCarousel({ labels }: { labels: CarouselLabels }) {
             aria-hidden={idx !== i}
             className="flex w-full shrink-0 snap-center flex-col gap-2 px-4"
           >
-            <span className="text-label text-ink-500">
+            <span className="step-num text-label text-ink-500">
               {labels.step} {String(idx + 1).padStart(2, "0")}
             </span>
             <h3 className="text-heading-md">{st.title}</h3>

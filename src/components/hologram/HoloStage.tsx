@@ -192,14 +192,15 @@ export function HoloStage({
         style={{ background: "linear-gradient(90deg, rgba(18,20,23,0.92) 0%, rgba(18,20,23,0.6) 32%, rgba(18,20,23,0) 55%)" }}
       />
 
-      <div className="pointer-events-none absolute inset-x-5 top-5 flex items-center justify-between gap-3 text-label text-paper-300 lg:inset-x-8 lg:top-8">
+      {/* HUD labels are decorative (the figcaption describes the stage), so screen readers skip them. */}
+      <div aria-hidden className="pointer-events-none absolute inset-x-5 top-5 flex items-center justify-between gap-3 text-label text-paper-300 lg:inset-x-8 lg:top-8">
         <span className="inline-flex items-center gap-2">
           <span className="live-dot" aria-hidden />
           <DecryptedText text={hud.online} delay={200} />
         </span>
         <DecryptedText text={hud.route} delay={500} className="hidden sm:inline" />
       </div>
-      <div className="pointer-events-none absolute right-5 bottom-5 flex flex-col items-end gap-2 text-label text-paper-300 lg:right-8 lg:bottom-8">
+      <div aria-hidden className="pointer-events-none absolute right-5 bottom-5 flex flex-col items-end gap-2 text-label text-paper-300 lg:right-8 lg:bottom-8">
         <span className="hidden items-center gap-2 text-paper-500 [@media(pointer:fine)]:inline-flex">
           <span aria-hidden>↔</span> {dragHint}
         </span>

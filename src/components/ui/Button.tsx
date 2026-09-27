@@ -9,12 +9,12 @@ const base =
 
 const styles: Record<Mood, Record<Variant, string>> = {
   mist: {
-    primary: "bg-ink-900 text-paper-50 hover:bg-[#2a2d33]",
+    primary: "btn-cta bg-ink-900 text-paper-50 hover:bg-[#2a2d33]",
     glow: "bg-holo-gradient text-ink-900 ring-1 ring-ink-900/15 hover:shadow-soft",
     ghost: "text-ink-900 ring-1 ring-line-mist hover:bg-mist-surface",
   },
   night: {
-    primary: "bg-paper-50 text-ink-900 hover:bg-holo-100",
+    primary: "btn-cta bg-paper-50 text-ink-900 hover:bg-holo-100",
     glow: "bg-holo-gradient text-ink-900 hover:shadow-glow-holo",
     ghost: "text-paper-50 ring-1 ring-line-night hover:bg-night-800",
   },

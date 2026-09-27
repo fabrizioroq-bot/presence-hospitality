@@ -12,6 +12,8 @@ Two moods alternate down the page, like a hotel lobby between day and night:
 - **Night** (dark): charcoal and near-black. This is where the **technology** lives: the Holobox portal, the hologram, glowing cyan-blue light, mono HUD labels.
 - **Warmth** is carried by a single amber accent (like the lobby lamp and the "HOTEL" neon in the pitch): live dots, the hologram's rim sparks, tiny highlights. Never a large fill.
 
+> **Pending client choice (27-09):** a bolder amber (conversion CTAs, headline emphasis, key figures, step numbers; ~10% of a page) is being previewed as variant A (solid) or B (holo→amber gradient) via `html[data-accent]` (see the end of `globals.css`). Once chosen, make it the default and update the roles below.
+
 Colour roles are strict: **ink = content, holo blue = technology/system, amber = human warmth/live.** No component uses holo and amber at equal weight.
 
 ### 4.2 Colour tokens (AA-verified)
@@ -49,6 +51,8 @@ All ratios below were computed with the WCAG 2.x formula. `scripts/check-contras
   /* Warm accent */
   --amber-300:      #F8C98B;
   --amber-400:      #F5A94A; /* 6.6:1 on charcoal; ink-900 on amber 8.37:1; NEVER as text on mist */
+  --amber-600:      #A85200; /* text on mist, large only (3.84:1 on mist-bg) */
+  --amber-700:      #8F4500; /* text on mist, any size (4.93:1 on mist-bg) */
 
   /* Orbs (decorative only, always blurred) */
   --orb-sky:        #8DB3DF;

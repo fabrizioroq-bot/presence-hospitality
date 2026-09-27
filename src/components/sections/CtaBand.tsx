@@ -20,7 +20,7 @@ export async function CtaBand({ from = "mist" }: { from?: "mist" | "night" | "de
         <LightSweep />
         <AmbientDust mood="night" density={0.5} />
         <div className="container-site flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-col gap-5">
             <Headline raw={t.raw("title") as string} className="text-display-lg" />
             <p className="max-w-[44ch] text-body-lg text-paper-300">{t("body")}</p>
           </div>
@@ -30,8 +30,8 @@ export async function CtaBand({ from = "mist" }: { from?: "mist" | "night" | "de
             </ButtonLink>
             <span className="text-body-sm text-paper-300">
               {t("or")}{" "}
-              <a href={site.phone.href} className="text-paper-50 underline underline-offset-4 hover:text-holo-300">
-                {site.phone.display}
+              <a href={site.phones[0].href} className="text-paper-50 underline underline-offset-4 hover:text-holo-300">
+                {site.phones[0].display}
               </a>
             </span>
           </div>

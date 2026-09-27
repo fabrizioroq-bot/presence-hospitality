@@ -15,7 +15,9 @@
     "language": "Language",
     "mobileMenu": "Menu",
     "stickyCta": "Book a demo",
-    "swipeHint": "Swipe for more"
+    "swipeHint": "Swipe for more",
+    "phoneSales": "Sales",
+    "phoneSupport": "Support"
   },
   "nav": {
     "howItWorks": "How it works",
@@ -43,7 +45,8 @@
     "privacy": "Privacy policy",
     "kvk": "KvK",
     "rights": "All rights reserved.",
-    "cookies": "Cookie policy"
+    "cookies": "Cookie policy",
+    "credit": "Designed & built by Agustín Roque"
   },
   "market": {
     "eyebrow": "The market",

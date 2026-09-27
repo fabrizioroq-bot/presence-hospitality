@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import { PageShell } from "@/components/layout/PageShell";
 import { LegalPage } from "@/components/sections/LegalPage";
-import { alternates, pagePath } from "@/i18n/paths";
+import { pageMeta } from "@/lib/seo";
 import { legal } from "@/content/legal";
 
 export async function generateMetadata({
@@ -10,13 +10,7 @@ export async function generateMetadata({
 }: PageProps<"/[locale]/cookies">): Promise<Metadata> {
   const { locale } = await params;
   const doc = legal[locale === "nl" ? "nl" : "en"].cookies;
-  return {
-    title: `${doc.title} · Presence Hospitality`,
-    alternates: {
-      canonical: pagePath(locale === "nl" ? "nl" : "en", "/cookies"),
-      ...alternates("/cookies"),
-    },
-  };
+  return pageMeta(locale === "nl" ? "nl" : "en", "/cookies", `${doc.title} · Presence Hospitality`, doc.description);
 }
 
 export default async function Page({ params }: PageProps<"/[locale]/cookies">) {

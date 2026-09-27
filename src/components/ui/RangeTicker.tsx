@@ -34,10 +34,8 @@ export function RangeTicker({ from, to, suffix = "%", className }: { from: numbe
         {Math.round(from * p)}–{Math.round(to * p)}
         {suffix}
       </span>
-      <span className="sr-only">
-        {from}–{to}
-        {suffix}
-      </span>
+      {/* Screen readers get only the final range, never the counting digits. */}
+      <span className="sr-only">{`${from}–${to}${suffix}`}</span>
     </span>
   );
 }

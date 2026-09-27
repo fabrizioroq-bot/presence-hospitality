@@ -9,13 +9,25 @@ import { useRef, type ReactNode } from "react";
  * Positive range = moves slower than the page (feels further away), negative = nearer.
  * Starts at 0 on server and client (no hydration mismatch); offsets apply from the first scroll event.
  */
-export function Depth({ children, className, range = 40 }: { children: ReactNode; className?: string; range?: number }) {
+export function Depth({
+  children,
+  className,
+  range = 40,
+  lgOnly = false,
+}: {
+  children: ReactNode;
+  className?: string;
+  range?: number;
+  /** Only shift from 1024px up, for blocks that sit side by side on desktop but stack (and could collide) below. */
+  lgOnly?: boolean;
+}) {
   const ref = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const target = useMotionValue(0);
   useMotionValueEvent(scrollYProgress, "change", (v) => {
-    target.set(reduce ? 0 : range - 2 * range * v);
+    const off = reduce || (lgOnly && !window.matchMedia("(min-width: 1024px)").matches);
+    target.set(off ? 0 : range - 2 * range * v);
   });
   const y = useSpring(target, { stiffness: 120, damping: 30, mass: 0.4 });
   return (

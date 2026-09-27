@@ -7,6 +7,7 @@ import { DemoForm, type DemoFormLabels } from "@/components/demo/DemoForm";
 import { Headline } from "@/components/ui/Headline";
 import { Reveal } from "@/components/ui/Reveal";
 import { site } from "@/content/site";
+import { PhoneLinks } from "@/components/ui/PhoneLinks";
 
 /** Book a demo: pitch + reassurance on the left, the form card on the right. Night. */
 export async function Demo({ asPage = false }: { asPage?: boolean } = {}) {
@@ -59,7 +60,7 @@ export async function Demo({ asPage = false }: { asPage?: boolean } = {}) {
           <div className="flex flex-col gap-8 lg:col-span-5">
             <div className="flex flex-col gap-6">
               <p className="text-label text-paper-500">{t("eyebrow")}</p>
-              <Headline as={asPage ? "h1" : "h2"} id="demo-title" raw={t.raw("title") as string} className="text-display-xl" />
+              <Headline as={asPage ? "h1" : "h2"} id="demo-title" raw={t.raw("title") as string} className="text-display-xl lg:text-display-lg" />
               <Reveal>
                 <p className="max-w-[44ch] text-body-lg text-paper-300">{t("sub")}</p>
               </Reveal>
@@ -87,9 +88,10 @@ export async function Demo({ asPage = false }: { asPage?: boolean } = {}) {
               </svg>
               <div className="flex flex-col gap-1 text-body">
                 <span className="text-paper-300">{t("contactLead")}</span>
-                <a href={site.phone.href} className="w-fit text-paper-50 underline decoration-line-night underline-offset-4 hover:decoration-holo-300">
-                  {site.phone.display}
-                </a>
+                <PhoneLinks
+                  labelClassName="text-paper-300"
+                  linkClassName="w-fit text-paper-50 underline decoration-line-night underline-offset-4 hover:decoration-holo-300"
+                />
                 <a href={`mailto:${site.email}`} className="w-fit break-all text-paper-50 underline decoration-line-night underline-offset-4 hover:decoration-holo-300">
                   {site.email}
                 </a>
