@@ -10,6 +10,7 @@ for (const path of paths) {
     const ctx = await b.newContext({ viewport: { width, height: 900 }, reducedMotion: "reduce" });
     const p = await ctx.newPage();
     await p.goto(base + path, { waitUntil: "networkidle" });
+    await p.waitForFunction(() => !document.getElementById("ph-intro"), null, { timeout: 6000 }).catch(() => {}); // intro loader (first visit)
     const r = await new AxeBuilder({ page: p }).withTags(["wcag2a", "wcag2aa", "wcag21aa", "wcag22aa"]).analyze();
     const v = r.violations.filter((x) => ["serious", "critical"].includes(x.impact));
     bad += v.length;

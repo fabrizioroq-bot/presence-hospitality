@@ -104,7 +104,10 @@ export function Navbar({
   const detectMood = useCallback(() => {
     const h = headerRef.current?.offsetHeight ?? 64;
     const stack = document.elementsFromPoint(window.innerWidth / 2, h + 2);
-    const el = stack.find((n) => !headerRef.current?.contains(n))?.closest<HTMLElement>("[data-mood]");
+    // Skip the header itself and full-screen overlays (intro loader, page-transition veil, cursor).
+    const el = stack
+      .find((n) => !headerRef.current?.contains(n) && !n.closest("#ph-intro, canvas.fixed, .cursor-ring"))
+      ?.closest<HTMLElement>("[data-mood]");
     setMood((el?.dataset.mood as Mood) ?? "mist");
   }, [setMood]);
   useEffect(() => {
@@ -116,10 +119,12 @@ export function Navbar({
     detectMood();
     window.addEventListener("scroll", onScroll, { passive: true });
     window.addEventListener("resize", onScroll);
+    window.addEventListener("ph:intro-done", onScroll);
     return () => {
       cancelAnimationFrame(raf);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
+      window.removeEventListener("ph:intro-done", onScroll);
     };
   }, [detectMood]);
 

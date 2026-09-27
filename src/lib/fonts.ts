@@ -16,9 +16,12 @@ export const hankenItalic = Hanken_Grotesk({
   style: ["italic"],
   display: "swap",
   variable: "--font-hanken-italic",
-  // Preloaded: the emphasised phrase is in the hero H1 (no swap/reflow after first paint).
+  // Preloaded: the emphasised phrase is in the hero H1. No generated Arial fallback: until the
+  // italic arrives, `.emph` falls through to upright Hanken 800 (see globals.css), whose metrics
+  // match, so the swap never re-wraps a headline (an Arial fallback caused a 0.17 layout shift).
   preload: true,
-  adjustFontFallback: true,
+  adjustFontFallback: false,
+  fallback: [],
 });
 
 export const jetbrains = JetBrains_Mono({
@@ -26,7 +29,9 @@ export const jetbrains = JetBrains_Mono({
   weight: ["400", "500"],
   display: "swap",
   variable: "--font-jetbrains",
-  // Preloaded: labels and the HUD are above the fold on every page.
-  preload: true,
+  // Not preloaded on purpose: three parallel font preloads on slow connections pushed the main
+  // Hanken file past first paint (headline re-wrap, CLS 0.17). Labels are short single lines with
+  // a metric-matched fallback, so their swap doesn't move anything.
+  preload: false,
   adjustFontFallback: true,
 });

@@ -85,7 +85,8 @@ const intro = (P: { n: number; aspect: number; b64: string }, caption: string) =
       g!.fill();
     }
     g!.globalAlpha = 1;
-    const ready = fontsOk && loaded && heroOk;
+    // Reduced motion: no 3D to wait for, just fonts + page.
+    const ready = fontsOk && loaded && (heroOk || reduce);
     if (!ending && t >= MIN && (ready || (fontsOk && loaded && t >= 1300) || t >= MAX)) end();
     if (ending && k >= 1) return finish();
     raf = requestAnimationFrame(draw);

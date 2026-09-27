@@ -7,6 +7,7 @@ const p = await b.newPage({ viewport: { width: 1440, height: 900 } });
 const errs = [];
 p.on("pageerror", (e) => errs.push(e.message));
 await p.goto(base + "/en", { waitUntil: "networkidle" });
+await p.waitForFunction(() => !document.getElementById("ph-intro"), null, { timeout: 6000 }).catch(() => {}); // intro loader (first visit)
 await p.evaluate(() => (window.__marker = 1));
 const checks = [];
 async function go(sel, expectPath, hash) {

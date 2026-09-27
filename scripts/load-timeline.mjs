@@ -5,13 +5,15 @@
 // section by section (one every 2.5 s). Everything is timed from navigation start.
 import { chromium, devices } from "playwright";
 import { writeFileSync } from "node:fs";
-const [base, path = "/en", profile = "desktop", out] = process.argv.slice(2);
+const [base, path = "/en", profile = "desktop", out, net = "slow4g"] = process.argv.slice(2);
+// SMOOTH=1: scroll like a reader (300 px every 120 ms) instead of jumping section to section.
+const SMOOTH = process.env.SMOOTH === "1";
 const b = await chromium.launch({ channel: "chrome" });
 const ctx = await b.newContext(profile === "mobile" ? { ...devices["Pixel 7"] } : { viewport: { width: 1440, height: 900 } });
 const p = await ctx.newPage();
 const cdp = await ctx.newCDPSession(p);
 await cdp.send("Network.enable");
-await cdp.send("Network.emulateNetworkConditions", { offline: false, latency: 150, downloadThroughput: (1.6 * 1024 * 1024) / 8, uploadThroughput: (750 * 1024) / 8 });
+if (net === "slow4g") await cdp.send("Network.emulateNetworkConditions", { offline: false, latency: 150, downloadThroughput: (1.6 * 1024 * 1024) / 8, uploadThroughput: (750 * 1024) / 8 });
 if (profile === "mobile") await cdp.send("Emulation.setCPUThrottlingRate", { rate: 4 });
 
 await p.addInitScript(() => {
@@ -29,6 +31,7 @@ await p.addInitScript(() => {
       T.shifts.push({ t: Math.round(e.startTime), v: +e.value.toFixed(4), src: (e.sources || []).map((s) => (s.node ? `${s.node.nodeName}${s.node.id ? "#" + s.node.id : ""}.${(s.node.className || "").toString().slice(0, 24)} in ${s.node.closest ? where(s.node) : "?"}` : "?")).slice(0, 3) });
     }),
   ).observe({ type: "layout-shift", buffered: true });
+  addEventListener("ph:intro-done", () => T.events.push({ t: now(), kind: "intro-done" }));
   document.fonts.addEventListener("loadingdone", (e) => e.fontfaces.forEach((f) => T.fonts.push({ t: now(), f: `${f.family.slice(0, 22)} ${f.weight} ${f.style}` })));
   const mo = new MutationObserver((muts) => {
     for (const m of muts) {
@@ -58,6 +61,13 @@ await p.waitForTimeout(1500);
 const secs = await p.evaluate(() => [...document.querySelectorAll("main section[id]")].filter((s) => !s.parentElement.closest("section[id]")).map((s) => s.id));
 const enters = [];
 for (const id of secs) {
+  if (SMOOTH) {
+    const target = await p.evaluate((id) => document.getElementById(id).getBoundingClientRect().top + scrollY - innerHeight * 0.25, id);
+    for (let y = await p.evaluate(() => scrollY); y < target - 300; y += 300) {
+      await p.evaluate((yy) => window.scrollTo(0, yy), y);
+      await p.waitForTimeout(120);
+    }
+  }
   const tEnter = await p.evaluate((id) => { const el = document.getElementById(id); window.scrollTo(0, el.getBoundingClientRect().top + scrollY - innerHeight * 0.25); return Math.round(performance.now()); }, id);
   enters.push({ sec: id, t: tEnter });
   await p.waitForTimeout(id === "how-it-works" ? 4000 : 2500);
@@ -69,7 +79,9 @@ await b.close();
 
 const firstOf = (kind, sec) => tl.events.filter((e) => e.kind === kind && (!sec || e.sec === sec)).map((e) => e.t).sort((a, c) => a - c)[0];
 const fcp = firstOf("first-contentful-paint");
-console.log(`\n=== ${base}${path} · ${profile} · cold cache · slow 4G${profile === "mobile" ? " · 4× CPU" : ""}`);
+console.log(`\n=== ${base}${path} · ${profile} · cold cache · ${net === "slow4g" ? "slow 4G" : "unthrottled"}${profile === "mobile" ? " · 4× CPU" : ""}${SMOOTH ? " · reading scroll" : ""}`);
+const introDone = tl.events.find((e) => e.kind === "intro-done")?.t;
+if (introDone) console.log(`Intro ended @${introDone}`);
 console.log(`FCP ${fcp} ms · LCP ${tl.lcp.at(-1)?.t} ms (${tl.lcp.at(-1)?.el}) · DOMContentLoaded ${firstOf("DOMContentLoaded")} · load ${firstOf("load")}`);
 console.log(`Fonts loaded: ${tl.fonts.map((f) => `${f.f} @${f.t}`).join(" · ") || "(none reported)"}`);
 const cls = tl.shifts.reduce((a, s) => a + s.v, 0);
