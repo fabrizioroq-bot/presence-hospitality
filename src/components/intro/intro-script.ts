@@ -38,7 +38,8 @@ const intro = (P: { n: number; aspect: number; b64: string }, caption: string) =
 
   // Targets
   const bin = atob(P.b64);
-  const dpr = Math.min(devicePixelRatio || 1, 2);
+  // Capped resolution: the canvas is redrawn every frame, keep it cheap on phones and software GL.
+  const dpr = Math.min(devicePixelRatio || 1, 1.5);
   let W = 0;
   let H = 0;
   let ww = 0;
@@ -56,32 +57,42 @@ const intro = (P: { n: number; aspect: number; b64: string }, caption: string) =
   addEventListener("resize", size);
   let seed = 11;
   const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
-  const pts: { tx: number; ty: number; sx: number; sy: number; d: number; r: number; warm: boolean; ph: number }[] = [];
+  const ease = (x: number) => 1 - Math.pow(1 - x, 3);
+  const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
+  // Colour groups (drawn as one path each → ~18 fills per frame instead of one per dot):
+  // 6 steps of deep blue → holo cyan across the word, plus warm sparks; 3 twinkle phases.
+  const COLS = [0, 1, 2, 3, 4, 5].map((k) => {
+    const x = k / 5;
+    return `rgb(${Math.round(lerp(23, 10, x))},${Math.round(lerp(71, 123, x))},${Math.round(lerp(166, 163, x))})`;
+  });
+  COLS.push("#F5A94A");
+  type Pt = { tx: number; ty: number; sx: number; sy: number; d: number; r: number };
+  const groups: Pt[][] = Array.from({ length: COLS.length * 3 }, () => []);
   for (let i = 0; i < P.n; i++) {
     const tx = bin.charCodeAt(i * 2) / 255;
     const ty = bin.charCodeAt(i * 2 + 1) / 255;
-    pts.push({ tx, ty, sx: 0.5 + (rnd() - 0.5) * 0.5, sy: 1.15 + rnd() * 0.25, d: tx * 180 + rnd() * 160, r: 0.8 + rnd() * 0.9, warm: rnd() < 0.05, ph: rnd() * 6.28 });
+    const c = rnd() < 0.05 ? 6 : Math.min(5, Math.floor(tx * 6));
+    groups[c * 3 + Math.floor(rnd() * 3)].push({ tx, ty, sx: 0.5 + (rnd() - 0.5) * 0.5, sy: 1.15 + rnd() * 0.25, d: tx * 180 + rnd() * 160, r: 0.8 + rnd() * 0.9 });
   }
-  const ease = (x: number) => 1 - Math.pow(1 - x, 3);
-  const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
-  // deep blue → holo cyan across the word (the site's accent), a few warm sparks
-  const col = (x: number) => `rgb(${Math.round(lerp(23, 10, x))},${Math.round(lerp(71, 123, x))},${Math.round(lerp(166, 163, x))})`;
 
   const draw = (now: number) => {
     const t = now - t0;
     g!.clearRect(0, 0, W, H);
     const k = ending ? Math.min(1, (now - ending) / OUT) : 0;
     const rad = (ww / 760) * 1.55;
-    for (const p of pts) {
-      const f = reduce ? 1 : ease(Math.min(1, Math.max(0, (t - p.d) / 850)));
-      const x = wx + lerp(p.sx * (W - wx * 2), p.tx * ww, f) + (reduce ? 0 : Math.sin(t / 300 + p.ph) * (1 - f) * 18 * dpr);
-      let y = wy + lerp(p.sy * H - wy, (p.ty * ww) / P.aspect, f);
-      y -= reduce ? 0 : k * k * (40 + p.ph * 14) * dpr; // dissolve upwards
-      const tw = 0.75 + 0.25 * Math.sin(t / 220 + p.ph * 3); // twinkle
-      g!.globalAlpha = (0.25 + 0.75 * f) * tw * (1 - k);
-      g!.fillStyle = p.warm ? "#F5A94A" : col(p.tx);
+    for (let gi = 0; gi < groups.length; gi++) {
+      const ph = (gi % 3) * 2.1;
+      g!.globalAlpha = Math.max(0, (0.8 + 0.2 * Math.sin(t / 220 + ph)) * (1 - k)); // twinkle per group
+      g!.fillStyle = COLS[Math.floor(gi / 3)];
       g!.beginPath();
-      g!.arc(x, y, rad * p.r * (0.6 + 0.4 * f), 0, 6.283);
+      for (const p of groups[gi]) {
+        const f = reduce ? 1 : ease(Math.min(1, Math.max(0, (t - p.d) / 850)));
+        const x = wx + lerp(p.sx * (W - wx * 2), p.tx * ww, f) + (reduce ? 0 : Math.sin(t / 300 + p.d) * (1 - f) * 18 * dpr);
+        const y = wy + lerp(p.sy * H - wy, (p.ty * ww) / P.aspect, f) - (reduce ? 0 : k * k * (40 + p.d * 0.1) * dpr); // dissolve upwards
+        const r = rad * p.r * (0.45 + 0.55 * f);
+        g!.moveTo(x + r, y);
+        g!.arc(x, y, r, 0, 6.283);
+      }
       g!.fill();
     }
     g!.globalAlpha = 1;
