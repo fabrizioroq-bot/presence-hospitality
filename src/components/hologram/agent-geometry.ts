@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { fetchBin } from "@/lib/bin-cache";
 
 // Must match BOUNDS in scripts/generate-agent-points.ts.
 const MIN = [-0.6, 0, -0.6];
@@ -7,7 +8,7 @@ const STRIDE = 8;
 
 /** Fetches a quantised point file and decodes the first `count` points. */
 export async function loadAgentGeometry(url: string, count: number) {
-  const buf = await (await fetch(url)).arrayBuffer();
+  const buf = await fetchBin(url);
   const view = new DataView(buf);
   const n = Math.min(count, Math.floor(buf.byteLength / STRIDE));
   const pos = new Float32Array(n * 3);

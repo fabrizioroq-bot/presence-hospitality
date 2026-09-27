@@ -57,7 +57,7 @@ export function HoloStage({
     const el = fig.current;
     if (!el || !hasWebGL2()) return;
     // Assets download ~2.5 screens ahead (while the previous section is being read); the
-    // scene mounts one screen ahead so it has painted before the stage scrolls in.
+    // scene mounts 1.5 screens ahead so it has painted before the stage scrolls in.
     const tier = detectTier();
     const pre = new IntersectionObserver(
       ([e]) => {
@@ -74,7 +74,7 @@ export function HoloStage({
         setLoad(true);
         near.disconnect();
       },
-      { rootMargin: "100% 0px" },
+      { rootMargin: "150% 0px" },
     );
     let wasHidden = true;
     const vis = new IntersectionObserver(

@@ -5,7 +5,7 @@ import type { CSSProperties, ReactNode } from "react";
  * triggered by <RevealObserver> (one IntersectionObserver for the whole page).
  *   data-rv-trigger   element that starts its reveals when `data-rv-amount` of it is visible
  *   data-rv-load      start on load instead of on view (above the fold)
-soft|soft|word|line"   item style (see globals.css); stagger via --rv-i/--rv-step/--rv-delay
+ *   data-rv="fade|soft|word|line"   item style (see globals.css); stagger via --rv-i/--rv-step/--rv-delay
  * Without JS, or with reduced motion, everything renders in its final state.
  */
 

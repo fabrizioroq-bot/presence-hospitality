@@ -1,17 +1,15 @@
 "use client";
 
+import { fetchBin } from "@/lib/bin-cache";
 import { tierConfig, type Tier } from "@/lib/perf-tier";
 
 /**
  * Asset preloading, so sections are ready before the reader reaches them.
- * Binaries are fetched at low priority into the HTTP cache (served `immutable`), so the scenes'
- * own fetch() later is instant; modules are imported (downloaded + evaluated) ahead of mounting.
+ * Point clouds go through the shared bin cache (the scenes reuse the same download); modules are
+ * imported (downloaded + evaluated) ahead of mounting.
  */
-const fetched = new Set<string>();
 export function prefetch(url: string) {
-  if (fetched.has(url)) return;
-  fetched.add(url);
-  fetch(url, { priority: "low" } as RequestInit).catch(() => fetched.delete(url));
+  fetchBin(url, "low").catch(() => {});
 }
 
 export const loadHeroCanvas = () => import("@/components/hologram/HeroCanvas");

@@ -48,7 +48,6 @@ await p.addInitScript(() => {
   }, 100);
 });
 
-const t0 = Date.now();
 await p.goto(base + path, { waitUntil: "commit", timeout: 90000 });
 await p.waitForTimeout(1000);
 if (profile === "mobile") await p.touchscreen.tap(5, 300).catch(() => {});
