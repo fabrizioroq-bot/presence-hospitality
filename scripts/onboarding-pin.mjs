@@ -14,7 +14,7 @@ const pinDist = info.height - +h;
 console.log(`${engine} ${w}×${h}: pin track ${Math.round(info.height)}px → pinned for ${Math.round(pinDist)}px (${(pinDist / +h).toFixed(2)} screens)`);
 for (let y = info.top - 1200; y < info.top; y += 300) { await p.evaluate((yy) => window.scrollTo(0, yy), y); await p.waitForTimeout(60); }
 let i = 0;
-for (const f of [0, 0.25, 0.5, 0.75, 0.86, 1.0, 1.25]) {
+for (const f of [0, 0.25, 0.5, 0.76, 0.9, 1.0, 1.15]) {
   const y = info.top + pinDist * f;
   await p.evaluate((yy) => window.scrollTo(0, yy), y);
   await p.waitForTimeout(700);

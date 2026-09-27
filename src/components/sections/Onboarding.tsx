@@ -38,7 +38,7 @@ export async function Onboarding() {
               <p className="text-label text-ink-700">{t("eyebrow")}</p>
               <Headline id="onboarding-title" raw={t.raw("title") as string} className="text-display-xl pin:text-display-lg" />
               <Reveal>
-                <p className="max-w-[52ch] text-body-lg text-ink-700">{t("sub")}</p>
+                <p className="onb-sub max-w-[52ch] text-body-lg text-ink-700">{t("sub")}</p>
               </Reveal>
             </div>
           }

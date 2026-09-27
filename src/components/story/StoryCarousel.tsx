@@ -1,7 +1,13 @@
 "use client";
 
 import { useReducedMotion } from "motion/react";
-import { useCallback, useEffect, useRef, useState, type KeyboardEvent } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  type KeyboardEvent,
+} from "react";
 import { cn } from "@/lib/cn";
 import { LobbySketch, type SketchLabels } from "./LobbySketch";
 
@@ -19,23 +25,38 @@ export type CarouselLabels = {
   sketch: SketchLabels;
 };
 
-const easeInOut = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+const easeInOut = (t: number) =>
+  t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2;
 
-/** Mobile (and reduced-motion) guest journey: one animated lobby scene + a swipeable step carousel. */
+const AUTOPLAY_MS = 3000; // time on each step
+const RESUME_MS = 6000; // idle time after a user interaction before autoplay resumes
+
+/**
+ * Mobile (and reduced-motion) guest journey: one animated lobby scene + a swipeable step carousel.
+ * Autoplays every 3 s while in view (never with reduced motion); any touch, swipe, key or focus
+ * pauses it, and it resumes after 6 s idle.
+ */
 export function StoryCarousel({ labels }: { labels: CarouselLabels }) {
   const n = labels.steps.length;
   const [i, setI] = useState(0);
   const [s, setS] = useState(STILL[0]);
   const sRef = useRef(STILL[0]);
+  const jumpRef = useRef(false); // next step change jumps instead of tweening (loop back to 1)
+  const region = useRef<HTMLDivElement>(null);
   const track = useRef<HTMLDivElement>(null);
   const reduce = useReducedMotion();
+  const [inView, setInView] = useState(false);
+  const [paused, setPaused] = useState(false);
+  const [fading, setFading] = useState(false);
+  const autoplay = !reduce && inView && !paused;
 
   // Tween the scene towards the active step.
   useEffect(() => {
     const from = sRef.current;
     const to = STILL[i];
     let raf = 0;
-    if (reduce) {
+    if (reduce || jumpRef.current) {
+      jumpRef.current = false;
       raf = requestAnimationFrame(() => {
         sRef.current = to;
         setS(to);
@@ -75,15 +96,85 @@ export function StoryCarousel({ labels }: { labels: CarouselLabels }) {
   }, [n]);
 
   const go = useCallback(
-    (idx: number) => {
+    (idx: number, instant = false) => {
       const el = track.current;
       const target = Math.max(0, Math.min(n - 1, idx));
       if (!el) return;
-      el.scrollTo({ left: target * el.clientWidth, behavior: reduce ? "auto" : "smooth" });
+      el.scrollTo({
+        left: target * el.clientWidth,
+        behavior: reduce || instant ? "auto" : "smooth",
+      });
       setI(target);
     },
     [n, reduce],
   );
+
+  // Autoplay only while at least half the carousel is on screen and the tab is visible.
+  useEffect(() => {
+    const el = region.current;
+    if (!el) return;
+    let visible = false;
+    const update = () => setInView(visible && !document.hidden);
+    const io = new IntersectionObserver(
+      ([e]) => {
+        visible = e.isIntersecting;
+        update();
+      },
+      { threshold: 0.5 },
+    );
+    io.observe(el);
+    document.addEventListener("visibilitychange", update);
+    return () => {
+      io.disconnect();
+      document.removeEventListener("visibilitychange", update);
+    };
+  }, []);
+
+  // Advance every AUTOPLAY_MS; after the last step, fade and jump back to the first.
+  useEffect(() => {
+    if (!autoplay) return;
+    let fadeTimer: ReturnType<typeof setTimeout> | undefined;
+    const t = setTimeout(() => {
+      if (i < n - 1) {
+        go(i + 1);
+      } else {
+        setFading(true);
+        fadeTimer = setTimeout(() => {
+          jumpRef.current = true;
+          go(0, true);
+          setFading(false);
+        }, 250);
+      }
+    }, AUTOPLAY_MS);
+    return () => {
+      clearTimeout(t);
+      clearTimeout(fadeTimer);
+    };
+  }, [autoplay, i, n, go]);
+
+  // Any user interaction pauses autoplay; it resumes after RESUME_MS without interaction.
+  useEffect(() => {
+    const el = region.current;
+    if (!el || reduce) return;
+    let resume: ReturnType<typeof setTimeout> | undefined;
+    const pause = () => {
+      setPaused(true);
+      clearTimeout(resume);
+      resume = setTimeout(() => setPaused(false), RESUME_MS);
+    };
+    const evs = [
+      "pointerdown",
+      "touchstart",
+      "wheel",
+      "keydown",
+      "focusin",
+    ] as const;
+    evs.forEach((ev) => el.addEventListener(ev, pause, { passive: true }));
+    return () => {
+      clearTimeout(resume);
+      evs.forEach((ev) => el.removeEventListener(ev, pause));
+    };
+  }, [reduce]);
 
   const onKey = (e: KeyboardEvent) => {
     if (e.key === "ArrowRight") {
@@ -96,9 +187,29 @@ export function StoryCarousel({ labels }: { labels: CarouselLabels }) {
   };
 
   return (
-    <div role="region" aria-roledescription="carousel" aria-label={labels.region} onKeyDown={onKey} className="flex flex-col gap-5">
-      <div className="relative overflow-hidden rounded-lg bg-night-900 ring-1 ring-white/5">
-        <div aria-hidden className="absolute inset-0" style={{ background: "radial-gradient(70% 55% at 55% 100%, rgba(47,127,208,0.18) 0%, rgba(18,20,23,0) 70%)" }} />
+    <div
+      ref={region}
+      role="region"
+      aria-roledescription="carousel"
+      aria-label={labels.region}
+      data-autoplay={autoplay ? "on" : paused ? "paused" : inView ? "idle" : "off-screen"}
+      onKeyDown={onKey}
+      className="flex flex-col gap-5"
+    >
+      <div
+        className={cn(
+          "relative overflow-hidden rounded-lg bg-night-900 ring-1 ring-white/5 transition-opacity duration-200",
+          fading && "opacity-40",
+        )}
+      >
+        <div
+          aria-hidden
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(70% 55% at 55% 100%, rgba(47,127,208,0.18) 0%, rgba(18,20,23,0) 70%)",
+          }}
+        />
         <LobbySketch s={s} labels={labels.sketch} className="relative" />
         <span className="absolute top-3 left-4 text-label text-paper-300">
           {String(i + 1).padStart(2, "0")} / {String(n).padStart(2, "0")}
@@ -110,7 +221,7 @@ export function StoryCarousel({ labels }: { labels: CarouselLabels }) {
         ref={track}
         tabIndex={0}
         className="no-scrollbar -mx-4 flex snap-x snap-mandatory overflow-x-auto overscroll-x-contain rounded-md focus-visible:outline-offset-[-2px]"
-        aria-live="polite"
+        aria-live={autoplay ? "off" : "polite"}
       >
         {labels.steps.map((st, idx) => (
           <div
@@ -131,8 +242,25 @@ export function StoryCarousel({ labels }: { labels: CarouselLabels }) {
       </div>
 
       <div className="flex items-center justify-between gap-4">
-        <button type="button" onClick={() => go(i - 1)} disabled={i === 0} aria-label={labels.prev} className="grid h-11 w-11 place-items-center rounded-pill ring-1 ring-line-mist transition-opacity disabled:opacity-35">
-          <svg aria-hidden viewBox="0 0 16 16" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round"><path d="M13 8H3M7 4 3 8l4 4" /></svg>
+        <button
+          type="button"
+          onClick={() => go(i - 1)}
+          disabled={i === 0}
+          aria-label={labels.prev}
+          className="grid h-11 w-11 place-items-center rounded-pill ring-1 ring-line-mist transition-opacity disabled:opacity-35"
+        >
+          <svg
+            aria-hidden
+            viewBox="0 0 16 16"
+            className="h-4 w-4"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={1.75}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M13 8H3M7 4 3 8l4 4" />
+          </svg>
         </button>
         <div className="flex items-center gap-2">
           {labels.steps.map((st, idx) => (
@@ -144,14 +272,53 @@ export function StoryCarousel({ labels }: { labels: CarouselLabels }) {
               aria-current={idx === i ? "step" : undefined}
               className="grid h-11 w-6 place-items-center"
             >
-              <span className={cn("block h-2 rounded-full transition-all duration-300", idx === i ? "w-6 bg-ink-900" : "w-2 bg-line-mist/60")} />
+              <span
+                className={cn(
+                  "block h-2 rounded-full transition-all duration-300",
+                  idx === i ? "w-6 bg-ink-900" : "w-2 bg-line-mist/60",
+                )}
+              />
             </button>
           ))}
         </div>
-        <button type="button" onClick={() => go(i + 1)} disabled={i === n - 1} aria-label={labels.next} className="grid h-11 w-11 place-items-center rounded-pill bg-ink-900 text-paper-50 transition-opacity disabled:opacity-35">
-          <svg aria-hidden viewBox="0 0 16 16" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round"><path d="M3 8h10M9 4l4 4-4 4" /></svg>
+        <button
+          type="button"
+          onClick={() => go(i + 1)}
+          disabled={i === n - 1}
+          aria-label={labels.next}
+          className="grid h-11 w-11 place-items-center rounded-pill bg-ink-900 text-paper-50 transition-opacity disabled:opacity-35"
+        >
+          <svg
+            aria-hidden
+            viewBox="0 0 16 16"
+            className="h-4 w-4"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth={1.75}
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="M3 8h10M9 4l4 4-4 4" />
+          </svg>
         </button>
       </div>
+
+      {/* Autoplay progress (time until the next step). Hidden with reduced motion. */}
+      {!reduce && (
+        <div
+          aria-hidden
+          className="relative -mt-2 h-0.5 overflow-hidden rounded-full bg-line-mist/30"
+        >
+          <span
+            key={`${i}-${autoplay}`}
+            className={cn(
+              "absolute inset-y-0 left-0 w-full origin-left rounded-full bg-ink-900",
+              autoplay ? "carousel-progress" : "scale-x-0",
+            )}
+            style={{ animationDuration: `${AUTOPLAY_MS}ms` }}
+          />
+        </div>
+      )}
     </div>
   );
 }
