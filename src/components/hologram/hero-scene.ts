@@ -111,7 +111,17 @@ export class HeroScene {
 
   private onGreet?: () => void;
 
-  constructor(tier: Tier, onLoaded: () => void, variant: SceneVariant = "hero", autoGreet = true, onGreet?: () => void) {
+  private startFormed: boolean | (() => boolean);
+
+  constructor(
+    tier: Tier,
+    onLoaded: () => void,
+    variant: SceneVariant = "hero",
+    autoGreet = true,
+    onGreet?: () => void,
+    formed: boolean | (() => boolean) = false,
+  ) {
+    this.startFormed = formed;
     this.variant = variant;
     this.autoGreet = autoGreet;
     this.onGreet = onGreet;
@@ -231,6 +241,7 @@ export class HeroScene {
 
   /** Re-run the formation (the agent re-forms from the emitter beam). */
   reform() {
+    this.startFormed = false;
     this.formationStart = null;
     this.agentMat.uniforms.uProgress.value = this.reduced ? 1 : 0;
   }
@@ -296,7 +307,11 @@ export class HeroScene {
     u.uDissolve.value =
       reduced || this.variant === "stage" ? 0 : THREE.MathUtils.smoothstep(f.scroll, 0.3, 0.85);
     if (this.agent && !reduced) {
-      if (this.formationStart === null) this.formationStart = time;
+      // Replacing a poster that's on screen: appear fully formed instead of re-forming.
+      if (this.formationStart === null) {
+        const f = typeof this.startFormed === "function" ? this.startFormed() : this.startFormed;
+        this.formationStart = f ? time - FORMATION_S : time;
+      }
       u.uProgress.value = easeOutExpo(Math.min(1, (time - this.formationStart) / FORMATION_S));
     }
 

@@ -1,7 +1,7 @@
 /** The vertical "HOTEL" neon from the pitch photo, drawn in code. Flickers once when it comes into view (CSS, see globals.css). */
 export function NeonSign({ word = "HOTEL" }: { word?: string }) {
   return (
-    <div aria-hidden className="flex flex-col items-center gap-2" data-rv-trigger="" data-rv-amount="0.6" data-rv="neon">
+    <div aria-hidden className="flex flex-col items-center gap-2" data-rv-trigger="" suppressHydrationWarning data-rv-amount="0.6" data-rv="neon">
       {word.split("").map((c, i) => (
         <span
           key={i}

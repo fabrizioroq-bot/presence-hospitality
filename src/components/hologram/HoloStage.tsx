@@ -6,10 +6,11 @@ import { BorderBeam } from "@/components/ui/BorderBeam";
 import { DecryptedText } from "@/components/ui/DecryptedText";
 import { cx as cn } from "@/lib/cx";
 import { useNear } from "@/lib/hooks";
+import { loadHeroCanvas, preloadHologram } from "@/lib/preload";
 import { detectTier, hasWebGL2, type Tier } from "@/lib/perf-tier";
 import type { PointerState } from "./hero-scene";
 
-const HeroCanvas = dynamic(() => import("./HeroCanvas"), { ssr: false });
+const HeroCanvas = dynamic(loadHeroCanvas, { ssr: false });
 
 const MAX_YAW = (35 * Math.PI) / 180;
 
@@ -40,7 +41,13 @@ export function HoloStage({
   const [active, setActive] = useState(false);
   const [ready, setReady] = useState(false);
   // Unmount the scene when the stage is far off-screen; the poster returns until it repaints.
-  const onFar = useCallback(() => setReady(false), []);
+  const readyRef = useRef(false);
+  const visibleRef = useRef(false);
+  const onFar = useCallback(() => {
+    readyRef.current = false;
+    setReady(false);
+  }, []);
+  const [formed] = useState(() => () => visibleRef.current);
   const near = useNear(fig, "150% 0px", onFar);
   const [reformKey, setReformKey] = useState(0);
   const [dragging, setDragging] = useState(false);
@@ -49,31 +56,47 @@ export function HoloStage({
   useEffect(() => {
     const el = fig.current;
     if (!el || !hasWebGL2()) return;
+    // Assets download ~2.5 screens ahead (while the previous section is being read); the
+    // scene mounts one screen ahead so it has painted before the stage scrolls in.
+    const tier = detectTier();
+    const pre = new IntersectionObserver(
+      ([e]) => {
+        if (!e.isIntersecting) return;
+        preloadHologram(tier);
+        pre.disconnect();
+      },
+      { rootMargin: "250% 0px" },
+    );
     const near = new IntersectionObserver(
       ([e]) => {
         if (!e.isIntersecting) return;
-        setTier(detectTier());
+        setTier(tier);
         setLoad(true);
         near.disconnect();
       },
-      { rootMargin: "60% 0px" },
+      { rootMargin: "100% 0px" },
     );
     let wasHidden = true;
     const vis = new IntersectionObserver(
       ([e]) => {
         const on = e.isIntersecting && !document.hidden;
         setActive(on);
+        visibleRef.current = e.intersectionRatio > 0.35;
         if (e.intersectionRatio > 0.35 && wasHidden) {
           wasHidden = false;
-          setReformKey((k) => k + 1);
+          // Re-form from the beam on entry — only if the scene is ready (otherwise the poster
+          // shows and the scene takes over fully formed).
+          if (readyRef.current) setReformKey((k) => k + 1);
         }
         if (!e.isIntersecting) wasHidden = true;
       },
       { threshold: [0, 0.35] },
     );
+    pre.observe(el);
     near.observe(el);
     vis.observe(el);
     return () => {
+      pre.disconnect();
       near.disconnect();
       vis.disconnect();
     };
@@ -183,7 +206,11 @@ export function HoloStage({
             pointer={pointer}
             scroll={noScroll}
             active={active}
-            onReady={() => setReady(true)}
+            onReady={() => {
+              readyRef.current = true;
+              setReady(true);
+            }}
+            formed={formed}
             variant="stage"
             yaw={yaw}
             reformKey={reformKey}

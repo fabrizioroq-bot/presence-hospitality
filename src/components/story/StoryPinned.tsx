@@ -5,13 +5,12 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { interp, trackScroll, Value } from "@/lib/anim";
 import { cx as cn } from "@/lib/cx";
 import { useNear } from "@/lib/hooks";
+import { afterLoadIdle, loadStoryCanvas, preloadStory } from "@/lib/preload";
 import { hasWebGL2 } from "@/lib/perf-tier";
 import { FLOOR, DOOR, HOLOBOX, KIOSK, STEPS, pctX, pctY, timeline } from "./layout";
 import { LobbySketch } from "./LobbySketch";
 
-const loadStoryCanvas = () => import("./StoryCanvas");
 const StoryCanvas = dynamic(loadStoryCanvas, { ssr: false });
-const STORY_ASSETS = ["/hologram/guest-9k.bin", "/hologram/agent-12k.bin"];
 
 export type StoryLabels = {
   step: string;
@@ -133,20 +132,10 @@ export function StoryPinned({ labels }: { labels: StoryLabels }) {
       window.matchMedia("(min-width: 1024px) and (prefers-reduced-motion: no-preference)").matches && hasWebGL2();
     if (!ok) return;
 
-    let prefetched = false;
-    const prefetch = () => {
-      if (prefetched) return;
-      prefetched = true;
-      loadStoryCanvas();
-      STORY_ASSETS.forEach((url) => fetch(url).catch(() => {}));
-    };
-    const events = ["pointermove", "wheel", "touchstart", "keydown", "scroll"] as const;
-    const onFirst = () => {
-      events.forEach((ev) => window.removeEventListener(ev, onFirst));
-      if ("requestIdleCallback" in window) window.requestIdleCallback(prefetch, { timeout: 1500 });
-      else setTimeout(prefetch, 300);
-    };
-    events.forEach((ev) => window.addEventListener(ev, onFirst, { passive: true }));
+    // Assets download while the hero is still on screen (right after load), so the scene is
+    // ready before the reader reaches the story.
+    const prefetch = preloadStory;
+    afterLoadIdle(prefetch);
 
     // Navbar / in-page links to this section: start immediately.
     const onClick = (e: MouseEvent) => {
@@ -169,7 +158,6 @@ export function StoryPinned({ labels }: { labels: StoryLabels }) {
     );
     near.observe(el);
     return () => {
-      events.forEach((ev) => window.removeEventListener(ev, onFirst));
       document.removeEventListener("click", onClick, true);
       near.disconnect();
     };

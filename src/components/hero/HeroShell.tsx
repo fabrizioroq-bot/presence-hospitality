@@ -6,8 +6,9 @@ import type { PointerState } from "@/components/hologram/hero-scene";
 import { spring, trackScroll, Value } from "@/lib/anim";
 import { useNear, useReducedMotion } from "@/lib/hooks";
 import { detectTier, hasWebGL2, type Tier } from "@/lib/perf-tier";
+import { afterLoadIdle, interacted, introActive, loadHeroCanvas, preloadHologram } from "@/lib/preload";
 
-const HeroCanvas = dynamic(() => import("@/components/hologram/HeroCanvas"), { ssr: false });
+const HeroCanvas = dynamic(loadHeroCanvas, { ssr: false });
 
 type Ctx = { sx: Value; sy: Value; progress: Value; enabled: boolean };
 const ParallaxCtx = createContext<Ctx | null>(null);
@@ -59,35 +60,53 @@ export function HeroShell({ children, ...props }: ComponentProps<"section"> & { 
     };
   }, [sx, sy, reduce]);
 
-  // Decide whether/when to load WebGL: first interaction, or idle after load.
+  // WebGL: assets are fetched during the intro (first visit) or right after load; the scene
+  // mounts on the first interaction (also one made before hydration), or after a quiet 7 s.
+  // If the poster is already on screen when it mounts, the agent starts fully formed (no pop).
+  const [reformKey, setReformKey] = useState(0);
+  // Poster on screen (and no intro over it) when the point cloud arrives → appear formed.
+  const [formed] = useState(() => () => {
+    const r = ref.current?.getBoundingClientRect();
+    return !!r && r.bottom > 0 && r.top < window.innerHeight && !introActive();
+  });
   useEffect(() => {
     if (!hasWebGL2()) return;
     portalRef.current = ref.current?.querySelector<HTMLElement>("[data-portal]") ?? null;
+    const t = detectTier();
+    if (introActive()) preloadHologram(t);
+    else afterLoadIdle(() => preloadHologram(t));
 
     let done = false;
     const go = () => {
       if (done) return;
       done = true;
-      setTier(detectTier());
+      setTier(t);
       setLoad(true);
       cleanup();
     };
-    // Load on the first real interaction; otherwise after a long quiet delay. This keeps
-    // three.js parsing and shader compilation out of the initial load (TBT / LCP).
-    const events = ["pointermove", "pointerdown", "wheel", "scroll", "touchstart", "keydown"] as const;
-    events.forEach((ev) => window.addEventListener(ev, go, { once: true, passive: true }));
+    // The agent forms from the beam as the intro hands over to the page.
+    const onIntroDone = () => setReformKey((k) => k + 1);
+    window.addEventListener("ph:intro-done", onIntroDone);
     let timer: ReturnType<typeof setTimeout> | undefined;
     const schedule = () => {
       timer = setTimeout(go, 7000);
     };
-    if (document.readyState === "complete") schedule();
-    else window.addEventListener("load", schedule, { once: true });
+    // During the intro the scene loads behind it (first visit), so it's there at the handover.
+    if (interacted() || introActive()) go();
+    else {
+      window.addEventListener("ph:interact", go, { once: true });
+      if (document.readyState === "complete") schedule();
+      else window.addEventListener("load", schedule, { once: true });
+    }
     function cleanup() {
-      events.forEach((ev) => window.removeEventListener(ev, go));
+      window.removeEventListener("ph:interact", go);
       window.removeEventListener("load", schedule);
       clearTimeout(timer);
     }
-    return cleanup;
+    return () => {
+      cleanup();
+      window.removeEventListener("ph:intro-done", onIntroDone);
+    };
   }, []);
 
   // Pause rendering off-screen and in hidden tabs.
@@ -119,7 +138,12 @@ export function HeroShell({ children, ...props }: ComponentProps<"section"> & { 
               pointer={pointer}
               scroll={progress}
               active={active}
-              onReady={() => setReady(true)}
+              onReady={() => {
+                setReady(true);
+                window.dispatchEvent(new Event("ph:hero-ready"));
+              }}
+              formed={formed}
+              reformKey={reformKey}
             />
           </div>
         )}

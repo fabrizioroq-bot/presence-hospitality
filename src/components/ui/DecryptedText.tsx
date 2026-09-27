@@ -34,10 +34,16 @@ export function DecryptedText({
         .map((c, i) => (c === " " || i < revealed ? c : CHARS[Math.floor(Math.random() * CHARS.length)]))
         .join("");
 
+    // Text that is already on screen when the page loads stays as it is (a scramble at load reads
+    // as half-loaded); the decrypt plays when the text scrolls into view later.
+    let first = true;
     const io = new IntersectionObserver(
       ([entry]) => {
+        const wasFirst = first;
+        first = false;
         if (!entry.isIntersecting) return;
         io.disconnect();
+        if (wasFirst) return;
         setShown(scramble(0));
         timeout = setTimeout(() => {
           let revealed = 0;

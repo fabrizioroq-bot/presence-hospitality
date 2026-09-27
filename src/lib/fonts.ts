@@ -16,7 +16,9 @@ export const hankenItalic = Hanken_Grotesk({
   style: ["italic"],
   display: "swap",
   variable: "--font-hanken-italic",
-  preload: false,
+  // Preloaded: the emphasised phrase is in the hero H1 (no swap/reflow after first paint).
+  preload: true,
+  adjustFontFallback: true,
 });
 
 export const jetbrains = JetBrains_Mono({
@@ -24,5 +26,7 @@ export const jetbrains = JetBrains_Mono({
   weight: ["400", "500"],
   display: "swap",
   variable: "--font-jetbrains",
-  preload: false,
+  // Preloaded: labels and the HUD are above the fold on every page.
+  preload: true,
+  adjustFontFallback: true,
 });

@@ -37,19 +37,19 @@ export function PackagesBoard({ items, tabsLabel }: { items: PackageItem[]; tabs
   return (
     <>
       {/* ---------- Desktop board ---------- */}
-      <div className="hidden lg:block" data-rv-trigger="">
+      <div className="hidden lg:block" data-rv-trigger="" suppressHydrationWarning>
         <div className="relative grid grid-cols-4 gap-6">
           {/* Dashed connector, wiped in left → right (clip-path, since the dashes use stroke-dasharray). */}
           <div
             aria-hidden
-            data-rv="wipe"
+            suppressHydrationWarning data-rv="wipe"
             className="pointer-events-none absolute top-1/2 right-[-48px] left-0 h-px -translate-y-1/2"
             style={{ ...at(0), backgroundImage: "repeating-linear-gradient(90deg, var(--paper-300) 0 6px, transparent 6px 12px)" }}
           />
           {items.map((it, i) => (
             <span
               key={it.name}
-              data-rv="pop"
+              suppressHydrationWarning data-rv="pop"
               style={at(0.25 + i * 0.12)}
               className={cn(
                 "relative z-10 justify-self-start rounded-pill bg-holo-gradient px-6 py-3 text-heading-md text-ink-900 transition-shadow duration-300",
@@ -66,7 +66,7 @@ export function PackagesBoard({ items, tabsLabel }: { items: PackageItem[]; tabs
               key={it.name}
               onPointerEnter={() => setHover(i)}
               onPointerLeave={() => setHover(null)}
-              data-rv="rise"
+              suppressHydrationWarning data-rv="rise"
               style={at(0.7 + i * 0.1)}
               className={cn("relative px-8 py-10", i > 0 && "before:absolute before:inset-y-8 before:left-0 before:w-px before:bg-line-night")}
             >

@@ -28,11 +28,11 @@ export function AnimatedWords({
 }) {
   const style: Vars = { "--rv-step": `${step}s`, "--rv-delay": `${delay}s` };
   return (
-    <Comp id={id} className={className} style={style} data-rv-trigger="" data-rv-amount="0.5" data-rv-load={trigger === "load" ? "" : undefined}>
+    <Comp id={id} className={className} style={style} data-rv-trigger="" suppressHydrationWarning data-rv-amount="0.5" data-rv-load={trigger === "load" ? "" : undefined}>
       {words.map((w, i) => (
         <span key={i}>
           <span
-            data-rv="word"
+            suppressHydrationWarning data-rv="word"
             style={{ "--rv-i": i } as Vars}
             className={w.glued ? "inline-block hyphens-manual" : "inline-block whitespace-nowrap"}
           >

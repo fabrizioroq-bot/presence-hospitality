@@ -20,9 +20,11 @@ type Props = {
   yaw?: RefObject<number>;
   /** Increment to make the agent re-form from the beam. */
   reformKey?: number;
+  /** Asked when the point cloud has loaded: true = appear fully formed (the poster is on screen, so swap without re-forming). */
+  formed?: () => boolean;
 };
 
-function SceneDriver({ tier, portal, pointer, scroll, active, onReady, variant = "hero", yaw, reformKey = 0 }: Props) {
+function SceneDriver({ tier, portal, pointer, scroll, active, onReady, variant = "hero", yaw, reformKey = 0, formed }: Props) {
   const scene = useRef<HeroScene | null>(null);
   const readySent = useRef(false);
   const invalidate = useThree((s) => s.invalidate);
@@ -41,13 +43,15 @@ function SceneDriver({ tier, portal, pointer, scroll, active, onReady, variant =
         if (variant === "hero") sessionStorage.setItem("ph-greeted", "1");
       } catch {}
     };
-    const s = new HeroScene(tier, () => invalidate(), variant, autoGreet, onGreet);
+    const s = new HeroScene(tier, () => invalidate(), variant, autoGreet, onGreet, formed ?? false);
     scene.current = s;
     if (portal.current) s.measure(portal.current);
     return () => {
       s.dispose();
       scene.current = null;
     };
+    // `formed` only matters when the scene is created.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tier, portal, invalidate, variant]);
 
   useEffect(() => {

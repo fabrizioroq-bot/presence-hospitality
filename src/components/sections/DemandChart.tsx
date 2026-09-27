@@ -69,11 +69,13 @@ function Chart({
   // CSS reveal (see Reveal.tsx): lines draw in (pathLength 1 + dash offset), fills fade in.
   const draw = (delay: number, duration: number) => ({
     "data-rv": "draw",
+    suppressHydrationWarning: true,
     pathLength: 1,
     style: { "--rv-i": 0, "--rv-delay": `${delay}s`, "--rv-dur": `${duration}s` } as CSSProperties,
   });
   const fade = (delay: number) => ({
     "data-rv": "svgfade",
+    suppressHydrationWarning: true,
     style: { "--rv-i": 0, "--rv-delay": `${delay}s` } as CSSProperties,
   });
 
@@ -83,7 +85,7 @@ function Chart({
       className={className}
       role="img"
       aria-labelledby={`${id}-t ${id}-d`}
-      data-rv-trigger=""
+      data-rv-trigger="" suppressHydrationWarning
       data-rv-amount="0.4"
     >
       <title id={`${id}-t`}>{labels.title}</title>

@@ -4,7 +4,8 @@ import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { hanken, hankenItalic, jetbrains } from "@/lib/fonts";
-import { RevealObserver } from "@/components/providers/RevealObserver";
+import { BOOT_SCRIPT } from "@/lib/boot-script";
+import { Intro } from "@/components/intro/Intro";
 import { Grain } from "@/components/brand/Grain";
 import { SmoothScroll } from "@/components/providers/SmoothScroll";
 import { CursorGlow } from "@/components/ambient/CursorGlow";
@@ -40,9 +41,6 @@ export async function generateMetadata({
   };
 }
 
-// Before first paint: enable CSS reveals only when JS runs and motion is allowed (see Reveal.tsx).
-const REVEAL_BOOT = `if(!matchMedia("(prefers-reduced-motion: reduce)").matches)document.documentElement.classList.add("rv")`;
-
 export default async function LocaleLayout({
   children,
   params,
@@ -51,21 +49,22 @@ export default async function LocaleLayout({
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
   const cur = await getTranslations({ locale, namespace: "cursor" });
+  const hero = await getTranslations({ locale, namespace: "hero" });
 
   return (
     <html
       lang={locale}
       className={`${hanken.variable} ${hankenItalic.variable} ${jetbrains.variable}`}
-      // REVEAL_BOOT adds a class to <html> before hydration.
+      // BOOT_SCRIPT adds classes to <html> before hydration.
       suppressHydrationWarning
     >
       <head>
-        <script dangerouslySetInnerHTML={{ __html: REVEAL_BOOT }} />
+        <script dangerouslySetInnerHTML={{ __html: BOOT_SCRIPT }} />
       </head>
       <body>
+        <Intro caption={hero("eyebrow")} />
         {/* No NextIntlClientProvider: client components receive their strings as props. */}
         {children}
-        <RevealObserver />
         <Grain />
         <CursorGlow />
         <CursorRing labels={{ drag: cur("drag"), book: cur("book"), play: cur("play") }} />

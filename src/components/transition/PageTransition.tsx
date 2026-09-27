@@ -2,6 +2,8 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { detectTier, hasWebGL2 } from "@/lib/perf-tier";
+import { preloadHologram } from "@/lib/preload";
 import { resetScroll, scrollToHash } from "@/lib/smooth-scroll";
 
 const OUT_MS = 380;
@@ -55,6 +57,32 @@ export function PageTransition() {
     };
     document.addEventListener("click", onClick, true);
     return () => document.removeEventListener("click", onClick, true);
+  }, [router]);
+
+  // Preload the next page on intent (hover, touch, keyboard focus) for every internal link,
+  // including plain <a> (footer, CTAs) that next/link doesn't prefetch: its route data and code,
+  // plus the hero hologram when the link goes to Home.
+  useEffect(() => {
+    const done = new Set<string>();
+    const onIntent = (e: Event) => {
+      const a = (e.target as Element | null)?.closest?.("a[href]") as HTMLAnchorElement | null;
+      if (!a) return;
+      const url = new URL(a.href, location.href);
+      if (url.origin !== location.origin || !/^\/(en|nl)(\/|$)/.test(url.pathname) || url.pathname === location.pathname) return;
+      if (done.has(url.pathname)) return;
+      done.add(url.pathname);
+      router.prefetch(url.pathname);
+      if (/^\/(en|nl)\/?$/.test(url.pathname) && hasWebGL2()) preloadHologram(detectTier());
+    };
+    const opts = { capture: true, passive: true } as const;
+    document.addEventListener("pointerover", onIntent, opts);
+    document.addEventListener("touchstart", onIntent, opts);
+    document.addEventListener("focusin", onIntent, opts);
+    return () => {
+      document.removeEventListener("pointerover", onIntent, opts);
+      document.removeEventListener("touchstart", onIntent, opts);
+      document.removeEventListener("focusin", onIntent, opts);
+    };
   }, [router]);
 
   // New route rendered → position it, then lift the veil.
