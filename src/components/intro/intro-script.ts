@@ -23,7 +23,10 @@ const intro = (P: { n: number; aspect: number; b64: string }, caption: string) =
   document.body.prepend(el);
   const g = cv.getContext("2d");
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const t0 = performance.now();
+  // The veil (CSS) is up from the first frame; the particles start once the page underneath has
+  // had its first contentful paint, so the animation never delays FCP/LCP.
+  const boot = performance.now();
+  let t0 = 0;
   const MIN = reduce ? 500 : 1100;
   const MAX = reduce ? 1200 : 1500;
   const OUT = reduce ? 300 : 350;
@@ -77,6 +80,7 @@ const intro = (P: { n: number; aspect: number; b64: string }, caption: string) =
 
   const draw = (now: number) => {
     const t = now - t0;
+    const total = now - boot;
     g!.clearRect(0, 0, W, H);
     const k = ending ? Math.min(1, (now - ending) / OUT) : 0;
     const rad = (ww / 760) * 1.55;
@@ -98,7 +102,9 @@ const intro = (P: { n: number; aspect: number; b64: string }, caption: string) =
     g!.globalAlpha = 1;
     // Reduced motion: no 3D to wait for, just fonts + page.
     const ready = fontsOk && loaded && (heroOk || reduce);
+    // Hard cap measured from the moment the intro appeared (≤ ~1.85 s including the fade).
     if (!ending && t >= MIN && (ready || (fontsOk && loaded && t >= 1300) || t >= MAX)) end();
+    if (!ending && total >= MAX + 150) end();
     if (ending && k >= 1) return finish();
     raf = requestAnimationFrame(draw);
   };
@@ -117,7 +123,19 @@ const intro = (P: { n: number; aspect: number; b64: string }, caption: string) =
   };
   const skip = () => end();
   ["pointerdown", "keydown", "wheel", "touchstart"].forEach((e) => addEventListener(e, skip, { once: true, passive: true }));
-  raf = requestAnimationFrame(draw);
+  let started = false;
+  const start = () => {
+    if (started) return;
+    started = true;
+    t0 = performance.now();
+    raf = requestAnimationFrame(draw);
+  };
+  try {
+    new PerformanceObserver((l) => {
+      if (l.getEntries().some((e) => e.name === "first-contentful-paint")) start();
+    }).observe({ type: "paint", buffered: true });
+  } catch {}
+  setTimeout(start, 400); // fallback (no paint timing support / nothing contentful yet)
   // Safety: never leave the page covered (e.g. rAF throttled in a background tab).
   setTimeout(() => {
     if (document.getElementById("ph-intro")) finish();
