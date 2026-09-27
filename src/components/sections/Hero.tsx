@@ -1,4 +1,6 @@
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
+import { pagePath } from "@/i18n/paths";
+import type { Locale } from "@/i18n/routing";
 import { MistOrbs } from "@/components/brand/MistOrbs";
 import { HexMotif } from "@/components/brand/HexMotif";
 import { HoloboxPortal } from "@/components/hologram/HoloboxPortal";
@@ -11,6 +13,7 @@ import { HeroShell, Parallax } from "@/components/hero/HeroShell";
 export async function Hero() {
   const t = await getTranslations("hero");
   const c = await getTranslations("common");
+  const locale = (await getLocale()) as Locale;
 
   return (
     <HeroShell
@@ -38,7 +41,7 @@ export async function Hero() {
         <span className="font-semibold text-ink-900">[partner]</span>
       </p>
 
-      <div className="container-site grid items-center gap-12 lg:min-h-[calc(100svh-var(--nav-h)-60px)] lg:grid-cols-12 lg:gap-6">
+      <div className="container-site grid items-center gap-10 lg:min-h-[calc(100svh-var(--nav-h)-60px)] lg:grid-cols-12 lg:gap-6">
         <Parallax className="flex min-w-0 flex-col gap-8 lg:col-span-7 lg:pr-6" mouse={[-6, -4]} scroll={-70}>
           <p className="text-label text-ink-700">{t("eyebrow")}</p>
           <AnimatedWords
@@ -53,7 +56,7 @@ export async function Hero() {
               <p className="max-w-[52ch] text-body-lg text-ink-700">{t("lead")}</p>
             </RevealItem>
             <RevealItem soft className="flex flex-col gap-3 sm:flex-row sm:items-center">
-              <ButtonLink href="#demo" arrow>
+              <ButtonLink href={pagePath(locale, "/demo")} arrow>
                 {c("bookDemo")}
               </ButtonLink>
               <ButtonLink href="#how-it-works" variant="ghost">
@@ -71,7 +74,7 @@ export async function Hero() {
 
         <Parallax className="min-w-0 lg:col-span-5 lg:col-start-8" mouse={[14, 10]} scroll={60}>
           <HoloboxPortal
-            className="mx-auto h-[62svh] min-h-[420px] w-full lg:aspect-[3/4.4] lg:h-auto lg:max-h-[78svh] lg:min-h-0 lg:w-auto"
+            className="mx-auto h-[56svh] min-h-[370px] w-full lg:aspect-[3/4.4] lg:h-auto lg:max-h-[78svh] lg:min-h-0 lg:w-auto"
             hud={{ online: t("hudOnline"), route: t("hudRoute"), live: t("hudLive") }}
             description={t("portalAlt")}
           />

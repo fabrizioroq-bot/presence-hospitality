@@ -1,4 +1,6 @@
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
+import { pagePath } from "@/i18n/paths";
+import type { Locale } from "@/i18n/routing";
 import { AmbientDust } from "@/components/ambient/AmbientDust";
 import { MoodTransition } from "@/components/ambient/MoodTransition";
 import { ParallaxOrbs } from "@/components/ambient/ParallaxOrbs";
@@ -11,6 +13,7 @@ import { Reveal } from "@/components/ui/Reveal";
 export async function HowItWorks() {
   const t = await getTranslations("how");
   const c = await getTranslations("common");
+  const locale = (await getLocale()) as Locale;
   const n = [1, 2, 3, 4, 5, 6] as const;
   const labels: StoryLabels = {
     step: t("step"),
@@ -83,9 +86,10 @@ export async function HowItWorks() {
           />
         </div>
 
-        <div className="container-site flex flex-col items-start gap-4 pt-10 pb-20 sm:flex-row sm:items-center lg:pt-8 lg:pb-32">
+        {/* Mobile relies on the sticky "Book a demo" bar instead of repeating the CTA here. */}
+        <div className="container-site pb-14 lg:flex lg:items-center lg:gap-4 lg:pt-8 lg:pb-32 [&>*]:max-lg:hidden">
           <p className="text-heading-md">{t("ctaLead")}</p>
-          <ButtonLink href="#demo" arrow>
+          <ButtonLink href={pagePath(locale, "/demo")} arrow>
             {c("bookDemo")}
           </ButtonLink>
         </div>

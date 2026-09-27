@@ -31,12 +31,17 @@ export function RevealGroup({
   gap = 0.07,
   onLoad = false,
   delay = 0,
+  id,
+  tabIndex,
 }: {
   children: ReactNode;
   className?: string;
   gap?: number;
   onLoad?: boolean;
   delay?: number;
+  id?: string;
+  /** Set to 0 when the group is a mobile swipe row (keyboard access to the scroller). */
+  tabIndex?: number;
 }) {
   const variants = {
     hidden: {},
@@ -44,12 +49,12 @@ export function RevealGroup({
   };
   if (onLoad)
     return (
-      <m.div className={className} variants={variants} initial="hidden" animate="show">
+      <m.div id={id} tabIndex={tabIndex} className={className} variants={variants} initial="hidden" animate="show">
         {children}
       </m.div>
     );
   return (
-    <m.div className={className} variants={variants} initial="hidden" whileInView="show" viewport={inView}>
+    <m.div id={id} tabIndex={tabIndex} className={className} variants={variants} initial="hidden" whileInView="show" viewport={inView}>
       {children}
     </m.div>
   );

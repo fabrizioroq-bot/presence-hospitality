@@ -32,7 +32,7 @@ const DESKTOP: Variant = {
 };
 const MOBILE: Variant = {
   w: 640,
-  h: 360,
+  h: 270,
   tickEvery: 6,
   font: 22,
   stroke: 1.8,

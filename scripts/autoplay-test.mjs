@@ -42,6 +42,6 @@ for (const [name, launcher, device] of [["ios-safari", webkit, devices["iPhone 1
   await p2.locator('#how-it-works [aria-roledescription="carousel"]').scrollIntoViewIfNeeded();
   const r0 = await stepOf(p2);
   await p2.waitForTimeout(7000);
-  console.log(`${name} (reduced motion): step ${r0} → ${await stepOf(p2)} after 7 s, progress bar present: ${await p2.locator("#how-it-works .carousel-progress").count() > 0}`);
+  console.log(`${name} (reduced motion): step ${r0} → ${await stepOf(p2)} after 7 s, progress bar visible: ${await p2.locator("#how-it-works .carousel-progress").isVisible().catch(() => false)}`);
   await b2.close();
 }

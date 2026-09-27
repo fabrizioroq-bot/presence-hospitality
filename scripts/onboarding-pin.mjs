@@ -4,7 +4,7 @@ import { chromium, webkit } from "playwright";
 const [base, out, w = "1440", h = "900", engine = "chromium"] = process.argv.slice(2);
 const b = await (engine === "webkit" ? webkit.launch() : chromium.launch({ channel: "chrome" }));
 const p = await b.newPage({ viewport: { width: +w, height: +h } });
-await p.goto(base + "/en", { waitUntil: "networkidle" });
+await p.goto(base + (process.env.ONB_PATH ?? "/en/onboarding"), { waitUntil: "networkidle" });
 const info = await p.evaluate(() => {
   const track = document.querySelector("#onboarding .relative");
   const r = track.getBoundingClientRect();

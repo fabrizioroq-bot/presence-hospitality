@@ -7,7 +7,13 @@ import { cn } from "@/lib/cn";
  * Single-open accordion (WAI-ARIA disclosure pattern): real <button>s with aria-expanded /
  * aria-controls, answers in labelled regions. Height animates with the CSS grid-rows trick.
  */
-export function Accordion({ items }: { items: { id: string; q: string; a: string }[] }) {
+export function Accordion({
+  items,
+  headingLevel: H = "h3",
+}: {
+  items: { id: string; q: string; a: string }[];
+  headingLevel?: "h2" | "h3";
+}) {
   const [open, setOpen] = useState<string | null>(null);
   const uid = useId();
   return (
@@ -18,7 +24,7 @@ export function Accordion({ items }: { items: { id: string; q: string; a: string
         const panel = `${uid}-${it.id}-a`;
         return (
           <li key={it.id} className="border-b border-line-mist">
-            <h3>
+            <H>
               <button
                 id={btn}
                 type="button"
@@ -40,7 +46,7 @@ export function Accordion({ items }: { items: { id: string; q: string; a: string
                   </svg>
                 </span>
               </button>
-            </h3>
+            </H>
             <div
               id={panel}
               role="region"

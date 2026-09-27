@@ -32,7 +32,7 @@ try {
 
   // 1) Submit a lead through the public form
   const page = await b.newPage({ viewport: { width: 1440, height: 900 } });
-  await page.goto(`${base}/nl`, { waitUntil: "networkidle" });
+  await page.goto(`${base}/nl/demo`, { waitUntil: "networkidle" });
   await page.locator("#demo").scrollIntoViewIfNeeded();
   await page.fill("#demo-first_name", "E2E");
   await page.fill("#demo-last_name", "Tester");

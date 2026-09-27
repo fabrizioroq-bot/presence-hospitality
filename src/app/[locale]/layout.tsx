@@ -8,6 +8,7 @@ import { MotionProvider } from "@/components/providers/MotionProvider";
 import { Grain } from "@/components/brand/Grain";
 import { SmoothScroll } from "@/components/providers/SmoothScroll";
 import { CursorGlow } from "@/components/ambient/CursorGlow";
+import { PageTransition } from "@/components/transition/PageTransition";
 import { site } from "@/content/site";
 import "@/styles/globals.css";
 
@@ -37,7 +38,10 @@ export async function generateMetadata({
   };
 }
 
-export default async function LocaleLayout({ children, params }: LayoutProps<"/[locale]">) {
+export default async function LocaleLayout({
+  children,
+  params,
+}: LayoutProps<"/[locale]">) {
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
@@ -53,6 +57,7 @@ export default async function LocaleLayout({ children, params }: LayoutProps<"/[
         <Grain />
         <CursorGlow />
         <SmoothScroll />
+        <PageTransition />
       </body>
     </html>
   );

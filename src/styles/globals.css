@@ -556,6 +556,29 @@ select.demo-input option {
   }
 }
 
+/* Mobile swipe rows: a horizontal scroll-snap row below lg (next card peeks out); the element's
+   own grid/flex layout takes over from lg. Usage: class="swipe-row lg:grid …", children "swipe-item". */
+@media (max-width: 1023.98px) {
+  .swipe-row {
+    display: flex !important;
+    gap: 12px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    margin-inline: -16px;
+    padding-inline: 16px;
+    scroll-padding-inline: 16px;
+    scrollbar-width: none;
+  }
+  .swipe-row::-webkit-scrollbar {
+    display: none;
+  }
+  .swipe-row > .swipe-item {
+    flex: 0 0 min(84%, 420px);
+    scroll-snap-align: start;
+  }
+}
+
 /* Story carousel autoplay progress bar. */
 @keyframes carousel-progress {
   from {

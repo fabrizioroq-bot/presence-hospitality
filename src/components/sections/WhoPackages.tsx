@@ -1,4 +1,6 @@
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
+import { pagePath } from "@/i18n/paths";
+import type { Locale } from "@/i18n/routing";
 import { AmbientDust } from "@/components/ambient/AmbientDust";
 import { LightSweep } from "@/components/ambient/LightSweep";
 import { MoodTransition } from "@/components/ambient/MoodTransition";
@@ -15,6 +17,7 @@ export async function WhoPackages() {
   const w = await getTranslations("who");
   const p = await getTranslations("packages");
   const c = await getTranslations("common");
+  const locale = (await getLocale()) as Locale;
   const roles = [1, 2, 3].map((i) => ({ title: w(`r${i}Title` as "r1Title"), body: w(`r${i}Body` as "r1Body") }));
   const fit = w.raw("fit") as string[];
   const items = p.raw("items") as PackageItem[];
@@ -96,7 +99,7 @@ export async function WhoPackages() {
             <PackagesBoard items={items} tabsLabel={p("tabsLabel")} />
           </div>
           <Reveal className="mt-10 flex flex-col items-start gap-4 sm:flex-row sm:items-center">
-            <ButtonLink href="#demo" mood="night" arrow>
+            <ButtonLink href={pagePath(locale, "/demo")} mood="night" arrow>
               {c("bookDemo")}
             </ButtonLink>
             <p className="text-body-sm text-paper-500">{p("note")}</p>

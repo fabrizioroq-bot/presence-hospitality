@@ -1,4 +1,6 @@
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
+import { pagePath } from "@/i18n/paths";
+import type { Locale } from "@/i18n/routing";
 import { MoodTransition } from "@/components/ambient/MoodTransition";
 import { ParallaxOrbs } from "@/components/ambient/ParallaxOrbs";
 import { ButtonLink } from "@/components/ui/Button";
@@ -10,6 +12,7 @@ import { cn } from "@/lib/cn";
 /** Pricing structure (no prices): stacked title + outlined three-column panel + "HOTEL" neon strip. Mist. */
 export async function Pricing() {
   const t = await getTranslations("pricing");
+  const locale = (await getLocale()) as Locale;
   const cols = [
     { title: t("c1Title"), lead: null, items: t.raw("c1") as string[], optional: false },
     { title: t("c2Title"), lead: t("c2Lead"), items: t.raw("c2") as string[], optional: false },
@@ -75,7 +78,7 @@ export async function Pricing() {
               ))}
             </RevealGroup>
             <Reveal>
-              <ButtonLink href="#demo" variant="ghost" arrow>
+              <ButtonLink href={pagePath(locale, "/demo")} variant="ghost" arrow>
                 {t("cta")}
               </ButtonLink>
             </Reveal>

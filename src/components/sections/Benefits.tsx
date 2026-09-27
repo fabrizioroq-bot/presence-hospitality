@@ -8,14 +8,16 @@ import { Headline } from "@/components/ui/Headline";
 import { RangeTicker } from "@/components/ui/RangeTicker";
 import { RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { SpotlightCard } from "@/components/ui/SpotlightCard";
+import { SwipeDots } from "@/components/ui/SwipeDots";
 import { claims } from "@/content/claims";
 import { cn } from "@/lib/cn";
 
-const tile = "flex h-full flex-col gap-4 rounded-xl p-8 lg:p-10";
+const tile = "flex h-full flex-col gap-4 rounded-xl p-7 lg:p-10";
 
 /** Our solution: asymmetric bento (A dominant, B ink, C gradient, D/E outlined). Mist. */
 export async function Benefits() {
   const t = await getTranslations("benefits");
+  const c = await getTranslations("common");
   const locale = (await getLocale()) as "en" | "nl";
   const savings = claims.savings;
   const showSavings = savings.enabled && savings.range;
@@ -25,7 +27,7 @@ export async function Benefits() {
       id="benefits"
       data-mood="mist"
       aria-labelledby="benefits-title"
-      className="relative isolate overflow-hidden bg-mist-bg pt-8 pb-24 text-ink-900 lg:pb-32"
+      className="relative isolate overflow-hidden bg-mist-bg pt-4 pb-16 text-ink-900 lg:pt-8 lg:pb-32"
     >
       <ParallaxOrbs
         orbs={[
@@ -42,9 +44,9 @@ export async function Benefits() {
           <Headline id="benefits-title" raw={t.raw("title") as string} className="max-w-[18ch] text-display-xl" />
         </div>
 
-        <RevealGroup className="mt-12 grid gap-6 lg:mt-16 lg:grid-cols-12 lg:grid-rows-[auto_auto_auto]" gap={0.09}>
+        <RevealGroup id="solution-benefits" tabIndex={0} className="swipe-row mt-10 lg:mt-16 lg:grid lg:grid-cols-12 lg:grid-rows-[auto_auto_auto] lg:gap-6" gap={0.09}>
           {/* A — dominant, with a small live Holobox */}
-          <RevealItem className="lg:col-span-7 lg:row-span-2">
+          <RevealItem className="swipe-item lg:col-span-7 lg:row-span-2">
             <Depth range={20} className="h-full">
               <SpotlightCard tone="ink" className={cn(tile, "justify-between border border-line-mist bg-mist-surface/80 lg:flex-row lg:gap-10")}>
                 <div className="flex flex-col gap-4 lg:max-w-[30ch] lg:self-end">
@@ -63,7 +65,7 @@ export async function Benefits() {
           </RevealItem>
 
           {/* B — cost, ink tile */}
-          <RevealItem className="lg:col-span-5">
+          <RevealItem className="swipe-item lg:col-span-5">
             <div className={cn(tile, "bg-ink-900 text-paper-50")}>
               <h3 className="text-heading-md">{t("bTitle")}</h3>
               {showSavings ? (
@@ -86,7 +88,7 @@ export async function Benefits() {
           </RevealItem>
 
           {/* C — 24/7, holo gradient */}
-          <RevealItem className="lg:col-span-5">
+          <RevealItem className="swipe-item lg:col-span-5">
             <div className={cn(tile, "bg-holo-gradient text-ink-900")}>
               <span className="text-display-xl">{claims.coverage[locale]}</span>
               <p className="max-w-[32ch] text-body-lg text-ink-700">{t("cBody")}</p>
@@ -94,7 +96,7 @@ export async function Benefits() {
           </RevealItem>
 
           {/* D — scalable */}
-          <RevealItem className="lg:col-span-5">
+          <RevealItem className="swipe-item lg:col-span-5">
             <div className={cn(tile, "border border-line-mist")}>
               <h3 className="text-heading-md">{t("dTitle")}</h3>
               <p className="text-body text-ink-700">{t("dBody")}</p>
@@ -102,7 +104,7 @@ export async function Benefits() {
           </RevealItem>
 
           {/* E — predictable cost, with the fee inputs */}
-          <RevealItem className="lg:col-span-7">
+          <RevealItem className="swipe-item lg:col-span-7">
             <div className={cn(tile, "border border-line-mist lg:grid lg:grid-cols-2 lg:items-end lg:gap-10")}>
               <div className="flex flex-col gap-4">
                 <h3 className="text-heading-md">{t("eTitle")}</h3>
@@ -120,6 +122,7 @@ export async function Benefits() {
             </div>
           </RevealItem>
         </RevealGroup>
+        <SwipeDots target="solution-benefits" count={5} label={c("swipeHint")} />
 
         {showSavings && (
           <p id="benefits-footnote" className="mt-6 max-w-[80ch] text-body-sm text-ink-500">

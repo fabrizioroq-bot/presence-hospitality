@@ -1,6 +1,6 @@
 // Fills and submits the demo form. Usage: node scripts/e2e-form.mjs <baseUrl> <path> <hotelName>
 import { chromium } from "playwright";
-const [base = "http://localhost:3000", path = "/en", hotel = `E2E Test Hotel ${Date.now()}`] = process.argv.slice(2);
+const [base = "http://localhost:3000", path = "/en/demo", hotel = `E2E Test Hotel ${Date.now()}`] = process.argv.slice(2);
 const b = await chromium.launch({ channel: "chrome" });
 const p = await b.newPage({ viewport: { width: 1440, height: 900 } });
 p.on("pageerror", (e) => console.log("pageerror", e.message.slice(0, 200)));

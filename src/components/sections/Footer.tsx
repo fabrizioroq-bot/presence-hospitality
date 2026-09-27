@@ -4,6 +4,8 @@ import { ParallaxOrbs } from "@/components/ambient/ParallaxOrbs";
 import { AmbientDust } from "@/components/ambient/AmbientDust";
 import { LightSweep } from "@/components/ambient/LightSweep";
 import { site } from "@/content/site";
+import { pagePath } from "@/i18n/paths";
+import type { Locale } from "@/i18n/routing";
 
 const icon = {
   phone:
@@ -30,11 +32,11 @@ function Icon({ d }: { d: string }) {
 }
 
 const NAV = [
-  ["how-it-works", "howItWorks"],
-  ["experience", "experience"],
-  ["packages", "packages"],
-  ["onboarding", "onboarding"],
-  ["faq", "faq"],
+  ["/", "howItWorks", "how-it-works"],
+  ["/solution", "solution", undefined],
+  ["/packages", "packages", undefined],
+  ["/onboarding", "onboarding", undefined],
+  ["/faq", "faq", undefined],
 ] as const;
 
 export async function Footer() {
@@ -71,7 +73,7 @@ export async function Footer() {
         />
         <LightSweep />
         <AmbientDust mood="night" density={0.8} />
-        <div className="container-site pt-24 lg:pt-32">
+        <div className="container-site pt-14 lg:pt-32">
           {/* Giant wordmark, like the pitch's closing "Thank You" */}
           <div className="relative">
             {/* Decorative wordmark as SVG (not body text, so it isn't subject to text contrast rules). */}
@@ -93,13 +95,13 @@ export async function Footer() {
                 Presence
               </text>
             </svg>
-            <p className="mt-6 text-body-lg text-paper-300 lg:absolute lg:right-0 lg:bottom-[12%] lg:mt-0">
+            <p className="mt-4 text-body text-paper-300 lg:absolute lg:mt-0 lg:text-body-lg lg:right-0 lg:bottom-[12%]">
               {t("tagline")}
             </p>
           </div>
 
-          <div className="mt-16 grid gap-12 border-t border-line-night/40 pt-12 sm:grid-cols-2 lg:grid-cols-4">
-            <div className="flex flex-col gap-4">
+          <div className="mt-8 grid grid-cols-2 gap-x-6 gap-y-8 border-t border-line-night/40 pt-8 lg:mt-16 lg:grid-cols-4 lg:gap-12 lg:pt-12">
+            <div className="col-span-2 flex flex-col gap-4 lg:col-span-1">
               <Logo onNight />
               <p className="text-body-sm text-paper-300">
                 {c("companyOf")}{" "}
@@ -109,7 +111,7 @@ export async function Footer() {
               </p>
             </div>
 
-            <div className="flex flex-col gap-4">
+            <div className="col-span-2 flex flex-col gap-4 lg:col-span-1">
               <h2 className="text-label text-paper-500">{t("contact")}</h2>
               <ul className="flex flex-col gap-3 text-body-sm">
                 <li className="flex gap-3">
@@ -150,13 +152,18 @@ export async function Footer() {
             <div className="flex flex-col gap-4">
               <h2 className="text-label text-paper-500">{t("explore")}</h2>
               <ul className="flex flex-col gap-3 text-body-sm">
-                {NAV.map(([id, key]) => (
-                  <li key={id}>
-                    <a href={`#${id}`} className="hover:text-holo-300">
+                {NAV.map(([page, key, hash]) => (
+                  <li key={key}>
+                    <a href={pagePath(locale as Locale, page, hash)} className="hover:text-holo-300">
                       {n(key)}
                     </a>
                   </li>
                 ))}
+                <li>
+                  <a href={pagePath(locale as Locale, "/demo")} className="hover:text-holo-300">
+                    {c("bookDemo")}
+                  </a>
+                </li>
               </ul>
             </div>
 
@@ -188,7 +195,7 @@ export async function Footer() {
             </div>
           </div>
 
-          <div className="mt-16 flex flex-col gap-4 border-t border-line-night/40 py-8 text-body-sm text-paper-300 sm:flex-row sm:items-center sm:justify-between">
+          <div className="mt-8 flex flex-row items-center justify-between gap-4 border-t border-line-night/40 py-4 pb-24 text-body-sm text-paper-300 lg:mt-16 lg:py-8">
             <span>{t("rights")}</span>
             <a
               href="#top"

@@ -1,6 +1,6 @@
 import { cn } from "@/lib/cn";
 
-/** 160px (240px desktop) gradient band between a mist and a night section, so the page never has a hard cut. */
+/** 80px (240px desktop) gradient band between a mist and a night section, so the page never has a hard cut. */
 type Mood = "mist" | "night" | "deep";
 
 export function MoodTransition({ from, to, className }: { from: Mood; to: Mood; className?: string }) {
@@ -8,7 +8,7 @@ export function MoodTransition({ from, to, className }: { from: Mood; to: Mood; 
   return (
     <div
       aria-hidden
-      className={cn("relative h-40 overflow-hidden lg:h-60", className)}
+      className={cn("relative h-14 overflow-hidden sm:h-20 lg:h-60", className)}
       style={{ background: `linear-gradient(180deg, ${c[from]} 0%, ${c[to]} 100%)` }}
     >
       <span

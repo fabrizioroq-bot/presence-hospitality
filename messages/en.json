@@ -13,11 +13,13 @@
     "backToTop": "Back to top",
     "primaryNav": "Main",
     "language": "Language",
-    "mobileMenu": "Menu"
+    "mobileMenu": "Menu",
+    "stickyCta": "Book a demo",
+    "swipeHint": "Swipe for more"
   },
   "nav": {
     "howItWorks": "How it works",
-    "experience": "Experience",
+    "solution": "Solution",
     "packages": "Packages",
     "onboarding": "Onboarding",
     "faq": "FAQ"
@@ -142,7 +144,7 @@
     "line": "<em>Welcome to your presence.</em>"
   },
   "benefits": {
-    "eyebrow": "Our solution",
+    "eyebrow": "Benefits",
     "title": "What changes when the desk <em>moves to the hub</em>",
     "aTitle": "Premium guest experience, centralised.",
     "aBody": "Real, trained receptionists and hospitality-first processes give every guest the same high standard, at every hour and every location, without the limits of on-site staffing.",
@@ -431,5 +433,43 @@
     "rate": "You've sent several requests in a short time. Please try again in a few minutes.",
     "successTitle": "Request received.",
     "successBody": "Thanks, {name}. We'll be in touch soon to schedule your demo."
+  },
+  "pages": {
+    "solution": {
+      "title": "Solution · Presence Hospitality",
+      "description": "What changes when your front desk moves to a central hub: benefits, how the Holobox runs behind the scenes, and the systems it connects to.",
+      "eyebrow": "Our solution",
+      "h1": "A premium front desk, <em>run from one hub</em>",
+      "sub": "What changes for your hotel, how the Holobox runs behind the scenes, and how it connects to the systems you already use."
+    },
+    "packages": {
+      "title": "Packages & pricing · Presence Hospitality",
+      "description": "Night-Only, Day + Evening or 24/7 Premium remote reception. Who it's for, what each package includes and how pricing is built up.",
+      "eyebrow": "Packages & pricing",
+      "h1": "Coverage that <em>fits your hotel</em>",
+      "sub": "Who it's for, what each package includes, and how pricing is built up."
+    },
+    "onboarding": {
+      "title": "Onboarding · Presence Hospitality",
+      "description": "From first call to go-live in six steps: intake, service design, Holobox installation, integration, training and a controlled pilot."
+    },
+    "faq": {
+      "title": "FAQ · Presence Hospitality",
+      "description": "Answers about PMS integration, night coverage, the agents, on-site staff, channels, pricing and onboarding."
+    },
+    "demo": {
+      "title": "Book a demo · Presence Hospitality",
+      "description": "See the Holobox live with a real receptionist and get a package recommendation for your hotel. No commitment."
+    }
+  },
+  "keyBenefits": {
+    "eyebrow": "Why hotels switch",
+    "title": "Less desk. <em>More hospitality.</em>",
+    "more": "See the full solution"
+  },
+  "ctaBand": {
+    "title": "Ready to see it <em>live?</em>",
+    "body": "Book a demo with a real receptionist in the Holobox.",
+    "or": "or call"
   }
 }

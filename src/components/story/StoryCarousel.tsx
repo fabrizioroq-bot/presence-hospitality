@@ -303,22 +303,14 @@ export function StoryCarousel({ labels }: { labels: CarouselLabels }) {
         </button>
       </div>
 
-      {/* Autoplay progress (time until the next step). Hidden with reduced motion. */}
-      {!reduce && (
-        <div
-          aria-hidden
-          className="relative -mt-2 h-0.5 overflow-hidden rounded-full bg-line-mist/30"
-        >
-          <span
-            key={`${i}-${autoplay}`}
-            className={cn(
-              "absolute inset-y-0 left-0 w-full origin-left rounded-full bg-ink-900",
-              autoplay ? "carousel-progress" : "scale-x-0",
-            )}
-            style={{ animationDuration: `${AUTOPLAY_MS}ms` }}
-          />
-        </div>
-      )}
+      {/* Autoplay progress (time until the next step). Always rendered (same SSR/client markup); hidden with reduced motion. */}
+      <div aria-hidden className="relative -mt-2 h-0.5 overflow-hidden rounded-full bg-line-mist/30 motion-reduce:hidden">
+        <span
+          key={`${i}-${autoplay}`}
+          className={cn("absolute inset-y-0 left-0 w-full origin-left rounded-full bg-ink-900", autoplay ? "carousel-progress" : "scale-x-0")}
+          style={{ animationDuration: `${AUTOPLAY_MS}ms` }}
+        />
+      </div>
     </div>
   );
 }

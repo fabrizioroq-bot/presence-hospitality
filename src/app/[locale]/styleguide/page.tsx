@@ -49,13 +49,27 @@ const typeScale = [
   ["text-heading-md", "Holobox installation"],
   ["text-heading-sm", "Operations managers"],
   ["text-caps", "Structural cost pressure"],
-  ["text-body-lg", "Presence Hospitality runs your reception from one central hub."],
-  ["text-body", "Guests check in on their own, and when they need someone, a receptionist appears."],
+  [
+    "text-body-lg",
+    "Presence Hospitality runs your reception from one central hub.",
+  ],
+  [
+    "text-body",
+    "Guests check in on their own, and when they need someone, a receptionist appears.",
+  ],
   ["text-body-sm", "Illustrative shape, not measured data."],
   ["text-label", "Agent online · 01 02 03"],
 ];
 
-function Swatch({ name, hex, dark = false }: { name: string; hex: string; dark?: boolean }) {
+function Swatch({
+  name,
+  hex,
+  dark = false,
+}: {
+  name: string;
+  hex: string;
+  dark?: boolean;
+}) {
   return (
     <div className="flex flex-col gap-2">
       <div
@@ -70,7 +84,9 @@ function Swatch({ name, hex, dark = false }: { name: string; hex: string; dark?:
   );
 }
 
-export default async function StyleguidePage({ params }: PageProps<"/[locale]/styleguide">) {
+export default async function StyleguidePage({
+  params,
+}: PageProps<"/[locale]/styleguide">) {
   if (process.env.NODE_ENV === "production") notFound();
   const { locale } = await params;
   setRequestLocale(locale);
@@ -78,18 +94,43 @@ export default async function StyleguidePage({ params }: PageProps<"/[locale]/st
   return (
     <main>
       {/* Mist */}
-      <section data-mood="mist" className="relative overflow-hidden section-pad">
+      <section
+        data-mood="mist"
+        className="relative overflow-hidden section-pad"
+      >
         <MistOrbs
           orbs={[
-            { color: "sky", size: "60vw", top: "-10%", right: "-15%", opacity: 0.75 },
-            { color: "peach", size: "22vw", top: "35%", right: "8%", opacity: 0.55, dur: 26 },
-            { color: "lavender", size: "35vw", bottom: "-15%", left: "-10%", opacity: 0.6, dur: 19 },
+            {
+              color: "sky",
+              size: "60vw",
+              top: "-10%",
+              right: "-15%",
+              opacity: 0.75,
+            },
+            {
+              color: "peach",
+              size: "22vw",
+              top: "35%",
+              right: "8%",
+              opacity: 0.55,
+              dur: 26,
+            },
+            {
+              color: "lavender",
+              size: "35vw",
+              bottom: "-15%",
+              left: "-10%",
+              opacity: 0.6,
+              dur: 19,
+            },
           ]}
         />
         <HexMotif className="-bottom-10 -left-16 w-[420px]" />
         <div className="relative container-site flex flex-col gap-24">
           <header className="flex flex-col gap-6">
-            <p className="text-label text-ink-500">Presence design system · dev only</p>
+            <p className="text-label text-ink-500">
+              Presence design system · dev only
+            </p>
             <Logo />
             <div className="flex items-center gap-6">
               <LogoMark className="h-12 w-12" />
@@ -114,10 +155,15 @@ export default async function StyleguidePage({ params }: PageProps<"/[locale]/st
           </div>
 
           <div className="flex flex-col gap-8">
-            <h2 className="text-display-lg">Type — Hanken Grotesk + JetBrains Mono</h2>
+            <h2 className="text-display-lg">
+              Type — Hanken Grotesk + JetBrains Mono
+            </h2>
             <div className="flex flex-col gap-8">
               {typeScale.map(([cls, sample]) => (
-                <div key={cls} className="grid gap-2 border-t border-line-mist/30 pt-4 lg:grid-cols-[220px_1fr]">
+                <div
+                  key={cls}
+                  className="grid gap-2 border-t border-line-mist/30 pt-4 lg:grid-cols-[220px_1fr]"
+                >
                   <span className="text-label text-ink-500">{cls}</span>
                   <span className={cls}>
                     {cls === "text-display-2xl" ? (
@@ -146,20 +192,29 @@ export default async function StyleguidePage({ params }: PageProps<"/[locale]/st
           </div>
 
           <div className="flex flex-col gap-8">
-            <h2 className="text-display-lg">Outlined panel (pitch signature)</h2>
+            <h2 className="text-display-lg">
+              Outlined panel (pitch signature)
+            </h2>
             <div className="grid rounded-xl border border-line-mist lg:grid-cols-3">
-              {["One-time setup", "Monthly service fee", "Variable component"].map((t, i) => (
+              {[
+                "One-time setup",
+                "Monthly service fee",
+                "Variable component",
+              ].map((t, i) => (
                 <div
                   key={t}
                   className={
                     "flex flex-col gap-4 p-8 lg:p-10 " +
-                    (i > 0 ? "border-t border-line-mist lg:border-t-0 lg:border-l" : "")
+                    (i > 0
+                      ? "border-t border-line-mist lg:border-t-0 lg:border-l"
+                      : "")
                   }
                 >
                   <span className="h-5 w-5 rounded-full bg-holo-gradient ring-1 ring-ink-900/10" />
                   <h3 className="text-heading-md">{t}</h3>
                   <p className="text-body text-ink-700">
-                    Column separated by a 1px divider. Radius 48px, stroke --line-mist.
+                    Column separated by a 1px divider. Radius 48px, stroke
+                    --line-mist.
                   </p>
                 </div>
               ))}
@@ -174,7 +229,9 @@ export default async function StyleguidePage({ params }: PageProps<"/[locale]/st
                   key={n}
                   className="flex h-32 items-end rounded-lg bg-mist-surface p-6 ring-1 ring-line-mist/40"
                 >
-                  <span className="text-label">{n} · y 24 → 0 · blur 6 → 0</span>
+                  <span className="text-label">
+                    {n} · y 24 → 0 · blur 6 → 0
+                  </span>
                 </RevealItem>
               ))}
             </RevealGroup>
@@ -183,11 +240,26 @@ export default async function StyleguidePage({ params }: PageProps<"/[locale]/st
       </section>
 
       {/* Night */}
-      <section data-mood="night" className="relative overflow-hidden section-pad">
+      <section
+        data-mood="night"
+        className="relative overflow-hidden section-pad"
+      >
         <MistOrbs
           orbs={[
-            { color: "sky", size: "50vw", top: "-20%", right: "-10%", opacity: 0.22 },
-            { color: "peach", size: "30vw", bottom: "-10%", left: "10%", opacity: 0.14 },
+            {
+              color: "sky",
+              size: "50vw",
+              top: "-20%",
+              right: "-10%",
+              opacity: 0.22,
+            },
+            {
+              color: "peach",
+              size: "30vw",
+              bottom: "-10%",
+              left: "10%",
+              opacity: 0.14,
+            },
           ]}
         />
         <div className="relative container-site flex flex-col gap-24">
@@ -241,11 +313,16 @@ export default async function StyleguidePage({ params }: PageProps<"/[locale]/st
           <div className="flex flex-col gap-8">
             <h2 className="text-display-lg">Package pills</h2>
             <div className="flex flex-wrap items-center gap-4">
-              {["Night-Only", "Day + Evening", "24/7 Premium", "Add-ons"].map((p) => (
-                <span key={p} className="rounded-pill bg-holo-gradient px-6 py-3 text-heading-sm text-ink-900 font-extrabold">
-                  {p}
-                </span>
-              ))}
+              {["Night-Only", "Day + Evening", "24/7 Premium", "Add-ons"].map(
+                (p) => (
+                  <span
+                    key={p}
+                    className="rounded-pill bg-holo-gradient px-6 py-3 text-heading-sm text-ink-900 font-extrabold"
+                  >
+                    {p}
+                  </span>
+                ),
+              )}
             </div>
           </div>
         </div>

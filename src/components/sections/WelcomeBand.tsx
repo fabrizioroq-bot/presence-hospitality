@@ -9,7 +9,7 @@ export async function WelcomeBand() {
   return (
     <>
       <MoodTransition from="deep" to="mist" />
-      <div data-mood="mist" className="relative isolate overflow-hidden bg-mist-bg py-20 lg:py-28">
+      <div data-mood="mist" className="relative isolate overflow-hidden bg-mist-bg py-12 lg:py-28">
         <ParallaxOrbs
           range={50}
           orbs={[

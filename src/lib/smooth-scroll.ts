@@ -13,8 +13,8 @@ const navOffset = () => {
   return (parseFloat(v) || 72) + 16;
 };
 
-/** Smoothly scrolls to an in-page target, then moves focus there (keyboard + screen readers). */
-export function scrollToHash(hash: string) {
+/** Scrolls to an in-page target (smooth, or instant after a page transition), then moves focus there. */
+export function scrollToHash(hash: string, opts: { immediate?: boolean } = {}) {
   const id = decodeURIComponent(hash.replace(/^#/, ""));
   const target = id === "top" ? document.body : document.getElementById(id);
   if (!target) return false;
@@ -25,12 +25,18 @@ export function scrollToHash(hash: string) {
   };
   if (instance) {
     // Lenis already honours the CSS `scroll-padding-top` (nav height + 16px) set on <html>.
-    instance.scrollTo(id === "top" ? 0 : target, { onComplete: focus });
+    instance.scrollTo(id === "top" ? 0 : target, { onComplete: focus, immediate: opts.immediate });
   } else {
     const y = id === "top" ? 0 : target.getBoundingClientRect().top + window.scrollY - navOffset();
-    window.scrollTo({ top: y, behavior: "smooth" });
+    window.scrollTo({ top: y, behavior: opts.immediate ? "instant" : "smooth" });
     focus();
   }
   history.replaceState(null, "", id === "top" ? window.location.pathname : `#${id}`);
   return true;
+}
+
+/** Jump to the top instantly (new page after a client-side navigation). */
+export function resetScroll() {
+  if (instance) instance.scrollTo(0, { immediate: true, force: true });
+  window.scrollTo(0, 0);
 }

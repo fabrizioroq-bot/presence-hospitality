@@ -7,7 +7,7 @@ import { faq } from "@/content/faq";
 import { site } from "@/content/site";
 
 /** FAQ: sticky intro + contact on the left, single-open accordion on the right. Mist. */
-export async function Faq() {
+export async function Faq({ asPage = false }: { asPage?: boolean } = {}) {
   const t = await getTranslations("faq");
   const items = faq
     .filter((f) => f.enabled)
@@ -18,7 +18,7 @@ export async function Faq() {
       id="faq"
       data-mood="mist"
       aria-labelledby="faq-title"
-      className="relative isolate overflow-x-clip bg-mist-bg pt-8 pb-24 text-ink-900 lg:pb-40"
+      className={`relative isolate overflow-x-clip bg-mist-bg text-ink-900 ${asPage ? "pt-[calc(var(--nav-h)+40px)] pb-16 lg:pt-[calc(var(--nav-h)+96px)] lg:pb-32" : "pt-8 pb-24 lg:pb-40"}`}
     >
       <ParallaxOrbs
         orbs={[
@@ -30,7 +30,7 @@ export async function Faq() {
         <div className="lg:col-span-4">
           <div className="flex flex-col gap-6 lg:sticky lg:top-[calc(var(--nav-h)+48px)]">
             <p className="text-label text-ink-700">{t("eyebrow")}</p>
-            <Headline id="faq-title" raw={t.raw("title") as string} className="text-display-xl" />
+            <Headline as={asPage ? "h1" : "h2"} id="faq-title" raw={t.raw("title") as string} className="text-display-xl" />
             <Reveal className="flex flex-col gap-4">
               <p className="text-heading-sm">{t("still")}</p>
               <p className="max-w-[32ch] text-body text-ink-700">{t("stillBody")}</p>
@@ -46,7 +46,7 @@ export async function Faq() {
           </div>
         </div>
         <div className="lg:col-span-7 lg:col-start-6">
-          <Accordion items={items} />
+          <Accordion items={items} headingLevel={asPage ? "h2" : "h3"} />
         </div>
       </div>
     </section>

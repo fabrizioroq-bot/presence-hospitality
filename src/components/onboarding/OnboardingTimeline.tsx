@@ -9,6 +9,7 @@ import {
 import * as m from "motion/react-m";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { cn } from "@/lib/cn";
+import { SwipeDots } from "@/components/ui/SwipeDots";
 import { stepIcons } from "./StepIcons";
 
 export type OnboardingStep = { title: string; body: string; get: string };
@@ -32,13 +33,16 @@ export function OnboardingTimeline({
   steps,
   youGet,
   header,
+  swipeLabel,
+  stepHeading: StepHeading = "h3",
 }: {
+  stepHeading?: "h2" | "h3";
   steps: OnboardingStep[];
   youGet: string;
   header: ReactNode;
+  swipeLabel: string;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const mobileRef = useRef<HTMLOListElement>(null);
   const reduce = useReducedMotion();
   const n = steps.length;
   const [pinned, setPinned] = useState(false);
@@ -57,12 +61,7 @@ export function OnboardingTimeline({
     target: ref,
     offset: pinned ? ["start start", "end end"] : ["start 0.8", "end 0.6"],
   });
-  const { scrollYProgress: listProgress } = useScroll({
-    target: mobileRef,
-    offset: ["start 0.8", "end 0.6"],
-  });
   const line = useMotionValue(0);
-  const lineMobile = useMotionValue(0);
 
   // Scale the pinned scene down (never up) so header + timeline always fit the viewport.
   const fitRef = useRef<HTMLDivElement>(null);
@@ -92,30 +91,20 @@ export function OnboardingTimeline({
   const toLine = (v: number) => (pinned ? Math.min(1, v / LIT_AT) : v);
   const [reached, setReached] = useState(n);
 
-  const [reachedMobile, setReachedMobile] = useState(n);
   useEffect(() => {
     const id = requestAnimationFrame(() => {
       const v = Math.min(1, pinProgress.get() / (pinned ? LIT_AT : 1));
-      const m = listProgress.get();
       line.set(reduce ? 1 : v);
-      lineMobile.set(reduce ? 1 : m);
       setReached(reduce ? n : reachedCount(v, n));
-      setReachedMobile(reduce ? n : reachedCount(m, n));
     });
     return () => cancelAnimationFrame(id);
-  }, [reduce, pinProgress, listProgress, line, lineMobile, n, pinned]);
+  }, [reduce, pinProgress, line, n, pinned]);
   useMotionValueEvent(pinProgress, "change", (v) => {
     if (reduce) return;
     const l = toLine(v);
     line.set(l);
     const c = reachedCount(l, n);
     setReached((r) => (r === c ? r : c));
-  });
-  useMotionValueEvent(listProgress, "change", (v) => {
-    if (reduce) return;
-    lineMobile.set(v);
-    const c = reachedCount(v, n);
-    setReachedMobile((r) => (r === c ? r : c));
   });
 
   const card = (
@@ -141,7 +130,7 @@ export function OnboardingTimeline({
       >
         {stepIcons[i]}
       </span>
-      <h3 className="text-heading-sm font-extrabold">{s.title}</h3>
+      <StepHeading className="text-heading-sm font-extrabold">{s.title}</StepHeading>
       <p className="text-body-sm text-ink-700">{s.body}</p>
       <p className="mt-auto border-t border-line-mist/40 pt-3 text-body-sm">
         <span className="block text-label text-ink-500">{youGet}</span>
@@ -226,34 +215,16 @@ export function OnboardingTimeline({
         </div>
       </div>
 
-      {/* ---------- Mobile / tablet: vertical line on the left ---------- */}
-      <ol
-        ref={mobileRef}
-        className="relative mt-12 flex flex-col gap-6 lg:hidden"
-      >
-        <span
-          aria-hidden
-          className="absolute top-6 bottom-6 left-6 w-px"
-          style={{
-            backgroundImage:
-              "repeating-linear-gradient(180deg, var(--line-mist) 0 6px, transparent 6px 12px)",
-          }}
-        />
-        <m.span
-          aria-hidden
-          style={{ scaleY: lineMobile }}
-          className="absolute top-6 bottom-6 left-6 w-0.5 origin-top -translate-x-[0.5px] bg-ink-900"
-        />
+      {/* ---------- Mobile / tablet: a swipe row of steps ---------- */}
+      <ol id="onboarding-steps" tabIndex={0} aria-label={swipeLabel} className="swipe-row mt-8 lg:hidden">
         {steps.map((s, i) => (
-          <li
-            key={s.title}
-            className="grid grid-cols-[3rem_1fr] items-start gap-4"
-          >
-            {node(i, reachedMobile)}
-            {card(s, i, reachedMobile)}
+          <li key={s.title} className="swipe-item flex flex-col gap-3">
+            {node(i, n)}
+            {card(s, i, n, "flex-1")}
           </li>
         ))}
       </ol>
+      <SwipeDots target="onboarding-steps" count={n} label={swipeLabel} />
     </div>
   );
 }

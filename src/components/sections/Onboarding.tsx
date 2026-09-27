@@ -8,8 +8,10 @@ import { Headline } from "@/components/ui/Headline";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 
 /** Onboarding: public workflow (client-facing steps only) + go-live checklist + first KPIs. Mist. */
-export async function Onboarding() {
+export async function Onboarding({ asPage = false }: { asPage?: boolean } = {}) {
+  const H = asPage ? "h2" : "h3";
   const t = await getTranslations("onboarding");
+  const c = await getTranslations("common");
   const steps = t.raw("steps") as OnboardingStep[];
   const ready = t.raw("ready") as string[];
   const kpis = t.raw("kpis") as string[];
@@ -18,7 +20,7 @@ export async function Onboarding() {
       id="onboarding"
       data-mood="mist"
       aria-labelledby="onboarding-title"
-      className="relative isolate overflow-x-clip bg-mist-bg py-24 text-ink-900 lg:py-32"
+      className={`relative isolate overflow-x-clip bg-mist-bg text-ink-900 ${asPage ? "pt-[calc(var(--nav-h)+40px)] pb-16 lg:pt-[calc(var(--nav-h)+48px)] lg:pb-32" : "py-16 lg:py-32"}`}
     >
       <ParallaxOrbs
         orbs={[
@@ -31,12 +33,14 @@ export async function Onboarding() {
 
       <div className="container-site">
         <OnboardingTimeline
+          stepHeading={asPage ? "h2" : "h3"}
           steps={steps}
           youGet={t("youGet")}
+          swipeLabel={c("swipeHint")}
           header={
             <div className="flex flex-col gap-6 pin:gap-4">
               <p className="text-label text-ink-700">{t("eyebrow")}</p>
-              <Headline id="onboarding-title" raw={t.raw("title") as string} className="text-display-xl pin:text-display-lg" />
+              <Headline as={asPage ? "h1" : "h2"} id="onboarding-title" raw={t.raw("title") as string} className="text-display-xl pin:text-display-lg" />
               <Reveal>
                 <p className="onb-sub max-w-[52ch] text-body-lg text-ink-700">{t("sub")}</p>
               </Reveal>
@@ -47,7 +51,7 @@ export async function Onboarding() {
         <Depth range={24} className="mt-16 lg:mt-24">
           <RevealGroup className="grid gap-6 lg:grid-cols-2" gap={0.1}>
             <RevealItem className="rounded-xl border border-line-mist p-8">
-              <h3 className="text-heading-sm font-extrabold">{t("readyTitle")}</h3>
+              <H className="text-heading-sm font-extrabold">{t("readyTitle")}</H>
               <ul className="mt-6 flex flex-col gap-3">
                 {ready.map((r) => (
                   <li key={r} className="flex gap-3 text-body text-ink-700">
@@ -61,7 +65,7 @@ export async function Onboarding() {
               </ul>
             </RevealItem>
             <RevealItem className="rounded-xl border border-line-mist p-8">
-              <h3 className="text-heading-sm font-extrabold">{t("kpiTitle")}</h3>
+              <H className="text-heading-sm font-extrabold">{t("kpiTitle")}</H>
               <ul className="mt-6 flex flex-wrap gap-3">
                 {kpis.map((k) => (
                   <li key={k} className="rounded-pill bg-mist-raised px-4 py-2 text-label text-ink-900 ring-1 ring-line-mist/70">

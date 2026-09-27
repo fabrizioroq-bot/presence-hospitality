@@ -13,11 +13,13 @@
     "backToTop": "Terug naar boven",
     "primaryNav": "Hoofdmenu",
     "language": "Taal",
-    "mobileMenu": "Menu"
+    "mobileMenu": "Menu",
+    "stickyCta": "Plan een demo",
+    "swipeHint": "Swipe voor meer"
   },
   "nav": {
     "howItWorks": "Hoe het werkt",
-    "experience": "Ervaring",
+    "solution": "Oplossing",
     "packages": "Pakketten",
     "onboarding": "Onboarding",
     "faq": "FAQ"
@@ -142,7 +144,7 @@
     "line": "<em>Welkom bij je Presence.</em>"
   },
   "benefits": {
-    "eyebrow": "Onze oplossing",
+    "eyebrow": "Voordelen",
     "title": "Wat er verandert als de receptie <em>naar de hub gaat</em>",
     "aTitle": "Premium gastbeleving, centraal geregeld.",
     "aBody": "Echte, getrainde receptionisten en processen die draaien om gastvrijheid geven elke gast hetzelfde hoge niveau, op elk uur en op elke locatie, zonder de beperkingen van personeel op locatie.",
@@ -431,5 +433,43 @@
     "rate": "Je hebt in korte tijd meerdere aanvragen verstuurd. Probeer het over een paar minuten opnieuw.",
     "successTitle": "Aanvraag ontvangen.",
     "successBody": "Bedankt, {name}. We nemen snel contact met je op om je demo in te plannen."
+  },
+  "pages": {
+    "solution": {
+      "title": "Oplossing · Presence Hospitality",
+      "description": "Wat er verandert als je receptie naar een centrale hub gaat: de voordelen, hoe de Holobox achter de schermen draait en met welke systemen hij koppelt.",
+      "eyebrow": "Onze oplossing",
+      "h1": "Een premium receptie, <em>vanuit één hub</em>",
+      "sub": "Wat er voor je hotel verandert, hoe de Holobox achter de schermen draait en hoe hij koppelt met de systemen die je al gebruikt."
+    },
+    "packages": {
+      "title": "Pakketten & prijzen · Presence Hospitality",
+      "description": "Receptie op afstand met Night-Only, Day + Evening of 24/7 Premium. Voor wie het is, wat elk pakket bevat en hoe de prijs is opgebouwd.",
+      "eyebrow": "Pakketten & prijzen",
+      "h1": "Bezetting die <em>bij je hotel past</em>",
+      "sub": "Voor wie het is, wat elk pakket bevat en hoe de prijs is opgebouwd."
+    },
+    "onboarding": {
+      "title": "Onboarding · Presence Hospitality",
+      "description": "Van eerste gesprek tot go-live in zes stappen: intake, serviceontwerp, Holobox-installatie, integratie, training en een gecontroleerde pilot."
+    },
+    "faq": {
+      "title": "FAQ · Presence Hospitality",
+      "description": "Antwoorden over PMS-koppeling, bezetting 's nachts, de receptionisten, personeel op locatie, kanalen, prijzen en onboarding."
+    },
+    "demo": {
+      "title": "Plan een demo · Presence Hospitality",
+      "description": "Zie de Holobox live met een echte receptionist en krijg een pakketadvies voor je hotel. Vrijblijvend."
+    }
+  },
+  "keyBenefits": {
+    "eyebrow": "Waarom hotels overstappen",
+    "title": "Minder balie. <em>Meer gastvrijheid.</em>",
+    "more": "Bekijk de hele oplossing"
+  },
+  "ctaBand": {
+    "title": "Klaar om het <em>live</em> te zien?",
+    "body": "Plan een demo met een echte receptionist in de Holobox.",
+    "or": "of bel"
   }
 }

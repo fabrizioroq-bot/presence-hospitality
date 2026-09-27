@@ -9,7 +9,7 @@ import { Reveal } from "@/components/ui/Reveal";
 import { site } from "@/content/site";
 
 /** Book a demo: pitch + reassurance on the left, the form card on the right. Night. */
-export async function Demo() {
+export async function Demo({ asPage = false }: { asPage?: boolean } = {}) {
   const t = await getTranslations("demo");
   const locale = (await getLocale()) as "en" | "nl";
   const labels: DemoFormLabels = {
@@ -38,12 +38,12 @@ export async function Demo() {
 
   return (
     <>
-      <MoodTransition from="mist" to="night" />
+      {!asPage && <MoodTransition from="mist" to="night" />}
       <section
         id="demo"
         data-mood="night"
         aria-labelledby="demo-title"
-        className="relative isolate overflow-x-clip bg-charcoal-700 pt-8 pb-24 text-paper-50 lg:pb-40"
+        className={`relative isolate overflow-x-clip bg-charcoal-700 text-paper-50 ${asPage ? "pt-[calc(var(--nav-h)+40px)] pb-16 lg:pt-[calc(var(--nav-h)+80px)] lg:pb-32" : "pt-8 pb-24 lg:pb-40"}`}
       >
         <ParallaxOrbs
           range={80}
@@ -59,7 +59,7 @@ export async function Demo() {
           <div className="flex flex-col gap-8 lg:col-span-5">
             <div className="flex flex-col gap-6">
               <p className="text-label text-paper-500">{t("eyebrow")}</p>
-              <Headline id="demo-title" raw={t.raw("title") as string} className="text-display-xl" />
+              <Headline as={asPage ? "h1" : "h2"} id="demo-title" raw={t.raw("title") as string} className="text-display-xl" />
               <Reveal>
                 <p className="max-w-[44ch] text-body-lg text-paper-300">{t("sub")}</p>
               </Reveal>
