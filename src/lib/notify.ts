@@ -7,15 +7,14 @@ const esc = (s: string) => s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&
  * Emails the team about a new lead via Resend. Never throws: a failed notification must not
  * fail the guest's request (the lead is already safely stored).
  */
-export async function notifyNewLead(lead: LeadInput & { id: string }) {
+export async function notifyNewLead(lead: LeadInput & { id: string }, origin: string) {
   const key = process.env.RESEND_API_KEY;
   const to = process.env.LEADS_NOTIFY_EMAIL;
   if (!key || !to) {
     console.warn("[notify] RESEND_API_KEY or LEADS_NOTIFY_EMAIL missing; skipping lead email");
     return;
   }
-  const site = process.env.NEXT_PUBLIC_SITE_URL ?? (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "");
-  const link = `${site}/dashboard/leads/${lead.id}`;
+  const link = `${origin}/dashboard/leads/${lead.id}`;
   const rows: [string, string][] = [
     ["Name", `${lead.first_name} ${lead.last_name}`],
     ["Hotel", lead.hotel_name],
@@ -41,9 +40,9 @@ export async function notifyNewLead(lead: LeadInput & { id: string }) {
       method: "POST",
       headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/json" },
       body: JSON.stringify({
-        // Until presence-hospitality.com is verified in Resend, LEADS_NOTIFY_FROM overrides this with
-        // Resend's test sender (see PENDING.md).
-        from: process.env.LEADS_NOTIFY_FROM ?? "Presence Hospitality <noreply@presence-hospitality.com>",
+        // Permanent sender (client decision 27-09): Resend's shared address, which delivers to the
+        // Resend account owner (LEADS_NOTIFY_EMAIL). A verified domain sender is optional (PENDING.md).
+        from: "Presence Hospitality <onboarding@resend.dev>",
         to: [to],
         reply_to: lead.email,
         subject: `New demo request: ${lead.hotel_name} (${lead.first_name} ${lead.last_name})`,

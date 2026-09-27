@@ -10,10 +10,11 @@ Full spec: `PROMPT_SITIO.md`. Open items: `PENDING.md`.
 - **No hard-coded copy in components.** Strings go in `messages/en.json` + `messages/nl.json` (keys must match — `npm run check:i18n`) or typed files in `src/content/`.
 - No third-party logos, no stock photos. Partner names as plain text only.
 - Next.js 16: `src/proxy.ts` (not middleware), async `params`, read `node_modules/next/dist/docs/` before using unfamiliar APIs.
-- Motion: import `* as m from "motion/react-m"` (LazyMotion strict is on). Animate only transform/opacity/filter/clip-path. Respect reduced motion.
+- No JS animation library: reveals are CSS (`Reveal.tsx`, `data-rv`), scroll/springs via `src/lib/anim.ts`, hooks in `src/lib/hooks.ts`. Animate only transform/opacity/filter/clip-path. Respect reduced motion. Initial JS ≤ 180 KB per page (`node scripts/js-size.mjs`).
+- Client components use `cx` (`@/lib/cx`, no tailwind-merge); server components may use `cn`.
 
 ## Stack
-Next.js 16 (App Router, Turbopack) · TypeScript strict · Tailwind CSS v4 (`src/styles/globals.css`) · Motion · React Three Fiber · next-intl (`/en`, `/nl`) · Supabase · react-hook-form + zod. Package manager: npm.
+Next.js 16 (App Router, Turbopack) · TypeScript strict · Tailwind CSS v4 (`src/styles/globals.css`) · React Three Fiber · next-intl (`/en`, `/nl`) · Supabase · Resend. Package manager: npm.
 
 ## Commands
 - `npm run dev` — dev server

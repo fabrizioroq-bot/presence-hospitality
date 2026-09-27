@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { cn } from "@/lib/cn";
+import { cx as cn } from "@/lib/cx";
 
 type Mood = "mist" | "night";
 

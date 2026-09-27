@@ -1,20 +1,21 @@
-import { cn } from "@/lib/cn";
+import { cx as cn } from "@/lib/cx";
 import type { ComponentProps } from "react";
 
 type Variant = "primary" | "glow" | "ghost";
 type Mood = "mist" | "night";
 
 const base =
-  "group inline-flex min-h-11 items-center justify-center gap-2 rounded-pill px-6 py-3 text-[0.9375rem] font-semibold tracking-[-0.01em] transition-[background-color,color,border-color,box-shadow] duration-200 disabled:cursor-not-allowed disabled:opacity-60";
+  "magnetic group inline-flex min-h-11 items-center justify-center gap-2 rounded-pill px-6 py-3 text-[0.9375rem] font-semibold tracking-[-0.01em] transition-[background-color,color,border-color,box-shadow] duration-200 disabled:cursor-not-allowed disabled:opacity-60";
 
 const styles: Record<Mood, Record<Variant, string>> = {
   mist: {
-    primary: "btn-cta bg-ink-900 text-paper-50 hover:bg-[#2a2d33]",
+    // Conversion CTA: blue → cyan gradient pill + scan (see .btn-cta in globals.css).
+    primary: "btn-cta",
     glow: "bg-holo-gradient text-ink-900 ring-1 ring-ink-900/15 hover:shadow-soft",
     ghost: "text-ink-900 ring-1 ring-line-mist hover:bg-mist-surface",
   },
   night: {
-    primary: "btn-cta bg-paper-50 text-ink-900 hover:bg-holo-100",
+    primary: "btn-cta",
     glow: "bg-holo-gradient text-ink-900 hover:shadow-glow-holo",
     ghost: "text-paper-50 ring-1 ring-line-night hover:bg-night-800",
   },

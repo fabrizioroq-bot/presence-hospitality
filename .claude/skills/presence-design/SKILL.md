@@ -12,9 +12,9 @@ Two moods alternate down the page, like a hotel lobby between day and night:
 - **Night** (dark): charcoal and near-black. This is where the **technology** lives: the Holobox portal, the hologram, glowing cyan-blue light, mono HUD labels.
 - **Warmth** is carried by a single amber accent (like the lobby lamp and the "HOTEL" neon in the pitch): live dots, the hologram's rim sparks, tiny highlights. Never a large fill.
 
-> **Pending client choice (27-09, round 2):** the amber variants were rejected. A blue accent (holo blue → cyan gradient on conversion CTAs, headline emphasis, key figures, step numbers, active dots/nav) is previewed as variant A (subtle) or B (vivid, animated scan on CTAs) via `html[data-accent]` (end of `globals.css`). Amber stays for the live dot, the traveller's suitcase and "paid idle time". Once chosen, make it the default and update the button + colour-role rules.
+**Blue accent (client-approved 27-09, "vivid"):** conversion CTAs, the italic headline emphasis, key figures, step numbers/nodes, timeline fills, active dots and the active navbar link use a **deep blue → holo cyan** gradient (`.btn-cta`, `em.emph`, `.key-figure`, `.step-num(-dark)`, `.step-node[data-lit]`, `.accent-dot/-bar/-line`, `.nav-ind` in `globals.css`). Keep it to ~10% of any viewport. On mist, gradient text runs `--blue-700 → --teal-700` (AA); on night `--holo-400 → --cyan-300`.
 
-Colour roles are strict: **ink = content, holo blue = technology/system, amber = human warmth/live.** No component uses holo and amber at equal weight.
+Colour roles are strict: **ink = content, blue/cyan = technology, emphasis and the conversion CTA, amber = human warmth/live** (only the live dot, the traveller's suitcase, rim sparks and "paid idle time"). Never use amber for CTAs or headline emphasis.
 
 ### 4.2 Colour tokens (AA-verified)
 All ratios below were computed with the WCAG 2.x formula. `scripts/check-contrast.ts` must re-verify them in CI (`npm run check:contrast`) and fail below the stated minimum.
@@ -51,10 +51,8 @@ All ratios below were computed with the WCAG 2.x formula. `scripts/check-contras
   /* Warm accent */
   --amber-300:      #F8C98B;
   --amber-400:      #F5A94A; /* 6.6:1 on charcoal; ink-900 on amber 8.37:1; NEVER as text on mist */
-  /* Accent blues (CTA / emphasis gradients; pending client choice A/B) */
+  /* Accent blues (CTA / emphasis gradients) */
   --blue-700:       #1747A6; /* 5.98:1 on mist-bg; white on it 8.44:1 */
-  --blue-650:       #1E6FAE; /* white on it 5.33:1 */
-  --blue-600:       #2567B0; /* 4.08:1 on mist-bg (large text) */
   --teal-700:       #0B6485; /* 4.69:1 on mist-bg */
   --cyan-700:       #0A7BA3; /* white on it 4.80:1 */
   --cyan-300:       #6FE3FF; /* 8.74:1 on charcoal */
@@ -72,13 +70,12 @@ All ratios below were computed with the WCAG 2.x formula. `scripts/check-contras
   --success-night:  #7FD9A8; /* 7.68:1 */
 
   /* Focus ring */
-  --focus:          #1C5AA0; /* on mist; on night use --holo-300 */
+  --focus:          #1747A6; /* blue-700 on mist; on night use --cyan-300 */
 }
 ```
 
 Buttons:
-- **Primary on mist:** `--ink-900` bg, `--paper-50` text (15.2:1). Hover: bg lifts to `#2A2D33`, arrow icon slides 4px right.
-- **Primary on night:** `--paper-50` bg, `--ink-900` text.
+- **Primary (conversion CTA, mist and night):** `.btn-cta`: `linear-gradient(100deg, --blue-700, --cyan-700)`, white text (8.44:1 → 4.80:1), faint cyan rim, a slow light band ("hologram scan") crossing it every 6 s (off for reduced motion). Hover: brightness 1.08 + blue/cyan glow; arrow slides 4px right.
 - **Glow (secondary):** `--holo-gradient` bg, `--ink-900` text, 1px `--ink-900` at 15% border. Used once per viewport at most.
 - **Ghost:** transparent, 1px `--line-mist` / `--line-night` border.
 
@@ -129,22 +126,14 @@ The client has no logo file. The pitch shows a mark of **interlocking rounded lo
 - Mark it `TODO(brand): replace with official vector if/when supplied` and list it in `PENDING.md`.
 - Favicon: `app/icon.svg` = the mark alone, `--ink-900` on transparent.
 
-### 4.7 Motion tokens
-```ts
-// src/lib/motion.ts
-export const ease = { out: [0.16, 1, 0.3, 1], inOut: [0.65, 0, 0.35, 1] } as const;
-export const dur = { fast: 0.15, base: 0.25, slow: 0.4, reveal: 0.7, hero: 1.2 } as const;
-export const spring = { type: "spring", stiffness: 260, damping: 30 } as const;
-export const reveal = {
-  hidden: { opacity: 0, y: 24, filter: "blur(6px)" },
-  show:   { opacity: 1, y: 0,  filter: "blur(0px)", transition: { duration: 0.7, ease: ease.out } },
-};
-export const stagger = (s = 0.07) => ({ show: { transition: { staggerChildren: s } } });
-```
-- Scroll reveals: `whileInView="show"`, `viewport={{ once: true, amount: 0.3 }}`.
+### 4.7 Motion tokens (no animation library since the final audit, 27-09)
+Motion was removed to keep initial JS under 180 KB. Same values, implemented as:
+- **Reveals** (`src/components/ui/Reveal.tsx`, CSS in `globals.css`, started by `RevealObserver`): server-rendered `data-rv-trigger` + `data-rv="fade|soft|word|line|bar|draw|…"`. `fade` = opacity 0 → 1, y 24 → 0, blur 6 → 0 over 0.7 s `cubic-bezier(0.16, 1, 0.3, 1)`; stagger via `--rv-step` (default 0.07 s), `--rv-delay`, `--rv-i`. Default trigger amount 0.3 (`data-rv-amount`); `data-rv-load` for above the fold. No JS or reduced motion → final state.
+- **Scroll-linked + springs** (`src/lib/anim.ts`): `trackScroll(el, ["start end", "end start"], cb)` (Motion's offset syntax, measured on layout boxes so transforms never feed back), `spring()`, `interp()`, `Value`. Write styles straight to the DOM; never re-render React per frame.
+- **Hooks** (`src/lib/hooks.ts`): `useReducedMotion`, `useInView`, `useNear` (unmount WebGL far off-screen).
 - Hover: 150–250ms. No hover effect scales anything above `1.02`.
 - Animate **only** `transform`, `opacity`, `filter` (blur ≤ 8px), and `clip-path`. Never animate layout properties.
-- `prefers-reduced-motion: reduce`: every reveal renders in its final state, scrollytelling becomes a static vertical list, orbs stop drifting, the hologram renders one static frame (§6.7). Implement with Motion's `useReducedMotion()` plus a CSS `@media` guard.
+- `prefers-reduced-motion: reduce`: every reveal renders in its final state, scrollytelling becomes a static vertical list, orbs stop drifting, the hologram renders one static frame (§6.7). Implement with `useReducedMotion()` from `@/lib/hooks` plus a CSS `@media` guard.
 
 ### 4.8 Anti "generic AI aesthetic" rules
 1. **No purple/violet gradients, no neon-purple glows**, no "aurora" behind the headline. Our gradients are only `--holo-gradient` and the blurred orbs.
@@ -152,7 +141,7 @@ export const stagger = (s = 0.07) => ({ show: { transition: { staggerChildren: s
 3. **No generic line icons as decoration** (no lightning bolts, rockets or shields). Numbers in pill badges (pitch style) or custom SVG diagrams do that job.
 4. **No glassmorphism cards over busy backgrounds.** Mist panels are outlined, not frosted.
 5. **No centred-everything layouts.** Default alignment is left; centre only the final CTA.
-6. **One primary CTA style per viewport.** "Book a demo" is always the same black pill on mist and white pill on night.
+6. **One primary CTA style per viewport.** "Book a demo" is always the same blue → cyan gradient pill (`.btn-cta`), on mist and on night.
 7. **No emoji, no "✨", no fake dashboards with invented metrics, no fake logos strip.**
 8. Headlines state a benefit or a fact; they never say "Welcome to the future of…".
 9. Every section has a distinct layout silhouette. Check this by scrolling the full page at 25% zoom: no two consecutive sections may share the same structure.
@@ -182,13 +171,19 @@ The page must never feel static, but motion stays calm: nothing faster than ~15 
 
 **Reduced motion:** the hero renders one static frame; dust, sweep and parallax are off; orbs are static.
 
-**Performance rules:** client components receive strings as props (no client i18n runtime); the navbar uses CSS transitions, not Motion; Motion is used for reveals and parallax only; above-the-fold reveals must not animate opacity (use `RevealItem soft`).
+**Performance rules:** client components receive strings as props (no client i18n runtime); no JS animation library (CSS reveals + `lib/anim.ts`); Lenis loads on the first mouse/wheel input; above-the-fold reveals must not animate opacity (use `RevealItem soft`). Initial JS budget: 180 KB per page (`node scripts/js-size.mjs`).
 
 ### 4.10 Scroll & scroll-driven storytelling (added in phase 5)
-- **Lenis** smooth scroll site-wide (`SmoothScroll` in the layout, `lerp 0.1`). Off for reduced motion; touch keeps native momentum. In-page `#links` go through `scrollToHash` (Lenis already honours `scroll-padding-top`, so don't add an offset). It moves focus to the target and updates the URL. Pause Lenis (`getLenis()?.stop()`) whenever the body is scroll-locked.
+- **Lenis** smooth scroll site-wide (`SmoothScroll` in the layout, `lerp 0.1`, loaded on the first mouse/wheel input). Off for reduced motion; touch keeps native momentum. In-page `#links` go through `scrollToHash` (Lenis already honours `scroll-padding-top`, so don't add an offset). It moves focus to the target and updates the URL. Pause Lenis (`getLenis()?.stop()`) whenever the body is scroll-locked.
 - **Pinned stories:** the track height is steps × 100svh (+40svh) and the stage is `sticky top-0 h-svh`. Drive everything from one scroll value `s` through a pure `timeline(s)` shared by WebGL, SVG and DOM. Step copy crossfades sequentially (never overlapping). The progress rail fills with scroll.
 - **Desktop-only scenes load through a gate** (`StoryGate`): phones never download them. The server still renders the same content as a mobile/reduced list, and a same-height placeholder prevents layout shift.
 - **Particle continuity:** scenes assemble from dust (`uForm`) and leave as rising dust (`uDissolve`). The hero agent dissolves as you scroll away; the next WebGL scene rebuilds from the same dust. Warm dots = human guest; cool holo = agent/technology.
 - **CursorGlow:** one soft 520px radial light following the mouse (`soft-light` blend), fine pointers only.
 - **Depth:** `Depth range={±30..40}` on large blocks (statements, panels, charts). Positive = further away. Never on body text inside cards.
 - **Mood transitions:** always a `MoodTransition` band between mist and night (160px, 240px on desktop).
+
+### 4.11 Immersion polish (client ideas 1–4, 27-09)
+1. **Greeting:** the hero hologram nods, tilts its head and a light pulse rises through it once per visit after it forms, and again when the mouse enters the portal (desktop, ≥ 8 s apart). The stage agent greets when it first forms. Shader uniforms `uNod`, `uTilt`, `uGreet`.
+2. **Day → night:** `--dusk` (0 → 1 over the page, `DayNight.tsx`) mixes the mist canvas towards `#D2D8E8` and the night canvas towards `#24272E` (AA-checked; `@supports color-mix` only).
+3. **Contextual cursor** (`CursorRing.tsx`, fine pointer + motion allowed; native cursor kept): ring grows on links, label pill "Drag" (`data-cursor="drag"`), "Book" (`.btn-cta`), "Play" (`data-cursor="play"`); hidden over form fields.
+4. **Magnetic buttons** (`.magnetic`, ≤ 6 px pull via CursorRing) + press feedback (`scale: 0.97`, all devices).

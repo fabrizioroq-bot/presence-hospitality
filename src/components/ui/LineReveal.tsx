@@ -1,28 +1,14 @@
-"use client";
-
-import * as m from "motion/react-m";
+import type { CSSProperties } from "react";
 import { splitHeadline } from "@/lib/headline";
-import { ease } from "@/lib/motion";
 
-/** Reveals each line with a clip-path wipe from the top, staggered 90 ms. Lines may contain one `<em>`. */
+type Vars = CSSProperties & Record<`--${string}`, string | number>;
+
+/** Reveals each line with a clip-path wipe from the top, staggered 90 ms (CSS-driven, see Reveal.tsx). Lines may contain one `<em>`. */
 export function LineReveal({ lines, className, lineClassName }: { lines: string[]; className?: string; lineClassName?: string }) {
   return (
-    <m.p
-      className={className}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, amount: 0.4 }}
-      variants={{ hidden: {}, show: { transition: { staggerChildren: 0.09 } } }}
-    >
+    <p className={className} style={{ "--rv-step": "0.09s" } as Vars} data-rv-trigger="" data-rv-amount="0.4">
       {lines.map((line, i) => (
-        <m.span
-          key={i}
-          className={lineClassName ?? "block"}
-          variants={{
-            hidden: { clipPath: "inset(0 0 100% 0)", y: "0.3em" },
-            show: { clipPath: "inset(0 0 0% 0)", y: 0, transition: { duration: 0.8, ease: ease.out } },
-          }}
-        >
+        <span key={i} className={lineClassName ?? "block"} data-rv="line" style={{ "--rv-i": i } as Vars}>
           {splitHeadline(line).map((w, j, arr) => (
             <span key={j} className={w.glued ? "hyphens-manual" : undefined}>
               {w.parts.map((p, k) =>
@@ -37,8 +23,8 @@ export function LineReveal({ lines, className, lineClassName }: { lines: string[
               {j < arr.length - 1 ? " " : null}
             </span>
           ))}
-        </m.span>
+        </span>
       ))}
-    </m.p>
+    </p>
   );
 }

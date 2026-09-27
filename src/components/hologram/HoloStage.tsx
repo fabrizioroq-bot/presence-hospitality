@@ -1,14 +1,13 @@
 "use client";
 
-import { useMotionValue } from "motion/react";
 import dynamic from "next/dynamic";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { BorderBeam } from "@/components/ui/BorderBeam";
 import { DecryptedText } from "@/components/ui/DecryptedText";
-import { cn } from "@/lib/cn";
+import { cx as cn } from "@/lib/cx";
+import { useNear } from "@/lib/hooks";
 import { detectTier, hasWebGL2, type Tier } from "@/lib/perf-tier";
 import type { PointerState } from "./hero-scene";
-import { HologramPoster } from "./HologramPoster";
 
 const HeroCanvas = dynamic(() => import("./HeroCanvas"), { ssr: false });
 
@@ -22,21 +21,27 @@ export function HoloStage({
   hud,
   alt,
   dragHint,
+  poster,
   className,
 }: {
   hud: { online: string; route: string; live: string };
   alt: string;
   dragHint: string;
+  /** Server-rendered <HologramPoster /> (keeps its point data out of the client bundle). */
+  poster: ReactNode;
   className?: string;
 }) {
   const fig = useRef<HTMLElement | null>(null);
   const pointer = useRef<PointerState>({ x: 0, y: 0, has: false, fine: false });
   const yaw = useRef(0);
-  const noScroll = useMotionValue(0);
+  const [noScroll] = useState(() => ({ get: () => 0 }));
   const [tier, setTier] = useState<Tier | null>(null);
   const [load, setLoad] = useState(false);
   const [active, setActive] = useState(false);
   const [ready, setReady] = useState(false);
+  // Unmount the scene when the stage is far off-screen; the poster returns until it repaints.
+  const onFar = useCallback(() => setReady(false), []);
+  const near = useNear(fig, "150% 0px", onFar);
   const [reformKey, setReformKey] = useState(0);
   const [dragging, setDragging] = useState(false);
 
@@ -148,6 +153,7 @@ export function HoloStage({
     <figure
       ref={fig}
       data-portal
+      data-cursor="drag"
       data-webgl={ready ? "ready" : undefined}
       className={cn(
         "relative isolate touch-pan-y overflow-hidden rounded-xl shadow-soft ring-1 ring-white/5 select-none",
@@ -166,10 +172,10 @@ export function HoloStage({
         }}
       />
       <div aria-hidden className="portal-fill absolute top-[6%] right-[6%] bottom-0 left-1/2 lg:left-[46%]">
-        <HologramPoster />
+        {poster}
       </div>
 
-      {load && tier && (
+      {load && tier && near && (
         <div aria-hidden className="pointer-events-none absolute inset-0">
           <HeroCanvas
             tier={tier}

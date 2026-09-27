@@ -1,7 +1,7 @@
 "use client";
 
 import { useId, useState } from "react";
-import { cn } from "@/lib/cn";
+import { cx as cn } from "@/lib/cx";
 
 /**
  * Single-open accordion (WAI-ARIA disclosure pattern): real <button>s with aria-expanded /

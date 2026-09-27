@@ -1,5 +1,5 @@
 import { useId } from "react";
-import { cn } from "@/lib/cn";
+import { cx as cn } from "@/lib/cx";
 
 // TODO(brand): provisional recreation of the interlocking-loops mark from the pitch deck.
 // Replace with the official vector if/when supplied.
@@ -17,7 +17,7 @@ export function LogoMark({
   return (
     <svg
       viewBox="-12 -12 24 24"
-      className={cn("h-6 w-6 shrink-0", className)}
+      className={cn("shrink-0", className ?? "h-6 w-6")}
       fill="none"
       role={title ? "img" : undefined}
       aria-hidden={title ? undefined : true}

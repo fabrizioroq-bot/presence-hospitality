@@ -7,9 +7,9 @@ export const site = {
   // back to the deployment URL.
   url:
     process.env.NEXT_PUBLIC_SITE_URL ??
-    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://www.presence-hospitality.com"),
-  // The public domain, shown and linked in the footer on every environment.
-  domainUrl: "https://www.presence-hospitality.com",
+    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://presence-hospitality.com"),
+  // The public domain (root is primary; www redirects to it), linked in the footer on every environment.
+  domainUrl: "https://presence-hospitality.com",
   displayUrl: "www.presence-hospitality.com",
   // Labels come from messages (`common.phoneSales`, `common.phoneSupport`).
   phones: [

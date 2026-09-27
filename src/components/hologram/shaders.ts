@@ -176,6 +176,9 @@ uniform vec3 uPointer;
 uniform float uPointerOn;
 uniform float uMotion; // 0 when reduced motion
 uniform float uDissolve; // 0..1 as the hero scrolls away
+uniform float uNod;      // greeting: head nod angle (rad), upper body bows a little with it
+uniform float uTilt;     // greeting: friendly sideways head tilt (rad)
+uniform float uGreet;    // greeting glow 0..1
 varying vec3 vColor;
 varying float vAlpha;
 void main() {
@@ -192,6 +195,25 @@ void main() {
   vec3 start = vec3(cos(ang) * rr, fract(aRandom * 31.3) * 1.9, sin(ang) * rr);
   vec3 p = mix(start, target, t);
   p += (1.0 - t) * 0.15 * vec3(sin(p.y * 8.0 + uTime * 2.0), 0.0, cos(p.y * 8.0 + uTime * 2.0));
+
+  // Greeting: a small bow from the waist plus a nod from the neck (rotation about x, towards camera).
+  if (orbit < 0.5 && uNod > 0.0) {
+    float wb = smoothstep(0.95, 1.45, target.y);
+    float ab = uNod * 0.22 * wb;
+    vec2 yz = vec2(p.y - 0.95, p.z);
+    p.y = 0.95 + yz.x * cos(ab) - yz.y * sin(ab);
+    p.z = yz.y * cos(ab) + yz.x * sin(ab);
+    float wh = smoothstep(1.44, 1.53, target.y);
+    float ah = uNod * wh;
+    float py = 1.49 + (0.95 - 1.49) * (1.0 - cos(ab)); // neck pivot follows the bow (approx.)
+    yz = vec2(p.y - py, p.z);
+    p.y = py + yz.x * cos(ah) - yz.y * sin(ah);
+    p.z = yz.y * cos(ah) + yz.x * sin(ah);
+    float at = uTilt * wh;
+    vec2 xy = vec2(p.x, p.y - py);
+    p.x = xy.x * cos(at) - xy.y * sin(at);
+    p.y = py + xy.x * sin(at) + xy.y * cos(at);
+  }
 
   // Orbit dust circles slowly.
   if (orbit > 0.5) {
@@ -234,7 +256,7 @@ void main() {
   vColor = col;
 
   float scan = 0.78 + 0.22 * sin(p.y * 140.0 + uTime * 3.0 * uMotion);
-  float alpha = (0.5 + 0.2 * rim) * scan * uFlicker * (0.35 + 0.65 * t) + band * 0.5;
+  float alpha = (0.5 + 0.2 * rim) * scan * uFlicker * (0.35 + 0.65 * t) + band * 0.5 + uGreet * 0.18;
   alpha += f * 0.35;
   alpha *= 1.0 - dz;
   alpha *= interior > 0.5 ? 0.6 : 1.0;

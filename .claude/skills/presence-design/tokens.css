@@ -28,10 +28,8 @@
   --holo-gradient: linear-gradient(100deg, #9dc9ff 0%, #e6f2ff 100%);
 
   /* Warm accent */
-  /* Accent blues (CTA / emphasis gradients, pending client choice A/B) */
+  /* Accent blues (CTA / emphasis gradients) */
   --blue-700: #1747a6;
-  --blue-650: #1e6fae;
-  --blue-600: #2567b0;
   --teal-700: #0b6485;
   --cyan-700: #0a7ba3;
   --cyan-300: #6fe3ff;

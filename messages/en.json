@@ -474,5 +474,10 @@
     "title": "Ready to see it <em>live?</em>",
     "body": "Book a demo with a real receptionist in the Holobox.",
     "or": "or call"
+  },
+  "cursor": {
+    "drag": "Drag",
+    "book": "Book",
+    "play": "Play"
   }
 }

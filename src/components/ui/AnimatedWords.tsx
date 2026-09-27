@@ -1,19 +1,17 @@
-"use client";
-
-import * as m from "motion/react-m";
+import type { CSSProperties } from "react";
 import type { HeadlineWord } from "@/lib/headline";
-import { ease } from "@/lib/motion";
 
 type Tag = "h1" | "h2" | "h3" | "p";
+type Vars = CSSProperties & Record<`--${string}`, string | number>;
 
 /**
- * Word-by-word rise + unblur (adapted from React Bits "Blur Text", Motion only).
+ * Word-by-word rise + unblur (adapted from React Bits "Blur Text"), CSS-driven (see Reveal.tsx).
  * Opacity stays at 1 so the text is painted immediately — safe for LCP.
  * `trigger="load"` animates on mount (hero); default animates on first view.
  */
 export function AnimatedWords({
   words,
-  as = "h2",
+  as: Comp = "h2",
   className,
   id,
   trigger = "view",
@@ -28,25 +26,16 @@ export function AnimatedWords({
   delay?: number;
   step?: number;
 }) {
-  const Comp = m[as];
-  const variants = {
-    hidden: { y: "0.28em", filter: "blur(8px)" },
-    show: (i: number) => ({
-      y: 0,
-      filter: "blur(0px)",
-      transition: { duration: 0.7, ease: ease.out, delay: delay + i * step },
-    }),
-  };
-  const trig =
-    trigger === "load"
-      ? { initial: "hidden", animate: "show" }
-      : { initial: "hidden", whileInView: "show", viewport: { once: true, amount: 0.5 } };
-
+  const style: Vars = { "--rv-step": `${step}s`, "--rv-delay": `${delay}s` };
   return (
-    <Comp id={id} className={className} {...trig}>
+    <Comp id={id} className={className} style={style} data-rv-trigger="" data-rv-amount="0.5" data-rv-load={trigger === "load" ? "" : undefined}>
       {words.map((w, i) => (
         <span key={i}>
-          <m.span custom={i} variants={variants} className={w.glued ? "inline-block hyphens-manual will-change-transform" : "inline-block whitespace-nowrap will-change-transform"}>
+          <span
+            data-rv="word"
+            style={{ "--rv-i": i } as Vars}
+            className={w.glued ? "inline-block hyphens-manual" : "inline-block whitespace-nowrap"}
+          >
             {w.parts.map((p, j) =>
               p.em ? (
                 <em key={j} className="emph">
@@ -56,7 +45,7 @@ export function AnimatedWords({
                 <span key={j}>{p.text}</span>
               ),
             )}
-          </m.span>
+          </span>
           {i < words.length - 1 ? " " : null}
         </span>
       ))}

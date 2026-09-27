@@ -1,12 +1,12 @@
 "use client";
 
-import { useInView, useReducedMotion } from "motion/react";
+import { useInView, useReducedMotion } from "@/lib/hooks";
 import { useEffect, useRef, useState } from "react";
 
 /** Counts a range up from 0 (e.g. "40–65%") when half visible (adapted from Magic UI "Number Ticker"). */
 export function RangeTicker({ from, to, suffix = "%", className }: { from: number; to: number; suffix?: string; className?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
-  const seen = useInView(ref, { once: true, amount: 0.5 });
+  const seen = useInView(ref, 0.5);
   const reduce = useReducedMotion();
   const [p, setP] = useState(1);
   // After hydration, park at 0 until the ticker is seen (server HTML keeps the final values).
@@ -31,7 +31,7 @@ export function RangeTicker({ from, to, suffix = "%", className }: { from: numbe
   return (
     <span ref={ref} className={className}>
       <span aria-hidden className="tabular-nums">
-        {Math.round(from * p)}–{Math.round(to * p)}
+        {Math.round(from * (reduce ? 1 : p))}–{Math.round(to * (reduce ? 1 : p))}
         {suffix}
       </span>
       {/* Screen readers get only the final range, never the counting digits. */}

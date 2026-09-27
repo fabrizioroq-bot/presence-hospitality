@@ -1,14 +1,9 @@
 "use client";
 
-import {
-  useMotionValue,
-  useMotionValueEvent,
-  useReducedMotion,
-  useScroll,
-} from "motion/react";
-import * as m from "motion/react-m";
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { cn } from "@/lib/cn";
+import { trackScroll } from "@/lib/anim";
+import { useReducedMotion } from "@/lib/hooks";
+import { cx as cn } from "@/lib/cx";
 import { SwipeDots } from "@/components/ui/SwipeDots";
 import { stepIcons } from "./StepIcons";
 
@@ -56,12 +51,7 @@ export function OnboardingTimeline({
       mq.removeEventListener("change", update);
     };
   }, []);
-  // Desktop: progress across the whole pin track. Mobile: as the list passes through the viewport.
-  const { scrollYProgress: pinProgress } = useScroll({
-    target: ref,
-    offset: pinned ? ["start start", "end end"] : ["start 0.8", "end 0.6"],
-  });
-  const line = useMotionValue(0);
+  const lineRef = useRef<HTMLSpanElement>(null);
 
   // Scale the pinned scene down (never up) so header + timeline always fit the viewport.
   const fitRef = useRef<HTMLDivElement>(null);
@@ -88,24 +78,26 @@ export function OnboardingTimeline({
       window.removeEventListener("resize", measure);
     };
   }, [pinned]);
-  const toLine = (v: number) => (pinned ? Math.min(1, v / LIT_AT) : v);
   const [reached, setReached] = useState(n);
 
+  // Desktop: progress across the whole pin track. Mobile: as the list passes through the viewport.
+  // The line is written straight to the DOM; only the lit-step count re-renders.
   useEffect(() => {
-    const id = requestAnimationFrame(() => {
-      const v = Math.min(1, pinProgress.get() / (pinned ? LIT_AT : 1));
-      line.set(reduce ? 1 : v);
-      setReached(reduce ? n : reachedCount(v, n));
+    const el = ref.current;
+    const ln = lineRef.current;
+    if (!el || !ln) return;
+    if (reduce) {
+      ln.style.transform = "scaleX(1)";
+      const id = requestAnimationFrame(() => setReached(n));
+      return () => cancelAnimationFrame(id);
+    }
+    return trackScroll(el, pinned ? ["start start", "end end"] : ["start 0.8", "end 0.6"], (v) => {
+      const l = pinned ? Math.min(1, v / LIT_AT) : v;
+      ln.style.transform = `scaleX(${l})`;
+      const c = reachedCount(l, n);
+      setReached((r) => (r === c ? r : c));
     });
-    return () => cancelAnimationFrame(id);
-  }, [reduce, pinProgress, line, n, pinned]);
-  useMotionValueEvent(pinProgress, "change", (v) => {
-    if (reduce) return;
-    const l = toLine(v);
-    line.set(l);
-    const c = reachedCount(l, n);
-    setReached((r) => (r === c ? r : c));
-  });
+  }, [reduce, n, pinned]);
 
   const card = (
     s: OnboardingStep,
@@ -174,9 +166,10 @@ export function OnboardingTimeline({
                   "repeating-linear-gradient(90deg, var(--line-mist) 0 6px, transparent 6px 12px)",
               }}
             />
-            <m.span
+            <span
+              ref={lineRef}
               aria-hidden
-              style={{ scaleX: line }}
+              style={{ transform: "scaleX(0)" }}
               className="accent-line absolute inset-x-0 top-1/2 h-0.5 origin-left -translate-y-1/2 bg-ink-900"
             />
             {steps.map((s, i) => {

@@ -1,22 +1,15 @@
 "use client";
 
-import {
-  useMotionValue,
-  useReducedMotion,
-  useScroll,
-  useSpring,
-  useTransform,
-  type MotionValue,
-} from "motion/react";
-import * as m from "motion/react-m";
 import dynamic from "next/dynamic";
-import { createContext, useContext, useEffect, useRef, useState, type ComponentProps, type ReactNode } from "react";
+import { createContext, useCallback, useContext, useEffect, useRef, useState, type ComponentProps, type ReactNode } from "react";
 import type { PointerState } from "@/components/hologram/hero-scene";
+import { spring, trackScroll, Value } from "@/lib/anim";
+import { useNear, useReducedMotion } from "@/lib/hooks";
 import { detectTier, hasWebGL2, type Tier } from "@/lib/perf-tier";
 
 const HeroCanvas = dynamic(() => import("@/components/hologram/HeroCanvas"), { ssr: false });
 
-type Ctx = { sx: MotionValue<number>; sy: MotionValue<number>; progress: MotionValue<number>; enabled: boolean };
+type Ctx = { sx: Value; sy: Value; progress: Value; enabled: boolean };
 const ParallaxCtx = createContext<Ctx | null>(null);
 
 /**
@@ -27,32 +20,44 @@ export function HeroShell({ children, ...props }: ComponentProps<"section"> & { 
   const ref = useRef<HTMLElement>(null);
   const portalRef = useRef<HTMLElement | null>(null);
   const pointer = useRef<PointerState>({ x: 0, y: 0, has: false, fine: false });
-  const reduce = useReducedMotion() ?? false;
+  const reduce = useReducedMotion();
 
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
-  const mx = useMotionValue(0);
-  const my = useMotionValue(0);
-  const sx = useSpring(mx, { stiffness: 40, damping: 18 });
-  const sy = useSpring(my, { stiffness: 40, damping: 18 });
+  // Scroll progress through the hero + spring-smoothed pointer (-1..1), shared with <Parallax>.
+  const [vals] = useState(() => ({ progress: new Value(0), sx: new Value(0), sy: new Value(0) }));
+  const { progress, sx, sy } = vals;
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    return trackScroll(el, ["start start", "end start"], (v) => progress.set(v));
+  }, [progress]);
 
   const [tier, setTier] = useState<Tier | null>(null);
   const [load, setLoad] = useState(false);
   const [active, setActive] = useState(true);
   const [ready, setReady] = useState(false);
+  // Unmount the scene when the hero is far off-screen; the poster returns until it repaints.
+  const onFar = useCallback(() => setReady(false), []);
+  const near = useNear(ref, "150% 0px", onFar);
 
   // Pointer tracking (no React renders).
   useEffect(() => {
     const fine = window.matchMedia("(pointer: fine)").matches;
+    const spX = spring((v) => sx.set(v), { stiffness: 40, damping: 18, mass: 1 });
+    const spY = spring((v) => sy.set(v), { stiffness: 40, damping: 18, mass: 1 });
     const onMove = (e: PointerEvent) => {
       pointer.current = { x: e.clientX, y: e.clientY, has: true, fine: fine && e.pointerType === "mouse" };
       if (fine && !reduce) {
-        mx.set((e.clientX / window.innerWidth) * 2 - 1);
-        my.set((e.clientY / window.innerHeight) * 2 - 1);
+        spX.set((e.clientX / window.innerWidth) * 2 - 1);
+        spY.set((e.clientY / window.innerHeight) * 2 - 1);
       }
     };
     window.addEventListener("pointermove", onMove, { passive: true });
-    return () => window.removeEventListener("pointermove", onMove);
-  }, [mx, my, reduce]);
+    return () => {
+      window.removeEventListener("pointermove", onMove);
+      spX.stop();
+      spY.stop();
+    };
+  }, [sx, sy, reduce]);
 
   // Decide whether/when to load WebGL: first interaction, or idle after load.
   useEffect(() => {
@@ -104,15 +109,15 @@ export function HeroShell({ children, ...props }: ComponentProps<"section"> & { 
   }, []);
 
   return (
-    <ParallaxCtx.Provider value={{ sx, sy, progress: scrollYProgress, enabled: !reduce }}>
+    <ParallaxCtx.Provider value={{ sx, sy, progress, enabled: !reduce }}>
       <section ref={ref} data-webgl={ready ? "ready" : undefined} {...props}>
-        {load && tier && (
+        {load && tier && near && (
           <div aria-hidden className="pointer-events-none absolute inset-0 -z-[5]">
             <HeroCanvas
               tier={tier}
               portal={portalRef}
               pointer={pointer}
-              scroll={scrollYProgress}
+              scroll={progress}
               active={active}
               onReady={() => setReady(true)}
             />
@@ -138,12 +143,27 @@ export function Parallax({
 }) {
   const ctx = useContext(ParallaxCtx);
   if (!ctx) throw new Error("Parallax must be used inside HeroShell");
-  const k = ctx.enabled ? 1 : 0; // same markup on server and client; zero offsets when reduced
-  const x = useTransform(ctx.sx, (v) => v * mouse[0] * k);
-  const y = useTransform([ctx.sy, ctx.progress], ([a, b]: number[]) => (a * mouse[1] + b * scroll) * k);
+  const ref = useRef<HTMLDivElement>(null);
+  const [mx, my] = mouse;
+  // Same markup on server and client; offsets are written straight to the DOM (none when reduced).
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || !ctx.enabled) return;
+    const write = () => {
+      const x = ctx.sx.get() * mx;
+      const y = ctx.sy.get() * my + ctx.progress.get() * scroll;
+      el.style.transform = `translate3d(${x.toFixed(2)}px, ${y.toFixed(2)}px, 0)`;
+    };
+    const offs = [ctx.sx.on(write), ctx.sy.on(write), ctx.progress.on(write)];
+    write();
+    return () => {
+      offs.forEach((off) => off());
+      el.style.transform = "";
+    };
+  }, [ctx, mx, my, scroll]);
   return (
-    <m.div style={{ x, y }} className={className}>
+    <div ref={ref} className={className}>
       {children}
-    </m.div>
+    </div>
   );
 }

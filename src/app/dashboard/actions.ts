@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { isAdmin, requireAdmin, requireUser } from "@/lib/dashboard/auth";
 import { STATUSES, type Status } from "@/lib/dashboard/leads";
+import { requestOrigin } from "@/lib/origin";
 import { supabaseServer } from "@/lib/supabase/server";
 
 export type FormState = { error?: string; ok?: string };
@@ -32,7 +33,8 @@ export async function requestReset(_: FormState, fd: FormData): Promise<FormStat
   const email = String(fd.get("email") ?? "").trim().toLowerCase();
   if (email) {
     const supabase = await supabaseServer();
-    await supabase.auth.resetPasswordForEmail(email);
+    // The email link comes back to the host the admin used (vercel.app now, the domain later).
+    await supabase.auth.resetPasswordForEmail(email, { redirectTo: `${await requestOrigin()}/dashboard/auth/confirm` });
   }
   // Same answer whether or not the account exists.
   return { ok: "If this email has dashboard access, a reset link is on its way." };

@@ -1,12 +1,12 @@
 "use client";
 
-import { useInView, useReducedMotion } from "motion/react";
+import { useInView, useReducedMotion } from "@/lib/hooks";
 import { useEffect, useRef, useState } from "react";
 
 /** Two-digit counter that rolls from 00 to `value` (≈400 ms) the first time it's seen. */
 export function NumberRoll({ value, className }: { value: number; className?: string }) {
   const ref = useRef<HTMLSpanElement>(null);
-  const seen = useInView(ref, { once: true, amount: 0.8 });
+  const seen = useInView(ref, 0.8);
   const reduce = useReducedMotion();
   const [n, setN] = useState(value);
   useEffect(() => {

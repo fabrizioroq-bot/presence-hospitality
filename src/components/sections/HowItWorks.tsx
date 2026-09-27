@@ -4,6 +4,7 @@ import type { Locale } from "@/i18n/routing";
 import { AmbientDust } from "@/components/ambient/AmbientDust";
 import { MoodTransition } from "@/components/ambient/MoodTransition";
 import { ParallaxOrbs } from "@/components/ambient/ParallaxOrbs";
+import { SketchDefs } from "@/components/story/SketchDefs";
 import { StoryCarousel } from "@/components/story/StoryCarousel";
 import { StoryPinned, type StoryLabels } from "@/components/story/StoryPinned";
 import { ButtonLink } from "@/components/ui/Button";
@@ -57,6 +58,7 @@ export async function HowItWorks() {
           ]}
         />
         <AmbientDust mood="mist" density={0.5} />
+        <SketchDefs />
 
         <div className="container-site flex flex-col gap-6 pt-16 lg:pt-24">
           <p className="text-label text-ink-700">{t("eyebrow")}</p>

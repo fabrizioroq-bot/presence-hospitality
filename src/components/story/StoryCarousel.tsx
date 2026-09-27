@@ -1,6 +1,6 @@
 "use client";
 
-import { useReducedMotion } from "motion/react";
+import { useReducedMotion } from "@/lib/hooks";
 import {
   useCallback,
   useEffect,
@@ -8,7 +8,7 @@ import {
   useState,
   type KeyboardEvent,
 } from "react";
-import { cn } from "@/lib/cn";
+import { cx as cn } from "@/lib/cx";
 import { LobbySketch, type SketchLabels } from "./LobbySketch";
 
 // Scene position (s) shown for each step. Moving between steps tweens s, so the traveller

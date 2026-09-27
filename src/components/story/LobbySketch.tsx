@@ -1,6 +1,4 @@
-import { POSTER_COOL, POSTER_WARM } from "@/components/hologram/poster-points";
-import { cn } from "@/lib/cn";
-import { GUEST_BODY, GUEST_CASE } from "./guest-points";
+import { cx as cn } from "@/lib/cx";
 import { DOOR, FLOOR, HOLOBOX, HUB, KIOSK, PERSON_SCALE, timeline } from "./layout";
 
 // World → SVG units (viewBox 1600 × 1000).
@@ -82,8 +80,9 @@ export function LobbySketch({ s, labels, className }: { s: number; labels?: Sket
       <line x1={X(HOLOBOX.x0) + 20} x2={X(HOLOBOX.x1) - 20} y1={Y(HOLOBOX.plinth)} y2={Y(HOLOBOX.plinth)} stroke="#8CC4FF" strokeOpacity="0.5" strokeWidth="2" />
       <line x1={X(HOLOBOX.x0) + 20} x2={X(HOLOBOX.x1) - 20} y1={Y(HOLOBOX.cap)} y2={Y(HOLOBOX.cap)} stroke="#8CC4FF" strokeOpacity="0.35" strokeWidth="2" />
       <g opacity={t.agent} transform={`translate(${X(HOLOBOX.cx) - 150 * posterScale} ${Y(HOLOBOX.plinth) - 600 * posterScale}) scale(${posterScale})`}>
-        <path d={POSTER_COOL} stroke="#8CC4FF" strokeWidth="7" strokeLinecap="round" opacity="0.85" />
-        <path d={POSTER_WARM} stroke="#F5A94A" strokeWidth="8" strokeLinecap="round" />
+        {/* Point paths are server-rendered once in <SketchDefs> (keeps ~9 KB gz of path data out of the JS). */}
+        <use href="#ls-cool" stroke="#8CC4FF" strokeWidth="7" strokeLinecap="round" opacity="0.85" />
+        <use href="#ls-warm" stroke="#F5A94A" strokeWidth="8" strokeLinecap="round" />
       </g>
 
       {/* Call to the hub */}
@@ -102,8 +101,8 @@ export function LobbySketch({ s, labels, className }: { s: number; labels?: Sket
         transform={`translate(${gx - 120 * guestScale} ${floorY - 590 * guestScale - bob}) scale(${guestScale})`}
         strokeLinecap="round"
       >
-        <path d={GUEST_BODY} stroke="#F4F6F8" strokeWidth="7" />
-        <path d={GUEST_CASE} stroke="#F8C98B" strokeWidth="7" />
+        <use href="#ls-guest-body" stroke="#F4F6F8" strokeWidth="7" />
+        <use href="#ls-guest-case" stroke="#F8C98B" strokeWidth="7" />
       </g>
 
       {labels && (

@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
 import { Logo } from "@/components/brand/Logo";
 import { buttonClass, Arrow } from "@/components/ui/Button";
-import { cn } from "@/lib/cn";
+import { cx as cn } from "@/lib/cx";
 import { getLenis } from "@/lib/smooth-scroll";
 
 type Mood = "mist" | "night";
@@ -241,10 +241,12 @@ export function Navbar({
               <span aria-hidden className="opacity-40">|</span>
               <span className={locale === "nl" ? "opacity-100" : "opacity-70"}>NL</span>
             </a>
-            <Link href={demoHref} className={buttonClass({ mood: night ? "night" : "mist", className: "hidden sm:inline-flex" })}>
-              {c("bookDemo")}
-              <Arrow />
-            </Link>
+            <span className="hidden sm:inline-flex">
+              <Link href={demoHref} className={buttonClass({ mood: night ? "night" : "mist" })}>
+                {c("bookDemo")}
+                <Arrow />
+              </Link>
+            </span>
             <button
               ref={toggleRef}
               type="button"

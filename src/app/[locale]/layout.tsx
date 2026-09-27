@@ -4,10 +4,12 @@ import { hasLocale } from "next-intl";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { routing } from "@/i18n/routing";
 import { hanken, hankenItalic, jetbrains } from "@/lib/fonts";
-import { MotionProvider } from "@/components/providers/MotionProvider";
+import { RevealObserver } from "@/components/providers/RevealObserver";
 import { Grain } from "@/components/brand/Grain";
 import { SmoothScroll } from "@/components/providers/SmoothScroll";
 import { CursorGlow } from "@/components/ambient/CursorGlow";
+import { CursorRing } from "@/components/ambient/CursorRing";
+import { DayNight } from "@/components/ambient/DayNight";
 import { PageTransition } from "@/components/transition/PageTransition";
 import { site } from "@/content/site";
 import "@/styles/globals.css";
@@ -38,7 +40,8 @@ export async function generateMetadata({
   };
 }
 
-const ACCENT_PREVIEW = `try{var q=new URLSearchParams(location.search).get("accent"),s=sessionStorage;if(q==="off")s.removeItem("accent");else if(q==="a"||q==="b")s.setItem("accent",q);var a=s.getItem("accent");if(a)document.documentElement.dataset.accent=a}catch(e){}`;
+// Before first paint: enable CSS reveals only when JS runs and motion is allowed (see Reveal.tsx).
+const REVEAL_BOOT = `if(!matchMedia("(prefers-reduced-motion: reduce)").matches)document.documentElement.classList.add("rv")`;
 
 export default async function LocaleLayout({
   children,
@@ -47,24 +50,26 @@ export default async function LocaleLayout({
   const { locale } = await params;
   if (!hasLocale(routing.locales, locale)) notFound();
   setRequestLocale(locale);
+  const cur = await getTranslations({ locale, namespace: "cursor" });
 
   return (
     <html
       lang={locale}
       className={`${hanken.variable} ${hankenItalic.variable} ${jetbrains.variable}`}
-      // The accent preview script below sets data-accent before hydration.
+      // REVEAL_BOOT adds a class to <html> before hydration.
       suppressHydrationWarning
     >
       <head>
-        {/* Accent preview (client choosing between two amber treatments): ?accent=a|b, kept for the
-            tab session; ?accent=off resets. Remove once a variant is chosen. */}
-        <script dangerouslySetInnerHTML={{ __html: ACCENT_PREVIEW }} />
+        <script dangerouslySetInnerHTML={{ __html: REVEAL_BOOT }} />
       </head>
       <body>
         {/* No NextIntlClientProvider: client components receive their strings as props. */}
-        <MotionProvider>{children}</MotionProvider>
+        {children}
+        <RevealObserver />
         <Grain />
         <CursorGlow />
+        <CursorRing labels={{ drag: cur("drag"), book: cur("book"), play: cur("play") }} />
+        <DayNight />
         <SmoothScroll />
         <PageTransition />
       </body>

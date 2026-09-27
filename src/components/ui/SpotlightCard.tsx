@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { cn } from "@/lib/cn";
+import { cx as cn } from "@/lib/cx";
 
 /** Soft light that follows the pointer inside the card (adapted from Magic UI "Magic Card", no deps). */
 export function SpotlightCard({ children, className, tone = "holo" }: { children: ReactNode; className?: string; tone?: "holo" | "ink" }) {

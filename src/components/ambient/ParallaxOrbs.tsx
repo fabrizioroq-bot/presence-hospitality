@@ -1,21 +1,27 @@
 "use client";
 
-import { useScroll, useTransform } from "motion/react";
-import * as m from "motion/react-m";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { MistOrbs, type Orb } from "@/components/brand/MistOrbs";
-import { cn } from "@/lib/cn";
+import { interp, trackScroll } from "@/lib/anim";
+import { cx as cn } from "@/lib/cx";
 
 /** MistOrbs that drift with scroll (±range px) on top of their CSS drift. */
 export function ParallaxOrbs({ orbs, range = 70, className }: { orbs: Orb[]; range?: number; className?: string }) {
   const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
-  const y = useTransform(scrollYProgress, [0, 1], [range, -range]);
+  const layer = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const el = ref.current;
+    const l = layer.current;
+    if (!el || !l || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    return trackScroll(el, ["start end", "end start"], (v) => {
+      l.style.transform = `translate3d(0, ${interp(v, [0, 1], [range, -range]).toFixed(1)}px, 0)`;
+    });
+  }, [range]);
   return (
     <div ref={ref} aria-hidden className={cn("pointer-events-none absolute inset-0 -z-10 overflow-hidden", className)}>
-      <m.div style={{ y }} className="absolute -inset-y-[80px] inset-x-0 motion-reduce:!transform-none">
+      <div ref={layer} className="absolute -inset-y-[80px] inset-x-0 will-change-transform">
         <MistOrbs orbs={orbs} />
-      </m.div>
+      </div>
     </div>
   );
 }

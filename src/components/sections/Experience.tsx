@@ -1,3 +1,4 @@
+import { HologramPoster } from "@/components/hologram/HologramPoster";
 import { getTranslations } from "next-intl/server";
 import { AmbientDust } from "@/components/ambient/AmbientDust";
 import { LightSweep } from "@/components/ambient/LightSweep";
@@ -42,6 +43,7 @@ export async function ExperienceStage() {
               hud={{ online: t("hudOnline"), route: t("hudRoute"), live: t("hudLive") }}
               alt={t("stageAlt")}
               dragHint={t("drag")}
+              poster={<HologramPoster />}
             />
             <div className="mt-8 flex max-w-xl flex-col gap-5 lg:pointer-events-none lg:absolute lg:bottom-0 lg:left-0 lg:mt-0 lg:gap-6 lg:p-12">
               <p className="text-label text-paper-500">{t("eyebrow")}</p>

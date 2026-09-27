@@ -1,13 +1,12 @@
 "use client";
 
-import { AnimatePresence, useReducedMotion } from "motion/react";
-import * as m from "motion/react-m";
 import { useEffect, useState } from "react";
-import { ease } from "@/lib/motion";
+import { useReducedMotion } from "@/lib/hooks";
 
 /**
  * Rotating word (adapted from Magic UI "Word Rotate"). All words are stacked in one grid cell
  * so the width never changes (no layout shift); screen readers get the full list once.
+ * Each new word rises in (CSS keyframes `word-in`).
  */
 export function WordRotate({ words, sr, className, interval = 2600 }: { words: string[]; sr: string; className?: string; interval?: number }) {
   const reduce = useReducedMotion();
@@ -26,18 +25,9 @@ export function WordRotate({ words, sr, className, interval = 2600 }: { words: s
             {w}
           </span>
         ))}
-        <AnimatePresence mode="wait" initial={false}>
-          <m.span
-            key={words[i]}
-            className="col-start-1 row-start-1 whitespace-nowrap"
-            initial={{ y: "0.4em", opacity: 0, filter: "blur(6px)" }}
-            animate={{ y: 0, opacity: 1, filter: "blur(0px)" }}
-            exit={{ y: "-0.4em", opacity: 0, filter: "blur(6px)" }}
-            transition={{ duration: 0.45, ease: ease.out }}
-          >
-            <em className="emph">{words[i]}</em>
-          </m.span>
-        </AnimatePresence>
+        <span key={words[i]} className={i === 0 ? "col-start-1 row-start-1 whitespace-nowrap" : "word-in col-start-1 row-start-1 whitespace-nowrap"}>
+          <em className="emph">{words[i]}</em>
+        </span>
       </span>
     </span>
   );

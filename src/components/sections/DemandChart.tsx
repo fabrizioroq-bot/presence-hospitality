@@ -1,9 +1,5 @@
-"use client";
-
-import * as m from "motion/react-m";
-import { useId } from "react";
+import { useId, type CSSProperties } from "react";
 import { DEMAND_SHAPE, smoothPath } from "@/lib/chart";
-import { ease } from "@/lib/motion";
 
 export type DemandChartLabels = {
   title: string;
@@ -70,24 +66,25 @@ function Chart({
     (_, i) => i * v.tickEvery,
   );
 
+  // CSS reveal (see Reveal.tsx): lines draw in (pathLength 1 + dash offset), fills fade in.
   const draw = (delay: number, duration: number) => ({
-    hidden: { pathLength: 0 },
-    show: { pathLength: 1, transition: { delay, duration, ease: ease.inOut } },
+    "data-rv": "draw",
+    pathLength: 1,
+    style: { "--rv-i": 0, "--rv-delay": `${delay}s`, "--rv-dur": `${duration}s` } as CSSProperties,
   });
   const fade = (delay: number) => ({
-    hidden: { opacity: 0 },
-    show: { opacity: 1, transition: { delay, duration: 0.4 } },
+    "data-rv": "svgfade",
+    style: { "--rv-i": 0, "--rv-delay": `${delay}s` } as CSSProperties,
   });
 
   return (
-    <m.svg
+    <svg
       viewBox={`0 0 ${v.w} ${v.h}`}
       className={className}
       role="img"
       aria-labelledby={`${id}-t ${id}-d`}
-      initial="hidden"
-      whileInView="show"
-      viewport={{ once: true, amount: 0.4 }}
+      data-rv-trigger=""
+      data-rv-amount="0.4"
     >
       <title id={`${id}-t`}>{labels.title}</title>
       <desc id={`${id}-d`}>{labels.desc}</desc>
@@ -164,7 +161,7 @@ function Chart({
       ))}
 
       {/* Paid idle time: gap between staffing and demand, at night */}
-      <m.g variants={fade(2.1)} clipPath={`url(#${id}-night)`}>
+      <g {...fade(2.1)} clipPath={`url(#${id}-night)`}>
         <rect
           x={pad.l}
           y={ys}
@@ -174,38 +171,38 @@ function Chart({
           mask={`url(#${id}-gap)`}
           opacity={0.35}
         />
-      </m.g>
+      </g>
 
       {/* Demand area + curve */}
-      <m.path
+      <path
         d={area}
         fill="var(--holo-400)"
         fillOpacity={0.12}
-        variants={fade(2.1)}
+        {...fade(2.1)}
       />
-      <m.path
+      <path
         d={demand}
         fill="none"
         stroke="var(--holo-400)"
         strokeWidth={v.stroke * 2.5}
         strokeLinecap="round"
-        variants={draw(0.9, 1.2)}
+        {...draw(0.9, 1.2)}
       />
 
       {/* Staffed hours: flat */}
-      <m.path
+      <path
         d={`M${x(0)} ${ys} L${x(24)} ${ys}`}
         stroke="var(--paper-300)"
         strokeWidth={v.stroke * 2}
         strokeLinecap="round"
         fill="none"
-        variants={draw(0, 0.9)}
+        {...draw(0, 0.9)}
       />
 
       {/* Inline labels (desktop only; mobile uses the HTML legend) */}
       {v.inline && (
-        <m.g
-          variants={fade(2.3)}
+        <g
+          {...fade(2.3)}
           fontFamily="var(--font-mono)"
           fontSize={v.font}
           letterSpacing="0.1em"
@@ -234,9 +231,9 @@ function Chart({
           >
             {labels.idle.toUpperCase()}
           </text>
-        </m.g>
+        </g>
       )}
-    </m.svg>
+    </svg>
   );
 }
 

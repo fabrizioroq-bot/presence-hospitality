@@ -1,7 +1,7 @@
 "use client";
 
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import type { MotionValue } from "motion/react";
+import type { Readable } from "@/lib/anim";
 import { useEffect, useRef, type RefObject } from "react";
 import { tierConfig, type Tier } from "@/lib/perf-tier";
 import { HeroScene, type PointerState, type SceneVariant } from "./hero-scene";
@@ -12,7 +12,7 @@ type Props = {
   tier: Tier;
   portal: RefObject<HTMLElement | null>;
   pointer: RefObject<PointerState>;
-  scroll: MotionValue<number>;
+  scroll: Readable;
   active: boolean;
   onReady: () => void;
   variant?: SceneVariant;
@@ -29,7 +29,19 @@ function SceneDriver({ tier, portal, pointer, scroll, active, onReady, variant =
   const size = useThree((s) => s.size);
 
   useEffect(() => {
-    const s = new HeroScene(tier, () => invalidate(), variant);
+    // The hero agent greets once per visit (tab session); the stage agent greets when it first forms.
+    let autoGreet = true;
+    if (variant === "hero") {
+      try {
+        autoGreet = !sessionStorage.getItem("ph-greeted");
+      } catch {}
+    }
+    const onGreet = () => {
+      try {
+        if (variant === "hero") sessionStorage.setItem("ph-greeted", "1");
+      } catch {}
+    };
+    const s = new HeroScene(tier, () => invalidate(), variant, autoGreet, onGreet);
     scene.current = s;
     if (portal.current) s.measure(portal.current);
     return () => {

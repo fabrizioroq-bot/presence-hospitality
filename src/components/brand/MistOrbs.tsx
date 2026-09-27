@@ -1,4 +1,4 @@
-import { cn } from "@/lib/cn";
+import { cx as cn } from "@/lib/cx";
 
 type OrbColor = "sky" | "mint" | "lavender" | "peach";
 

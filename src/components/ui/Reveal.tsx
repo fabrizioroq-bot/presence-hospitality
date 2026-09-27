@@ -1,28 +1,34 @@
-"use client";
+import type { CSSProperties, ReactNode } from "react";
 
-import * as m from "motion/react-m";
-import type { ReactNode } from "react";
-import { inView, reveal, revealSoft } from "@/lib/motion";
+/*
+ * Scroll reveals without a JS animation library: server-rendered markup + CSS transitions,
+ * triggered by <RevealObserver> (one IntersectionObserver for the whole page).
+ *   data-rv-trigger   element that starts its reveals when `data-rv-amount` of it is visible
+ *   data-rv-load      start on load instead of on view (above the fold)
+ *   data-rv="fade|soft|word|line"   item style (see globals.css); stagger via --rv-i/--rv-step/--rv-delay
+ * Without JS, or with reduced motion, everything renders in its final state.
+ */
+
+type Vars = CSSProperties & Record<`--${string}`, string | number>;
 
 export function Reveal({
   children,
   className,
-  as = "div",
+  as: Comp = "div",
 }: {
   children: ReactNode;
   className?: string;
   as?: "div" | "li" | "p" | "section";
 }) {
-  const Comp = m[as];
   return (
-    <Comp className={className} variants={reveal} initial="hidden" whileInView="show" viewport={inView}>
+    <Comp className={className} data-rv-trigger="" data-rv="fade">
       {children}
     </Comp>
   );
 }
 
 /**
- * `onLoad` animates on mount instead of on view — use it above the fold, together with
+ * `onLoad` animates on mount instead of on view: use it above the fold, together with
  * `soft` items, so the content is painted from the first frame (LCP-safe).
  */
 export function RevealGroup({
@@ -43,20 +49,11 @@ export function RevealGroup({
   /** Set to 0 when the group is a mobile swipe row (keyboard access to the scroller). */
   tabIndex?: number;
 }) {
-  const variants = {
-    hidden: {},
-    show: { transition: { staggerChildren: gap, delayChildren: delay } },
-  };
-  if (onLoad)
-    return (
-      <m.div id={id} tabIndex={tabIndex} className={className} variants={variants} initial="hidden" animate="show">
-        {children}
-      </m.div>
-    );
+  const style: Vars = { "--rv-step": `${gap}s`, "--rv-delay": `${delay}s` };
   return (
-    <m.div id={id} tabIndex={tabIndex} className={className} variants={variants} initial="hidden" whileInView="show" viewport={inView}>
+    <div id={id} tabIndex={tabIndex} className={className} style={style} data-rv-trigger="" data-rv-load={onLoad ? "" : undefined}>
       {children}
-    </m.div>
+    </div>
   );
 }
 
@@ -71,8 +68,8 @@ export function RevealItem({
   soft?: boolean;
 }) {
   return (
-    <m.div className={className} variants={soft ? revealSoft : reveal}>
+    <div className={className} data-rv={soft ? "soft" : "fade"}>
       {children}
-    </m.div>
+    </div>
   );
 }

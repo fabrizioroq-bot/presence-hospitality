@@ -1,11 +1,11 @@
 "use client";
 
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import type { MotionValue } from "motion/react";
+import type { Readable } from "@/lib/anim";
 import { useEffect, useRef } from "react";
 import { StoryScene } from "./story-scene";
 
-function Driver({ s, onReady }: { s: MotionValue<number>; onReady: () => void }) {
+function Driver({ s, onReady }: { s: Readable; onReady: () => void }) {
   const scene = useRef<StoryScene | null>(null);
   const ready = useRef(false);
   const invalidate = useThree((st) => st.invalidate);
@@ -36,7 +36,7 @@ export default function StoryCanvas({
   active,
   onReady,
 }: {
-  s: MotionValue<number>;
+  s: Readable;
   active: boolean;
   onReady: () => void;
 }) {

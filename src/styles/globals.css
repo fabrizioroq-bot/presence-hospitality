@@ -30,12 +30,10 @@
   --holo-500: #5aa8f5;
   --holo-600: #2f7fd0;
   --holo-gradient: linear-gradient(100deg, #9dc9ff 0%, #e6f2ff 100%);
-  /* Accent blues (CTA / emphasis gradients). Text on mist: blue-700 5.98:1, blue-600 4.08:1,
-     teal-700 4.69:1 on mist-bg. White on blue-700 8.44:1, blue-650 5.33:1, cyan-700 4.80:1.
+  /* Accent blues (CTA / emphasis gradients). Text on mist-bg: blue-700 5.98:1, teal-700 4.69:1.
+     White on blue-700 8.44:1, on cyan-700 4.80:1.
      cyan-300 on charcoal 8.74:1. */
   --blue-700: #1747a6;
-  --blue-650: #1e6fae;
-  --blue-600: #2567b0;
   --teal-700: #0b6485;
   --cyan-700: #0a7ba3;
   --cyan-300: #6fe3ff;
@@ -53,7 +51,7 @@
   --success-mist: #1e6b45;
   --success-night: #7fd9a8;
 
-  --focus: #1c5aa0;
+  --focus: #1747a6; /* blue-700 */
 
   --r-sm: 8px;
   --r-md: 16px;
@@ -62,7 +60,8 @@
   --r-pill: 999px;
 
   --shadow-soft: 0 24px 60px -30px rgba(29, 31, 35, 0.35);
-  --glow-holo: 0 0 0 1px rgba(140, 196, 255, 0.35), 0 0 32px rgba(140, 196, 255, 0.28),
+  --glow-holo:
+    0 0 0 1px rgba(140, 196, 255, 0.35), 0 0 32px rgba(140, 196, 255, 0.28),
     0 0 96px rgba(140, 196, 255, 0.14);
   --glow-amber: 0 0 12px rgba(245, 169, 74, 0.6);
 
@@ -252,7 +251,7 @@
     border-radius: 4px;
   }
   [data-mood="night"] :focus-visible {
-    outline-color: var(--holo-300);
+    outline-color: var(--cyan-300);
   }
   [data-mood="night"] {
     background: var(--charcoal-700);
@@ -347,7 +346,13 @@
   left: 0;
   width: 45%;
   height: 200%;
-  background: linear-gradient(90deg, transparent 0%, rgba(191, 224, 255, 0.07) 45%, rgba(248, 201, 139, 0.04) 55%, transparent 100%);
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(191, 224, 255, 0.07) 45%,
+    rgba(248, 201, 139, 0.04) 55%,
+    transparent 100%
+  );
   filter: blur(20px);
   animation: light-sweep 38s linear infinite;
   will-change: transform;
@@ -372,7 +377,12 @@
   inset-inline: 0;
   top: 0;
   height: 100%;
-  background: linear-gradient(180deg, transparent 45%, rgba(191, 224, 255, 0.22) 50%, transparent 55%);
+  background: linear-gradient(
+    180deg,
+    transparent 45%,
+    rgba(191, 224, 255, 0.22) 50%,
+    transparent 55%
+  );
   animation: scan-sweep 4.5s linear infinite;
   pointer-events: none;
 }
@@ -428,7 +438,9 @@
   font-size: 1rem;
   line-height: 1.4;
   box-shadow: inset 0 0 0 1px var(--line-night);
-  transition: box-shadow 200ms, background-color 200ms;
+  transition:
+    box-shadow 200ms,
+    background-color 200ms;
 }
 .demo-input::placeholder {
   color: var(--paper-500);
@@ -440,7 +452,9 @@
 .demo-input:focus-visible {
   outline: none;
   background: var(--night-900);
-  box-shadow: inset 0 0 0 1px var(--holo-300), 0 0 0 3px rgba(191, 224, 255, 0.25);
+  box-shadow:
+    inset 0 0 0 1px var(--holo-300),
+    0 0 0 3px rgba(191, 224, 255, 0.25);
 }
 .demo-input.is-invalid {
   box-shadow: inset 0 0 0 1px var(--danger-night);
@@ -500,8 +514,16 @@ select.demo-input option {
   inset: -1px;
   border-radius: inherit;
   padding: 1px;
-  background: conic-gradient(from var(--shine-angle), transparent 0 70%, var(--holo-300) 82%, var(--amber-300) 90%, transparent 100%);
-  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  background: conic-gradient(
+    from var(--shine-angle),
+    transparent 0 70%,
+    var(--holo-300) 82%,
+    var(--amber-300) 90%,
+    transparent 100%
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
   mask-composite: exclude;
   opacity: 0;
@@ -652,42 +674,38 @@ select.demo-input option {
 }
 
 /* ---------------------------------------------------------------------------------------------
-   Blue accent: two candidate treatments, switched by <html data-accent="a|b"> (preview: ?accent=a
-   or ?accent=b). Without the attribute the site renders exactly as before. Amber stays for the
+   Blue accent (client-approved "vivid", 27-09): deep blue → holo cyan. Amber stays only for the
    live dot, the traveller's suitcase and "paid idle time". Hooks: .btn-cta (conversion buttons) ·
-   em.emph (headline highlight) · .key-figure · .step-num / .step-num-dark (step counters on light /
-   dark) · .step-node[data-lit] · .accent-dot (active carousel dot) · .accent-bar (autoplay bar) ·
-   .accent-line (timeline progress fill) · .nav-ind (active navbar link). Gradient text keeps AA at both ends on its background.
+   em.emph (headline highlight) · .key-figure · .step-num / .step-num-dark (step counters on light
+   / dark) · .step-node[data-lit] · .accent-dot (active carousel dot) · .accent-bar (autoplay bar) ·
+   .accent-line (timeline fill) · .nav-ind (active navbar link). Every gradient stop passes AA on its
+   background (scripts/check-contrast.ts); on light surfaces the cyan end is the deeper teal-700.
    --------------------------------------------------------------------------------------------- */
 
-@keyframes cta-sweep {
-  0% {
-    transform: translateX(-160%) skewX(-20deg);
-  }
-  55%,
-  100% {
-    transform: translateX(460%) skewX(-20deg);
-  }
-}
-
-html[data-accent] .btn-cta {
+/* Conversion CTA: gradient pill, white text, a slow "hologram scan" crossing it, glow on hover. */
+.btn-cta {
   position: relative;
   isolation: isolate;
   overflow: hidden;
   color: #fff;
+  background: linear-gradient(100deg, var(--blue-700) 0%, var(--cyan-700) 100%);
+  box-shadow:
+    0 0 0 1px rgba(111, 227, 255, 0.25),
+    0 8px 24px -12px rgba(10, 123, 163, 0.7);
+  transition:
+    box-shadow 0.25s,
+    filter 0.2s,
+    translate 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    scale 0.15s;
 }
-/* The "hologram scan": a soft band of light crossing the button. */
-html[data-accent] .btn-cta::after {
-  content: "";
-  position: absolute;
-  inset: -2px auto -2px 0;
-  width: 34%;
-  z-index: -1;
-  pointer-events: none;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.28), transparent);
-  transform: translateX(-160%) skewX(-20deg);
+.btn-cta:hover {
+  filter: brightness(1.08) saturate(1.1);
+  box-shadow:
+    0 0 0 1px rgba(111, 227, 255, 0.55),
+    0 10px 34px -8px rgba(47, 127, 208, 0.85),
+    0 0 48px -12px rgba(111, 227, 255, 0.7);
 }
-html[data-accent] .btn-cta::before {
+.btn-cta::before {
   /* hairline top highlight, like a lit glass edge */
   content: "";
   position: absolute;
@@ -697,107 +715,348 @@ html[data-accent] .btn-cta::before {
   pointer-events: none;
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22);
 }
-html[data-accent] [data-mood="mist"] em.emph,
-html[data-accent] [data-mood="mist"] .key-figure,
-html[data-accent] [data-mood="night"] em.emph,
-html[data-accent] [data-mood="night"] .key-figure,
-html[data-accent] .bg-ink-900 .key-figure,
-html[data-accent] .step-num,
-html[data-accent] .step-num-dark {
+.btn-cta::after {
+  content: "";
+  position: absolute;
+  inset: -2px auto -2px 0;
+  width: 34%;
+  z-index: -1;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.28),
+    transparent
+  );
+  transform: translateX(-160%) skewX(-20deg);
+  animation: cta-sweep 6s cubic-bezier(0.45, 0, 0.25, 1) 1.5s infinite;
+}
+@keyframes cta-sweep {
+  0% {
+    transform: translateX(-160%) skewX(-20deg);
+  }
+  55%,
+  100% {
+    transform: translateX(460%) skewX(-20deg);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn-cta::after {
+    animation: none;
+  }
+}
+
+/* Gradient text */
+[data-mood="mist"] em.emph,
+[data-mood="mist"] .key-figure,
+[data-mood="night"] em.emph,
+[data-mood="night"] .key-figure,
+.bg-ink-900 .key-figure,
+.step-num,
+.step-num-dark {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
 }
-
-/* A: subtle. Softer blue gradient; glow and one scan pass on hover only. */
-html[data-accent="a"] .btn-cta {
-  background: linear-gradient(100deg, var(--link-mist) 0%, var(--blue-650) 100%);
-  transition: box-shadow 0.25s, filter 0.2s;
+[data-mood="mist"] em.emph,
+[data-mood="mist"] .key-figure,
+.step-num {
+  background-image: linear-gradient(
+    100deg,
+    var(--blue-700) 0%,
+    var(--teal-700) 100%
+  );
 }
-html[data-accent="a"] .btn-cta:hover {
-  filter: brightness(1.06);
-  box-shadow: 0 10px 30px -10px rgba(47, 127, 208, 0.75);
-}
-html[data-accent="a"] .btn-cta:hover::after {
-  animation: cta-sweep 1.2s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)) 1;
-}
-html[data-accent="a"] [data-mood="mist"] em.emph,
-html[data-accent="a"] [data-mood="mist"] .key-figure {
-  background-image: linear-gradient(100deg, var(--link-mist) 0%, var(--blue-600) 100%);
-}
-html[data-accent="a"] [data-mood="night"] em.emph,
-html[data-accent="a"] [data-mood="night"] .key-figure,
-html[data-accent="a"] .bg-ink-900 .key-figure,
-html[data-accent="a"] .step-num-dark {
-  background-image: linear-gradient(100deg, var(--holo-300) 0%, var(--holo-400) 100%);
-}
-html[data-accent="a"] .step-num {
-  background-image: linear-gradient(100deg, var(--link-mist), var(--link-mist));
-}
-html[data-accent="a"] .step-node[data-lit] {
-  background: linear-gradient(135deg, var(--link-mist) 0%, var(--blue-650) 100%);
-  color: #fff;
-}
-html[data-accent="a"] [data-mood="mist"] [aria-current] > .accent-dot,
-html[data-accent="a"] [data-mood="mist"] .accent-bar,
-html[data-accent="a"] .accent-line {
-  background: var(--link-mist);
-  opacity: 1;
-}
-html[data-accent="a"] [data-mood="night"] [aria-current] > .accent-dot {
-  background: var(--holo-300);
-  opacity: 1;
+[data-mood="night"] em.emph,
+[data-mood="night"] .key-figure,
+.bg-ink-900 .key-figure,
+.step-num-dark {
+  background-image: linear-gradient(
+    100deg,
+    var(--holo-400) 0%,
+    var(--cyan-300) 100%
+  );
 }
 
-/* B: vivid. Saturated deep blue → cyan, a slow scan sweeping the CTAs, brighter glows. */
-html[data-accent="b"] {
-  --focus: var(--blue-700);
-}
-html[data-accent="b"] [data-mood="night"] :focus-visible {
-  outline-color: var(--cyan-300);
-}
-html[data-accent="b"] .btn-cta {
-  background: linear-gradient(100deg, var(--blue-700) 0%, var(--cyan-700) 100%);
-  box-shadow: 0 0 0 1px rgba(111, 227, 255, 0.25), 0 8px 24px -12px rgba(10, 123, 163, 0.7);
-  transition: box-shadow 0.25s, filter 0.2s;
-}
-html[data-accent="b"] .btn-cta::after {
-  animation: cta-sweep 6s cubic-bezier(0.45, 0, 0.25, 1) 1.5s infinite;
-}
-html[data-accent="b"] .btn-cta:hover {
-  filter: brightness(1.08) saturate(1.1);
-  box-shadow: 0 0 0 1px rgba(111, 227, 255, 0.55), 0 10px 34px -8px rgba(47, 127, 208, 0.85), 0 0 48px -12px rgba(111, 227, 255, 0.7);
-}
-html[data-accent="b"] [data-mood="mist"] em.emph,
-html[data-accent="b"] [data-mood="mist"] .key-figure,
-html[data-accent="b"] .step-num {
-  background-image: linear-gradient(100deg, var(--blue-700) 0%, var(--teal-700) 100%);
-}
-html[data-accent="b"] [data-mood="night"] em.emph,
-html[data-accent="b"] [data-mood="night"] .key-figure,
-html[data-accent="b"] .bg-ink-900 .key-figure,
-html[data-accent="b"] .step-num-dark {
-  background-image: linear-gradient(100deg, var(--holo-400) 0%, var(--cyan-300) 100%);
-}
-html[data-accent="b"] .step-node[data-lit] {
+/* Steps, progress, dots, navbar */
+.step-node[data-lit] {
   background: linear-gradient(135deg, var(--blue-700) 0%, var(--cyan-700) 100%);
   color: #fff;
-  box-shadow: 0 0 0 1px rgba(111, 227, 255, 0.45), 0 0 18px rgba(90, 168, 245, 0.55);
+  box-shadow:
+    0 0 0 1px rgba(111, 227, 255, 0.45),
+    0 0 18px rgba(90, 168, 245, 0.55);
 }
-html[data-accent="b"] [data-mood="mist"] [aria-current] > .accent-dot,
-html[data-accent="b"] [data-mood="mist"] .accent-bar,
-html[data-accent="b"] .accent-line {
+[data-mood="mist"] [aria-current] > .accent-dot,
+[data-mood="mist"] .accent-bar,
+.accent-line {
   background: linear-gradient(90deg, var(--blue-700), var(--cyan-700));
   opacity: 1;
 }
-html[data-accent="b"] [data-mood="night"] [aria-current] > .accent-dot {
+[data-mood="night"] [aria-current] > .accent-dot {
   background: linear-gradient(90deg, var(--holo-400), var(--cyan-300));
   box-shadow: 0 0 10px rgba(111, 227, 255, 0.6);
   opacity: 1;
 }
-html[data-accent="b"] .nav-ind {
+.nav-ind {
   background: linear-gradient(90deg, var(--holo-600), var(--cyan-300));
   box-shadow: 0 0 14px rgba(111, 227, 255, 0.8);
+}
+
+/* ---------------------------------------------------------------------------------------------
+   Immersion polish (client ideas 1–4). 1 greeting lives in the hologram scene.
+   --------------------------------------------------------------------------------------------- */
+
+/* 2 · Day → night: --dusk (0 top → 1 bottom, DayNight.tsx) shifts the canvases towards dusk.
+   Dusk tones are AA-checked with every text colour used on them (scripts/check-contrast.ts). */
+:root {
+  --dusk: 0;
+}
+@supports (color: color-mix(in oklab, red, blue)) {
+  :root {
+    --mist-bg: color-mix(in oklab, #d3dae1, #d2d8e8 calc(var(--dusk) * 100%));
+    --charcoal-700: color-mix(
+      in oklab,
+      #2f3136,
+      #24272e calc(var(--dusk) * 100%)
+    );
+  }
+}
+
+/* 3 · Contextual cursor ring (desktop, fine pointer, motion allowed; native cursor kept). */
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 60;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.cursor-ring > i {
+  position: absolute;
+  left: -20px;
+  top: -20px;
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  border: 1px solid rgba(29, 31, 35, 0.35);
+  transform: scale(0.62);
+  transition:
+    transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.25s,
+    background-color 0.25s,
+    opacity 0.2s;
+}
+.cursor-ring[data-mood="night"] > i {
+  border-color: rgba(191, 224, 255, 0.5);
+}
+.cursor-ring[data-state="link"] > i,
+.cursor-ring[data-state="label"] > i {
+  transform: scale(1);
+  border-color: rgba(47, 127, 208, 0.55);
+  background-color: rgba(47, 127, 208, 0.06);
+}
+.cursor-ring[data-mood="night"][data-state="link"] > i,
+.cursor-ring[data-mood="night"][data-state="label"] > i {
+  border-color: rgba(111, 227, 255, 0.6);
+  background-color: rgba(111, 227, 255, 0.06);
+}
+.cursor-ring[data-press] > i {
+  transform: scale(0.8);
+}
+.cursor-ring[data-state="hidden"] > i {
+  opacity: 0;
+}
+.cursor-ring > span {
+  position: absolute;
+  left: 18px;
+  top: 16px;
+  padding: 4px 9px;
+  border-radius: 999px;
+  font:
+    500 10px/1 var(--font-jetbrains),
+    ui-monospace,
+    monospace;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: #fff;
+  background: linear-gradient(100deg, var(--blue-700), var(--cyan-700));
+  box-shadow: 0 6px 18px -6px rgba(10, 123, 163, 0.7);
+  opacity: 0;
+  transform: translateY(4px) scale(0.9);
+  transition:
+    opacity 0.2s,
+    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.cursor-ring[data-state="label"] > span {
+  opacity: 1;
+  transform: none;
+}
+
+/* 4 · Magnetic buttons (pull set by CursorRing) + press feedback on every device. */
+.magnetic {
+  transition-property:
+    background-color, color, border-color, box-shadow, filter, translate, scale;
+  transition-duration: 0.2s, 0.2s, 0.2s, 0.25s, 0.2s, 0.45s, 0.15s;
+  transition-timing-function:
+    ease, ease, ease, ease, ease, cubic-bezier(0.16, 1, 0.3, 1), ease;
+}
+.magnetic:active,
+.btn-cta:active {
+  scale: 0.97;
+}
+@media (prefers-reduced-motion: reduce) {
+  .magnetic:active,
+  .btn-cta:active {
+    scale: none;
+  }
+}
+
+/* ---------------------------------------------------------------------------------------------
+   Scroll reveals (Reveal.tsx + RevealObserver). `html.rv` is set before paint only when JS runs
+   and motion is allowed; until the observer boots (`rv-on`) a failsafe shows content after 3 s.
+   --------------------------------------------------------------------------------------------- */
+html.rv [data-rv] {
+  transition:
+    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    filter 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+    clip-path 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: calc(
+    var(--rv-delay, 0s) + var(--rv-i, 0) * var(--rv-step, 0.07s)
+  );
+}
+html.rv [data-rv-trigger]:not([data-in])[data-rv="fade"],
+html.rv [data-rv-trigger]:not([data-in]) [data-rv="fade"] {
+  opacity: 0;
+  transform: translateY(24px);
+  filter: blur(6px);
+}
+html.rv [data-rv-trigger]:not([data-in]) [data-rv="soft"] {
+  transform: translateY(16px);
+  filter: blur(6px);
+}
+html.rv [data-rv-trigger]:not([data-in]) [data-rv="word"] {
+  transform: translateY(0.28em);
+  filter: blur(8px);
+}
+html.rv [data-rv-trigger]:not([data-in]) [data-rv="line"] {
+  clip-path: inset(0 0 100% 0);
+  transform: translateY(0.3em);
+}
+html.rv [data-rv="word"] {
+  will-change: transform;
+}
+@keyframes rv-failsafe {
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+    clip-path: none;
+  }
+}
+html.rv:not(.rv-on) [data-rv] {
+  animation: rv-failsafe 0.01s 3s forwards;
+}
+html.rv [data-rv="bar"] {
+  transition-duration: 0.9s;
+}
+html.rv [data-rv-trigger]:not([data-in]) [data-rv="bar"] {
+  transform: scaleX(0);
+}
+html.rv [data-rv="neon"]:not([data-in]) {
+  opacity: 0.25;
+}
+html.rv [data-rv="neon"][data-in] {
+  animation: neon-flicker 0.9s linear;
+}
+@keyframes neon-flicker {
+  0% {
+    opacity: 0.25;
+  }
+  15% {
+    opacity: 1;
+  }
+  30% {
+    opacity: 0.55;
+  }
+  50% {
+    opacity: 1;
+  }
+  65% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Border beam: a light running along the border (offset-path). */
+.border-beam {
+  animation: border-beam linear infinite;
+}
+@keyframes border-beam {
+  from {
+    offset-distance: 0%;
+  }
+  to {
+    offset-distance: 100%;
+  }
+}
+
+/* Rotating hero word: each new word rises in. */
+.word-in {
+  animation: word-in 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+@keyframes word-in {
+  from {
+    transform: translateY(0.4em);
+    opacity: 0;
+    filter: blur(6px);
+  }
+}
+html.rv [data-rv="wipe"] {
+  transition-duration: 1s;
+  transition-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
+}
+html.rv [data-rv-trigger]:not([data-in]) [data-rv="wipe"] {
+  clip-path: inset(0 100% 0 0);
+}
+html.rv [data-rv="pop"] {
+  transition:
+    opacity 0.45s ease-out,
+    transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow 0.3s;
+  transition-delay: calc(var(--rv-delay, 0s) + var(--rv-i, 0) * var(--rv-step, 0.07s)), calc(var(--rv-delay, 0s) + var(--rv-i, 0) * var(--rv-step, 0.07s)), 0s;
+}
+html.rv [data-rv-trigger]:not([data-in]) [data-rv="pop"] {
+  opacity: 0;
+  transform: scale(0.9);
+}
+html.rv [data-rv="rise"] {
+  transition-duration: 0.6s;
+}
+html.rv [data-rv-trigger]:not([data-in]) [data-rv="rise"] {
+  opacity: 0;
+  transform: translateY(16px);
+}
+html.rv [data-rv="draw"] {
+  stroke-dasharray: 1;
+  transition: stroke-dashoffset var(--rv-dur, 1s) cubic-bezier(0.65, 0, 0.35, 1);
+  transition-delay: var(--rv-delay, 0s);
+}
+html.rv [data-rv-trigger]:not([data-in]) [data-rv="draw"] {
+  stroke-dashoffset: 1;
+}
+html.rv [data-rv="svgfade"] {
+  transition: opacity 0.4s;
+  transition-delay: var(--rv-delay, 0s);
+}
+html.rv [data-rv-trigger]:not([data-in]) [data-rv="svgfade"] {
+  opacity: 0;
 }

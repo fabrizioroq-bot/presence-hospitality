@@ -2,7 +2,7 @@
 
 import { useActionState, useEffect, useRef, useState, type FocusEvent, type FormEvent, type ReactNode } from "react";
 import { submitDemoRequest, type DemoState } from "@/app/actions/demo-request";
-import { cn } from "@/lib/cn";
+import { cx as cn } from "@/lib/cx";
 import { FIELDS, LIMITS, POSITIONS, validateField, type ErrorCode, type FieldErrors, type LeadField } from "@/lib/leads/validate";
 
 export type DemoFormLabels = {
@@ -302,7 +302,7 @@ export function DemoForm({
         type="submit"
         disabled={pending}
         aria-busy={pending || undefined}
-        className="btn-cta group inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-pill bg-paper-50 px-7 py-3 text-[0.9375rem] font-semibold text-ink-900 transition-[background-color,opacity] hover:bg-holo-100 disabled:cursor-wait disabled:opacity-70 sm:w-auto sm:self-start"
+        className="btn-cta magnetic group inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-pill px-7 py-3 text-[0.9375rem] font-semibold disabled:cursor-wait disabled:opacity-70 sm:w-auto sm:self-start"
       >
         {pending ? (
           <>

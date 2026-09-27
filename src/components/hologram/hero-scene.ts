@@ -102,9 +102,19 @@ export class HeroScene {
   private disposed = false;
 
   private variant: SceneVariant;
+  /** Greeting (nod + light pulse): auto once after the first formation, then on hover. */
+  private autoGreet: boolean;
+  private greetStart: number | null = null;
+  private greetQueued = false;
+  private lastGreet = -99;
+  private wasOver = false;
 
-  constructor(tier: Tier, onLoaded: () => void, variant: SceneVariant = "hero") {
+  private onGreet?: () => void;
+
+  constructor(tier: Tier, onLoaded: () => void, variant: SceneVariant = "hero", autoGreet = true, onGreet?: () => void) {
     this.variant = variant;
+    this.autoGreet = autoGreet;
+    this.onGreet = onGreet;
     this.cfg = tierConfig[tier];
     this.reduced = tier === "reduced";
     const { cfg, shared, reduced } = this;
@@ -167,6 +177,9 @@ export class HeroScene {
         uPointerOn: { value: 0 },
         uMotion: { value: reduced ? 0 : 1 },
         uDissolve: { value: 0 },
+        uNod: { value: 0 },
+        uTilt: { value: 0 },
+        uGreet: { value: 0 },
       },
       ...additive,
     });
@@ -317,6 +330,34 @@ export class HeroScene {
       u.uPointerOn.value += (0 - u.uPointerOn.value) * 0.1;
     }
 
+    // Greeting: once after the first formation (if enabled), and when the mouse enters the portal
+    // (desktop, at most every 8 s). ~1.8 s: bow + nod down, hold, back up; a light pulse rises.
+    if (!reduced && this.agent) {
+      if (this.autoGreet && u.uProgress.value >= 1 && this.lastGreet < 0 && !this.greetQueued) {
+        this.greetQueued = true;
+        this.greetStart = time + 0.35;
+        this.onGreet?.();
+      }
+      if (over && !this.wasOver && p.fine && u.uProgress.value >= 1 && time - this.lastGreet > 8 && this.greetStart === null)
+        this.greetStart = time;
+      this.wasOver = over;
+      if (this.greetStart !== null && time >= this.greetStart) {
+        const g = time - this.greetStart;
+        const io = (x: number) => (x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2);
+        const k = g < 0.55 ? io(g / 0.55) : g < 0.75 ? 1 : 1 - io(Math.min(1, (g - 0.75) / 0.95));
+        u.uNod.value = 0.34 * k;
+        u.uTilt.value = 0.16 * k;
+        u.uGreet.value = Math.sin(Math.min(1, g / 1.7) * Math.PI);
+        if (g >= 1.7) {
+          u.uNod.value = 0;
+          u.uTilt.value = 0;
+          u.uGreet.value = 0;
+          this.lastGreet = this.greetStart;
+          this.greetStart = null;
+        }
+      }
+    }
+
     // Flicker + glitch slice (never while the user is looking at the agent).
     if (!reduced) {
       if (time > this.nextDip && !over && u.uProgress.value >= 1) {
@@ -329,7 +370,12 @@ export class HeroScene {
       const dipping = time < this.dipUntil;
       u.uFlicker.value = dipping ? 0.82 : 1;
       if (!dipping) u.uGlitchAmt.value = 0;
-      u.uSweep.value = u.uProgress.value >= 1 ? ((time % 4.5) / 4.5) * 2.1 - 0.1 : -10;
+      u.uSweep.value =
+        this.greetStart !== null && time >= this.greetStart
+          ? Math.min(1, (time - this.greetStart) / 1.3) * 2.1 - 0.1 // greeting pulse rises feet → head
+          : u.uProgress.value >= 1
+            ? ((time % 4.5) / 4.5) * 2.1 - 0.1
+            : -10;
     }
 
     // ---- render ----

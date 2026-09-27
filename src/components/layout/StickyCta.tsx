@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { cn } from "@/lib/cn";
+import { cx as cn } from "@/lib/cx";
 
 /**
  * Mobile-only "Book a demo" bar. Appears after the first screen, hides while the footer or a
@@ -44,7 +44,7 @@ export function StickyCta({ href, label }: { href: string; label: string }) {
         href={href}
         tabIndex={show ? 0 : -1}
         aria-hidden={show ? undefined : true}
-        className="btn-cta flex min-h-12 w-full items-center justify-center gap-2 rounded-pill bg-ink-900 font-semibold text-paper-50 shadow-[0_12px_32px_-12px_rgba(29,31,35,0.6)]"
+        className="btn-cta flex min-h-12 w-full items-center justify-center gap-2 rounded-pill font-semibold"
       >
         {label}
         <svg aria-hidden viewBox="0 0 16 16" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round"><path d="M3 8h10M9 4l4 4-4 4" /></svg>

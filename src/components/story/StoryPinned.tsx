@@ -1,10 +1,10 @@
 "use client";
 
-import { useMotionValueEvent, useScroll, useTransform, type MotionValue } from "motion/react";
-import * as m from "motion/react-m";
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { cn } from "@/lib/cn";
+import { interp, trackScroll, Value } from "@/lib/anim";
+import { cx as cn } from "@/lib/cx";
+import { useNear } from "@/lib/hooks";
 import { hasWebGL2 } from "@/lib/perf-tier";
 import { FLOOR, DOOR, HOLOBOX, KIOSK, STEPS, pctX, pctY, timeline } from "./layout";
 import { LobbySketch } from "./LobbySketch";
@@ -31,43 +31,50 @@ const phaseOf = (s: number): Phase => {
   return "welcome";
 };
 
-/** Step copy that fades/rises in its own scroll window. */
-function StepText({ s, i, step, label, title, body }: { s: MotionValue<number>; i: number; step: number; label: string; title: string; body: string }) {
+/** Scroll window of step i: sequential, never overlapping (out over [i+0.84, i+0.94], next in over [i+0.95, i+1.06]). */
+function stepStyle(v: number, i: number) {
   const first = i === 0;
   const last = i === STEPS - 1;
-  // Sequential, never overlapping: out over [i+0.84, i+0.94], next in over [i+0.95, i+1.06].
   const input = first ? [0, 0.84, 0.94] : last ? [i - 0.05, i + 0.06, STEPS] : [i - 0.05, i + 0.06, i + 0.84, i + 0.94];
-  const opacity = useTransform(s, input, first ? [1, 1, 0] : last ? [0, 1, 1] : [0, 1, 1, 0]);
-  const y = useTransform(s, input, first ? [0, 0, -24] : last ? [24, 0, 0] : [24, 0, 0, -24]);
+  const opacity = interp(v, input, first ? [1, 1, 0] : last ? [0, 1, 1] : [0, 1, 1, 0]);
+  const y = interp(v, input, first ? [0, 0, -24] : last ? [24, 0, 0] : [24, 0, 0, -24]);
+  return { opacity, y };
+}
+
+/** Step copy that fades/rises in its own scroll window (styles written by StoryPinned). */
+function StepText({ i, step, label, title, body, liRef }: { i: number; step: number; label: string; title: string; body: string; liRef: (el: HTMLLIElement | null) => void }) {
+  const init = stepStyle(0, i);
   return (
-    <m.li style={{ opacity, y }} aria-current={step === i ? "step" : undefined} className="absolute inset-x-0 top-0 flex flex-col gap-4">
+    <li
+      ref={liRef}
+      style={{ opacity: init.opacity, transform: `translateY(${init.y}px)` }}
+      aria-current={step === i ? "step" : undefined}
+      className="absolute inset-x-0 top-0 flex flex-col gap-4"
+    >
       <span className="step-num text-label text-ink-500">
         {label} {String(i + 1).padStart(2, "0")} / {String(STEPS).padStart(2, "0")}
       </span>
       <h3 className="text-display-lg text-ink-900">{title}</h3>
       <p className="max-w-[40ch] text-body-lg text-ink-700">{body}</p>
-    </m.li>
+    </li>
   );
 }
 
 /** Desktop: the section pins while the guest journey plays out, driven by scroll (s = 0..6). */
 export function StoryPinned({ labels }: { labels: StoryLabels }) {
   const track = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({ target: track, offset: ["start start", "end end"] });
-  const s = useTransform(scrollYProgress, [0, 1], [0, STEPS]);
-  const fill = useTransform(scrollYProgress, [0, 1], [0, 1]);
-
-  // Stage eases in as the section arrives.
-  const { scrollYProgress: enter } = useScroll({ target: track, offset: ["start end", "start start"] });
-  const stageScale = useTransform(enter, [0, 1], [0.92, 1]);
-  const stageOpacity = useTransform(enter, [0, 0.6], [0.4, 1]);
+  const fillRef = useRef<HTMLSpanElement>(null);
+  const figRef = useRef<HTMLElement>(null);
+  const stepRefs = useRef<(HTMLLIElement | null)[]>([]);
+  // s = 0..STEPS across the pinned track; shared with the WebGL scene.
+  const [s] = useState(() => new Value(0));
 
   const [step, setStep] = useState(0);
   const [posterS, setPosterS] = useState(0);
   const readyRef = useRef(false);
   const [phase, setPhase] = useState<Phase>("welcome");
   const [flags, setFlags] = useState({ tap: false, live: false, hub: false });
-  useMotionValueEvent(s, "change", (v) => {
+  const onS = useCallback((v: number) => {
     const i = Math.min(STEPS - 1, Math.max(0, Math.floor(v)));
     setStep((p) => (p === i ? p : i));
     const ph = phaseOf(v);
@@ -77,7 +84,35 @@ export function StoryPinned({ labels }: { labels: StoryLabels }) {
     setFlags((f) => (f.tap === next.tap && f.live === next.live && f.hub === next.hub ? f : next));
     // Until WebGL paints, the SVG poster follows the scroll too (no frozen or unstyled frame).
     if (!readyRef.current) setPosterS(Math.round(v * 40) / 40);
-  });
+  }, []);
+
+  // Scroll → s, rail fill and step copy (written to the DOM), plus the stage easing in.
+  useEffect(() => {
+    const el = track.current;
+    if (!el) return;
+    const offMain = trackScroll(el, ["start start", "end end"], (p) => {
+      const v = p * STEPS;
+      s.set(v);
+      if (fillRef.current) fillRef.current.style.transform = `scaleY(${p})`;
+      stepRefs.current.forEach((li, i) => {
+        if (!li) return;
+        const st = stepStyle(v, i);
+        li.style.opacity = String(st.opacity);
+        li.style.transform = `translateY(${st.y}px)`;
+      });
+      onS(v);
+    });
+    const offEnter = trackScroll(el, ["start end", "start start"], (p) => {
+      const f = figRef.current;
+      if (!f) return;
+      f.style.transform = `scale(${interp(p, [0, 1], [0.92, 1])})`;
+      f.style.opacity = String(interp(p, [0, 0.6], [0.4, 1]));
+    });
+    return () => {
+      offMain();
+      offEnter();
+    };
+  }, [s, onS]);
 
   // WebGL (desktop, WebGL2, motion allowed). Assets are prefetched right after the first
   // interaction, the canvas mounts well before the section (or instantly on a navbar jump),
@@ -85,6 +120,12 @@ export function StoryPinned({ labels }: { labels: StoryLabels }) {
   const [load, setLoad] = useState(false);
   const [active, setActive] = useState(false);
   const [ready, setReady] = useState(false);
+  // Unmount the WebGL scene when the story is far off-screen; the SVG poster takes over again.
+  const onFar = useCallback(() => {
+    readyRef.current = false;
+    setReady(false);
+  }, []);
+  const near = useNear(track, "150% 0px", onFar);
   useEffect(() => {
     const el = track.current;
     if (!el) return;
@@ -157,7 +198,7 @@ export function StoryPinned({ labels }: { labels: StoryLabels }) {
           <div className="col-span-4 flex gap-8">
             <div aria-hidden className="relative flex flex-col items-center gap-5 py-1">
               <span className="absolute top-4 bottom-4 left-1/2 w-px -translate-x-1/2 bg-line-mist/40" />
-              <m.span style={{ scaleY: fill }} className="accent-line absolute top-4 bottom-4 left-1/2 w-px origin-top -translate-x-1/2 bg-ink-900" />
+              <span ref={fillRef} style={{ transform: "scaleY(0)" }} className="accent-line absolute top-4 bottom-4 left-1/2 w-px origin-top -translate-x-1/2 bg-ink-900" />
               {labels.steps.map((_, i) => (
                 <span
                   key={i}
@@ -173,15 +214,26 @@ export function StoryPinned({ labels }: { labels: StoryLabels }) {
             </div>
             <ol className="relative min-h-[340px] flex-1">
               {labels.steps.map((st, i) => (
-                <StepText key={i} s={s} i={i} step={step} label={labels.step} title={st.title} body={st.body} />
+                <StepText
+                  key={i}
+                  i={i}
+                  step={step}
+                  label={labels.step}
+                  title={st.title}
+                  body={st.body}
+                  liRef={(el) => {
+                    stepRefs.current[i] = el;
+                  }}
+                />
               ))}
             </ol>
           </div>
 
           {/* Stage */}
           <div className="col-span-8 flex justify-end">
-            <m.figure
-              style={{ scale: stageScale, opacity: stageOpacity, width: "min(100%, calc((100svh - var(--nav-h) - 96px) * 1.6))" }}
+            <figure
+              ref={figRef}
+              style={{ transform: "scale(0.92)", opacity: 0.4, width: "min(100%, calc((100svh - var(--nav-h) - 96px) * 1.6))" }}
               className="@container relative aspect-[16/10] overflow-hidden rounded-xl bg-night-900 shadow-soft ring-1 ring-white/5"
             >
               <div
@@ -193,7 +245,7 @@ export function StoryPinned({ labels }: { labels: StoryLabels }) {
               <div className={cn("absolute inset-0 transition-opacity duration-700", ready ? "opacity-0" : "opacity-100")}>
                 <LobbySketch s={posterS} />
               </div>
-              {load && <StoryCanvas s={s} active={active} onReady={onReady} />}
+              {load && near && <StoryCanvas s={s} active={active} onReady={onReady} />}
 
               {/* Kiosk screen (real text, aligned to the scene) */}
               <div
@@ -271,7 +323,7 @@ export function StoryPinned({ labels }: { labels: StoryLabels }) {
                 </span>
               </div>
               <figcaption className="sr-only">{labels.sceneDesc}</figcaption>
-            </m.figure>
+            </figure>
           </div>
         </div>
       </div>

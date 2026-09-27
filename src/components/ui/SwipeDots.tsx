@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { cn } from "@/lib/cn";
+import { cx as cn } from "@/lib/cx";
 
 /** Page dots for a mobile `.swipe-row` (by id). Tapping a dot scrolls to that card. Hidden on lg. */
 export function SwipeDots({ target, count, label }: { target: string; count: number; label: string }) {

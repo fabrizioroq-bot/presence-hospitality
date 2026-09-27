@@ -2,6 +2,7 @@
 
 import { after } from "next/server";
 import { notifyNewLead } from "@/lib/notify";
+import { requestOrigin } from "@/lib/origin";
 import { supabaseAdmin } from "@/lib/supabase/admin";
 import { validateLead, type FieldErrors } from "@/lib/leads/validate";
 
@@ -53,6 +54,7 @@ export async function submitDemoRequest(_prev: DemoState, formData: FormData): P
   }
 
   // Send the notification after the response, so the guest never waits on email.
-  after(() => notifyNewLead({ ...lead, id: data.id }));
+  const origin = await requestOrigin();
+  after(() => notifyNewLead({ ...lead, id: data.id }, origin));
   return { status: "success", firstName: lead.first_name };
 }

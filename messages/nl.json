@@ -474,5 +474,10 @@
     "title": "Klaar om het <em>live</em> te zien?",
     "body": "Plan een demo met een echte receptionist in de Holobox.",
     "or": "of bel"
+  },
+  "cursor": {
+    "drag": "Sleep",
+    "book": "Plan",
+    "play": "Afspelen"
   }
 }
