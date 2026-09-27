@@ -274,7 +274,7 @@ export function StoryCarousel({ labels }: { labels: CarouselLabels }) {
             >
               <span
                 className={cn(
-                  "block h-2 rounded-full transition-all duration-300",
+                  "accent-dot block h-2 rounded-full transition-all duration-300",
                   idx === i ? "w-6 bg-ink-900" : "w-2 bg-line-mist/60",
                 )}
               />
@@ -307,7 +307,7 @@ export function StoryCarousel({ labels }: { labels: CarouselLabels }) {
       <div aria-hidden className="relative -mt-2 h-0.5 overflow-hidden rounded-full bg-line-mist/30 motion-reduce:hidden">
         <span
           key={`${i}-${autoplay}`}
-          className={cn("absolute inset-y-0 left-0 w-full origin-left rounded-full bg-ink-900", autoplay ? "carousel-progress" : "scale-x-0")}
+          className={cn("accent-bar absolute inset-y-0 left-0 w-full origin-left rounded-full bg-ink-900", autoplay ? "carousel-progress" : "scale-x-0")}
           style={{ animationDuration: `${AUTOPLAY_MS}ms` }}
         />
       </div>

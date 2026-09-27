@@ -12,7 +12,7 @@ Two moods alternate down the page, like a hotel lobby between day and night:
 - **Night** (dark): charcoal and near-black. This is where the **technology** lives: the Holobox portal, the hologram, glowing cyan-blue light, mono HUD labels.
 - **Warmth** is carried by a single amber accent (like the lobby lamp and the "HOTEL" neon in the pitch): live dots, the hologram's rim sparks, tiny highlights. Never a large fill.
 
-> **Pending client choice (27-09):** a bolder amber (conversion CTAs, headline emphasis, key figures, step numbers; ~10% of a page) is being previewed as variant A (solid) or B (holo→amber gradient) via `html[data-accent]` (see the end of `globals.css`). Once chosen, make it the default and update the roles below.
+> **Pending client choice (27-09, round 2):** the amber variants were rejected. A blue accent (holo blue → cyan gradient on conversion CTAs, headline emphasis, key figures, step numbers, active dots/nav) is previewed as variant A (subtle) or B (vivid, animated scan on CTAs) via `html[data-accent]` (end of `globals.css`). Amber stays for the live dot, the traveller's suitcase and "paid idle time". Once chosen, make it the default and update the button + colour-role rules.
 
 Colour roles are strict: **ink = content, holo blue = technology/system, amber = human warmth/live.** No component uses holo and amber at equal weight.
 
@@ -51,8 +51,13 @@ All ratios below were computed with the WCAG 2.x formula. `scripts/check-contras
   /* Warm accent */
   --amber-300:      #F8C98B;
   --amber-400:      #F5A94A; /* 6.6:1 on charcoal; ink-900 on amber 8.37:1; NEVER as text on mist */
-  --amber-600:      #A85200; /* text on mist, large only (3.84:1 on mist-bg) */
-  --amber-700:      #8F4500; /* text on mist, any size (4.93:1 on mist-bg) */
+  /* Accent blues (CTA / emphasis gradients; pending client choice A/B) */
+  --blue-700:       #1747A6; /* 5.98:1 on mist-bg; white on it 8.44:1 */
+  --blue-650:       #1E6FAE; /* white on it 5.33:1 */
+  --blue-600:       #2567B0; /* 4.08:1 on mist-bg (large text) */
+  --teal-700:       #0B6485; /* 4.69:1 on mist-bg */
+  --cyan-700:       #0A7BA3; /* white on it 4.80:1 */
+  --cyan-300:       #6FE3FF; /* 8.74:1 on charcoal */
 
   /* Orbs (decorative only, always blurred) */
   --orb-sky:        #8DB3DF;

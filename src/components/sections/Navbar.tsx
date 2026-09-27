@@ -220,7 +220,7 @@ export function Navbar({
                     <span
                       aria-hidden
                       className={cn(
-                        "absolute inset-x-4 -bottom-0.5 h-[2px] origin-left rounded-full bg-holo-500 shadow-[0_0_12px_rgba(90,168,245,0.8)] transition-transform duration-300 ease-out",
+                        "nav-ind absolute inset-x-4 -bottom-0.5 h-[2px] origin-left rounded-full bg-holo-500 shadow-[0_0_12px_rgba(90,168,245,0.8)] transition-transform duration-300 ease-out",
                         active === l.key ? "scale-x-100" : "scale-x-0",
                       )}
                     />

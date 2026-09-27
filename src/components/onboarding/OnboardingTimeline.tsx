@@ -177,7 +177,7 @@ export function OnboardingTimeline({
             <m.span
               aria-hidden
               style={{ scaleX: line }}
-              className="absolute inset-x-0 top-1/2 h-0.5 origin-left -translate-y-1/2 bg-ink-900"
+              className="accent-line absolute inset-x-0 top-1/2 h-0.5 origin-left -translate-y-1/2 bg-ink-900"
             />
             {steps.map((s, i) => {
               const above = i % 2 === 0;

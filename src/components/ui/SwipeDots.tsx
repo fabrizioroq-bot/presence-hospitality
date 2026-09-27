@@ -38,7 +38,7 @@ export function SwipeDots({ target, count, label }: { target: string; count: num
     <div className="mt-4 flex items-center justify-center gap-1 lg:hidden">
       {Array.from({ length: count }, (_, k) => (
         <button key={k} type="button" onClick={() => go(k)} aria-label={`${label} ${k + 1}/${count}`} aria-current={k === i ? "true" : undefined} className="grid h-8 w-6 place-items-center">
-          <span className={cn("block h-1.5 rounded-full transition-all duration-300", k === i ? "w-5 bg-current" : "w-1.5 bg-current opacity-30")} />
+          <span className={cn("accent-dot block h-1.5 rounded-full transition-all duration-300", k === i ? "w-5 bg-current" : "w-1.5 bg-current opacity-30")} />
         </button>
       ))}
     </div>

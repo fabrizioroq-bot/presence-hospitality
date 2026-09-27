@@ -157,7 +157,7 @@ export function StoryPinned({ labels }: { labels: StoryLabels }) {
           <div className="col-span-4 flex gap-8">
             <div aria-hidden className="relative flex flex-col items-center gap-5 py-1">
               <span className="absolute top-4 bottom-4 left-1/2 w-px -translate-x-1/2 bg-line-mist/40" />
-              <m.span style={{ scaleY: fill }} className="absolute top-4 bottom-4 left-1/2 w-px origin-top -translate-x-1/2 bg-ink-900" />
+              <m.span style={{ scaleY: fill }} className="accent-line absolute top-4 bottom-4 left-1/2 w-px origin-top -translate-x-1/2 bg-ink-900" />
               {labels.steps.map((_, i) => (
                 <span
                   key={i}
