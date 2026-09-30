@@ -111,7 +111,14 @@
     "prev": "Previous step",
     "next": "Next step",
     "goTo": "Go to step {n}",
-    "swipe": "Swipe"
+    "swipe": "Swipe",
+    "hGuest": "Guest",
+    "hReception": "Reception",
+    "hSayProblem": "My card isn't going through…",
+    "hSayHello": "Good evening! Let me sort that out for you.",
+    "hSayThanks": "That was quick. Thank you!",
+    "hCardTitle": "Behind the hologram",
+    "hCardBody": "A real receptionist at our hub, live."
   },
   "experience": {
     "eyebrow": "The Holobox",

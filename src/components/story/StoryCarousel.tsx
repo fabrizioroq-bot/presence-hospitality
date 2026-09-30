@@ -9,6 +9,7 @@ import {
   type KeyboardEvent,
 } from "react";
 import { cx as cn } from "@/lib/cx";
+import { HumanCard, humanState, SpeechBubbles, type HumanLabels } from "./human";
 import { LobbySketch, type SketchLabels } from "./LobbySketch";
 
 // Scene position (s) shown for each step. Moving between steps tweens s, so the traveller
@@ -23,6 +24,7 @@ export type CarouselLabels = {
   goTo: string; // "Go to step {n}"
   steps: { title: string; body: string }[];
   sketch: SketchLabels;
+  human: HumanLabels;
 };
 
 const easeInOut = (t: number) =>
@@ -211,6 +213,9 @@ export function StoryCarousel({ labels }: { labels: CarouselLabels }) {
           }}
         />
         <LobbySketch s={s} labels={labels.sketch} className="relative" />
+        <div className="@container absolute inset-0">
+          <SpeechBubbles state={humanState(s)} labels={labels.human} />
+        </div>
         <span className="step-num-dark absolute top-3 left-4 text-label text-paper-300">
           {String(i + 1).padStart(2, "0")} / {String(n).padStart(2, "0")}
         </span>
@@ -237,6 +242,7 @@ export function StoryCarousel({ labels }: { labels: CarouselLabels }) {
             </span>
             <h3 className="text-heading-md">{st.title}</h3>
             <p className="text-body text-ink-700">{st.body}</p>
+            {idx === 4 && <HumanCard labels={labels.human} variant="inline" />}
           </div>
         ))}
       </div>

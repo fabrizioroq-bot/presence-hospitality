@@ -1152,3 +1152,44 @@ html[data-hero="4"] .hero-variant[data-v="4"] {
     inset 0 0 60px -10px rgba(90, 168, 245, 0.35);
   background: linear-gradient(180deg, rgba(141, 179, 223, 0.12) 0%, transparent 28%, transparent 70%, rgba(23, 71, 166, 0.18) 100%);
 }
+
+/* Speech bubbles in the guest-journey scene (story/human.tsx): a small tail pointing at the speaker. */
+.story-bubble::after {
+  content: "";
+  position: absolute;
+  bottom: -0.55cqw;
+  width: 1.2cqw;
+  height: 1.2cqw;
+  background: inherit;
+  transform: rotate(45deg);
+  border-radius: 0.2cqw;
+}
+.story-bubble--left::after {
+  left: 18%;
+}
+.story-bubble--right::after {
+  right: 12%;
+}
+.story-bubble--problem {
+  left: 23%;
+  bottom: 61%;
+}
+.story-bubble--thanks {
+  left: 20%;
+  bottom: 61%;
+}
+.story-bubble--hello {
+  left: 20%;
+  bottom: 79%;
+}
+@container (max-width: 560px) {
+  .story-bubble--hello {
+    left: 4%;
+    bottom: 58%;
+  }
+  .story-bubble::after {
+    bottom: -1.2cqw;
+    width: 2.6cqw;
+    height: 2.6cqw;
+  }
+}

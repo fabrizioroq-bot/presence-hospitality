@@ -111,7 +111,14 @@
     "prev": "Vorige stap",
     "next": "Volgende stap",
     "goTo": "Ga naar stap {n}",
-    "swipe": "Swipe"
+    "swipe": "Swipe",
+    "hGuest": "Gast",
+    "hReception": "Receptie",
+    "hSayProblem": "Mijn kaart wordt niet geaccepteerd…",
+    "hSayHello": "Goedenavond! Ik los het voor u op.",
+    "hSayThanks": "Dat ging snel. Dank u wel!",
+    "hCardTitle": "Achter het hologram",
+    "hCardBody": "Een echte receptionist in onze hub, live."
   },
   "experience": {
     "eyebrow": "De Holobox",

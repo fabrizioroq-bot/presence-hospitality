@@ -16,6 +16,15 @@ export async function HowItWorks() {
   const c = await getTranslations("common");
   const locale = (await getLocale()) as Locale;
   const n = [1, 2, 3, 4, 5, 6] as const;
+  const human = {
+    guest: t("hGuest"),
+    reception: t("hReception"),
+    sayProblem: t("hSayProblem"),
+    sayHello: t("hSayHello"),
+    sayThanks: t("hSayThanks"),
+    cardTitle: t("hCardTitle"),
+    cardBody: t("hCardBody"),
+  };
   const labels: StoryLabels = {
     step: t("step"),
     steps: n.map((i) => ({ title: t(`s${i}Title`), body: t(`s${i}Body`) })),
@@ -38,6 +47,7 @@ export async function HowItWorks() {
       live: t("lLive"),
     },
     sceneDesc: t("sceneDesc"),
+    human,
   };
   const sketchLabels = { entrance: t("lEntrance"), kiosk: t("lKiosk"), holobox: t("lHolobox"), hub: t("lHub") };
 
@@ -84,6 +94,7 @@ export async function HowItWorks() {
               goTo: t.raw("goTo") as string,
               steps: labels.steps,
               sketch: sketchLabels,
+              human,
             }}
           />
         </div>

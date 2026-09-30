@@ -8,6 +8,7 @@ import { useNear } from "@/lib/hooks";
 import { afterLoadIdle, loadStoryCanvas, onFirstInteraction, prefetchStoryData, preloadStory } from "@/lib/preload";
 import { hasWebGL2 } from "@/lib/perf-tier";
 import { FLOOR, DOOR, HOLOBOX, KIOSK, STEPS, pctX, pctY, timeline } from "./layout";
+import { HumanCard, humanState, SpeechBubbles, type HumanLabels, type HumanState } from "./human";
 import { LobbySketch } from "./LobbySketch";
 
 const StoryCanvas = dynamic(loadStoryCanvas, { ssr: false });
@@ -18,6 +19,7 @@ export type StoryLabels = {
   kiosk: { welcome: string; lastName: string; booking: string; checkIn: string; alert: string; alertHint: string; calling: string; done: string };
   scene: { entrance: string; kiosk: string; holobox: string; hub: string; tap: string; live: string };
   sceneDesc: string;
+  human: HumanLabels;
 };
 
 type Phase = "welcome" | "typing" | "alert" | "calling" | "done";
@@ -73,6 +75,7 @@ export function StoryPinned({ labels }: { labels: StoryLabels }) {
   const readyRef = useRef(false);
   const [phase, setPhase] = useState<Phase>("welcome");
   const [flags, setFlags] = useState({ tap: false, live: false, hub: false });
+  const [human, setHuman] = useState<HumanState>({ talk: null, card: false });
   const onS = useCallback((v: number) => {
     const i = Math.min(STEPS - 1, Math.max(0, Math.floor(v)));
     setStep((p) => (p === i ? p : i));
@@ -81,6 +84,8 @@ export function StoryPinned({ labels }: { labels: StoryLabels }) {
     const t = timeline(v);
     const next = { tap: v > 2.5 && v < 3.95, live: t.agent > 0.95, hub: t.flow > 0.3 };
     setFlags((f) => (f.tap === next.tap && f.live === next.live && f.hub === next.hub ? f : next));
+    const h = humanState(v);
+    setHuman((o) => (o.talk === h.talk && o.card === h.card ? o : h));
     // Until WebGL paints, the SVG poster follows the scroll too (no frozen or unstyled frame).
     if (!readyRef.current) setPosterS(Math.round(v * 40) / 40);
   }, []);
@@ -312,6 +317,8 @@ export function StoryPinned({ labels }: { labels: StoryLabels }) {
                   {labels.scene.live}
                 </span>
               </div>
+              <SpeechBubbles state={human} labels={labels.human} />
+              <HumanCard labels={labels.human} show={human.card} variant="overlay" />
               <figcaption className="sr-only">{labels.sceneDesc}</figcaption>
             </figure>
           </div>
