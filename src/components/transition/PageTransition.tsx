@@ -2,8 +2,6 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { detectTier, hasWebGL2 } from "@/lib/perf-tier";
-import { preloadHologram } from "@/lib/preload";
 import { resetScroll, scrollToHash } from "@/lib/smooth-scroll";
 
 const OUT_MS = 380;
@@ -60,8 +58,7 @@ export function PageTransition() {
   }, [router]);
 
   // Preload the next page on intent (hover, touch, keyboard focus) for every internal link,
-  // including plain <a> (footer, CTAs) that next/link doesn't prefetch: its route data and code,
-  // plus the hero hologram when the link goes to Home.
+  // including plain <a> (footer, CTAs) that next/link doesn't prefetch: its route data and code.
   useEffect(() => {
     const done = new Set<string>();
     const onIntent = (e: Event) => {
@@ -72,7 +69,6 @@ export function PageTransition() {
       if (done.has(url.pathname)) return;
       done.add(url.pathname);
       router.prefetch(url.pathname);
-      if (/^\/(en|nl)\/?$/.test(url.pathname) && hasWebGL2()) preloadHologram(detectTier());
     };
     const opts = { capture: true, passive: true } as const;
     document.addEventListener("pointerover", onIntent, opts);

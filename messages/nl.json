@@ -31,11 +31,12 @@
     "lead": "Presence Hospitality verzorgt je receptie vanuit één centrale hub. Gasten checken zelf in, en hebben ze iemand nodig, dan verschijnt er een getrainde receptionist als levensgroot hologram in je lobby. Overdag, 's nachts of allebei.",
     "ctaSecondary": "Zo werkt het",
     "note": "Voor onafhankelijke hotels en hostels · Live in Nederland",
-    "hudOnline": "Agent online",
-    "hudRoute": "Hub → Lobby",
-    "hudLive": "Live · 4K telepresence",
-    "portalAlt": "Illustratie: een receptionist die als hologram in de Holobox verschijnt.",
-    "title": "Stop met het werven van <em>receptie</em>personeel."
+    "title": "Stop met het werven van <em>receptie</em>personeel.",
+    "photoStatus": "Receptionist online · 24/7",
+    "photoAlt1": "Een glimlachende receptioniste verwelkomt gasten aan de balie van een warm boetiekhotel.",
+    "photoAlt2": "Een receptioniste glimlacht achter een houten balie, verlicht door een warme lamp.",
+    "photoAlt3": "Een gast wordt verwelkomd aan de receptie van een elegant hotel.",
+    "photoAlt4": "Een receptioniste aan de balie van een zonnige, klassieke hotellobby."
   },
   "footer": {
     "tagline": "Klaar wanneer je gasten dat zijn.",

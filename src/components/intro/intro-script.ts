@@ -39,7 +39,11 @@ const intro = (P: { n: number; aspect: number; b64: string }, caption: string) =
   let raf = 0;
   document.fonts.ready.then(() => (fontsOk = true));
   addEventListener("load", () => (loaded = true), { once: true });
-  addEventListener("ph:hero-ready", () => (heroOk = true), { once: true });
+  // Hero photo decoded (the visible variant), or no hero on this page.
+  const heroReady = () => {
+    const img = [...document.querySelectorAll<HTMLImageElement>("img.hero-variant")].find((i) => i.offsetParent !== null);
+    return !img || (img.complete && img.naturalWidth > 0);
+  };
 
   // Targets
   const bin = atob(P.b64);
@@ -103,6 +107,7 @@ const intro = (P: { n: number; aspect: number; b64: string }, caption: string) =
     }
     g!.globalAlpha = 1;
     // Reduced motion: no 3D to wait for, just fonts + page.
+    if (!heroOk) heroOk = heroReady();
     const ready = fontsOk && loaded && (heroOk || reduce);
     // Hard cap measured from the moment the intro appeared (≤ ~1.85 s including the fade).
     if (!ending && t >= MIN && (ready || (fontsOk && loaded && t >= 1300) || t >= MAX)) end();

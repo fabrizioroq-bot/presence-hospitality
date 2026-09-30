@@ -31,11 +31,12 @@
     "lead": "Presence Hospitality runs your reception from one central hub. Guests check in on their own, and when they need someone, a trained receptionist appears in your lobby as a life-size hologram. Day, night, or both.",
     "ctaSecondary": "See how it works",
     "note": "Built for independent hotels and hostels · Live in the Netherlands",
-    "hudOnline": "Agent online",
-    "hudRoute": "Hub → Lobby",
-    "hudLive": "Live · 4K telepresence",
-    "portalAlt": "Illustration: a receptionist appearing as a hologram inside the Holobox.",
-    "title": "Stop hiring <em>front desk</em> staff."
+    "title": "Stop hiring <em>front desk</em> staff.",
+    "photoStatus": "Receptionist online · 24/7",
+    "photoAlt1": "A smiling receptionist welcoming guests at the front desk of a warm boutique hotel.",
+    "photoAlt2": "A receptionist smiling behind a wooden reception desk lit by a warm lamp.",
+    "photoAlt3": "A guest being welcomed at the reception desk of an elegant hotel.",
+    "photoAlt4": "A receptionist at the front desk of a sunlit, traditional hotel lobby."
   },
   "footer": {
     "tagline": "Ready when your guests are.",

@@ -5,6 +5,10 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  images: {
+    formats: ["image/avif", "image/webp"],
+    qualities: [72, 75],
+  },
   productionBrowserSourceMaps: process.env.ANALYZE === "1",
   async headers() {
     return [

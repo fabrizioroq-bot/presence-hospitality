@@ -68,7 +68,7 @@ export function RevealItem({
   soft?: boolean;
 }) {
   return (
-    <div className={className} data-rv={soft ? "soft" : "fade"}>
+    <div className={className} suppressHydrationWarning data-rv={soft ? "soft" : "fade"}>
       {children}
     </div>
   );

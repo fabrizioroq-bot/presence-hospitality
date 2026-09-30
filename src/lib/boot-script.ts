@@ -21,6 +21,13 @@ const boot = () => {
       sessionStorage.setItem("ph-intro", "1");
     }
   } catch {}
+  // Hero photo preview: ?hero=1..4 shows another variant (kept for the tab session).
+  try {
+    const hv = new URLSearchParams(location.search).get("hero");
+    if (hv && /^[1-4]$/.test(hv)) sessionStorage.setItem("ph-hero", hv);
+    const hs = sessionStorage.getItem("ph-hero");
+    if (hs) h.dataset.hero = hs;
+  } catch {}
   w.__phI = false;
   const evs = ["pointerdown", "touchstart", "wheel", "keydown", "scroll", "mousemove"];
   const onI = () => {
