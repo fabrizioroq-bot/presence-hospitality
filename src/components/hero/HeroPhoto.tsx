@@ -25,7 +25,7 @@ export function HeroPhoto({ alts, status, className }: { alts: Record<string, st
             height={p.height}
             priority={isDefault}
             fetchPriority={isDefault ? "high" : "low"}
-            quality={72}
+            quality={80}
             sizes="(min-width: 1024px) 36vw, 94vw"
             data-v={n}
             data-default={isDefault ? "" : undefined}

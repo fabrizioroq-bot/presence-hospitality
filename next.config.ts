@@ -7,7 +7,7 @@ const nextConfig: NextConfig = {
   poweredByHeader: false,
   images: {
     formats: ["image/avif", "image/webp"],
-    qualities: [72, 75],
+    qualities: [75, 80],
   },
   productionBrowserSourceMaps: process.env.ANALYZE === "1",
   async headers() {
