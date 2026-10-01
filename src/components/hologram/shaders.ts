@@ -66,10 +66,10 @@ void main() {
   float n1 = fbm(uv * 1.25 + drift);
   float n2 = fbm(uv * 2.0 - drift * 1.4 + n1 * 0.9);
 
-  vec3 sky = vec3(0.553, 0.702, 0.875);
-  vec3 mint = vec3(0.745, 0.902, 0.855);
-  vec3 lav = vec3(0.839, 0.776, 0.894);
-  vec3 peach = vec3(0.945, 0.780, 0.639);
+  vec3 sky = vec3(0.663, 0.714, 0.941);
+  vec3 mint = vec3(0.725, 0.651, 0.890);
+  vec3 lav = vec3(0.769, 0.710, 0.863);
+  vec3 peach = vec3(0.914, 0.812, 0.769);
 
   vec3 col = mix(sky, lav, smoothstep(0.3, 0.72, n2));
   col = mix(col, mint, smoothstep(0.55, 0.8, n1) * 0.6);
@@ -92,7 +92,7 @@ void main() {
   float d = portalDist(frag);
   float inside = 1.0 - smoothstep(-uPR, uPR, d);
   vec2 pu = (frag - uRect.xy) / uRect.zw;
-  vec3 panel = vec3(0.071, 0.078, 0.090);
+  vec3 panel = vec3(0.102, 0.078, 0.125); // --night-900
   panel += vec3(0.184, 0.498, 0.816) * 0.30 * exp(-dot((pu - vec2(0.5, -0.02)) * vec2(1.2, 2.0), (pu - vec2(0.5, -0.02)) * vec2(1.2, 2.0)) * 2.2);
   panel += vec3(0.549, 0.769, 1.0) * 0.045 * exp(-dot(pu - vec2(0.5, 0.58), pu - vec2(0.5, 0.58)) * 3.0);
   // faint glass-case edges
