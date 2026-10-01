@@ -39,9 +39,9 @@ const intro = (P: { n: number; aspect: number; b64: string }, caption: string) =
   let raf = 0;
   document.fonts.ready.then(() => (fontsOk = true));
   addEventListener("load", () => (loaded = true), { once: true });
-  // Hero photo decoded (the visible variant), or no hero on this page.
+  // Hero photo decoded, or no hero on this page.
   const heroReady = () => {
-    const img = [...document.querySelectorAll<HTMLImageElement>("img.hero-variant")].find((i) => i.offsetParent !== null);
+    const img = document.querySelector<HTMLImageElement>("img.hero-photo-img");
     return !img || (img.complete && img.naturalWidth > 0);
   };
 

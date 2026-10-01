@@ -75,7 +75,7 @@ export async function Hero() {
         <Parallax className="min-w-0 lg:col-span-5 lg:col-start-8" mouse={[14, 10]} scroll={60}>
           <HeroPhoto
             className="mx-auto h-[56svh] min-h-[370px] w-full lg:aspect-[3/4.4] lg:h-auto lg:max-h-[78svh] lg:min-h-0 lg:w-auto"
-            alts={{ photoAlt1: t("photoAlt1"), photoAlt2: t("photoAlt2"), photoAlt3: t("photoAlt3"), photoAlt4: t("photoAlt4") }}
+            alt={t("photoAlt")}
             status={t("photoStatus")}
           />
         </Parallax>

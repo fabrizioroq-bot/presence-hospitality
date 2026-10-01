@@ -1127,28 +1127,10 @@ html.intro {
   overflow: hidden;
 }
 
-/* ---------------------------------------------------------------------------------------------
-   Hero photograph (HeroPhoto.tsx). Only the chosen variant is displayed (and downloaded):
-   the default, or ?hero=1..4 (boot script → html[data-hero]) while the client picks one.
-   --------------------------------------------------------------------------------------------- */
-.hero-variant {
-  display: none;
-}
-.hero-variant[data-default] {
-  display: block;
-}
-html[data-hero] .hero-variant[data-default] {
-  display: none;
-}
-html[data-hero="1"] .hero-variant[data-v="1"],
-html[data-hero="2"] .hero-variant[data-v="2"],
-html[data-hero="3"] .hero-variant[data-v="3"],
-html[data-hero="4"] .hero-variant[data-v="4"] {
-  display: block;
-}
+/* Hero photograph (HeroPhoto.tsx). */
 .hero-photo {
   background: var(--mist-surface);
-  box-shadow: 0 30px 80px -34px rgba(47, 127, 208, 0.45), 0 24px 60px -30px rgba(29, 31, 35, 0.35);
+  box-shadow: 0 30px 80px -34px rgba(47, 127, 208, 0.45), 0 24px 60px -30px rgba(43, 34, 51, 0.35);
 }
 /* Soft holographic-blue light on the edges of the photo (no sci-fi, just a hint of the concept). */
 .hero-photo-glow {
