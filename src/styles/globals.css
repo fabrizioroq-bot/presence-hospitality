@@ -1140,7 +1140,14 @@ html.intro {
   background: linear-gradient(180deg, rgba(141, 179, 223, 0.12) 0%, transparent 28%, transparent 70%, rgba(23, 71, 166, 0.18) 100%);
 }
 
-/* Speech bubbles in the guest-journey scene (story/human.tsx): a small tail pointing at the speaker. */
+/* Speech bubbles in the guest-journey scene (story/human.tsx). Each bubble is anchored by its tail
+   to the speaker's head, using the shared lobby layout (story/layout.ts, 16:10 stage): guest at the
+   kiosk x = 40.7%, guest leaving ≈ 42%, receptionist in the Holobox x = 59.4%; heads at ≈ 50–52%
+   from the bottom. --tc = tail centre from the bubble edge, --lift = tail height + breathing room. */
+.story-bubble {
+  --tc: 2.2cqw;
+  --lift: 1.6cqw;
+}
 .story-bubble::after {
   content: "";
   position: absolute;
@@ -1152,32 +1159,45 @@ html.intro {
   border-radius: 0.2cqw;
 }
 .story-bubble--left::after {
-  left: 18%;
+  left: calc(var(--tc) - 0.6cqw);
 }
 .story-bubble--right::after {
-  right: 12%;
+  right: calc(var(--tc) - 0.6cqw);
 }
+/* guest at the kiosk (s 2.3–3.05): tail on the head, bubble opens to the right */
 .story-bubble--problem {
-  left: 23%;
-  bottom: 61%;
+  left: calc(40.7% - var(--tc));
+  bottom: calc(51% + var(--lift));
 }
+/* guest leaving, dissolving upwards (s 5.3–5.85) */
 .story-bubble--thanks {
-  left: 20%;
-  bottom: 61%;
+  left: calc(42% - var(--tc));
+  bottom: calc(57% + var(--lift));
 }
+/* receptionist in the Holobox (s 4.55–5.05): tail on the head, bubble opens to the left */
 .story-bubble--hello {
-  left: 20%;
-  bottom: 79%;
+  right: calc(40.6% - var(--tc));
+  bottom: calc(53% + var(--lift));
 }
 @container (max-width: 560px) {
-  .story-bubble--hello {
-    left: 4%;
-    bottom: 58%;
+  .story-bubble {
+    --tc: 3.7cqw;
+    --lift: 2.6cqw;
   }
   .story-bubble::after {
     bottom: -1.2cqw;
     width: 2.6cqw;
     height: 2.6cqw;
+  }
+  .story-bubble--left::after {
+    left: calc(var(--tc) - 1.3cqw);
+  }
+  .story-bubble--right::after {
+    right: calc(var(--tc) - 1.3cqw);
+  }
+  /* the carousel shows step 6 before the guest dissolves: keep the line right above the head */
+  .story-bubble--thanks {
+    bottom: calc(51% + var(--lift));
   }
 }
 

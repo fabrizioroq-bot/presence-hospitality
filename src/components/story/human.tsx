@@ -25,8 +25,8 @@ export function humanState(s: number): HumanState {
   return { talk, card: s >= 4.4 };
 }
 
-// Where each bubble sits in the 16:10 stage: classes .story-bubble--<key> in globals.css
-// (the receptionist's line moves lower on small stages so it never leaves the scene).
+// Where each bubble sits in the 16:10 stage: classes .story-bubble--<key> in globals.css, with the
+// tail on the speaker's head (guest bubbles open to the right, the receptionist's to the left).
 const TAIL = { problem: "left", thanks: "left", hello: "right" } as const;
 
 export function SpeechBubbles({ state, labels }: { state: HumanState; labels: HumanLabels }) {
