@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "Presence Hospitality: Remote front office & holographic reception for hotels",
+    "title": "Presence Hospitality | Remote front office & holographic reception for hotels",
     "description": "Presence Hospitality runs your hotel reception from a central 24/7 hub. Self check-in plus live receptionists who appear as life-size holograms. Night, day or 24/7 packages."
   },
   "common": {
@@ -444,29 +444,29 @@
   },
   "pages": {
     "solution": {
-      "title": "Solution · Presence Hospitality",
+      "title": "Solution | Presence Hospitality",
       "description": "What changes when your front desk moves to a central hub: benefits, how the Holobox runs behind the scenes, and the systems it connects to.",
       "eyebrow": "Our solution",
       "h1": "A premium front desk, <em>run from one hub</em>",
       "sub": "What changes for your hotel, how the Holobox runs behind the scenes, and how it connects to the systems you already use."
     },
     "packages": {
-      "title": "Packages & pricing · Presence Hospitality",
+      "title": "Packages & pricing | Presence Hospitality",
       "description": "Night-Only, Day + Evening or 24/7 Premium remote reception. Who it's for, what each package includes and how pricing is built up.",
       "eyebrow": "Packages & pricing",
       "h1": "Coverage that <em>fits your hotel</em>",
       "sub": "Who it's for, what each package includes, and how pricing is built up."
     },
     "onboarding": {
-      "title": "Onboarding · Presence Hospitality",
+      "title": "Onboarding | Presence Hospitality",
       "description": "From first call to go-live in six steps: intake, service design, Holobox installation, integration, training and a controlled pilot."
     },
     "faq": {
-      "title": "FAQ · Presence Hospitality",
+      "title": "FAQ | Presence Hospitality",
       "description": "Answers about PMS integration, night coverage, the agents, on-site staff, channels, pricing and onboarding."
     },
     "demo": {
-      "title": "Book a demo · Presence Hospitality",
+      "title": "Book a demo | Presence Hospitality",
       "description": "See the Holobox live with a real receptionist and get a package recommendation for your hotel. No commitment."
     }
   },

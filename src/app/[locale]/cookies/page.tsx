@@ -10,7 +10,7 @@ export async function generateMetadata({
 }: PageProps<"/[locale]/cookies">): Promise<Metadata> {
   const { locale } = await params;
   const doc = legal[locale === "nl" ? "nl" : "en"].cookies;
-  return pageMeta(locale === "nl" ? "nl" : "en", "/cookies", `${doc.title} · Presence Hospitality`, doc.description);
+  return pageMeta(locale === "nl" ? "nl" : "en", "/cookies", `${doc.title} | Presence Hospitality`, doc.description);
 }
 
 export default async function Page({ params }: PageProps<"/[locale]/cookies">) {

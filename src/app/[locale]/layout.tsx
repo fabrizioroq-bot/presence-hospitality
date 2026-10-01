@@ -38,6 +38,12 @@ export async function generateMetadata({
       canonical: `/${locale}`,
       languages: { en: "/en", nl: "/nl", "x-default": "/en" },
     },
+    applicationName: site.name,
+    // Search Console / Bing Webmaster ownership tags, rendered once the codes are set in site.ts.
+    verification: {
+      ...(site.verification.google ? { google: site.verification.google } : {}),
+      ...(site.verification.bing ? { other: { "msvalidate.01": site.verification.bing } } : {}),
+    },
   };
 }
 

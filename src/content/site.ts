@@ -25,6 +25,13 @@ export const site = {
     mapsHref:
       "https://www.google.com/maps/search/?api=1&query=Korte+Leidsedwarsstraat+92-1+Amsterdam",
   },
+  // Brand image for search results and structured data (square, on white; scripts/generate-brand-assets.mjs).
+  logo: "/brand/presence-hospitality-logo-512.png",
+  // Official profiles for structured data (`sameAs`). PENDING: LinkedIn etc. from the client.
+  sameAs: [] as string[],
+  // Search engine ownership checks (public meta tags, not secrets). PENDING: codes from the client.
+  // google: the `content` of <meta name="google-site-verification">; bing: <meta name="msvalidate.01">.
+  verification: { google: "", bing: "" },
   kvk: null as string | null, // PENDING
   vat: null as string | null, // PENDING
 } as const;
