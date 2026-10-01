@@ -2,7 +2,6 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
-import { warmPalette } from "@/lib/palette";
 import { resetScroll, scrollToHash } from "@/lib/smooth-scroll";
 
 const OUT_MS = 380;
@@ -107,7 +106,6 @@ export function PageTransition() {
     const w = (c.width = Math.round(innerWidth * dpr));
     const h = (c.height = Math.round(innerHeight * dpr));
     const N = innerWidth < 768 ? 70 : 140;
-    const pal = warmPalette();
     const parts = Array.from({ length: N }, () => ({
       x: Math.random() * w,
       y: h * (0.3 + Math.random() * 0.9),
@@ -127,8 +125,8 @@ export function PageTransition() {
       ctx.clearRect(0, 0, w, h);
       // Mist veil with a soft sky glow.
       const g = ctx.createRadialGradient(w * 0.7, h * 0.2, 0, w * 0.7, h * 0.2, Math.max(w, h));
-      g.addColorStop(0, `rgba(${pal ? "207,199,217" : "141,179,223"},${0.9 * veil})`);
-      g.addColorStop(1, `rgba(${pal ? "238,234,243" : "211,218,225"},${veil})`);
+      g.addColorStop(0, `rgba(207,199,217,${0.9 * veil})`);
+      g.addColorStop(1, `rgba(238,234,243,${veil})`);
       ctx.fillStyle = g;
       ctx.fillRect(0, 0, w, h);
       // Particles rising (dissolve), fading with the veil on the way in.
@@ -137,7 +135,7 @@ export function PageTransition() {
         const y = q.y - q.v * secs * 0.55;
         const x = q.x + Math.sin(secs * 3 + q.ph) * 6 * dpr;
         ctx.globalAlpha = alpha * 0.85;
-        ctx.fillStyle = q.warm ? (pal ? "#D99A86" : "#F5A94A") : pal && q.ph > Math.PI ? "#7B61C9" : "#2F7FD0";
+        ctx.fillStyle = q.warm ? "#D99A86" : q.ph > Math.PI ? "#7B61C9" : "#2F7FD0";
         ctx.beginPath();
         ctx.arc(x, ((y % h) + h) % h, q.r, 0, Math.PI * 2);
         ctx.fill();

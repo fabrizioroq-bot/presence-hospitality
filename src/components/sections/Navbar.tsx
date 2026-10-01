@@ -183,8 +183,8 @@ export function Navbar({
   const night = mood === "night" || open;
   const surface = scrolled && !open
     ? night
-      ? "bg-charcoal-700/72 backdrop-blur-[14px] shadow-[inset_0_-1px_0_rgba(124,131,142,0.3)]"
-      : "bg-mist-bg/72 backdrop-blur-[14px] shadow-[inset_0_-1px_0_rgba(99,104,112,0.3)]"
+      ? "bg-charcoal-700/72 backdrop-blur-[14px] shadow-[inset_0_-1px_0_rgba(136,124,149,0.3)]"
+      : "bg-mist-bg/72 backdrop-blur-[14px] shadow-[inset_0_-1px_0_rgba(115,103,138,0.3)]"
     : "bg-transparent";
 
   return (

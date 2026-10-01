@@ -10,25 +10,30 @@ import { RevealGroup, RevealItem } from "@/components/ui/Reveal";
 // Strings here are intentionally not translated.
 
 const mistSwatches = [
-  ["--mist-bg", "#D3DAE1"],
-  ["--mist-surface", "#E4E9EE"],
-  ["--mist-raised", "#F2F5F8"],
-  ["--ink-900", "#1D1F23"],
-  ["--ink-700", "#3E4046"],
-  ["--ink-500", "#5A5E66"],
-  ["--line-mist", "#636870"],
-  ["--link-mist", "#1C5AA0"],
+  ["--mist-bg", "#EEEAF3"],
+  ["--ivory", "#F7F3EE"],
+  ["--lavender", "#CFC7D9"],
+  ["--mist-raised", "#FCFAF7"],
+  ["--ink-900", "#221B29"],
+  ["--ink-700", "#463B52"],
+  ["--ink-500", "#584B65"],
+  ["--line-mist", "#73678A"],
+  ["--link-mist", "#4A36A0"],
 ];
 const nightSwatches = [
-  ["--night-900", "#121417"],
-  ["--night-800", "#1B1D21"],
-  ["--charcoal-700", "#2F3136"],
-  ["--paper-50", "#F4F6F8"],
-  ["--paper-300", "#C5CAD1"],
-  ["--paper-500", "#A3AAB4"],
-  ["--line-night", "#7C838E"],
+  ["--night-900", "#1A1420"],
+  ["--night-800", "#221A29"],
+  ["--charcoal-700", "#2B2233"],
+  ["--paper-50", "#F6F2F8"],
+  ["--paper-300", "#D4CBDD"],
+  ["--paper-500", "#AEA3BA"],
+  ["--line-night", "#887C95"],
 ];
 const accentSwatches = [
+  ["--blue-700", "#2F4FD8"],
+  ["--cyan-700", "#7B61C9"],
+  ["--teal-700", "#6A4CB4"],
+  ["--cyan-300", "#B9A2F2"],
   ["--holo-100", "#E6F2FF"],
   ["--holo-300", "#BFE0FF"],
   ["--holo-400", "#8CC4FF"],
@@ -36,10 +41,11 @@ const accentSwatches = [
   ["--holo-600", "#2F7FD0"],
   ["--amber-300", "#F8C98B"],
   ["--amber-400", "#F5A94A"],
-  ["--orb-sky", "#8DB3DF"],
-  ["--orb-mint", "#BEE6DA"],
-  ["--orb-lavender", "#D6C6E4"],
-  ["--orb-peach", "#F1C7A3"],
+  ["--blush", "#E9CFC4"],
+  ["--orb-sky", "#A9B6F0"],
+  ["--orb-mint", "#B9A6E3"],
+  ["--orb-lavender", "#C4B5DC"],
+  ["--orb-peach", "#E9CFC4"],
 ];
 
 const typeScale = [

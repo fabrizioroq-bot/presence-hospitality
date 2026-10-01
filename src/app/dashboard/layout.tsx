@@ -12,7 +12,7 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false, nocache: true },
 };
 
-export const viewport: Viewport = { themeColor: "#121417" };
+export const viewport: Viewport = { themeColor: "#1A1420" };
 
 export default function DashboardLayout({
   children,

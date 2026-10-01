@@ -2,7 +2,6 @@
 
 import { useEffect, useRef } from "react";
 import { cx as cn } from "@/lib/cx";
-import { warmPalette } from "@/lib/palette";
 
 type Mood = "mist" | "night";
 
@@ -46,13 +45,10 @@ export function AmbientDust({
       return s;
     };
     const cool = mood === "night" ? sprite("191,224,255", 0.9) : sprite("90,168,245", 0.55);
-    // Warm palette: half the cool motes turn lavender/violet, and the warm sparks turn blush.
-    const pal = warmPalette();
-    const violet = pal ? (mood === "night" ? sprite("201,186,242", 0.9) : sprite("123,97,201", 0.5)) : cool;
-    const violetShare = pal === "b" ? 0.6 : 0.45;
-    const warm = pal
-      ? sprite(mood === "night" ? "233,207,196" : "214,150,130", mood === "night" ? 0.85 : 0.6)
-      : sprite("245,169,74", mood === "night" ? 0.85 : 0.6);
+    // Warm palette: most motes are lavender/violet, the rest holo blue; warm sparks are blush.
+    const violet = mood === "night" ? sprite("201,186,242", 0.9) : sprite("123,97,201", 0.5);
+    const violetShare = 0.6;
+    const warm = sprite(mood === "night" ? "233,207,196" : "214,150,130", mood === "night" ? 0.85 : 0.6);
 
     type Mote = { x: number; y: number; r: number; vy: number; ph: number; depth: number; warm: boolean; violet: boolean };
     let motes: Mote[] = [];

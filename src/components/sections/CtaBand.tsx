@@ -14,7 +14,7 @@ export async function CtaBand({
   tone,
 }: {
   from?: "mist" | "night" | "deep" | null;
-  /** Tone of the light section above (warm palette). */
+  /** Tone of the light section above. */
   tone?: Tone;
 }) {
   const t = await getTranslations("ctaBand");

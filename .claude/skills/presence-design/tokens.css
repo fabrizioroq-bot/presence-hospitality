@@ -1,66 +1,71 @@
 /* Presence Hospitality — design tokens (source of truth: src/styles/globals.css mirrors this block) */
 :root {
-  /* Mist (light surfaces) */
-  --mist-bg: #d3dae1;
-  --mist-surface: #e4e9ee;
-  --mist-raised: #f2f5f8;
-  --ink-900: #1d1f23;
-  --ink-700: #3e4046;
-  --ink-500: #5a5e66;
-  --line-mist: #636870;
-  --link-mist: #1c5aa0;
+  /* Light surfaces (warm palette, client-approved 01-10). Lavender light is the canvas; light
+     sections alternate with ivory and lavender mist via data-tone (see "Section tones" below). */
+  --mist-bg: #eeeaf3; /* lavender light */
+  --mist-surface: #f7f3ee; /* warm ivory: cards, panels */
+  --mist-raised: #fcfaf7;
+  --ivory: #f7f3ee;
+  --lavender: #cfc7d9; /* lavender mist, brand colour */
+  --blush: #e9cfc4; /* tiny touches only */
+  --ink-900: #221b29; /* 14.1:1 on lavender light, 10.2:1 on lavender mist */
+  --ink-700: #463b52;
+  --ink-500: #584b65; /* captions, ≥ 4.9:1 on every light tone */
+  --line-mist: #73678a; /* ≥ 3:1 UI */
+  --link-mist: #4a36a0;
 
-  /* Night (dark surfaces) */
-  --night-900: #121417;
-  --night-800: #1b1d21;
-  --charcoal-700: #2f3136;
-  --paper-50: #f4f6f8;
-  --paper-300: #c5cad1;
-  --paper-500: #a3aab4;
-  --line-night: #7c838e;
+  /* Dark surfaces: deep plum */
+  --night-900: #1a1420;
+  --night-800: #221a29;
+  --charcoal-700: #2b2233; /* deep plum, dark section canvas */
+  --paper-50: #f6f2f8;
+  --paper-300: #d4cbdd;
+  --paper-500: #aea3ba; /* 6.3:1 on plum */
+  --line-night: #887c95;
 
-  /* Holo (technology) */
+  /* Holo (technology: hologram, 3D, tech details) — unchanged blue */
   --holo-100: #e6f2ff;
   --holo-300: #bfe0ff;
   --holo-400: #8cc4ff;
   --holo-500: #5aa8f5;
   --holo-600: #2f7fd0;
-  --holo-gradient: linear-gradient(100deg, #9dc9ff 0%, #e6f2ff 100%);
-
-  /* Warm accent */
-  /* Accent blues (CTA / emphasis gradients) */
-  --blue-700: #1747a6;
-  --teal-700: #0b6485;
-  --cyan-700: #0a7ba3;
-  --cyan-300: #6fe3ff;
+  /* Highlight tiles, glow buttons, package tabs: lavender-violet → ivory */
+  --holo-gradient: linear-gradient(100deg, #d5c8f2 0%, #f7f3ee 100%);
+  /* Accent gradient blue → violet (CTA / emphasis). White on blue-700 6.50:1, on cyan-700 4.78:1.
+     Emphasis on light: blue-700 → teal-700 (violet) ≥ 5.3:1. On dark: holo-400 → cyan-300 ≥ 6.9:1.
+     (Names kept from the blue accent so every hook keeps working.) */
+  --blue-700: #2f4fd8;
+  --teal-700: #6a4cb4;
+  --cyan-700: #7b61c9;
+  --cyan-300: #b9a2f2;
+  --glow-rgb: 185, 162, 242; /* violet glow */
 
   --amber-300: #f8c98b;
   --amber-400: #f5a94a;
 
-  /* Orbs (decorative, always blurred) */
-  --orb-sky: #8db3df;
-  --orb-mint: #bee6da;
-  --orb-lavender: #d6c6e4;
-  --orb-peach: #f1c7a3;
+  --orb-sky: #a9b6f0;
+  --orb-mint: #b9a6e3;
+  --orb-lavender: #c4b5dc;
+  --orb-peach: #e9cfc4;
 
-  /* Feedback */
   --danger-mist: #a8321f;
   --danger-night: #ff8a75;
   --success-mist: #1e6b45;
   --success-night: #7fd9a8;
 
-  --focus: #1c5aa0;
+  --focus: #4535a8;
 
-  /* Radii */
   --r-sm: 8px;
   --r-md: 16px;
   --r-lg: 32px;
   --r-xl: 48px;
   --r-pill: 999px;
 
-  /* Elevation */
-  --shadow-soft: 0 24px 60px -30px rgba(29, 31, 35, 0.35);
-  --glow-holo: 0 0 0 1px rgba(140, 196, 255, 0.35), 0 0 32px rgba(140, 196, 255, 0.28),
+  --shadow-soft: 0 24px 60px -30px rgba(43, 34, 51, 0.32);
+  --glow-holo:
+    0 0 0 1px rgba(140, 196, 255, 0.35), 0 0 32px rgba(140, 196, 255, 0.28),
     0 0 96px rgba(140, 196, 255, 0.14);
   --glow-amber: 0 0 12px rgba(245, 169, 74, 0.6);
+
+  --nav-h: 64px;
 }

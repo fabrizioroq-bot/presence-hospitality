@@ -2,7 +2,7 @@ import { cn } from "@/lib/cn";
 
 /** 80px (240px desktop) gradient band between a mist and a night section, so the page never has a hard cut. */
 type Mood = "mist" | "night" | "deep";
-/** Light-section tone (only takes effect with the warm palette, see globals.css). */
+/** Light-section tone (globals.css "Section tones"). */
 export type Tone = "ivory" | "lavender";
 
 export function MoodTransition({

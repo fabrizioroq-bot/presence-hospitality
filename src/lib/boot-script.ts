@@ -28,14 +28,6 @@ const boot = () => {
     const hs = sessionStorage.getItem("ph-hero");
     if (hs) h.dataset.hero = hs;
   } catch {}
-  // Palette preview: ?palette=a|b (warm lavender/plum variants), ?palette=off resets.
-  try {
-    const pv = new URLSearchParams(location.search).get("palette");
-    if (pv === "off") sessionStorage.removeItem("ph-palette");
-    else if (pv === "a" || pv === "b") sessionStorage.setItem("ph-palette", pv);
-    const ps = sessionStorage.getItem("ph-palette");
-    if (ps) h.dataset.palette = ps;
-  } catch {}
   w.__phI = false;
   const evs = ["pointerdown", "touchstart", "wheel", "keydown", "scroll", "mousemove"];
   const onI = () => {

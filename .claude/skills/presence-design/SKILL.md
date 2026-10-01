@@ -6,15 +6,17 @@ description: Presence Hospitality design system — tokens, typography, layout, 
 # Presence Hospitality — design system
 
 
-### 4.1 Visual concept: "Mist & Night"
+### 4.1 Visual concept: "Mist & Night", warm palette (client-approved 01-10)
 Two moods alternate down the page, like a hotel lobby between day and night:
-- **Mist** (light): the pitch deck's look. A cool grey-blue canvas, soft blurred orbs of sky blue, mint, lavender and a hint of peach, with fine film grain. Charcoal ink. Thin outlined panels with large radii. This is **hospitality: calm, human, daylight.**
-- **Night** (dark): charcoal and near-black. This is where the **technology** lives: the Holobox portal, the hologram, glowing cyan-blue light, mono HUD labels.
-- **Warmth** is carried by a single amber accent (like the lobby lamp and the "HOTEL" neon in the pitch): live dots, the hologram's rim sparks, tiny highlights. Never a large fill.
+- **Mist** (light): lavender light `--mist-bg #EEEAF3` canvas; light sections alternate with **warm ivory** `#F7F3EE` and **lavender mist** `#CFC7D9` (the brand colour) via `data-tone="ivory" | "lavender"` on the section *and* its `MoodTransition`/`CtaBand` (`tone` prop). Plum-black ink. Cards on ivory with soft plum-tinted shadows. Soft orbs of periwinkle, lavender, violet and blush, fine film grain. This is **hospitality: calm, human, warm.**
+- **Night** (dark): **deep plum** `#2B2233` (cards `#221A29`, deepest `#1A1420`) with a subtle violet/blue glow. The footer is plum too. This is where the **technology** lives: the Holobox, the hologram and the 3D stay **holographic blue**.
+- **Blush** `#E9CFC4` for tiny touches only (dust sparks, intro sparks). **Amber** stays only for the live dot, the traveller's suitcase and "paid idle time".
 
-**Blue accent (client-approved 27-09, "vivid"):** conversion CTAs, the italic headline emphasis, key figures, step numbers/nodes, timeline fills, active dots and the active navbar link use a **deep blue → holo cyan** gradient (`.btn-cta`, `em.emph`, `.key-figure`, `.step-num(-dark)`, `.step-node[data-lit]`, `.accent-dot/-bar/-line`, `.nav-ind` in `globals.css`). Keep it to ~10% of any viewport. On mist, gradient text runs `--blue-700 → --teal-700` (AA); on night `--holo-400 → --cyan-300`.
+**Accent gradient (blue → violet):** conversion CTAs (`#2F4FD8 → #7B61C9`, white text, scan sweep, violet glow), the italic headline emphasis, key figures, step numbers/nodes, timeline fills, active dots and the active navbar link (`.btn-cta`, `em.emph`, `.key-figure`, `.step-num(-dark)`, `.step-node[data-lit]`, `.accent-dot/-bar/-line`, `.nav-ind`). Token names are historical: `--blue-700` (blue), `--cyan-700` (CTA violet), `--teal-700` (emphasis violet on light), `--cyan-300` (light violet on dark). On mist, gradient text runs `--blue-700 → --teal-700`; on night `--holo-400 → --cyan-300`. Keep it to ~10% of any viewport. `--holo-gradient` (highlight tiles, glow buttons, package tabs) is lavender-violet → ivory.
 
-Colour roles are strict: **ink = content, blue/cyan = technology, emphasis and the conversion CTA, amber = human warmth/live** (only the live dot, the traveller's suitcase, rim sparks and "paid idle time"). Never use amber for CTAs or headline emphasis.
+Colour roles: **ink = content, holo blue = technology (hologram, 3D, tech details), blue → violet = emphasis and the conversion CTA, lavender/ivory/plum = surfaces, amber/blush = tiny human warmth.** Use each colour with intent; never amber or blush for CTAs or text.
+
+> The token list in §4.2 below is the original grey/blue set kept for history; **the live values are in `tokens.css` and `globals.css`** (both carry the warm palette) and `scripts/check-contrast.ts` verifies every pair.
 
 ### 4.2 Colour tokens (AA-verified)
 All ratios below were computed with the WCAG 2.x formula. `scripts/check-contrast.ts` must re-verify them in CI (`npm run check:contrast`) and fail below the stated minimum.
@@ -136,7 +138,7 @@ Motion was removed to keep initial JS under 180 KB. Same values, implemented as:
 - `prefers-reduced-motion: reduce`: every reveal renders in its final state, scrollytelling becomes a static vertical list, orbs stop drifting, the hologram renders one static frame (§6.7). Implement with `useReducedMotion()` from `@/lib/hooks` plus a CSS `@media` guard.
 
 ### 4.8 Anti "generic AI aesthetic" rules
-1. **No purple/violet gradients, no neon-purple glows**, no "aurora" behind the headline. Our gradients are only `--holo-gradient` and the blurred orbs.
+1. **No neon-purple glows and no "aurora" behind the headline.** The only violet is the client-approved blue → violet accent gradient (CTA, emphasis) and soft lavender surfaces/orbs; never a large saturated purple fill.
 2. **No row of three identical icon cards.** Every grid has hierarchy: one dominant element plus supporting ones, different spans, or a different medium (chart, list, panel).
 3. **No generic line icons as decoration** (no lightning bolts, rockets or shields). Numbers in pill badges (pitch style) or custom SVG diagrams do that job.
 4. **No glassmorphism cards over busy backgrounds.** Mist panels are outlined, not frosted.
@@ -164,7 +166,7 @@ The page must never feel static, but motion stays calm: nothing faster than ~15 
 **Depth / parallax** (`HeroShell` + `Parallax`): text moves least (mouse ±6/4 px, scroll −70 px), the Holobox more (mouse ±14/10 px, scroll +60 px), and the background most (in shader). Springs: stiffness 40, damping 18. Mouse parallax only for fine pointers.
 
 **Other sections (no WebGL):**
-- `AmbientDust` (2D canvas): 30–64 motes rising at 4–14 px/s with a gentle sway; cool holo + ~8% amber; only animates while on screen; half density and 30 fps on touch. Use `mood="night"` on dark sections.
+- `AmbientDust` (2D canvas): 30–64 motes rising at 4–14 px/s with a gentle sway; ~60% lavender/violet + holo blue, ~8% blush sparks; only animates while on screen; half density and 30 fps on touch. Use `mood="night"` on dark sections.
 - `ParallaxOrbs`: MistOrbs that shift ±70 px across the section's scroll range.
 - `LightSweep`: a 38 s diagonal band of light, night sections only.
 - Every section gets `ParallaxOrbs`, and night sections also get `AmbientDust` + `LightSweep`. Mist sections may use `AmbientDust` at `density ≤ 0.6`.
