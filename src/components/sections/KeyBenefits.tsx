@@ -20,7 +20,7 @@ export async function KeyBenefits() {
   const savings = claims.savings;
   const showSavings = savings.enabled && savings.range;
   return (
-    <section id="benefits" data-mood="mist" aria-labelledby="key-benefits-title" className="relative isolate overflow-hidden bg-mist-bg pt-4 pb-16 text-ink-900 lg:pt-8 lg:pb-32">
+    <section id="benefits" data-mood="mist" data-tone="lavender" aria-labelledby="key-benefits-title" className="relative isolate overflow-hidden bg-mist-bg pt-4 pb-16 text-ink-900 lg:pt-8 lg:pb-32">
       <ParallaxOrbs
         orbs={[
           { color: "mint", size: "min(50vw, 700px)", top: "10%", right: "-16%", opacity: 0.5, dur: 24 },

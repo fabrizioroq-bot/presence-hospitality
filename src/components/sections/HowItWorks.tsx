@@ -53,10 +53,11 @@ export async function HowItWorks() {
 
   return (
     <>
-      <MoodTransition from="night" to="mist" />
+      <MoodTransition from="night" to="mist" tone="ivory" />
       <section
         id="how-it-works"
         data-mood="mist"
+        data-tone="ivory"
         aria-labelledby="how-title"
         className="relative isolate bg-mist-bg text-ink-900"
       >

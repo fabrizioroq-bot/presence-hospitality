@@ -16,6 +16,7 @@ export async function LegalPage({
   return (
     <div
       data-mood="mist"
+      data-tone="ivory"
       className="relative isolate overflow-x-clip bg-mist-bg pt-[calc(var(--nav-h)+64px)] pb-24 text-ink-900"
     >
       <ParallaxOrbs

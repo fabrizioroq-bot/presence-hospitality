@@ -20,10 +20,11 @@ export async function Pricing() {
   ];
   return (
     <>
-      <MoodTransition from="night" to="mist" />
+      <MoodTransition from="night" to="mist" tone="ivory" />
       <section
         id="pricing"
         data-mood="mist"
+        data-tone="ivory"
         aria-labelledby="pricing-title"
         className="relative isolate overflow-hidden bg-mist-bg pt-8 pb-24 text-ink-900 lg:pb-32"
       >

@@ -8,8 +8,8 @@ export async function WelcomeBand() {
   const t = await getTranslations("welcome");
   return (
     <>
-      <MoodTransition from="deep" to="mist" />
-      <div data-mood="mist" className="relative isolate overflow-hidden bg-mist-bg py-12 lg:py-28">
+      <MoodTransition from="deep" to="mist" tone="lavender" />
+      <div data-mood="mist" data-tone="lavender" className="relative isolate overflow-hidden bg-mist-bg py-12 lg:py-28">
         <ParallaxOrbs
           range={50}
           orbs={[

@@ -33,7 +33,7 @@ export default async function Page({
       <Benefits />
       <BehindTheBox />
       <Integrations from="deep" />
-      <CtaBand from="mist" />
+      <CtaBand from="mist" tone="lavender" />
     </PageShell>
   );
 }

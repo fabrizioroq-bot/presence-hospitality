@@ -1193,3 +1193,172 @@ html[data-hero="4"] .hero-variant[data-v="4"] {
     height: 2.6cqw;
   }
 }
+
+/* ---------------------------------------------------------------------------------------------
+   Warm palette preview (team feedback 01-10: "too clinical"). `?palette=a|b` sets
+   html[data-palette] (boot script); without it the site keeps the approved blue/grey look.
+   Lavender mist #CFC7D9 · lavender light #EEEAF3 (canvas) · warm ivory #F7F3EE · deep plum #2B2233 ·
+   muted violet #6E5A8A (emphasis on light) · soft blush #E9CFC4 (tiny touches). Holo blue stays for
+   the hologram, 3D and tech details. CTA gradient #2F4FD8 → #7B61C9. Every text/UI pair below is
+   AA-checked in scripts/check-contrast.ts.
+     A soft   · lavender + ivory dominant, dusky violet dark sections, plum only in the footer.
+     B richer · deep plum dark sections, stronger violet in emphasis, glows and particles.
+   Light sections alternate by `data-tone` (ivory | lavender; none = lavender light).
+   --------------------------------------------------------------------------------------------- */
+html[data-palette] {
+  --ivory: #f7f3ee;
+  --lavender: #cfc7d9;
+  --blush: #e9cfc4;
+  --mist-bg: #eeeaf3;
+  --mist-surface: #f7f3ee;
+  --mist-raised: #fcfaf7;
+  --ink-900: #221b29;
+  --ink-700: #463b52;
+  --ink-500: #584b65;
+  --line-mist: #73678a;
+  --link-mist: #4a36a0;
+  --paper-50: #f6f2f8;
+  --paper-300: #d4cbdd;
+  /* CTA gradient (white text: 6.50 / 4.78) and text-gradient stops on light */
+  --blue-700: #2f4fd8;
+  --cyan-700: #7b61c9;
+  --teal-700: #6e5a8a;
+  --focus: #4535a8;
+  /* Highlight tiles, glow buttons, package tabs: lavender-violet → ivory instead of icy blue */
+  --holo-gradient: linear-gradient(100deg, #d5c8f2 0%, #f7f3ee 100%);
+  --shadow-soft: 0 24px 60px -30px rgba(43, 34, 51, 0.32);
+  --glow-rgb: 185, 162, 242;
+}
+html[data-palette="a"] {
+  --night-900: #261f2d;
+  --night-800: #312939;
+  --charcoal-700: #3b3247;
+  --paper-500: #bdb2c8;
+  --line-night: #968aa4;
+  --cyan-300: #c7b8f0; /* emphasis end on dark */
+  --orb-sky: #c3c9ee;
+  --orb-mint: #f3e7dc;
+  --orb-lavender: #cfc7d9;
+  --orb-peach: #e9cfc4;
+  --glow-a: 0.12;
+}
+html[data-palette="b"] {
+  --night-900: #1a1420;
+  --night-800: #221a29;
+  --charcoal-700: #2b2233;
+  --paper-500: #aea3ba;
+  --line-night: #887c95;
+  --cyan-300: #b9a2f2;
+  --teal-700: #6a4cb4; /* stronger violet in emphasis */
+  --orb-sky: #a9b6f0;
+  --orb-mint: #b9a6e3;
+  --orb-lavender: #c4b5dc;
+  --orb-peach: #e9cfc4;
+  --glow-a: 0.2;
+}
+@supports (color: color-mix(in oklab, red, blue)) {
+  html[data-palette] {
+    --mist-bg: color-mix(in oklab, #eeeaf3, #e4ddec calc(var(--dusk) * 100%));
+  }
+  html[data-palette="a"] {
+    --charcoal-700: color-mix(in oklab, #3b3247, #342b40 calc(var(--dusk) * 100%));
+  }
+  html[data-palette="b"] {
+    --charcoal-700: color-mix(in oklab, #2b2233, #241c2b calc(var(--dusk) * 100%));
+  }
+}
+
+/* Light-section tones */
+html[data-palette] [data-tone="ivory"] {
+  --mist-bg: #f7f3ee;
+  --mist-surface: #fdfbf8;
+  --mist-raised: #ffffff;
+}
+html[data-palette] [data-tone="lavender"] {
+  --mist-bg: #cfc7d9;
+  --mist-surface: #f7f3ee;
+  --mist-raised: #fcfaf7;
+  --line-mist: #6a5e80;
+  --blue-700: #2a43b8;
+  --teal-700: #584872;
+}
+html[data-palette="b"] [data-tone="lavender"] {
+  --teal-700: #563d97;
+}
+
+/* Footer: deep plum in both variants */
+html[data-palette] footer[data-mood="night"] {
+  --night-900: #1a1420;
+  --night-800: #221a29;
+  --charcoal-700: #2b2233;
+}
+
+/* Dark sections: a subtle violet/blue glow over the plum */
+html[data-palette] :is(section, footer, div.isolate)[data-mood="night"] {
+  background-image:
+    radial-gradient(60% 55% at 88% 0%, rgba(123, 97, 201, var(--glow-a)), transparent 70%),
+    radial-gradient(50% 45% at 8% 100%, rgba(47, 79, 216, calc(var(--glow-a) * 0.7)), transparent 70%);
+}
+
+/* Mist ↔ night bands: a violet haze through the middle instead of a flat grey-mauve fade */
+html[data-palette] [data-band]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    75% 60% at 35% 50%,
+    rgba(123, 97, 201, calc(var(--glow-a) * 1.4)),
+    transparent 72%
+  );
+}
+
+/* Cards on ivory / lavender with soft plum-tinted shadows */
+html[data-palette] [data-mood="mist"] :is(.bg-mist-surface, .bg-mist-raised) {
+  box-shadow:
+    0 22px 44px -30px rgba(43, 34, 51, 0.38),
+    0 2px 6px -3px rgba(43, 34, 51, 0.08);
+}
+
+html[data-palette] ::selection {
+  background: #d9ccf5;
+}
+
+/* Accent glows: cyan → violet */
+html[data-palette] .btn-cta {
+  box-shadow:
+    0 0 0 1px rgba(var(--glow-rgb), 0.3),
+    0 8px 24px -12px rgba(123, 97, 201, 0.75);
+}
+html[data-palette] .btn-cta:hover {
+  box-shadow:
+    0 0 0 1px rgba(var(--glow-rgb), 0.6),
+    0 10px 34px -8px rgba(98, 88, 214, 0.8),
+    0 0 48px -12px rgba(var(--glow-rgb), 0.75);
+}
+html[data-palette] .step-node[data-lit] {
+  box-shadow:
+    0 0 0 1px rgba(var(--glow-rgb), 0.5),
+    0 0 18px rgba(123, 97, 201, 0.5);
+}
+html[data-palette] [data-mood="night"] [aria-current] > .accent-dot {
+  box-shadow: 0 0 10px rgba(var(--glow-rgb), 0.6);
+}
+html[data-palette] .nav-ind {
+  background: linear-gradient(90deg, var(--blue-700), var(--cyan-300));
+  box-shadow: 0 0 14px rgba(var(--glow-rgb), 0.8);
+}
+
+/* Intro veil: lavender light instead of grey mist */
+html[data-palette].intro #ph-intro {
+  background:
+    radial-gradient(55% 45% at 72% 18%, rgba(207, 199, 217, 0.55), transparent 70%),
+    rgba(238, 234, 243, 0.82);
+}
+@media (pointer: coarse) {
+  html[data-palette].intro #ph-intro {
+    background:
+      radial-gradient(55% 45% at 72% 18%, rgba(207, 199, 217, 0.55), transparent 70%),
+      rgba(238, 234, 243, 0.95);
+  }
+}

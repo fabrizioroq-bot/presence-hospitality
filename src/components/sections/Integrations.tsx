@@ -11,10 +11,11 @@ export async function Integrations({ from }: { from?: "night" | "deep" } = {}) {
   const t = await getTranslations("integrations");
   return (
     <>
-      {from && <MoodTransition from={from} to="mist" />}
+      {from && <MoodTransition from={from} to="mist" tone="lavender" />}
       <section
         id="integrations"
         data-mood="mist"
+        data-tone="lavender"
         aria-labelledby="integrations-title"
         className="relative isolate overflow-hidden bg-mist-bg pt-10 pb-16 text-ink-900 lg:pt-24 lg:pb-40"
       >

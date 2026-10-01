@@ -31,7 +31,7 @@ export default async function Page({
       />
       <WhoPackages />
       <Pricing />
-      <CtaBand from="mist" />
+      <CtaBand from="mist" tone="ivory" />
     </PageShell>
   );
 }

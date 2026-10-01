@@ -31,7 +31,7 @@ export async function ExperienceStage() {
   ];
   return (
     <>
-      <MoodTransition from="mist" to="deep" />
+      <MoodTransition from="mist" to="deep" tone="ivory" />
       <section id="experience" data-mood="night" aria-labelledby="experience-title" className="relative isolate overflow-hidden bg-night-900 pb-16 text-paper-50 lg:pb-32">
         <ParallaxOrbs range={80} orbs={orbs} />
         <LightSweep />

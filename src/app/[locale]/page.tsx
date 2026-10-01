@@ -33,7 +33,7 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
       <ExperienceStage />
       <WelcomeBand />
       <KeyBenefits />
-      <CtaBand from="mist" />
+      <CtaBand from="mist" tone="lavender" />
     </PageShell>
   );
 }

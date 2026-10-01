@@ -70,11 +70,15 @@ const intro = (P: { n: number; aspect: number; b64: string }, caption: string) =
   const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
   // Colour groups (drawn as one path each → ~18 fills per frame instead of one per dot):
   // 6 steps of deep blue → holo cyan across the word, plus warm sparks; 3 twinkle phases.
+  const pal = !!document.documentElement.dataset.palette;
   const COLS = [0, 1, 2, 3, 4, 5].map((k) => {
     const x = k / 5;
-    return `rgb(${Math.round(lerp(23, 10, x))},${Math.round(lerp(71, 123, x))},${Math.round(lerp(166, 163, x))})`;
+    // Warm palette preview: CTA blue → violet; default: deep blue → holo cyan.
+    return pal
+      ? `rgb(${Math.round(lerp(47, 123, x))},${Math.round(lerp(79, 97, x))},${Math.round(lerp(216, 201, x))})`
+      : `rgb(${Math.round(lerp(23, 10, x))},${Math.round(lerp(71, 123, x))},${Math.round(lerp(166, 163, x))})`;
   });
-  COLS.push("#F5A94A");
+  COLS.push(pal ? "#D99A86" : "#F5A94A");
   type Pt = { tx: number; ty: number; sx: number; sy: number; d: number; r: number };
   const groups: Pt[][] = Array.from({ length: COLS.length * 3 }, () => []);
   for (let i = 0; i < P.n; i++) {
