@@ -12,6 +12,7 @@ export function EditorialPhoto({
   sizes,
   className,
   position = "50% 50%",
+  priority = false,
 }: {
   photo: Photo;
   alt: string;
@@ -19,6 +20,8 @@ export function EditorialPhoto({
   className?: string;
   /** object-position, to keep the subject in frame when the ratio crops. */
   position?: string;
+  /** Near the top of the page (likely LCP): load eagerly with high priority. */
+  priority?: boolean;
 }) {
   return (
     <figure className={cn("relative overflow-hidden rounded-xl bg-mist-surface shadow-soft", className)}>
@@ -29,7 +32,8 @@ export function EditorialPhoto({
         height={photo.height}
         sizes={sizes}
         quality={75}
-        loading="lazy"
+        loading={priority ? "eager" : "lazy"}
+        fetchPriority={priority ? "high" : undefined}
         className="absolute inset-0 h-full w-full object-cover"
         style={{ objectPosition: position }}
       />

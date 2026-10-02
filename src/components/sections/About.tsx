@@ -71,6 +71,7 @@ export async function About() {
           sizes="(min-width: 1360px) 1264px, 94vw"
           className="aspect-[16/9] lg:col-span-12 lg:aspect-[21/8]"
           position="50% 55%"
+          priority
         />
         <Reveal className="flex flex-col gap-6 lg:col-span-6">
           <h2 id="about-who" className="text-display-lg">
