@@ -4,6 +4,8 @@ import { Accordion } from "@/components/faq/Accordion";
 import { Headline } from "@/components/ui/Headline";
 import { Reveal } from "@/components/ui/Reveal";
 import { faq } from "@/content/faq";
+import { EditorialPhoto } from "@/components/ui/EditorialPhoto";
+import { photos } from "@/content/photos";
 import { site } from "@/content/site";
 import { PhoneLinks } from "@/components/ui/PhoneLinks";
 
@@ -31,7 +33,7 @@ export async function Faq({ asPage = false }: { asPage?: boolean } = {}) {
         <div className="lg:col-span-4">
           <div className="flex flex-col gap-6 lg:sticky lg:top-[calc(var(--nav-h)+48px)]">
             <p className="text-label text-ink-700">{t("eyebrow")}</p>
-            <Headline as={asPage ? "h1" : "h2"} id="faq-title" raw={t.raw("title") as string} className="text-display-xl" />
+            <Headline as={asPage ? "h1" : "h2"} id="faq-title" raw={t.raw("title") as string} className="max-w-[14ch] text-display-lg" />
             <Reveal className="flex flex-col gap-4">
               <p className="text-heading-sm">{t("still")}</p>
               <p className="max-w-[32ch] text-body text-ink-700">{t("stillBody")}</p>
@@ -45,6 +47,14 @@ export async function Faq({ asPage = false }: { asPage?: boolean } = {}) {
                 </a>
               </p>
             </Reveal>
+            {asPage && (
+              <EditorialPhoto
+                photo={photos.faq}
+                alt={t("photoAlt")}
+                sizes="30vw"
+                className="mt-4 hidden aspect-[4/3] lg:block"
+              />
+            )}
           </div>
         </div>
         <div className="lg:col-span-7 lg:col-start-6">

@@ -25,7 +25,7 @@
   --ph-hologram-cyan: #8bdce5; /* tech only */
   --ph-hologram-violet: #afa5ce; /* tech only */
   --ph-live: #3a8f75; /* "online" status dot */
-  --ph-neon: #f6b4a0; /* the "HOTEL" neon sign (decorative) */
+  --ph-neon: #f6b4a0; /* warm status badge (dashboard: demo scheduled) */
   --ph-accent-on-dark: #9cc2b8; /* muted teal lightened for checks, links and markers on dark (8.9:1) */
   --ph-text-primary: #172126;
   --ph-text-secondary: #344249; /* leads and explanatory text (9.3:1 on ivory) */
@@ -644,13 +644,6 @@ select.demo-input option {
   }
 }
 
-/* Pinned onboarding on short desktop viewports: drop the one-line subtitle to keep type large. */
-@media (min-width: 1024px) and (min-height: 650px) and (max-height: 859px) and (prefers-reduced-motion: no-preference) {
-  .onb-sub {
-    display: none;
-  }
-}
-
 /* Mobile swipe rows: a horizontal scroll-snap row below lg (next card peeks out); the element's
    own grid/flex layout takes over from lg. Usage: class="swipe-row lg:grid …", children "swipe-item". */
 @media (max-width: 1023.98px) {
@@ -975,32 +968,6 @@ html.rv [data-rv="bar"] {
 html.rv [data-rv-trigger]:not([data-in]) [data-rv="bar"] {
   transform: scaleX(0);
 }
-html.rv [data-rv="neon"]:not([data-in]) {
-  opacity: 0.25;
-}
-html.rv [data-rv="neon"][data-in] {
-  animation: neon-flicker 0.9s linear;
-}
-@keyframes neon-flicker {
-  0% {
-    opacity: 0.25;
-  }
-  15% {
-    opacity: 1;
-  }
-  30% {
-    opacity: 0.55;
-  }
-  50% {
-    opacity: 1;
-  }
-  65% {
-    opacity: 0.8;
-  }
-  100% {
-    opacity: 1;
-  }
-}
 
 /* Border beam: a light running along the border (offset-path). */
 .border-beam {
@@ -1015,35 +982,6 @@ html.rv [data-rv="neon"][data-in] {
   }
 }
 
-/* Rotating hero word: each new word rises in. */
-.word-in {
-  animation: word-in 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-@keyframes word-in {
-  from {
-    transform: translateY(0.4em);
-    opacity: 0;
-    filter: blur(6px);
-  }
-}
-html.rv [data-rv="wipe"] {
-  transition-duration: 1s;
-  transition-timing-function: cubic-bezier(0.65, 0, 0.35, 1);
-}
-html.rv [data-rv-trigger]:not([data-in]) [data-rv="wipe"] {
-  clip-path: inset(0 100% 0 0);
-}
-html.rv [data-rv="pop"] {
-  transition:
-    opacity 0.45s ease-out,
-    transform 0.55s cubic-bezier(0.34, 1.56, 0.64, 1),
-    box-shadow 0.3s;
-  transition-delay: calc(var(--rv-delay, 0s) + var(--rv-i, 0) * var(--rv-step, 0.07s)), calc(var(--rv-delay, 0s) + var(--rv-i, 0) * var(--rv-step, 0.07s)), 0s;
-}
-html.rv [data-rv-trigger]:not([data-in]) [data-rv="pop"] {
-  opacity: 0;
-  transform: scale(0.9);
-}
 html.rv [data-rv="rise"] {
   transition-duration: 0.6s;
 }
@@ -1249,4 +1187,17 @@ html.intro {
     0 0 0 1px var(--ph-border-subtle),
     0 22px 44px -30px rgba(23, 59, 77, 0.3),
     0 2px 6px -3px rgba(23, 33, 38, 0.06);
+}
+
+/* The 24-hour demand chart (DemandChart.tsx) on a light card: its night-tuned tokens remapped to the
+   interface palette (text petrol/ink, axes warm grey, night band sand, demand line teal, idle amber
+   kept as a graphic; the amber legend text uses the AA-safe warning brown). */
+.chart-light {
+  --paper-50: var(--ph-text-primary);
+  --paper-300: var(--ph-text-secondary);
+  --paper-500: var(--ph-text-muted);
+  --line-night: var(--ph-border-strong);
+  --night-900: #ece5da;
+  --ph-accent-on-dark: var(--ph-brand-secondary-text);
+  --amber-300: var(--ph-warning);
 }

@@ -61,8 +61,9 @@ export async function Demo({ asPage = false }: { asPage?: boolean } = {}) {
             <div className="flex flex-col gap-6">
               <p className="text-label text-paper-500">{t("eyebrow")}</p>
               <Headline as={asPage ? "h1" : "h2"} id="demo-title" raw={t.raw("title") as string} className="text-display-xl lg:text-display-lg" />
-              <Reveal>
+              <Reveal className="flex flex-col gap-4">
                 <p className="max-w-[44ch] text-body-lg text-paper-300">{t("sub")}</p>
+                <p className="text-heading-sm text-paper-50">{t("challenge")}</p>
               </Reveal>
             </div>
             <Reveal>

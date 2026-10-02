@@ -4,7 +4,7 @@ import { PageShell } from "@/components/layout/PageShell";
 import { PageHeader } from "@/components/layout/PageHeader";
 import { CtaBand } from "@/components/sections/CtaBand";
 import { Pricing } from "@/components/sections/Pricing";
-import { WhoPackages } from "@/components/sections/WhoPackages";
+import { PackagesCalm } from "@/components/sections/PackagesCalm";
 import type { Locale } from "@/i18n/routing";
 import { pageMeta } from "@/lib/seo";
 
@@ -29,9 +29,9 @@ export default async function Page({
         h1={t.raw("h1") as string}
         sub={t("sub")}
       />
-      <WhoPackages />
+      <PackagesCalm />
       <Pricing />
-      <CtaBand from="mist" tone="ivory" />
+      <CtaBand from="mist" tone="lavender" />
     </PageShell>
   );
 }

@@ -39,9 +39,11 @@ export function RevealGroup({
   delay = 0,
   id,
   tabIndex,
+  as: Comp = "div",
 }: {
   children: ReactNode;
   className?: string;
+  as?: "div" | "ol" | "ul";
   gap?: number;
   onLoad?: boolean;
   delay?: number;
@@ -51,9 +53,9 @@ export function RevealGroup({
 }) {
   const style: Vars = { "--rv-step": `${gap}s`, "--rv-delay": `${delay}s` };
   return (
-    <div id={id} tabIndex={tabIndex} className={className} style={style} data-rv-trigger="" suppressHydrationWarning data-rv-load={onLoad ? "" : undefined}>
+    <Comp id={id} tabIndex={tabIndex} className={className} style={style} data-rv-trigger="" suppressHydrationWarning data-rv-load={onLoad ? "" : undefined}>
       {children}
-    </div>
+    </Comp>
   );
 }
 
@@ -61,15 +63,17 @@ export function RevealItem({
   children,
   className,
   soft = false,
+  as: Comp = "div",
 }: {
   children: ReactNode;
   className?: string;
+  as?: "div" | "li";
   /** No opacity change: rise + unblur only (LCP-safe). */
   soft?: boolean;
 }) {
   return (
-    <div className={className} suppressHydrationWarning data-rv={soft ? "soft" : "fade"}>
+    <Comp className={className} suppressHydrationWarning data-rv={soft ? "soft" : "fade"}>
       {children}
-    </div>
+    </Comp>
   );
 }

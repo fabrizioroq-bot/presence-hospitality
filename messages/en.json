@@ -30,12 +30,12 @@
   "hero": {
     "eyebrow": "Presence Hospitality · Front office as a service",
     "tagline": "Front office as a service",
-    "lead": "Presence Hospitality runs your reception from one central hub. Guests check in on their own, and when they need someone, a trained receptionist appears in your lobby as a life-size hologram. Day, night, or both.",
-    "ctaSecondary": "See how it works",
+    "lead": "A fully staffed reception, without staffing every shift on site. When guests need help, a real receptionist from our Amsterdam hub appears live in your lobby, day or night.",
     "note": "Built for independent hotels and hostels · Live in the Netherlands",
     "title": "Stop hiring <em>front desk</em> staff.",
     "photoStatus": "Receptionist online · 24/7",
-    "photoAlt": "Presence Hospitality: a guest with her suitcase walking to her room along a modern hotel corridor."
+    "photoAlt": "Presence Hospitality: a guest with her suitcase walking to her room along a modern hotel corridor.",
+    "call": "Or call sales"
   },
   "footer": {
     "tagline": "Ready when your guests are.",
@@ -120,21 +120,12 @@
     "hCardBody": "A real receptionist at our hub, live."
   },
   "experience": {
-    "eyebrow": "The Holobox",
-    "title": "Not a video call. <em>A presence.</em>",
-    "body": "Real, trained receptionists deliver a high-end 4K telepresence experience across all your locations. They work from a dedicated studio at our hub, so to your guest it feels like someone is really there.",
-    "fFormatLabel": "Format",
-    "fFormat": "Mini or full-size Holobox, in your lobby or at reception.",
-    "fLiveLabel": "Live",
-    "fLive": "Real people, never a recording or a chatbot.",
-    "fLangLabel": "Languages",
-    "fLang": "Multilingual agents; language profiles agreed per hotel.",
+    "body": "Mini or full-size, in your lobby or at reception. When a guest presses call, a receptionist appears life-size, at eye level, and helps them on the spot.",
     "drag": "Drag to look around",
-    "media": "Real Holobox footage — coming soon",
     "stageAlt": "Illustration: a Presence Hospitality receptionist appearing as a life-size hologram inside the Holobox.",
     "hudOnline": "Agent online",
-    "hudRoute": "Studio → Lobby",
-    "hudLive": "Live · 4K telepresence"
+    "hudRoute": "Hub → Lobby",
+    "hudLive": "Live · from our hub"
   },
   "behind": {
     "eyebrow": "How it runs",
@@ -150,13 +141,10 @@
     "c5Title": "Dashboards & reporting",
     "c5Body": "KPIs such as wait times, first contact resolution and NPS, plus audit logs and quality reviews."
   },
-  "welcome": {
-    "line": "<em>Welcome to your presence.</em>"
-  },
   "benefits": {
     "eyebrow": "Benefits",
     "title": "What changes when the desk <em>moves to the hub</em>",
-    "aTitle": "Premium guest experience, centralised.",
+    "aTitle": "The same welcome, at every hour.",
     "aBody": "Real, trained receptionists and hospitality-first processes give every guest the same high standard, at every hour and every location, without the limits of on-site staffing.",
     "bTitle": "Structural cost reduction.",
     "bUpTo": "up to",
@@ -164,8 +152,8 @@
     "bFallback": "Centralising the desk removes idle time, so you pay for service, not for waiting.",
     "footnote": "Estimate based on the Presence Hospitality operating model. Actual savings depend on property size, service hours and volume.",
     "cBody": "Night, day, or around the clock. Coverage from one central hub.",
-    "dTitle": "Scalable & future-proof.",
-    "dBody": "Open integrations, full data ownership and a proven tech stack. Add a second property without adding a second desk. No vendor lock-in.",
+    "dTitle": "Start with one property. Add more later.",
+    "dBody": "Open integrations and full ownership of your data. Add a second property without adding a second desk. No vendor lock-in.",
     "eTitle": "Predictable cost.",
     "eBody": "A monthly service fee based on your rooms, service hours and volume. No overtime, no last-minute replacements to organise.",
     "eRooms": "Rooms",
@@ -261,7 +249,10 @@
           "Advanced analytics & reporting"
         ]
       }
-    ]
+    ],
+    "startHere": "Many hotels start here",
+    "addonsTitle": "Add-ons for any package",
+    "includes": "What's included"
   },
   "pricing": {
     "eyebrow": "Pricing",
@@ -290,7 +281,7 @@
   },
   "onboarding": {
     "eyebrow": "Onboarding",
-    "title": "From first call to <em>go-live</em>",
+    "title": "Nothing changes <em>until everything works.</em>",
     "sub": "A structured handover. We only take over the desk once everything has been tested.",
     "youGet": "You get",
     "steps": [
@@ -340,11 +331,12 @@
       "Incidents per 100 stays",
       "Guest satisfaction",
       "First contact resolution"
-    ]
+    ],
+    "photoAlt": "A brass door handle with a key in an old wooden door."
   },
   "faq": {
     "eyebrow": "FAQ",
-    "title": "Good <em>questions</em>",
+    "title": "Questions hotel owners <em>ask us</em>",
     "still": "Still have questions?",
     "stillBody": "Call or email us, we're happy to walk you through it.",
     "items": {
@@ -383,16 +375,42 @@
       "where": {
         "q": "Where do you operate?",
         "a": "We're live in the Netherlands and expanding across Europe."
+      },
+      "internet": {
+        "q": "What happens if the internet goes down?",
+        "a": "Every Holobox runs on a redundant internet connection to our hub. The fallback procedures for your hotel are agreed during onboarding and ready before we go live."
+      },
+      "device": {
+        "q": "What if the Holobox or the kiosk is unavailable?",
+        "a": "Guests can also reach our hub by chat and telephone. What happens on site is part of the fallback procedures we agree with you before go-live."
+      },
+      "emergency": {
+        "q": "What if a guest becomes aggressive, or there is a physical emergency?",
+        "a": "Security escalation follows clear protocols. We coordinate with your local contact or security partner, as agreed in your service design."
+      },
+      "remote": {
+        "q": "What happens when something can't be solved remotely?",
+        "a": "Before go-live we agree what stays on site and who is called when something escalates. Your hotel always has a local contact."
+      },
+      "nights": {
+        "q": "Can I start with nights only?",
+        "a": "Yes. Many hotels start with Night-Only: late arrivals, guest questions and incidents are handled remotely, with no night staff on site. You can move to Day + Evening or 24/7 later."
+      },
+      "acceptance": {
+        "q": "Will guests accept a remote receptionist?",
+        "a": ""
       }
-    }
+    },
+    "photoAlt": "A brass service bell on a wooden reception desk."
   },
   "demo": {
     "eyebrow": "Book a demo",
-    "title": "See the front desk <em>of the future.</em>",
-    "sub": "Tell us about your hotel. We'll get back to you to schedule a live demo of the Holobox.",
+    "title": "See exactly what <em>your guest sees.</em>",
+    "sub": "Speak to a real Presence receptionist through the Holobox. Bring us a difficult guest scenario.",
     "reassure": [
-      "Live demo with a real agent",
-      "A package recommendation for your property",
+      "A live receptionist",
+      "A real guest scenario, yours",
+      "A package recommendation for your hotel",
       "No commitment"
     ],
     "contactLead": "Prefer to talk first?",
@@ -442,22 +460,23 @@
     "server": "Something went wrong on our side. Please try again, or email us at {email}.",
     "rate": "You've sent several requests in a short time. Please try again in a few minutes.",
     "successTitle": "Request received.",
-    "successBody": "Thanks, {name}. We'll be in touch soon to schedule your demo."
+    "successBody": "Thanks, {name}. We'll be in touch soon to schedule your demo.",
+    "challenge": "Try to break it."
   },
   "pages": {
     "solution": {
       "title": "Solution | Presence Hospitality",
       "description": "What changes when your front desk moves to a central hub: benefits, how the Holobox runs behind the scenes, and the systems it connects to.",
       "eyebrow": "Our solution",
-      "h1": "A premium front desk, <em>run from one hub</em>",
+      "h1": "Your front desk, <em>run from one hub</em>",
       "sub": "What changes for your hotel, how the Holobox runs behind the scenes, and how it connects to the systems you already use."
     },
     "packages": {
       "title": "Packages & pricing | Presence Hospitality",
       "description": "Night-Only, Day + Evening or 24/7 Premium remote reception. Who it's for, what each package includes and how pricing is built up.",
       "eyebrow": "Packages & pricing",
-      "h1": "Coverage that <em>fits your hotel</em>",
-      "sub": "Who it's for, what each package includes, and how pricing is built up."
+      "h1": "Start with nights. <em>Grow into 24/7.</em>",
+      "sub": "Three packages with a clear scope. We recommend one after a short intake."
     },
     "onboarding": {
       "title": "Onboarding | Presence Hospitality",
@@ -476,10 +495,10 @@
       "description": "About Presence Hospitality: the remote front office for hotels. A company of [partner], based in Amsterdam. Who we are, what we do and how to reach us.",
       "eyebrow": "About us",
       "h1": "About <em>Presence Hospitality</em>",
-      "sub": "We run hotel receptions from one central hub, so independent hotels and hostels can welcome every guest without staffing a front desk around the clock.",
-      "whoTitle": "Who we are",
-      "who1": "Presence Hospitality is front office as a service for hotels. Instead of a staffed desk in every lobby, trained receptionists work from one central hub. Guests check in on their own, and when they need a person, a receptionist appears in the lobby as a life-size hologram inside the Holobox.",
-      "who2": "Presence Hospitality B.V. is a company of [partner]. We are based in Amsterdam and work with independent hotels and hostels in the Netherlands.",
+      "sub": "We did not start with a hologram. We started with a hotel staffing problem.",
+      "whoTitle": "We come from hospitality.",
+      "who1": "Presence Hospitality is part of [partner], a hospitality group based in Amsterdam that runs restaurants, bars, cafés and hotels. The technology is new; the operational understanding of hospitality is not.",
+      "who2": "That is why we sell a staffed reception, not a device. Trained receptionists work from our hub in Amsterdam. Guests check in on their own, and when they need a person, a receptionist appears in the lobby as a life-size hologram inside the Holobox.",
       "whatTitle": "What we do",
       "what": {
         "solution": {
@@ -503,13 +522,15 @@
       "partOf": "Part of",
       "office": "Office",
       "email": "Email",
-      "website": "Website"
+      "website": "Website",
+      "who3": "Presence Hospitality B.V. works with independent hotels and hostels in the Netherlands.",
+      "photoAlt": "A warmly lit hotel reception in wood, with lounge chairs."
     }
   },
   "keyBenefits": {
-    "eyebrow": "Why hotels switch",
-    "title": "Less desk. <em>More hospitality.</em>",
-    "more": "See the full solution"
+    "eyebrow": "The business case",
+    "title": "Pay for service, <em>not for waiting.</em>",
+    "more": "See packages and pricing"
   },
   "ctaBand": {
     "title": "Ready to see it <em>live?</em>",
@@ -520,5 +541,111 @@
     "drag": "Drag",
     "book": "Book",
     "play": "Play"
+  },
+  "trust": {
+    "label": "Who is behind Presence Hospitality",
+    "items": [
+      "Built in Amsterdam",
+      "A company of [partner]",
+      "Real receptionists, not AI, not a recording",
+      "24/7"
+    ]
+  },
+  "problemQuiet": {
+    "eyebrow": "The problem",
+    "title": "Your reception should not cost the same <em>at 3 PM and 3 AM.</em>",
+    "body": "A traditional desk is staffed at the same level around the clock, while guests mostly need you at check-out and check-in. At night, you pay for waiting.",
+    "photoAlt": "An empty hotel reception desk in marble and brass, late in the evening."
+  },
+  "people": {
+    "eyebrow": "Real people",
+    "title": "Who answers <em>your guests?</em>",
+    "body": "No avatar, no recording, no chatbot. When your guest presses call, a trained receptionist answers live from our hub in Amsterdam.",
+    "facts": [
+      {
+        "t": "Hospitality professionals",
+        "d": "Our own core team plus certified hospitality partners."
+      },
+      {
+        "t": "Trained to one standard",
+        "d": "Shared standards and SOPs, and a playbook we write for your hotel."
+      },
+      {
+        "t": "Live, every time",
+        "d": "Never a recording or a chatbot. Day, night or 24/7."
+      },
+      {
+        "t": "In your guests' languages",
+        "d": "Multilingual receptionists; the languages are agreed per hotel."
+      }
+    ],
+    "photoAlt": "Hands on a keyboard and a headset at a reception workstation.",
+    "detailAlt": "A headset resting beside a laptop on a desk."
+  },
+  "callVideo": {
+    "eyebrow": "A real call",
+    "title": "See a real call, <em>unedited.</em>",
+    "body": "A guest at the kiosk, a payment that fails, one tap, and a receptionist who sorts it out.",
+    "captions": "Captions on. No sound until you press play."
+  },
+  "caseStudy": {
+    "eyebrow": "Case study",
+    "title": "Results from <em>a real hotel.</em>"
+  },
+  "whatIf": {
+    "eyebrow": "What if…",
+    "title": "What if something <em>goes wrong?</em>",
+    "sub": "Straight answers to the questions hotel owners ask us first.",
+    "items": [
+      {
+        "q": "The internet goes down?",
+        "a": "Every Holobox runs on a redundant internet connection to our hub. The fallback procedures for your hotel are agreed during onboarding and ready before we go live."
+      },
+      {
+        "q": "The Holobox or the kiosk is unavailable?",
+        "a": "Guests can also reach our hub by chat and telephone. What happens on site is part of the fallback procedures we agree with you before go-live."
+      },
+      {
+        "q": "A guest becomes aggressive, or there is an emergency?",
+        "a": "Security escalation follows clear protocols. We coordinate with your local contact or security partner, as agreed in your service design."
+      },
+      {
+        "q": "Something can't be solved remotely?",
+        "a": "Before go-live we agree what stays on site and who is called when something escalates. Your hotel always has a local contact."
+      }
+    ],
+    "more": "All questions hotel owners ask us"
+  },
+  "startSmall": {
+    "eyebrow": "Start small",
+    "title": "Start with nights. <em>Expand later if it works.</em>",
+    "body": "Many hotels start with Night-Only: late arrivals, questions and incidents handled remotely, with no night staff on site. Day + Evening and 24/7 are there when you want them.",
+    "more": "Compare the packages",
+    "photoAlt": "A wall of hotel room keys in warmly lit wooden cubbies."
+  },
+  "onboardingSummary": {
+    "eyebrow": "Onboarding",
+    "title": "Nothing changes <em>until everything works.</em>",
+    "sub": "Six steps, and we only take over the desk once everything has been tested.",
+    "more": "See the onboarding"
+  },
+  "finale": {
+    "eyebrow": "The Holobox",
+    "title": "One tap. <em>A real person.</em>",
+    "s1": "Your guest arrives",
+    "s1Body": "Late, tired, with luggage. The kiosk takes care of the routine.",
+    "s2": "They press call",
+    "s2Body": "Something needs a person. One tap on the Holobox.",
+    "s3": "A receptionist appears",
+    "s3Body": "Life-size, at eye level, and sorts it out there and then.",
+    "line": "Behind every Presence is <em>a real person.</em>",
+    "lineBody": "Your guest sees a receptionist working live from our hub in Amsterdam, not a recording.",
+    "arrivalAlt": "A guest with two suitcases walking down a hotel corridor, in silhouette.",
+    "hubAlt": "Over the shoulder of a person with a headset at a desk."
+  },
+  "ctaHome": {
+    "title": "Meet the reception team that could answer <em>your guests tonight.</em>",
+    "body": "Book a live demo and speak to a Presence receptionist through the Holobox.",
+    "button": "Book a live demo"
   }
 }

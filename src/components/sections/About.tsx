@@ -1,7 +1,9 @@
 import { getLocale, getTranslations } from "next-intl/server";
 import { ParallaxOrbs } from "@/components/ambient/ParallaxOrbs";
 import { Depth } from "@/components/ui/Depth";
+import { EditorialPhoto } from "@/components/ui/EditorialPhoto";
 import { Reveal } from "@/components/ui/Reveal";
+import { photos } from "@/content/photos";
 import { site } from "@/content/site";
 import { pagePath } from "@/i18n/paths";
 import type { Locale } from "@/i18n/routing";
@@ -9,7 +11,7 @@ import type { Locale } from "@/i18n/routing";
 const WHAT = ["solution", "packages", "onboarding"] as const;
 
 /**
- * About page body (ivory): who we are (copy left) beside the company details panel (outlined,
+ * About page body (ivory): the hospitality-origin story (copy left) beside the company details panel (outlined,
  * right), then "What we do" as divided rows that link to the pages that explain each part.
  * Every fact comes from src/content/site.ts.
  */
@@ -63,12 +65,20 @@ export async function About() {
         ]}
       />
       <div className="container-site grid gap-12 lg:grid-cols-12 lg:gap-6">
+        <EditorialPhoto
+          photo={photos.about}
+          alt={t("photoAlt")}
+          sizes="(min-width: 1360px) 1264px, 94vw"
+          className="aspect-[16/9] lg:col-span-12 lg:aspect-[21/8]"
+          position="50% 55%"
+        />
         <Reveal className="flex flex-col gap-6 lg:col-span-6">
           <h2 id="about-who" className="text-display-lg">
             {t("whoTitle")}
           </h2>
           <p className="max-w-[56ch] text-body-lg text-ink-700">{t("who1")}</p>
           <p className="max-w-[56ch] text-body-lg text-ink-700">{t("who2")}</p>
+          <p className="max-w-[56ch] text-body-lg text-ink-700">{t("who3")}</p>
         </Reveal>
 
         <Depth range={-24} className="lg:col-span-5 lg:col-start-8">

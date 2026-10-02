@@ -1,15 +1,12 @@
 import { getLocale, getTranslations } from "next-intl/server";
 import { pagePath } from "@/i18n/paths";
 import type { Locale } from "@/i18n/routing";
-import { MoodTransition } from "@/components/ambient/MoodTransition";
-import { ParallaxOrbs } from "@/components/ambient/ParallaxOrbs";
 import { ButtonLink } from "@/components/ui/Button";
 import { Headline } from "@/components/ui/Headline";
-import { NeonSign } from "@/components/ui/NeonSign";
 import { Reveal, RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { cn } from "@/lib/cn";
 
-/** Pricing structure (no prices): stacked title + outlined three-column panel + "HOTEL" neon strip. Mist. */
+/** Pricing structure (no prices): stacked title + outlined three-column panel. Calm, white. */
 export async function Pricing() {
   const t = await getTranslations("pricing");
   const locale = (await getLocale()) as Locale;
@@ -20,27 +17,15 @@ export async function Pricing() {
   ];
   return (
     <>
-      <MoodTransition from="night" to="mist" tone="ivory" />
       <section
         id="pricing"
         data-mood="mist"
-        data-tone="ivory"
+        data-tone="lavender"
         aria-labelledby="pricing-title"
-        className="relative isolate overflow-hidden bg-mist-bg pt-8 pb-24 text-ink-900 lg:pb-32"
+        className="relative isolate overflow-hidden bg-mist-bg py-16 text-ink-900 lg:py-28"
       >
-        <ParallaxOrbs
-          orbs={[
-            { color: "sky", size: "min(40vw, 560px)", bottom: "-10%", left: "-10%", opacity: 0.55, dur: 22 },
-            { color: "mint", size: "min(26vw, 360px)", top: "10%", right: "20%", opacity: 0.4, dur: 25 },
-          ]}
-        />
 
-        {/* Vertical "HOTEL" neon on a night strip, as in the pitch photo (desktop). */}
-        <div aria-hidden className="absolute inset-y-0 right-0 hidden w-28 items-center justify-center bg-night-900 xl:flex">
-          <NeonSign />
-        </div>
-
-        <div className="container-site grid gap-12 lg:grid-cols-12 lg:gap-6 xl:pr-40">
+<div className="container-site grid gap-12 lg:grid-cols-12 lg:gap-6">
           <div className="flex flex-col gap-6 lg:col-span-4">
             <p className="text-label text-ink-700">{t("eyebrow")}</p>
             <Headline id="pricing-title" raw={t.raw("title") as string} className="max-w-[8ch] text-display-xl" />

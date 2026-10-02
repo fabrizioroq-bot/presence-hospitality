@@ -10,11 +10,13 @@ import { ButtonLink } from "@/components/ui/Button";
 import { RevealGroup, RevealItem } from "@/components/ui/Reveal";
 import { splitHeadline } from "@/lib/headline";
 import { HeroShell, Parallax } from "@/components/hero/HeroShell";
+import { site } from "@/content/site";
 
 export async function Hero() {
   const t = await getTranslations("hero");
   const c = await getTranslations("common");
   const locale = (await getLocale()) as Locale;
+  const sales = site.phones.find((p) => p.key === "sales")!;
 
   return (
     <HeroShell
@@ -34,13 +36,6 @@ export async function Hero() {
         ]}
       />
       <HexMotif className="-bottom-24 -left-24 -z-10 w-[460px]" />
-
-      {/* "A company of [partner]" — top-right label, as in the pitch header */}
-      <p className="absolute top-[calc(var(--nav-h)+20px)] right-12 hidden text-right text-body-sm leading-tight text-ink-700 lg:block">
-        {c("companyOf")}
-        <br />
-        <span className="font-semibold text-ink-900">[partner]</span>
-      </p>
 
       <div className="container-site grid items-center gap-10 lg:min-h-[calc(100svh-var(--nav-h)-60px)] lg:grid-cols-12 lg:gap-6">
         <Parallax className="flex min-w-0 flex-col gap-8 lg:col-span-7 lg:pr-6" mouse={[-6, -4]} scroll={-70}>
@@ -69,26 +64,27 @@ export async function Hero() {
             <RevealItem soft>
               <p className="max-w-[52ch] text-body-lg text-ink-700">{t("lead")}</p>
             </RevealItem>
-            <RevealItem soft className="flex flex-col gap-3 sm:flex-row sm:items-center">
+            {/* One dominant CTA; the sales line stays visible next to it (desktop and mobile). */}
+            <RevealItem soft className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
               <ButtonLink href={pagePath(locale, "/demo")} arrow>
                 {c("bookDemo")}
               </ButtonLink>
-              <ButtonLink href="#how-it-works" variant="ghost">
-                {t("ctaSecondary")}
-              </ButtonLink>
+              <p className="text-body text-ink-700">
+                {t("call")}{" "}
+                <a href={sales.href} className="inline-flex min-h-11 items-center font-semibold whitespace-nowrap text-link-mist underline underline-offset-4">
+                  {sales.display}
+                </a>
+              </p>
             </RevealItem>
             <RevealItem soft>
               <p className="text-body-sm text-ink-500">{t("note")}</p>
-              <p className="mt-2 text-body-sm text-ink-500 lg:hidden">
-                {c("companyOf")} <span className="font-semibold text-ink-900">[partner]</span>
-              </p>
             </RevealItem>
           </RevealGroup>
         </Parallax>
 
         <Parallax className="min-w-0 lg:col-span-5 lg:col-start-8" mouse={[14, 10]} scroll={60}>
           <HeroPhoto
-            className="mx-auto h-[56svh] min-h-[370px] w-full lg:aspect-[3/4.4] lg:h-auto lg:max-h-[78svh] lg:min-h-0 lg:w-auto"
+            className="mx-auto h-[42svh] min-h-[300px] w-full lg:aspect-[3/4.4] lg:h-auto lg:max-h-[78svh] lg:min-h-0 lg:w-auto"
             alt={t("photoAlt")}
             status={t("photoStatus")}
           />

@@ -18,6 +18,13 @@ description: Presence Hospitality design system — tokens, typography, layout, 
 - **Readability (50+ visitors):** body 17px mobile / 18px desktop, line-height 1.6, ~68ch max; small text ≥ 15px; eyebrows (`text-label`) 13px mono with 0.08em tracking, only for very short labels; navigation 16px semibold; buttons 16px semibold, tap targets ≥ 44px; no 300 weights. Body and explanatory text aim for 7:1, AA is the floor (`npm run check:contrast`).
 - Tokens: the `--ph-*` block in `tokens.css` / `globals.css`; older token names alias them.
 
+### 4.0b Visual Trust (02-10) — how the two worlds are used
+- "Make the technology feel extraordinary. Make the company feel ordinary to trust." ~70% hospitality world (ivory/white, petrol, natural editorial photos via `EditorialPhoto`, calm large type), ~30% Presence world (hologram, particles, dark scenes).
+- Rhythm Human → Tech → Human; alternate WOW and QUIET sections (quiet = one message, one image, generous space, no orbs/dust).
+- No receptionist faces or names anywhere; people imagery must be non-identifiable (hands, over the shoulder, workstations).
+- Packages and Onboarding are calm pages: static, light, no pinned scroll. The most sophisticated effect is reserved for "a person appears" (the Holobox finale).
+- Sections without real content stay hidden behind `src/content/flags.ts`; never fill them with estimates.
+
 ### 4.1 Visual concept: "Mist & Night", warm palette (client-approved 01-10) — superseded by 4.0
 Two moods alternate down the page, like a hotel lobby between day and night:
 - **Mist** (light): lavender light `--mist-bg #EEEAF3` canvas; light sections alternate with **warm ivory** `#F7F3EE` and **lavender mist** `#CFC7D9` (the brand colour) via `data-tone="ivory" | "lavender"` on the section *and* its `MoodTransition`/`CtaBand` (`tone` prop). Plum-black ink. Cards on ivory with soft plum-tinted shadows. Soft orbs of periwinkle, lavender, violet and blush, fine film grain. This is **hospitality: calm, human, warm.**

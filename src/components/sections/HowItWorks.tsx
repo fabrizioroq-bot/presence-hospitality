@@ -2,7 +2,6 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { pagePath } from "@/i18n/paths";
 import type { Locale } from "@/i18n/routing";
 import { AmbientDust } from "@/components/ambient/AmbientDust";
-import { MoodTransition } from "@/components/ambient/MoodTransition";
 import { ParallaxOrbs } from "@/components/ambient/ParallaxOrbs";
 import { SketchDefs } from "@/components/story/SketchDefs";
 import { StoryCarousel } from "@/components/story/StoryCarousel";
@@ -53,7 +52,6 @@ export async function HowItWorks() {
 
   return (
     <>
-      <MoodTransition from="night" to="mist" tone="ivory" />
       <section
         id="how-it-works"
         data-mood="mist"

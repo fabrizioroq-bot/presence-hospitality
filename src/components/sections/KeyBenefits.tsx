@@ -11,7 +11,7 @@ import { cn } from "@/lib/cn";
 
 const tile = "swipe-item flex h-full flex-col gap-4 rounded-xl p-7 lg:p-10";
 
-/** Home: three key benefits (swipe row on mobile) + link to the full solution. Mist. */
+/** Home 07, the business case (summary → /packages): savings with its footnote, coverage, predictable cost. */
 export async function KeyBenefits() {
   const t = await getTranslations("benefits");
   const k = await getTranslations("keyBenefits");
@@ -20,7 +20,7 @@ export async function KeyBenefits() {
   const savings = claims.savings;
   const showSavings = savings.enabled && savings.range;
   return (
-    <section id="benefits" data-mood="mist" data-tone="lavender" aria-labelledby="key-benefits-title" className="relative isolate overflow-hidden bg-mist-bg pt-4 pb-16 text-ink-900 lg:pt-8 lg:pb-32">
+    <section id="benefits" data-mood="mist" data-tone="ivory" aria-labelledby="key-benefits-title" className="relative isolate overflow-hidden bg-mist-bg pt-4 pb-16 text-ink-900 lg:pt-8 lg:pb-32">
       <ParallaxOrbs
         orbs={[
           { color: "mint", size: "min(50vw, 700px)", top: "10%", right: "-16%", opacity: 0.5, dur: 24 },
@@ -60,7 +60,7 @@ export async function KeyBenefits() {
         <SwipeDots target="key-benefits" count={3} label={c("swipeHint")} />
         <div className="mt-6 flex flex-col gap-4 lg:mt-8 lg:flex-row lg:items-center lg:justify-between">
           {showSavings && <p className="max-w-[80ch] text-body-sm text-ink-500">¹ {t("footnote")}</p>}
-          <a href={pagePath(locale, "/solution")} className="group inline-flex min-h-11 items-center gap-2 font-semibold text-ink-900 underline decoration-line-mist underline-offset-4 hover:decoration-ink-900">
+          <a href={pagePath(locale, "/packages")} className="group inline-flex min-h-11 items-center gap-2 font-semibold text-ink-900 underline decoration-line-mist underline-offset-4 hover:decoration-ink-900">
             {k("more")}
             <svg aria-hidden viewBox="0 0 16 16" className="h-4 w-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round"><path d="M3 8h10M9 4l4 4-4 4" /></svg>
           </a>

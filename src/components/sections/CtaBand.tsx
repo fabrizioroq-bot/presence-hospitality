@@ -12,11 +12,15 @@ import type { Locale } from "@/i18n/routing";
 export async function CtaBand({
   from = "mist",
   tone,
+  copy,
 }: {
   from?: "mist" | "night" | "deep" | null;
   /** Tone of the light section above. */
   tone?: Tone;
+  /** Message namespace with title/body/button (the home uses "ctaHome"); default "ctaBand". */
+  copy?: "ctaHome";
 }) {
+  const own = copy ? await getTranslations(copy) : null;
   const t = await getTranslations("ctaBand");
   const c = await getTranslations("common");
   const locale = (await getLocale()) as Locale;
@@ -28,12 +32,12 @@ export async function CtaBand({
         <AmbientDust mood="night" density={0.5} />
         <div className="container-site flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
           <div className="flex flex-col gap-5">
-            <Headline raw={t.raw("title") as string} className="text-display-lg" />
-            <p className="max-w-[44ch] text-body-lg text-paper-300">{t("body")}</p>
+            <Headline raw={(own ?? t).raw("title") as string} className="max-w-[22ch] text-display-lg" />
+            <p className="max-w-[44ch] text-body-lg text-paper-300">{(own ?? t)("body")}</p>
           </div>
           <div className="flex flex-col items-start gap-3 sm:flex-row sm:items-center">
             <ButtonLink href={pagePath(locale, "/demo")} mood="night" arrow>
-              {c("bookDemo")}
+              {own ? own("button") : c("bookDemo")}
             </ButtonLink>
             <span className="text-body-sm text-paper-300">
               {t("or")}{" "}
