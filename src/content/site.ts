@@ -29,9 +29,9 @@ export const site = {
   logo: "/brand/presence-hospitality-logo-512.png",
   // Official profiles for structured data (`sameAs`). PENDING: LinkedIn etc. from the client.
   sameAs: [] as string[],
-  // Search engine ownership checks (public meta tags, not secrets). PENDING: codes from the client.
+  // Search engine ownership checks (public meta tags, not secrets). Google also has public/google*.html. PENDING: Bing code.
   // google: the `content` of <meta name="google-site-verification">; bing: <meta name="msvalidate.01">.
-  verification: { google: "", bing: "" },
+  verification: { google: "sS0MFYGWb45GFhYKepsqJ6BYWXm2AJrlCgtPm0Iw1TI", bing: "" },
   kvk: null as string | null, // PENDING
   vat: null as string | null, // PENDING
 } as const;
