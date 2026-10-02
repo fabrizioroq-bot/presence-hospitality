@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Presence Hospitality | Front office op afstand & holografische receptie voor hotels",
-    "description": "Presence Hospitality verzorgt je hotelreceptie vanuit een centrale hub, 24/7. Gasten checken zelf in en live receptionisten verschijnen als levensgroot hologram. Pakketten voor de nacht, de dag of 24/7."
+    "description": "Presence Hospitality verzorgt je hotelreceptie vanuit een centrale hub: zelf inchecken plus live receptionisten als levensgroot hologram. Dag, nacht of 24/7."
   },
   "common": {
     "skip": "Ga naar inhoud",
@@ -24,16 +24,18 @@
     "solution": "Oplossing",
     "packages": "Pakketten",
     "onboarding": "Onboarding",
-    "faq": "FAQ"
+    "faq": "FAQ",
+    "about": "Over ons"
   },
   "hero": {
-    "eyebrow": "Front office as a service",
+    "eyebrow": "Presence Hospitality · Front office as a service",
+    "tagline": "Front office as a service",
     "lead": "Presence Hospitality verzorgt je receptie vanuit één centrale hub. Gasten checken zelf in, en hebben ze iemand nodig, dan verschijnt er een getrainde receptionist als levensgroot hologram in je lobby. Overdag, 's nachts of allebei.",
     "ctaSecondary": "Zo werkt het",
     "note": "Voor onafhankelijke hotels en hostels · Live in Nederland",
     "title": "Stop met het werven van <em>receptie</em>personeel.",
     "photoStatus": "Receptionist online · 24/7",
-    "photoAlt": "Een gast loopt met haar koffer door een moderne hotelgang naar haar kamer."
+    "photoAlt": "Presence Hospitality: een gast loopt met haar koffer door een moderne hotelgang naar haar kamer."
   },
   "footer": {
     "tagline": "Klaar wanneer je gasten dat zijn.",
@@ -129,7 +131,7 @@
     "fLang": "Meertalige receptionisten; de talen stemmen we per hotel af.",
     "drag": "Sleep om rond te kijken",
     "media": "Echte Holobox-beelden — binnenkort",
-    "stageAlt": "Illustratie: een receptionist die als levensgroot hologram in de Holobox verschijnt.",
+    "stageAlt": "Illustratie: een receptionist van Presence Hospitality die als levensgroot hologram in de Holobox verschijnt.",
     "hudOnline": "Agent online",
     "hudRoute": "Studio → Lobby",
     "hudLive": "Live · 4K telepresence"
@@ -462,12 +464,46 @@
       "description": "Van eerste gesprek tot go-live in zes stappen: intake, serviceontwerp, Holobox-installatie, integratie, training en een gecontroleerde pilot."
     },
     "faq": {
-      "title": "FAQ | Presence Hospitality",
+      "title": "Veelgestelde vragen | Presence Hospitality",
       "description": "Antwoorden over PMS-koppeling, bezetting 's nachts, de receptionisten, personeel op locatie, kanalen, prijzen en onboarding."
     },
     "demo": {
       "title": "Plan een demo | Presence Hospitality",
       "description": "Zie de Holobox live met een echte receptionist en krijg een pakketadvies voor je hotel. Vrijblijvend."
+    },
+    "about": {
+      "title": "Over ons | Presence Hospitality",
+      "description": "Over Presence Hospitality: de front office op afstand voor hotels. Een bedrijf van [partner], gevestigd in Amsterdam. Wie we zijn, wat we doen en hoe je ons bereikt.",
+      "eyebrow": "Over ons",
+      "h1": "Over <em>Presence Hospitality</em>",
+      "sub": "We verzorgen hotelrecepties vanuit één centrale hub, zodat onafhankelijke hotels en hostels elke gast kunnen ontvangen zonder dag en nacht een receptie te bemensen.",
+      "whoTitle": "Wie we zijn",
+      "who1": "Presence Hospitality is front office as a service voor hotels. In plaats van een bemande balie in elke lobby werken getrainde receptionisten vanuit één centrale hub. Gasten checken zelf in, en hebben ze iemand nodig, dan verschijnt er een receptionist als levensgroot hologram in de Holobox in de lobby.",
+      "who2": "Presence Hospitality B.V. is een bedrijf van [partner]. We zijn gevestigd in Amsterdam en werken met onafhankelijke hotels en hostels in Nederland.",
+      "whatTitle": "Wat we doen",
+      "what": {
+        "solution": {
+          "t": "Receptie op afstand",
+          "d": "Inchecken, vragen van gasten en de momenten waarop een mens nodig is, geregeld vanuit de hub: overdag, 's nachts of 24/7.",
+          "link": "Zo werkt de oplossing"
+        },
+        "packages": {
+          "t": "Pakketten",
+          "d": "Night-Only, Day + Evening of 24/7 Premium, afgestemd op de uren die je hotel gedekt wil hebben.",
+          "link": "Vergelijk de pakketten"
+        },
+        "onboarding": {
+          "t": "Onboarding",
+          "d": "Van eerste gesprek tot go-live in zes stappen, van intake en Holobox-installatie tot een gecontroleerde pilot.",
+          "link": "Bekijk de onboardingstappen"
+        }
+      },
+      "contactTitle": "Contact",
+      "company": "Bedrijf",
+      "partOf": "Onderdeel van",
+      "office": "Kantoor",
+      "email": "E-mail",
+      "website": "Website"
     }
   },
   "keyBenefits": {

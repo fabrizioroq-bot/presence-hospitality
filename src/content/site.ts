@@ -3,12 +3,9 @@ export const site = {
   name: "Presence Hospitality",
   legalName: "Presence Hospitality B.V.",
   parent: "[partner]",
-  // Canonical base: NEXT_PUBLIC_SITE_URL (set to the custom domain in production); previews fall
-  // back to the deployment URL.
-  url:
-    process.env.NEXT_PUBLIC_SITE_URL ??
-    (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://presence-hospitality.com"),
-  // The public domain (root is primary; www redirects to it), linked in the footer on every environment.
+  // The public domain (root is primary; www and the vercel.app alias redirect to it). Every canonical,
+  // hreflang, Open Graph URL, sitemap entry and structured-data URL uses it, on every environment
+  // (previews are noindex), so search engines never see a vercel.app URL as the original.
   domainUrl: "https://presence-hospitality.com",
   displayUrl: "www.presence-hospitality.com",
   // Labels come from messages (`common.phoneSales`, `common.phoneSupport`).
@@ -32,6 +29,8 @@ export const site = {
   // Search engine ownership checks (public meta tags, not secrets). Google also has public/google*.html. PENDING: Bing code.
   // google: the `content` of <meta name="google-site-verification">; bing: <meta name="msvalidate.01">.
   verification: { google: "sS0MFYGWb45GFhYKepsqJ6BYWXm2AJrlCgtPm0Iw1TI", bing: "" },
+  // IndexNow (Bing, Yandex, Seznam…): public key, served as /<key>.txt from public/. Not a secret.
+  indexNowKey: "cbfd2825b1349918dcbce86b1f549c79",
   kvk: null as string | null, // PENDING
   vat: null as string | null, // PENDING
 } as const;

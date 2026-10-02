@@ -2,7 +2,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { site } from "@/content/site";
 
 /**
- * Structured data for brand search (home page, EN + NL): one @graph with
+ * Structured data for brand search (every public page via PageShell, EN + NL): one @graph with
  * - Organization: name, legal name, logo, contact points, parent company, official profiles;
  * - ProfessionalService (a schema.org LocalBusiness type): the Amsterdam office;
  * - WebSite: the site name Google shows above the result.

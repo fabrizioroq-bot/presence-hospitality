@@ -8,7 +8,6 @@ import { HowItWorks } from "@/components/sections/HowItWorks";
 import { KeyBenefits } from "@/components/sections/KeyBenefits";
 import { MarketProblem } from "@/components/sections/MarketProblem";
 import { WelcomeBand } from "@/components/sections/WelcomeBand";
-import { OrgJsonLd } from "@/components/seo/OrgJsonLd";
 import type { Locale } from "@/i18n/routing";
 import { pageMeta } from "@/lib/seo";
 
@@ -26,7 +25,6 @@ export default async function HomePage({ params }: PageProps<"/[locale]">) {
   setRequestLocale(locale);
   return (
     <PageShell page="/">
-      <OrgJsonLd />
       <Hero />
       <MarketProblem />
       <HowItWorks />

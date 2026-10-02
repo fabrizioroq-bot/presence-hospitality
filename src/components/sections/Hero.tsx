@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { getLocale, getTranslations } from "next-intl/server";
 import { pagePath } from "@/i18n/paths";
 import type { Locale } from "@/i18n/routing";
@@ -43,7 +44,20 @@ export async function Hero() {
 
       <div className="container-site grid items-center gap-10 lg:min-h-[calc(100svh-var(--nav-h)-60px)] lg:grid-cols-12 lg:gap-6">
         <Parallax className="flex min-w-0 flex-col gap-8 lg:col-span-7 lg:pr-6" mouse={[-6, -4]} scroll={-70}>
-          <p className="text-label text-ink-700">{t("eyebrow")}</p>
+          {/* "Presence Hospitality · Front office as a service": each part stays on one line on phones. */}
+          <p className="text-label text-ink-700">
+            {t("eyebrow")
+              .split(" · ")
+              .map((part, i, parts) => (
+                <Fragment key={part}>
+                  <span className="whitespace-nowrap">
+                    {part}
+                    {i < parts.length - 1 && " ·"}
+                  </span>
+                  {i < parts.length - 1 && " "}
+                </Fragment>
+              ))}
+          </p>
           <AnimatedWords
             as="h1"
             id="hero-title"

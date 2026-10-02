@@ -3,6 +3,7 @@
 //   src/app/favicon.ico            16/32/48 px (Google shows favicons at multiples of 48 px)
 //   src/app/icon1.png              192 px app icon (plum tile)
 //   src/app/apple-icon.png         180 px Apple touch icon
+//   public/brand/icon-512.png, icon-maskable-512.png   web manifest icons (src/app/manifest.ts)
 //   public/brand/presence-hospitality-logo-512.png   square logo on white (structured data)
 //   public/og/presence-hospitality-{en,nl}.png       1200×630 share images (tagline from messages)
 // Usage: node scripts/generate-brand-assets.mjs   (needs network for the Hanken Grotesk webfont)
@@ -41,6 +42,15 @@ const tile = (size, radius) =>
   page(`<div style="width:${size}px;height:${size}px;border-radius:${radius}px;background:${PLUM};display:grid;place-items:center">${mark(LAV_LIGHT, Math.round(size * 0.7))}</div>`, size, size);
 await shot(tile(192, 40), 192, 192, "src/app/icon1.png", true);
 await shot(tile(180, 0), 180, 180, "src/app/apple-icon.png");
+// Web manifest: rounded tile, and a full-bleed maskable one with the mark inside the 80% safe zone.
+mkdirSync("public/brand", { recursive: true });
+await shot(tile(512, 108), 512, 512, "public/brand/icon-512.png", true);
+await shot(
+  page(`<div style="width:512px;height:512px;background:${PLUM};display:grid;place-items:center">${mark(LAV_LIGHT, 300)}</div>`, 512, 512),
+  512,
+  512,
+  "public/brand/icon-maskable-512.png",
+);
 
 // favicon.ico with PNG-encoded 16/32/48 entries.
 const icoSizes = [16, 32, 48];

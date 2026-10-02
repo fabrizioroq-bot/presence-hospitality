@@ -1,7 +1,7 @@
 {
   "meta": {
     "title": "Presence Hospitality | Remote front office & holographic reception for hotels",
-    "description": "Presence Hospitality runs your hotel reception from a central 24/7 hub. Self check-in plus live receptionists who appear as life-size holograms. Night, day or 24/7 packages."
+    "description": "Presence Hospitality runs your hotel reception from a central hub: self check-in plus live receptionists who appear as life-size holograms. Night, day or 24/7."
   },
   "common": {
     "skip": "Skip to content",
@@ -24,16 +24,18 @@
     "solution": "Solution",
     "packages": "Packages",
     "onboarding": "Onboarding",
-    "faq": "FAQ"
+    "faq": "FAQ",
+    "about": "About us"
   },
   "hero": {
-    "eyebrow": "Front office as a service",
+    "eyebrow": "Presence Hospitality · Front office as a service",
+    "tagline": "Front office as a service",
     "lead": "Presence Hospitality runs your reception from one central hub. Guests check in on their own, and when they need someone, a trained receptionist appears in your lobby as a life-size hologram. Day, night, or both.",
     "ctaSecondary": "See how it works",
     "note": "Built for independent hotels and hostels · Live in the Netherlands",
     "title": "Stop hiring <em>front desk</em> staff.",
     "photoStatus": "Receptionist online · 24/7",
-    "photoAlt": "A guest with her suitcase walking to her room along a modern hotel corridor."
+    "photoAlt": "Presence Hospitality: a guest with her suitcase walking to her room along a modern hotel corridor."
   },
   "footer": {
     "tagline": "Ready when your guests are.",
@@ -129,7 +131,7 @@
     "fLang": "Multilingual agents; language profiles agreed per hotel.",
     "drag": "Drag to look around",
     "media": "Real Holobox footage — coming soon",
-    "stageAlt": "Illustration: a receptionist appearing as a life-size hologram inside the Holobox.",
+    "stageAlt": "Illustration: a Presence Hospitality receptionist appearing as a life-size hologram inside the Holobox.",
     "hudOnline": "Agent online",
     "hudRoute": "Studio → Lobby",
     "hudLive": "Live · 4K telepresence"
@@ -468,6 +470,40 @@
     "demo": {
       "title": "Book a demo | Presence Hospitality",
       "description": "See the Holobox live with a real receptionist and get a package recommendation for your hotel. No commitment."
+    },
+    "about": {
+      "title": "About us | Presence Hospitality",
+      "description": "About Presence Hospitality: the remote front office for hotels. A company of [partner], based in Amsterdam. Who we are, what we do and how to reach us.",
+      "eyebrow": "About us",
+      "h1": "About <em>Presence Hospitality</em>",
+      "sub": "We run hotel receptions from one central hub, so independent hotels and hostels can welcome every guest without staffing a front desk around the clock.",
+      "whoTitle": "Who we are",
+      "who1": "Presence Hospitality is front office as a service for hotels. Instead of a staffed desk in every lobby, trained receptionists work from one central hub. Guests check in on their own, and when they need a person, a receptionist appears in the lobby as a life-size hologram inside the Holobox.",
+      "who2": "Presence Hospitality B.V. is a company of [partner]. We are based in Amsterdam and work with independent hotels and hostels in the Netherlands.",
+      "whatTitle": "What we do",
+      "what": {
+        "solution": {
+          "t": "Remote reception",
+          "d": "Check-in, guest questions and the moments that need a human, handled from the hub by day, by night or 24/7.",
+          "link": "How the solution works"
+        },
+        "packages": {
+          "t": "Packages",
+          "d": "Night-Only, Day + Evening or 24/7 Premium, matched to the hours your hotel needs covered.",
+          "link": "Compare the packages"
+        },
+        "onboarding": {
+          "t": "Onboarding",
+          "d": "From first call to go-live in six steps, from intake and Holobox installation to a controlled pilot.",
+          "link": "See the onboarding steps"
+        }
+      },
+      "contactTitle": "Contact",
+      "company": "Company",
+      "partOf": "Part of",
+      "office": "Office",
+      "email": "Email",
+      "website": "Website"
     }
   },
   "keyBenefits": {

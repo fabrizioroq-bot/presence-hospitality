@@ -37,6 +37,7 @@ const NAV = [
   ["/packages", "packages", undefined],
   ["/onboarding", "onboarding", undefined],
   ["/faq", "faq", undefined],
+  ["/about", "about", undefined],
 ] as const;
 
 export async function Footer() {

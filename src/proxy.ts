@@ -15,7 +15,16 @@ export default async function proxy(request: NextRequest) {
     url.pathname = "/dashboard/auth/confirm";
     return NextResponse.redirect(url);
   }
-  return intl(request);
+  const res = intl(request);
+  // The bare domain → /en is permanent (308) so search engines treat /en as the home page.
+  // A visitor whose cookie or browser prefers Dutch still gets a temporary redirect to /nl.
+  if (request.nextUrl.pathname === "/" && res.status === 307) {
+    const to = new URL(res.headers.get("location")!, request.url);
+    if (to.pathname === `/${routing.defaultLocale}`) {
+      return new NextResponse(null, { status: 308, headers: res.headers });
+    }
+  }
+  return res;
 }
 
 export const config = {

@@ -31,7 +31,7 @@ export async function generateMetadata({
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "meta" });
   return {
-    metadataBase: new URL(site.url),
+    metadataBase: new URL(site.domainUrl),
     title: t("title"),
     description: t("description"),
     alternates: {
@@ -68,7 +68,7 @@ export default async function LocaleLayout({
         <script dangerouslySetInnerHTML={{ __html: BOOT_SCRIPT }} />
       </head>
       <body>
-        <Intro caption={hero("eyebrow")} />
+        <Intro caption={hero("tagline")} />
         {/* No NextIntlClientProvider: client components receive their strings as props. */}
         {children}
         <Grain />

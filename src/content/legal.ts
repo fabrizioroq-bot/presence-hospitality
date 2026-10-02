@@ -117,7 +117,7 @@ export const legal: Record<"en" | "nl", { privacy: LegalDoc; cookies: LegalDoc }
     privacy: {
       title: "Privacybeleid",
       description:
-        "Hoe Presence Hospitality omgaat met de gegevens die je deelt bij een demo-aanvraag: wat we verzamelen, waarom, wie ze verwerkt, hoe lang we ze bewaren en je rechten onder de AVG.",
+        "Hoe Presence Hospitality omgaat met je gegevens bij een demo-aanvraag: wat we verzamelen, waarom, wie ze verwerkt, hoe lang we ze bewaren en je rechten (AVG).",
       updated: UPDATED.nl,
       intro:
         "In dit beleid lees je welke persoonsgegevens Presence Hospitality verwerkt als je deze website bezoekt of een demo aanvraagt, waarom we dat doen en welke rechten je hebt.",
