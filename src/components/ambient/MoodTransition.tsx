@@ -37,7 +37,7 @@ export function MoodTransition({
           left: "55%",
           top: "-60%",
           opacity: 0.35,
-          background: "radial-gradient(circle, var(--orb-sky) 0%, transparent 65%)",
+          background: "radial-gradient(circle, var(--ph-brand-secondary) 0%, transparent 65%)",
         }}
       />
     </div>
