@@ -25,6 +25,7 @@ export async function OrgJsonLd() {
   const address = {
     "@type": "PostalAddress",
     streetAddress: site.address.street,
+    postalCode: site.address.postalCode,
     addressLocality: site.address.city,
     addressCountry: site.address.country,
   };

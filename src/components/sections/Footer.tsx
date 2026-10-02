@@ -149,7 +149,7 @@ export async function Footer() {
                     rel="noopener noreferrer"
                     className="hover:text-holo-300"
                   >
-                    {site.address.street}, {site.address.city}
+                    {site.address.street}, {site.address.postalCode} {site.address.city}
                   </a>
                 </li>
               </ul>

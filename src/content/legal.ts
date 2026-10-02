@@ -27,7 +27,7 @@ export const legal: Record<"en" | "nl", { privacy: LegalDoc; cookies: LegalDoc }
         {
           h: "Who we are",
           p: [
-            "Presence Hospitality B.V., a company of [partner], Korte Leidsedwarsstraat 92-1, Amsterdam, the Netherlands, is the controller for the processing described here.",
+            "Presence Hospitality B.V., a company of [partner], Korte Leidsedwarsstraat 92-1, 1017 NM Amsterdam, the Netherlands, is the controller for the processing described here.",
           ],
         },
         {
@@ -125,7 +125,7 @@ export const legal: Record<"en" | "nl", { privacy: LegalDoc; cookies: LegalDoc }
         {
           h: "Wie we zijn",
           p: [
-            "Presence Hospitality B.V., een bedrijf van [partner], Korte Leidsedwarsstraat 92-1, Amsterdam, is verwerkingsverantwoordelijke voor de verwerking die hier wordt beschreven.",
+            "Presence Hospitality B.V., een bedrijf van [partner], Korte Leidsedwarsstraat 92-1, 1017 NM Amsterdam, is verwerkingsverantwoordelijke voor de verwerking die hier wordt beschreven.",
           ],
         },
         {

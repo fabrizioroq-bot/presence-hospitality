@@ -15,12 +15,13 @@ export const site = {
   ],
   email: "info@presence-hospitality.com",
   address: {
-    // CONFIRM: street spelling and postcode.
+    // CONFIRM: street spelling. Postcode confirmed by the client (02-10).
     street: "Korte Leidsedwarsstraat 92-1",
+    postalCode: "1017 NM",
     city: "Amsterdam",
     country: "NL",
     mapsHref:
-      "https://www.google.com/maps/search/?api=1&query=Korte+Leidsedwarsstraat+92-1+Amsterdam",
+      "https://www.google.com/maps/search/?api=1&query=Korte+Leidsedwarsstraat+92-1+1017+NM+Amsterdam",
   },
   // Brand image for search results and structured data (square, on white; scripts/generate-brand-assets.mjs).
   logo: "/brand/presence-hospitality-logo-512.png",

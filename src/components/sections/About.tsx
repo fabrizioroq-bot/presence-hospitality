@@ -23,7 +23,7 @@ export async function About() {
     [
       t("office"),
       <a key="office" href={site.address.mapsHref} target="_blank" rel="noopener noreferrer" className="underline-offset-4 hover:underline">
-        {site.address.street}, {site.address.city}
+        {site.address.street}, {site.address.postalCode} {site.address.city}
       </a>,
     ],
     [
