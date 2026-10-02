@@ -1,8 +1,8 @@
 /**
  * Splits a headline with a single `<em>…</em>` phrase into word groups.
  * A group is rendered as one unbreakable unit, which keeps an emphasised word
- * glued to an attached suffix (e.g. NL "<em>receptie</em>personeel"); words of the
- * emphasised phrase are separate groups, so the phrase can wrap.
+ * glued to an attached suffix (e.g. NL "<em>receptie</em>personeel"); a long emphasised
+ * phrase is split into words so it can wrap.
  */
 export type HeadlineWord = { parts: { text: string; em: boolean }[]; glued: boolean };
 
@@ -20,9 +20,10 @@ export function splitHeadline(raw: string): HeadlineWord[] {
   let glue = false; // true when the previous segment ended mid-word
   for (const seg of segments) {
     if (!seg.text) continue;
-    // Every segment splits on whitespace (long emphasised phrases must wrap on phones, e.g. NL
-    // "evenveel te kosten als om 3 uur 's middags."); each word keeps its emphasis.
-    const tokens = seg.text.split(/(\s+)/);
+    // A short emphasised phrase stays one unit ("front desk"); a long one splits on whitespace so it
+    // can wrap on phones (NL "evenveel te kosten als om 3 uur 's middags."). Plain text always splits.
+    const keepWhole = seg.em && seg.text.trim().length <= 16;
+    const tokens = keepWhole ? [seg.text.trim()] : seg.text.split(/(\s+)/);
     const startsWithSpace = /^\s/.test(seg.text);
     tokens.forEach((tok, i) => {
       if (/^\s+$/.test(tok)) {
