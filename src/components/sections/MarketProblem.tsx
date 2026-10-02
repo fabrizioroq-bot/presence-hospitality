@@ -60,7 +60,7 @@ export async function MarketProblem() {
                 {tax.enabled && tax.source && (
                   <div className="rounded-lg border border-line-night p-6 text-body-sm text-paper-300">
                     <p>{tax[locale]}</p>
-                    <a href={tax.source} className="mt-3 inline-block text-holo-300 underline underline-offset-4">
+                    <a href={tax.source} className="mt-3 inline-block text-accent-night underline underline-offset-4">
                       {t("source")}
                     </a>
                   </div>

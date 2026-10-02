@@ -116,7 +116,7 @@ export async function BehindTheBox() {
                     value={card.n}
                     className={cn(
                       "grid h-14 w-14 shrink-0 place-items-center rounded-pill font-mono text-[1.125rem] font-medium tabular-nums sm:h-16 sm:w-16 sm:text-[1.25rem]",
-                      card.filled ? "bg-ink-900 text-paper-50" : "bg-paper-50 text-ink-900",
+                      card.filled ? "bg-petrol text-paper-50" : "bg-paper-50 text-ink-900",
                     )}
                   />
                   <div className="flex flex-col gap-2 pt-1">

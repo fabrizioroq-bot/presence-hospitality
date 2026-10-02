@@ -6,7 +6,19 @@ description: Presence Hospitality design system — tokens, typography, layout, 
 # Presence Hospitality — design system
 
 
-### 4.1 Visual concept: "Mist & Night", warm palette (client-approved 01-10)
+### 4.0 "Warm Holographic Navy" (brand/UX research, 02-10) — supersedes the colours in 4.1–4.2 and the sizes in 4.3
+"Make the technology feel extraordinary and the company feel ordinary to trust." Two visual systems:
+- **Interface reality (the company):** warm ivory `--ph-bg-page #F6F2EC` backgrounds, white cards `#FFFFFF` with a subtle border (`--ph-border-subtle`) and a soft petrol shadow, petrol navy `#173B4D` for headlines, links and structure (tiles, bars, filled controls: `bg-petrol`), text `#172126` / secondary `#344249` / meta `#56636A`. CTAs are **solid terracotta** `#B74B32` (hover `#963821`), white text, no gradient, no scan sweep (`.btn-cta`).
+- **Holographic reality (the product):** blue `#63B8D8`, cyan `#8BDCE5`, lavender/violet `#AFA5CE`, particles and dark cinematic scenes — **only** around the hologram, the Holobox, the guest-journey story and other tech moments. Lavender, cyan and blue are never backgrounds or UI colours on the interface.
+- **Dark sections and footer:** `#0F1D25` (cards `#17272F`, deepest `#0A151B`). Hologram glow may live here. Checks, links and markers on dark interface sections use teal-light `--ph-accent-on-dark #9CC2B8`, not cyan.
+- **Light sections:** ivory (default, `data-tone="ivory"`) or white (`data-tone="lavender"`, name kept for the hooks) with ivory cards. Orbs on light sections are warm sand / pale teal; on dark they switch to the holographic colours.
+- **Emphasis:** `em.emph` is deep teal `#4A6A62` on light (no gradient on text); on dark it keeps a subtle holo-blue → cyan gradient. Key figures: petrol on light.
+- **Charts and diagrams:** petrol, teal and terracotta; amber only for "paid idle time".
+- Target share: ~45% ivory, 24% white, 15% dark petrol, 7% petrol, 4% holographic effects, 3% teal, 2% terracotta.
+- **Readability (50+ visitors):** body 17px mobile / 18px desktop, line-height 1.6, ~68ch max; small text ≥ 15px; eyebrows (`text-label`) 13px mono with 0.08em tracking, only for very short labels; navigation 16px semibold; buttons 16px semibold, tap targets ≥ 44px; no 300 weights. Body and explanatory text aim for 7:1, AA is the floor (`npm run check:contrast`).
+- Tokens: the `--ph-*` block in `tokens.css` / `globals.css`; older token names alias them.
+
+### 4.1 Visual concept: "Mist & Night", warm palette (client-approved 01-10) — superseded by 4.0
 Two moods alternate down the page, like a hotel lobby between day and night:
 - **Mist** (light): lavender light `--mist-bg #EEEAF3` canvas; light sections alternate with **warm ivory** `#F7F3EE` and **lavender mist** `#CFC7D9` (the brand colour) via `data-tone="ivory" | "lavender"` on the section *and* its `MoodTransition`/`CtaBand` (`tone` prop). Plum-black ink. Cards on ivory with soft plum-tinted shadows. Soft orbs of periwinkle, lavender, violet and blush, fine film grain. This is **hospitality: calm, human, warm.**
 - **Night** (dark): **deep plum** `#2B2233` (cards `#221A29`, deepest `#1A1420`) with a subtle violet/blue glow. The footer is plum too. This is where the **technology** lives: the Holobox, the hologram and the 3D stay **holographic blue**.

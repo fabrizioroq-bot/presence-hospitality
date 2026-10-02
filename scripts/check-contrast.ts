@@ -1,4 +1,6 @@
-/* Verifies WCAG 2.x contrast of the token pairs used in the design system. Exits 1 on failure. */
+/* Verifies WCAG 2.x contrast of the token pairs used in the design system. Exits 1 on failure.
+   "Warm Holographic Navy" (02-10): AA is the floor everywhere; body and explanatory text aim for
+   7:1 (AAA) and are checked against that target. */
 const lum = (hex: string) => {
   const c = [0, 2, 4].map((i) => parseInt(hex.slice(1 + i, 3 + i), 16) / 255);
   const [r, g, b] = c.map((x) => (x <= 0.04045 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4));
@@ -9,92 +11,87 @@ const ratio = (a: string, b: string) => {
   return (hi + 0.05) / (lo + 0.05);
 };
 
-// Warm palette (globals.css :root + "Section tones").
+// globals.css :root (--ph-* tokens and their aliases) + "Surfaces".
 const T = {
-  // light canvases: lavender light (default, + its dusk end), ivory tone, ivory card surface, lavender mist tone
-  mistBg: "#EEEAF3", mistDusk: "#E4DDEC", ivory: "#F7F3EE", ivorySurface: "#FDFBF8", lavender: "#CFC7D9",
-  ink900: "#221B29", ink700: "#463B52", ink500: "#584B65", lineMist: "#73678A", lineLavender: "#6A5E80",
-  linkMist: "#4A36A0", focus: "#4535A8", selection: "#D9CCF5",
-  // dark canvases: deep plum (+ dusk end), dark cards, deepest
-  charcoal: "#2B2233", charcoalDusk: "#241C2B", night800: "#221A29", night900: "#1A1420",
-  paper50: "#F6F2F8", paper300: "#D4CBDD", paper500: "#AEA3BA", lineNight: "#887C95",
-  holo300: "#BFE0FF", holo400: "#8CC4FF", highlightA: "#D5C8F2", highlightB: "#F7F3EE",
-  amber400: "#F5A94A",
-  // accent: CTA gradient blue-700 → cyan-700 (violet); emphasis blue-700 → teal-700 on light, holo-400 → cyan-300 on dark
-  blue700: "#2F4FD8", cyan700: "#7B61C9", teal700: "#6A4CB4", cyan300: "#B9A2F2",
-  lavBlue700: "#2A43B8", lavTeal700: "#563D97", white: "#FFFFFF",
-  dangerMist: "#A8321F", dangerNight: "#FF8A75", successMist: "#1E6B45", successNight: "#7FD9A8",
+  // light canvases: ivory (+ its dusk end), white (cards, white sections)
+  ivory: "#F6F2EC", ivoryDusk: "#EFE8DE", white: "#FFFFFF", highlight: "#E2EBE8",
+  text: "#172126", textSecondary: "#344249", muted: "#56636A", petrol: "#173B4D",
+  tealText: "#4A6A62", teal: "#5F7F77", borderUi: "#858179", selection: "#CFE2E7",
+  cta: "#B74B32", ctaHover: "#963821",
+  success: "#2F6F5E", error: "#A63D40", warning: "#8A5D16",
+  // dark canvases: petrol (+ dusk end), dark cards, deepest
+  dark: "#0F1D25", darkDusk: "#0B171E", night800: "#17272F", night900: "#0A151B",
+  paper50: "#FFFFFF", paper300: "#C7D2D7", paper500: "#9DADB4", lineNight: "#627882",
+  accentNight: "#9CC2B8", holoBlue: "#63B8D8", holoCyan: "#8BDCE5", holoViolet: "#AFA5CE",
+  amber400: "#F5A94A", amber300: "#F8C98B", neon: "#F6B4A0",
+  dangerNight: "#FF8A75", successNight: "#7FD9A8",
 };
 
 // [foreground, background, minimum, label]
 const pairs: [string, string, number, string][] = [];
+const AAA = 7;
 
 for (const [name, bg] of [
-  ["lavender light", T.mistBg],
-  ["lavender light dusk", T.mistDusk],
   ["ivory", T.ivory],
-  ["ivory surface", T.ivorySurface],
+  ["ivory dusk", T.ivoryDusk],
+  ["white", T.white],
 ] as const) {
   pairs.push(
-    [T.ink900, bg, 4.5, `ink-900 on ${name}`],
-    [T.ink700, bg, 4.5, `ink-700 on ${name}`],
-    [T.ink500, bg, 4.5, `ink-500 on ${name}`],
-    [T.lineMist, bg, 3, `line-mist on ${name} (UI)`],
-    [T.linkMist, bg, 4.5, `link-mist on ${name}`],
-    [T.focus, bg, 3, `focus ring on ${name} (UI)`],
-    [T.blue700, bg, 4.5, `emphasis blue-700 on ${name}`],
-    [T.teal700, bg, 4.5, `emphasis violet teal-700 on ${name}`],
-    [T.dangerMist, bg, 4.5, `danger-mist on ${name}`],
-    [T.successMist, bg, 4.5, `success-mist on ${name}`],
+    [T.text, bg, AAA, `body text on ${name}`],
+    [T.textSecondary, bg, AAA, `secondary/lead text on ${name}`],
+    [T.petrol, bg, AAA, `petrol headline / link on ${name}`],
+    [T.muted, bg, 4.5, `muted meta text on ${name}`],
+    [T.tealText, bg, 4.5, `teal emphasis on ${name}`],
+    [T.borderUi, bg, 3, `control border on ${name} (UI)`],
+    [T.petrol, bg, 3, `focus ring on ${name} (UI)`],
+    [T.cta, bg, 3, `terracotta button edge on ${name} (UI)`],
+    [T.success, bg, 4.5, `success on ${name}`],
+    [T.error, bg, 4.5, `error on ${name}`],
+    [T.warning, bg, 4.5, `warning on ${name}`],
   );
 }
 
 pairs.push(
-  // lavender mist tone (overrides line, blue-700 and teal-700 locally)
-  [T.ink900, T.lavender, 4.5, "ink-900 on lavender mist"],
-  [T.ink700, T.lavender, 4.5, "ink-700 on lavender mist"],
-  [T.ink500, T.lavender, 4.5, "ink-500 on lavender mist"],
-  [T.lineLavender, T.lavender, 3, "line on lavender mist (UI)"],
-  [T.linkMist, T.lavender, 4.5, "link-mist on lavender mist"],
-  [T.focus, T.lavender, 3, "focus ring on lavender mist (UI)"],
-  [T.lavBlue700, T.lavender, 4.5, "emphasis blue on lavender mist"],
-  [T.lavTeal700, T.lavender, 4.5, "emphasis violet on lavender mist"],
-  // buttons
-  [T.white, T.blue700, 4.5, "white on blue-700 (CTA start)"],
-  [T.white, T.cyan700, 4.5, "white on cyan-700 (CTA end)"],
-  [T.white, T.lavBlue700, 4.5, "white on CTA start (lavender tone)"],
-  [T.paper50, T.ink900, 4.5, "paper-50 on ink-900 (primary button)"],
-  [T.ink900, T.paper50, 4.5, "ink-900 on paper-50 (night button)"],
-  [T.ink900, T.selection, 4.5, "ink-900 on text selection"],
-  // highlight gradient (tiles, glow buttons, package tabs)
-  [T.ink900, T.highlightA, 4.5, "ink-900 on highlight gradient start"],
-  [T.ink900, T.highlightB, 4.5, "ink-900 on highlight gradient end"],
-  [T.ink700, T.highlightA, 4.5, "ink-700 on highlight gradient start"],
-  [T.blue700, T.highlightA, 3, "blue-700 on highlight gradient (large: 24/7)"],
-  [T.teal700, T.highlightA, 3, "teal-700 on highlight gradient (large)"],
-  [T.lavBlue700, T.highlightA, 4.5, "emphasis blue (lavender tone) on highlight gradient"],
-  [T.lavTeal700, T.highlightA, 4.5, "emphasis violet (lavender tone) on highlight gradient"],
+  // buttons, tiles, selection
+  [T.white, T.cta, 4.5, "white on terracotta CTA"],
+  [T.white, T.ctaHover, 4.5, "white on terracotta CTA hover"],
+  [T.white, T.petrol, AAA, "white on petrol tile / filled control"],
+  [T.accentNight, T.petrol, 4.5, "teal-light marker on petrol tile"],
+  [T.holoBlue, T.petrol, 3, "key figure gradient start on petrol tile (large)"],
+  [T.holoCyan, T.petrol, 4.5, "key figure gradient end on petrol tile"],
+  [T.text, T.highlight, AAA, "text on highlight tile"],
+  [T.petrol, T.highlight, AAA, "petrol on highlight tile"],
+  [T.textSecondary, T.highlight, AAA, "secondary text on highlight tile"],
+  [T.text, T.selection, AAA, "text on selection"],
+  [T.text, T.neon, AAA, "text on status badge (neon)"],
+  [T.text, T.accentNight, AAA, "text on status badge (teal-light)"],
 );
 
-for (const bg of [T.charcoal, T.charcoalDusk, T.night800, T.night900]) {
+for (const [name, bg] of [
+  ["dark", T.dark],
+  ["dark dusk", T.darkDusk],
+  ["dark card", T.night800],
+  ["deepest", T.night900],
+] as const) {
   pairs.push(
-    [T.paper50, bg, 4.5, `paper-50 on ${bg}`],
-    [T.paper300, bg, 4.5, `paper-300 on ${bg}`],
-    [T.paper500, bg, 4.5, `paper-500 on ${bg}`],
-    [T.lineNight, bg, 3, `line-night on ${bg} (UI)`],
-    [T.holo300, bg, 4.5, `holo-300 on ${bg}`],
-    [T.holo400, bg, 4.5, `holo-400 on ${bg} (emphasis start)`],
-    [T.cyan300, bg, 4.5, `cyan-300 on ${bg} (emphasis end, focus on night)`],
-    [T.amber400, bg, 4.5, `amber-400 on ${bg}`],
-    [T.dangerNight, bg, 4.5, `danger-night on ${bg}`],
-    [T.successNight, bg, 4.5, `success-night on ${bg}`],
+    [T.paper50, bg, AAA, `white on ${name}`],
+    [T.paper300, bg, AAA, `secondary text on ${name}`],
+    [T.paper500, bg, 4.5, `captions on ${name}`],
+    [T.lineNight, bg, 3, `control border on ${name} (UI)`],
+    [T.accentNight, bg, 4.5, `teal-light checks/links on ${name}`],
+    [T.holoBlue, bg, 4.5, `hologram blue (emphasis start) on ${name}`],
+    [T.holoCyan, bg, 4.5, `hologram cyan (emphasis end) on ${name}`],
+    [T.holoViolet, bg, 4.5, `hologram violet on ${name}`],
+    [T.amber400, bg, 4.5, `amber "paid idle time" on ${name}`],
+    [T.amber300, bg, 4.5, `amber legend on ${name}`],
+    [T.dangerNight, bg, 4.5, `error on ${name}`],
+    [T.successNight, bg, 4.5, `success on ${name}`],
   );
 }
-pairs.push(
-  [T.amber400, T.ink900, 4.5, "amber-400 on ink-900 (figures on ink tiles)"],
-  [T.cyan300, T.ink900, 4.5, "cyan-300 on ink-900 (key figure on ink tile)"],
-  [T.holo400, T.ink900, 4.5, "holo-400 on ink-900 (key figure on ink tile)"],
-);
+
+// The CTA edge only needs 3:1 where the button sits on a page canvas; on dark cards its white label
+// (5.2:1) identifies it, which WCAG 1.4.11 accepts for text buttons.
+pairs.push([T.cta, T.dark, 3, "terracotta button edge on dark canvas (UI)"], [T.cta, T.darkDusk, 3, "terracotta button edge on dark dusk (UI)"]);
 
 let failed = 0;
 for (const [fg, bg, min, label] of pairs) {

@@ -7,71 +7,115 @@
 /* Tokens — mirror of .claude/skills/presence-design/tokens.css        */
 /* ------------------------------------------------------------------ */
 :root {
-  /* Light surfaces (warm palette, client-approved 01-10). Lavender light is the canvas; light
-     sections alternate with ivory and lavender mist via data-tone (see "Section tones" below). */
-  --mist-bg: #eeeaf3; /* lavender light */
-  --mist-surface: #f7f3ee; /* warm ivory: cards, panels */
-  --mist-raised: #fcfaf7;
-  --ivory: #f7f3ee;
-  --lavender: #cfc7d9; /* lavender mist, brand colour */
-  --blush: #e9cfc4; /* tiny touches only */
-  --ink-900: #221b29; /* 14.1:1 on lavender light, 10.2:1 on lavender mist */
-  --ink-700: #463b52;
-  --ink-500: #584b65; /* captions, ≥ 4.9:1 on every light tone */
-  --line-mist: #73678a; /* ≥ 3:1 UI */
-  --link-mist: #4a36a0;
+  /* "Warm Holographic Navy" (brand/UX research, 02-10). Two systems:
+     - interface reality (the company): warm ivory, white cards, petrol navy text and structure,
+       terracotta CTAs — calm, warm, credible;
+     - holographic reality (the product): blue / cyan / lavender glow, particles and dark scenes,
+       ONLY around the hologram, the Holobox and tech moments.
+     The --ph-* tokens are the source of truth; the older names below alias them so every
+     component keeps working. Every text/background pair is checked in scripts/check-contrast.ts. */
+  --ph-bg-page: #f6f2ec; /* warm ivory, main background */
+  --ph-bg-surface: #ffffff; /* cards */
+  --ph-bg-dark: #0f1d25; /* dark sections, footer */
+  --ph-brand-primary: #173b4d; /* petrol navy: headlines, links, structure */
+  --ph-brand-secondary: #5f7f77; /* muted teal: charts, decoration */
+  --ph-brand-secondary-text: #4a6a62; /* muted teal deepened for text (5.3:1 on ivory) */
+  --ph-brand-hologram-lavender: #cfc7d9;
+  --ph-hologram-blue: #63b8d8; /* tech only */
+  --ph-hologram-cyan: #8bdce5; /* tech only */
+  --ph-hologram-violet: #afa5ce; /* tech only */
+  --ph-live: #3a8f75; /* "online" status dot */
+  --ph-neon: #f6b4a0; /* the "HOTEL" neon sign (decorative) */
+  --ph-accent-on-dark: #9cc2b8; /* muted teal lightened for checks, links and markers on dark (8.9:1) */
+  --ph-text-primary: #172126;
+  --ph-text-secondary: #344249; /* leads and explanatory text (9.3:1 on ivory) */
+  --ph-text-muted: #56636a; /* meta text only (5.6:1 on ivory) */
+  --ph-text-on-dark: #ffffff;
+  --ph-cta-bg: #b74b32; /* terracotta */
+  --ph-cta-bg-hover: #963821;
+  --ph-cta-text: #ffffff;
+  --ph-success: #2f6f5e;
+  --ph-error: #a63d40;
+  --ph-warning: #8a5d16;
+  --ph-border-subtle: #dcd8d2; /* card edges (decorative, paired with a shadow) */
+  --ph-border-strong: #a9a6a0;
+  --ph-border-ui: #858179; /* boundaries that identify a control: ≥ 3:1 on ivory and white */
+  --ph-focus-ring: #173b4d;
+  --ph-font-body-desktop: 1.125rem;
+  --ph-font-body-mobile: 1.0625rem;
+  --ph-font-small: 0.9375rem;
+  --ph-line-height-body: 1.6;
+  --ph-radius-sm: 8px;
+  --ph-radius-md: 14px;
+  --ph-radius-lg: 24px;
+  --ph-content-readable: 68ch;
 
-  /* Dark surfaces: deep plum */
-  --night-900: #1a1420;
-  --night-800: #221a29;
-  --charcoal-700: #2b2233; /* deep plum, dark section canvas */
-  --paper-50: #f6f2f8;
-  --paper-300: #d4cbdd;
-  --paper-500: #aea3ba; /* 6.3:1 on plum */
-  --line-night: #887c95;
+  /* Light surfaces (interface) */
+  --mist-bg: var(--ph-bg-page);
+  --mist-surface: var(--ph-bg-surface);
+  --mist-raised: var(--ph-bg-surface);
+  --ivory: var(--ph-bg-page);
+  --lavender: var(--ph-brand-hologram-lavender); /* hologram only, never a surface */
+  --blush: #e9cfc4;
+  --ink-900: var(--ph-text-primary);
+  --ink-700: var(--ph-text-secondary);
+  --ink-500: var(--ph-text-muted);
+  --line-mist: var(--ph-border-ui);
+  --link-mist: var(--ph-brand-primary);
 
-  /* Holo (technology: hologram, 3D, tech details) — unchanged blue */
-  --holo-100: #e6f2ff;
-  --holo-300: #bfe0ff;
-  --holo-400: #8cc4ff;
-  --holo-500: #5aa8f5;
-  --holo-600: #2f7fd0;
-  /* Highlight tiles, glow buttons, package tabs: lavender-violet → ivory */
-  --holo-gradient: linear-gradient(100deg, #d5c8f2 0%, #f7f3ee 100%);
-  /* Accent gradient blue → violet (CTA / emphasis). White on blue-700 6.50:1, on cyan-700 4.78:1.
-     Emphasis on light: blue-700 → teal-700 (violet) ≥ 5.3:1. On dark: holo-400 → cyan-300 ≥ 6.9:1.
-     (Names kept from the blue accent so every hook keeps working.) */
-  --blue-700: #2f4fd8;
-  --teal-700: #6a4cb4;
-  --cyan-700: #7b61c9;
-  --cyan-300: #b9a2f2;
-  --glow-rgb: 185, 162, 242; /* violet glow */
+  /* Dark surfaces: deep petrol */
+  --night-900: #0a151b; /* Holobox interior, deepest */
+  --night-800: #17272f; /* dark cards */
+  --charcoal-700: var(--ph-bg-dark);
+  --paper-50: var(--ph-text-on-dark);
+  --paper-300: #c7d2d7; /* secondary text on dark */
+  --paper-500: #9dadb4; /* captions on dark */
+  --line-night: #627882; /* ≥ 3:1 UI on dark canvas and cards */
 
+  /* Holo (technology only: hologram, 3D, Holobox, tech details) */
+  --holo-100: #e3f5f8;
+  --holo-300: var(--ph-hologram-cyan);
+  --holo-400: var(--ph-hologram-blue);
+  --holo-500: var(--ph-hologram-blue);
+  --holo-600: #3e8faf;
+  /* Highlight tiles, glow buttons, package tabs: a faint teal tint → white (interface, not neon). */
+  --holo-gradient: linear-gradient(100deg, #e2ebe8 0%, #ffffff 100%);
+  /* Accent hooks (names kept from earlier palettes): petrol and teal on light; on dark the
+     emphasis may keep a subtle holographic gradient (holo-400 → cyan-300). */
+  --blue-700: var(--ph-brand-primary);
+  --teal-700: var(--ph-brand-secondary-text);
+  --cyan-700: var(--ph-brand-secondary);
+  --cyan-300: var(--ph-hologram-cyan);
+  --glow-rgb: 99, 184, 216; /* hologram glow */
+
+  /* Amber: only "paid idle time" in the demand chart */
   --amber-300: #f8c98b;
   --amber-400: #f5a94a;
 
-  --orb-sky: #a9b6f0;
-  --orb-mint: #b9a6e3;
-  --orb-lavender: #c4b5dc;
-  --orb-peach: #e9cfc4;
+  /* Orbs on light sections: warm sand and a whisper of teal (no lavender or blue on the interface).
+     Night sections switch them to the holographic colours (see "Dark sections" below). */
+  --orb-sky: #e6dccd;
+  --orb-mint: #dbe5e1;
+  --orb-lavender: #ece3d6;
+  --orb-peach: #edd6ca;
 
-  --danger-mist: #a8321f;
+  --danger-mist: var(--ph-error);
   --danger-night: #ff8a75;
-  --success-mist: #1e6b45;
+  --success-mist: var(--ph-success);
   --success-night: #7fd9a8;
 
-  --focus: #4535a8;
+  --focus: var(--ph-focus-ring);
 
-  --r-sm: 8px;
-  --r-md: 16px;
-  --r-lg: 32px;
-  --r-xl: 48px;
+  --r-sm: var(--ph-radius-sm);
+  --r-md: var(--ph-radius-md);
+  --r-lg: var(--ph-radius-lg);
+  --r-xl: 48px; /* big outlined panels and the Holobox portal (the 3D scene reads this radius) */
   --r-pill: 999px;
 
-  --shadow-soft: 0 24px 60px -30px rgba(43, 34, 51, 0.32);
+  --shadow-soft: 0 24px 60px -30px rgba(23, 59, 77, 0.3);
   --glow-holo:
-    0 0 0 1px rgba(140, 196, 255, 0.35), 0 0 32px rgba(140, 196, 255, 0.28),
-    0 0 96px rgba(140, 196, 255, 0.14);
+    0 0 0 1px rgba(139, 220, 229, 0.35), 0 0 32px rgba(99, 184, 216, 0.28),
+    0 0 96px rgba(99, 184, 216, 0.14);
   --glow-amber: 0 0 12px rgba(245, 169, 74, 0.6);
 
   --nav-h: 64px;
@@ -110,6 +154,12 @@
   --color-danger-night: var(--danger-night);
   --color-success-mist: var(--success-mist);
   --color-success-night: var(--success-night);
+  --color-petrol: var(--ph-brand-primary);
+  --color-teal: var(--ph-brand-secondary);
+  --color-teal-text: var(--ph-brand-secondary-text);
+  --color-terracotta: var(--ph-cta-bg);
+  --color-accent-night: var(--ph-accent-on-dark);
+  --color-neon: var(--ph-neon);
 
   --font-sans: var(--font-hanken), ui-sans-serif, system-ui, sans-serif;
   --font-mono: var(--font-jetbrains), ui-monospace, monospace;
@@ -168,26 +218,31 @@
   font-weight: 800;
   text-transform: uppercase;
 }
+/* Readability (50+ visitors): body 17px mobile / 18px desktop, line-height 1.6, no light weights,
+   small text never below 15px, eyebrows 13px with moderate tracking. */
 @utility text-body-lg {
-  font-size: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
-  line-height: 1.55;
-  font-weight: 300;
-}
-@utility text-body {
-  font-size: 1rem;
-  line-height: 1.6;
+  font-size: clamp(1.125rem, 1.06rem + 0.3vw, 1.3125rem);
+  line-height: var(--ph-line-height-body);
   font-weight: 400;
 }
+@utility text-body {
+  font-size: var(--ph-font-body-mobile);
+  line-height: var(--ph-line-height-body);
+  font-weight: 400;
+  @media (min-width: 1024px) {
+    font-size: var(--ph-font-body-desktop);
+  }
+}
 @utility text-body-sm {
-  font-size: 0.875rem;
+  font-size: var(--ph-font-small);
   line-height: 1.5;
   font-weight: 400;
 }
 @utility text-label {
   font-family: var(--font-mono);
-  font-size: 0.75rem;
-  line-height: 1;
-  letter-spacing: 0.14em;
+  font-size: 0.8125rem;
+  line-height: 1.15;
+  letter-spacing: 0.08em;
   font-weight: 500;
   text-transform: uppercase;
   font-variant-numeric: tabular-nums;
@@ -251,7 +306,7 @@
     text-rendering: optimizeLegibility;
   }
   ::selection {
-    background: #d9ccf5;
+    background: #cfe2e7;
     color: var(--ink-900);
   }
   :focus-visible {
@@ -260,7 +315,7 @@
     border-radius: 4px;
   }
   [data-mood="night"] :focus-visible {
-    outline-color: var(--cyan-300);
+    outline-color: var(--paper-50);
   }
   [data-mood="night"] {
     background: var(--charcoal-700);
@@ -358,8 +413,8 @@
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(191, 224, 255, 0.07) 45%,
-    rgba(248, 201, 139, 0.04) 55%,
+    rgba(139, 220, 229, 0.06) 45%,
+    rgba(255, 255, 255, 0.03) 55%,
     transparent 100%
   );
   filter: blur(20px);
@@ -441,10 +496,10 @@
   width: 100%;
   min-height: 48px;
   border-radius: var(--r-sm);
-  background: rgba(18, 20, 23, 0.6);
+  background: rgba(10, 21, 27, 0.6);
   color: var(--paper-50);
   padding: 12px 16px;
-  font-size: 1rem;
+  font-size: var(--ph-font-body-mobile);
   line-height: 1.4;
   box-shadow: inset 0 0 0 1px var(--line-night);
   transition:
@@ -456,14 +511,14 @@
   opacity: 0.8;
 }
 .demo-input:hover {
-  background: rgba(18, 20, 23, 0.8);
+  background: rgba(10, 21, 27, 0.8);
 }
 .demo-input:focus-visible {
   outline: none;
   background: var(--night-900);
   box-shadow:
-    inset 0 0 0 1px var(--holo-300),
-    0 0 0 3px rgba(191, 224, 255, 0.25);
+    inset 0 0 0 1px var(--paper-50),
+    0 0 0 3px rgba(255, 255, 255, 0.22);
 }
 .demo-input.is-invalid {
   box-shadow: inset 0 0 0 1px var(--danger-night);
@@ -479,7 +534,7 @@ select.demo-input option {
   height: 22px;
   border-radius: 6px;
   box-shadow: inset 0 0 0 1px var(--line-night);
-  background: rgba(18, 20, 23, 0.6);
+  background: rgba(10, 21, 27, 0.6);
   display: grid;
   place-content: center;
   cursor: pointer;
@@ -494,7 +549,7 @@ select.demo-input option {
   transition: transform 150ms;
 }
 .demo-check:checked {
-  background: var(--holo-300);
+  background: var(--paper-50);
   box-shadow: none;
 }
 .demo-check:checked::after {
@@ -526,8 +581,8 @@ select.demo-input option {
   background: conic-gradient(
     from var(--shine-angle),
     transparent 0 70%,
-    var(--holo-300) 82%,
-    var(--amber-300) 90%,
+    var(--paper-300) 82%,
+    var(--ph-cta-bg) 90%,
     transparent 100%
   );
   -webkit-mask:
@@ -579,8 +634,8 @@ select.demo-input option {
   animation: burst 900ms cubic-bezier(0.16, 1, 0.3, 1) var(--d) both;
 }
 .success-burst i.warm {
-  background: var(--amber-400);
-  box-shadow: var(--glow-amber);
+  background: var(--ph-cta-bg);
+  box-shadow: 0 0 12px rgba(183, 75, 50, 0.6);
 }
 @media (prefers-reduced-motion: reduce) {
   .shine-focus::before,
@@ -665,8 +720,8 @@ select.demo-input option {
   width: 8px;
   height: 8px;
   border-radius: 9999px;
-  background: var(--amber-400);
-  box-shadow: var(--glow-amber);
+  background: var(--ph-live);
+  box-shadow: 0 0 10px rgba(58, 143, 117, 0.55);
   animation: live-pulse 1.6s ease-in-out infinite;
 }
 
@@ -683,134 +738,80 @@ select.demo-input option {
 }
 
 /* ---------------------------------------------------------------------------------------------
-   Blue accent (client-approved "vivid", 27-09): deep blue → holo cyan. Amber stays only for the
-   live dot, the traveller's suitcase and "paid idle time". Hooks: .btn-cta (conversion buttons) ·
-   em.emph (headline highlight) · .key-figure · .step-num / .step-num-dark (step counters on light
-   / dark) · .step-node[data-lit] · .accent-dot (active carousel dot) · .accent-bar (autoplay bar) ·
-   .accent-line (timeline fill) · .nav-ind (active navbar link). Every gradient stop passes AA on its
-   background (scripts/check-contrast.ts); on light surfaces the cyan end is the deeper teal-700.
+   Accents ("Warm Holographic Navy", 02-10). Hooks: .btn-cta (conversion buttons: solid terracotta)
+   · em.emph (headline highlight: deep teal on light, subtle holographic gradient on dark) ·
+   .key-figure · .step-num / .step-num-dark · .step-node[data-lit] · .accent-dot · .accent-bar ·
+   .accent-line · .nav-ind. No gradients on text over light surfaces.
    --------------------------------------------------------------------------------------------- */
 
-/* Conversion CTA: gradient pill, white text, a slow "hologram scan" crossing it, glow on hover. */
+/* Conversion CTA: solid terracotta pill, white text (5.2:1), a soft warm glow on hover. */
 .btn-cta {
   position: relative;
-  isolation: isolate;
-  overflow: hidden;
-  color: #fff;
-  background: linear-gradient(100deg, var(--blue-700) 0%, var(--cyan-700) 100%);
-  box-shadow:
-    0 0 0 1px rgba(var(--glow-rgb), 0.3),
-    0 8px 24px -12px rgba(123, 97, 201, 0.75);
+  color: var(--ph-cta-text);
+  background: var(--ph-cta-bg);
+  box-shadow: 0 6px 18px -12px rgba(150, 56, 33, 0.7);
   transition:
+    background-color 0.2s,
     box-shadow 0.25s,
-    filter 0.2s,
     translate 0.45s cubic-bezier(0.16, 1, 0.3, 1),
     scale 0.15s;
 }
 .btn-cta:hover {
-  filter: brightness(1.08) saturate(1.1);
-  box-shadow:
-    0 0 0 1px rgba(var(--glow-rgb), 0.6),
-    0 10px 34px -8px rgba(98, 88, 214, 0.8),
-    0 0 48px -12px rgba(var(--glow-rgb), 0.75);
-}
-.btn-cta::before {
-  /* hairline top highlight, like a lit glass edge */
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  border-radius: inherit;
-  pointer-events: none;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.22);
-}
-.btn-cta::after {
-  content: "";
-  position: absolute;
-  inset: -2px auto -2px 0;
-  width: 34%;
-  z-index: -1;
-  pointer-events: none;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.28),
-    transparent
-  );
-  transform: translateX(-160%) skewX(-20deg);
-  animation: cta-sweep 6s cubic-bezier(0.45, 0, 0.25, 1) 1.5s infinite;
-}
-@keyframes cta-sweep {
-  0% {
-    transform: translateX(-160%) skewX(-20deg);
-  }
-  55%,
-  100% {
-    transform: translateX(460%) skewX(-20deg);
-  }
-}
-@media (prefers-reduced-motion: reduce) {
-  .btn-cta::after {
-    animation: none;
-  }
+  background: var(--ph-cta-bg-hover);
+  box-shadow: 0 10px 28px -10px rgba(183, 75, 50, 0.55);
 }
 
-/* Gradient text */
-[data-mood="mist"] em.emph,
+/* Headlines on light surfaces: petrol navy (headings inside dark islands keep their own colour). */
+[data-mood="mist"] :is(h1, h2, h3):not([data-mood="night"] *, .bg-ink-900 *, .bg-petrol *, .bg-night-900 *, .bg-night-800 *, .bg-charcoal-700 *) {
+  color: var(--ph-brand-primary);
+}
+
+/* Emphasis and figures on light: solid colours */
+[data-mood="mist"] em.emph {
+  color: var(--teal-700);
+}
 [data-mood="mist"] .key-figure,
+.step-num {
+  color: var(--ph-brand-primary);
+}
+
+/* On dark (tech moments, dark sections): a subtle holographic gradient */
 [data-mood="night"] em.emph,
 [data-mood="night"] .key-figure,
 .bg-ink-900 .key-figure,
-.step-num,
+.bg-petrol .key-figure,
 .step-num-dark {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
-}
-[data-mood="mist"] em.emph,
-[data-mood="mist"] .key-figure,
-.step-num {
-  background-image: linear-gradient(
-    100deg,
-    var(--blue-700) 0%,
-    var(--teal-700) 100%
-  );
-}
-[data-mood="night"] em.emph,
-[data-mood="night"] .key-figure,
-.bg-ink-900 .key-figure,
-.step-num-dark {
-  background-image: linear-gradient(
-    100deg,
-    var(--holo-400) 0%,
-    var(--cyan-300) 100%
-  );
+  background-image: linear-gradient(100deg, var(--holo-400) 0%, var(--cyan-300) 100%);
 }
 
 /* Steps, progress, dots, navbar */
 .step-node[data-lit] {
-  background: linear-gradient(135deg, var(--blue-700) 0%, var(--cyan-700) 100%);
+  background: var(--ph-brand-primary);
   color: #fff;
-  box-shadow:
-    0 0 0 1px rgba(var(--glow-rgb), 0.5),
-    0 0 18px rgba(123, 97, 201, 0.5);
+  box-shadow: 0 0 0 4px rgba(23, 59, 77, 0.12);
 }
 [data-mood="mist"] [aria-current] > .accent-dot,
 [data-mood="mist"] .accent-bar,
 .accent-line {
-  background: linear-gradient(90deg, var(--blue-700), var(--cyan-700));
+  background: var(--ph-brand-primary);
   opacity: 1;
 }
 [data-mood="night"] [aria-current] > .accent-dot {
-  background: linear-gradient(90deg, var(--holo-400), var(--cyan-300));
-  box-shadow: 0 0 10px rgba(var(--glow-rgb), 0.6);
+  background: var(--cyan-300);
+  box-shadow: 0 0 10px rgba(var(--glow-rgb), 0.5);
   opacity: 1;
 }
 .nav-ind {
-  background: linear-gradient(90deg, var(--blue-700), var(--cyan-300));
-  box-shadow: 0 0 14px rgba(var(--glow-rgb), 0.8);
+  background: var(--ph-brand-primary);
+  box-shadow: none;
+}
+.text-paper-50 .nav-ind {
+  background: var(--paper-50);
 }
 
 /* ---------------------------------------------------------------------------------------------
@@ -824,8 +825,8 @@ select.demo-input option {
 }
 @supports (color: color-mix(in oklab, red, blue)) {
   :root {
-    --mist-bg: color-mix(in oklab, #eeeaf3, #e4ddec calc(var(--dusk) * 100%));
-    --charcoal-700: color-mix(in oklab, #2b2233, #241c2b calc(var(--dusk) * 100%));
+    --mist-bg: color-mix(in oklab, #f6f2ec, #efe8de calc(var(--dusk) * 100%));
+    --charcoal-700: color-mix(in oklab, #0f1d25, #0b171e calc(var(--dusk) * 100%));
   }
 }
 
@@ -848,7 +849,7 @@ select.demo-input option {
   width: 40px;
   height: 40px;
   border-radius: 999px;
-  border: 1px solid rgba(29, 31, 35, 0.35);
+  border: 1px solid rgba(23, 33, 38, 0.35);
   transform: scale(0.62);
   transition:
     transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
@@ -857,18 +858,18 @@ select.demo-input option {
     opacity 0.2s;
 }
 .cursor-ring[data-mood="night"] > i {
-  border-color: rgba(191, 224, 255, 0.5);
+  border-color: rgba(255, 255, 255, 0.45);
 }
 .cursor-ring[data-state="link"] > i,
 .cursor-ring[data-state="label"] > i {
   transform: scale(1);
-  border-color: rgba(98, 88, 214, 0.55);
-  background-color: rgba(98, 88, 214, 0.06);
+  border-color: rgba(23, 59, 77, 0.55);
+  background-color: rgba(23, 59, 77, 0.06);
 }
 .cursor-ring[data-mood="night"][data-state="link"] > i,
 .cursor-ring[data-mood="night"][data-state="label"] > i {
-  border-color: rgba(var(--glow-rgb), 0.6);
-  background-color: rgba(var(--glow-rgb), 0.06);
+  border-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.06);
 }
 .cursor-ring[data-press] > i {
   transform: scale(0.8);
@@ -890,8 +891,8 @@ select.demo-input option {
   text-transform: uppercase;
   white-space: nowrap;
   color: #fff;
-  background: linear-gradient(100deg, var(--blue-700), var(--cyan-700));
-  box-shadow: 0 6px 18px -6px rgba(123, 97, 201, 0.7);
+  background: var(--ph-brand-primary);
+  box-shadow: 0 6px 18px -6px rgba(23, 59, 77, 0.6);
   opacity: 0;
   transform: translateY(4px) scale(0.9);
   transition:
@@ -1078,11 +1079,11 @@ html.intro #ph-intro {
   inset: 0;
   z-index: 95;
   cursor: pointer;
-  /* Translucent frosted lavender, not an opaque cover: the page is really painted underneath
+  /* Translucent frosted ivory, not an opaque cover: the page is really painted underneath
      (FCP/LCP stay on the page's own content) and shows softly through while the word forms. */
   background:
-    radial-gradient(55% 45% at 72% 18%, rgba(207, 199, 217, 0.55), transparent 70%),
-    rgba(238, 234, 243, 0.82);
+    radial-gradient(55% 45% at 72% 18%, rgba(230, 220, 205, 0.55), transparent 70%),
+    rgba(246, 242, 236, 0.84);
   -webkit-backdrop-filter: blur(18px) saturate(1.05);
   backdrop-filter: blur(18px) saturate(1.05);
   transition: opacity 0.35s ease;
@@ -1093,8 +1094,8 @@ html.intro #ph-intro {
     -webkit-backdrop-filter: none;
     backdrop-filter: none;
     background:
-      radial-gradient(55% 45% at 72% 18%, rgba(207, 199, 217, 0.55), transparent 70%),
-      rgba(238, 234, 243, 0.95);
+      radial-gradient(55% 45% at 72% 18%, rgba(230, 220, 205, 0.55), transparent 70%),
+      rgba(246, 242, 236, 0.95);
   }
 }
 html.intro #ph-intro.out {
@@ -1113,8 +1114,8 @@ html.intro #ph-intro.out {
   right: 0;
   top: 60%;
   text-align: center;
-  font: 500 0.75rem/1 var(--font-jetbrains), ui-monospace, monospace;
-  letter-spacing: 0.14em;
+  font: 500 0.8125rem/1 var(--font-jetbrains), ui-monospace, monospace;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
   color: var(--ink-500);
   opacity: 0;
@@ -1130,14 +1131,14 @@ html.intro {
 /* Hero photograph (HeroPhoto.tsx). */
 .hero-photo {
   background: var(--mist-surface);
-  box-shadow: 0 30px 80px -34px rgba(47, 127, 208, 0.45), 0 24px 60px -30px rgba(43, 34, 51, 0.35);
+  box-shadow: 0 30px 80px -40px rgba(23, 59, 77, 0.45), 0 18px 40px -28px rgba(23, 33, 38, 0.3);
 }
-/* Soft holographic-blue light on the edges of the photo (no sci-fi, just a hint of the concept). */
+/* A pale cyan edge light on the photo: the only hint of the hologram in the hero. */
 .hero-photo-glow {
   box-shadow:
-    inset 0 0 0 1px rgba(140, 196, 255, 0.45),
-    inset 0 0 60px -10px rgba(90, 168, 245, 0.35);
-  background: linear-gradient(180deg, rgba(141, 179, 223, 0.12) 0%, transparent 28%, transparent 70%, rgba(23, 71, 166, 0.18) 100%);
+    inset 0 0 0 1px rgba(139, 220, 229, 0.5),
+    inset 0 0 50px -14px rgba(139, 220, 229, 0.3);
+  background: linear-gradient(180deg, transparent 0%, transparent 70%, rgba(15, 29, 37, 0.2) 100%);
 }
 
 /* Speech bubbles in the guest-journey scene (story/human.tsx). Each bubble is anchored by its tail
@@ -1202,47 +1203,50 @@ html.intro {
 }
 
 /* ---------------------------------------------------------------------------------------------
-   Warm palette (client-approved 01-10, "B · richer"): lavender mist #CFC7D9 · lavender light
-   #EEEAF3 · warm ivory #F7F3EE · deep plum #2B2233 · violet accents · blush for tiny touches.
-   Holo blue stays for the hologram, 3D and tech details. Every pair is AA-checked in
-   scripts/check-contrast.ts.
+   Surfaces ("Warm Holographic Navy", 02-10). Target share: ~45% ivory, 24% white, 15% dark petrol,
+   7% petrol, 4% holographic effects, 3% teal, 2% terracotta.
    --------------------------------------------------------------------------------------------- */
 
-/* Section tones: light sections alternate lavender light (default) / ivory / lavender mist.
+/* Section tones: light sections are ivory (default and data-tone="ivory") or white
+   (data-tone="lavender", name kept for the existing hooks) with ivory cards.
    MoodTransition takes the same `tone` so the band blends into the section. */
 [data-tone="ivory"] {
-  --mist-bg: #f7f3ee;
-  --mist-surface: #fdfbf8;
-  --mist-raised: #ffffff;
+  --mist-bg: var(--ph-bg-page);
+  --mist-surface: var(--ph-bg-surface);
+  --mist-raised: var(--ph-bg-surface);
 }
 [data-tone="lavender"] {
-  --mist-bg: #cfc7d9;
-  --mist-surface: #f7f3ee;
-  --mist-raised: #fcfaf7;
-  --line-mist: #6a5e80;
-  --blue-700: #2a43b8;
-  --teal-700: #563d97;
+  --mist-bg: var(--ph-bg-surface);
+  --mist-surface: var(--ph-bg-page);
+  --mist-raised: var(--ph-bg-page);
 }
 
-/* Dark sections: a subtle violet/blue glow over the plum */
+/* Dark sections: deep petrol; the holographic colours may live here (orbs, a faint glow). */
+[data-mood="night"] {
+  --orb-sky: var(--ph-hologram-blue);
+  --orb-mint: var(--ph-hologram-cyan);
+  --orb-lavender: var(--ph-hologram-violet);
+  --orb-peach: var(--ph-brand-secondary);
+}
 :is(section, footer, div.isolate)[data-mood="night"] {
   background-image:
-    radial-gradient(60% 55% at 88% 0%, rgba(123, 97, 201, 0.2), transparent 70%),
-    radial-gradient(50% 45% at 8% 100%, rgba(47, 79, 216, 0.14), transparent 70%);
+    radial-gradient(60% 55% at 88% 0%, rgba(99, 184, 216, 0.1), transparent 70%),
+    radial-gradient(50% 45% at 8% 100%, rgba(95, 127, 119, 0.14), transparent 70%);
 }
 
-/* Mist ↔ night bands: a violet haze through the middle instead of a flat grey-mauve fade */
+/* Light ↔ dark bands: a faint petrol haze through the middle */
 [data-band]::after {
   content: "";
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(75% 60% at 35% 50%, rgba(123, 97, 201, 0.28), transparent 72%);
+  background: radial-gradient(75% 60% at 35% 50%, rgba(23, 59, 77, 0.16), transparent 72%);
 }
 
-/* Cards on ivory / lavender with soft plum-tinted shadows */
-[data-mood="mist"] :is(.bg-mist-surface, .bg-mist-raised) {
+/* Cards on light surfaces: a subtle border and a soft petrol-tinted shadow */
+[data-mood="mist"] :is(.bg-mist-surface, .bg-mist-raised, .bg-holo-gradient) {
   box-shadow:
-    0 22px 44px -30px rgba(43, 34, 51, 0.38),
-    0 2px 6px -3px rgba(43, 34, 51, 0.08);
+    0 0 0 1px var(--ph-border-subtle),
+    0 22px 44px -30px rgba(23, 59, 77, 0.3),
+    0 2px 6px -3px rgba(23, 33, 38, 0.06);
 }

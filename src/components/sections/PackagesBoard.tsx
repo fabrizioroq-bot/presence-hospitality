@@ -29,7 +29,7 @@ export function PackagesBoard({ items, tabsLabel }: { items: PackageItem[]; tabs
 
   const bullet = (p: string, active: boolean) => (
     <li key={p} className="flex gap-3">
-      <span aria-hidden className={cn("mt-[0.6em] h-1.5 w-1.5 shrink-0 rounded-full transition-colors", active ? "bg-holo-300" : "bg-line-night")} />
+      <span aria-hidden className={cn("mt-[0.6em] h-1.5 w-1.5 shrink-0 rounded-full transition-colors", active ? "bg-accent-night" : "bg-line-night")} />
       <span>{p}</span>
     </li>
   );

@@ -38,7 +38,7 @@ function Submit({ pending, children }: { pending: boolean; children: string }) {
     <button
       type="submit"
       disabled={pending}
-      className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-pill bg-paper-50 px-6 font-semibold text-ink-900 transition-colors hover:bg-holo-100 disabled:opacity-60"
+      className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-pill bg-paper-50 px-6 font-semibold text-ink-900 transition-colors hover:bg-paper-300 disabled:opacity-60"
     >
       {pending && (
         <span
@@ -91,7 +91,7 @@ export function LoginForm({ initialError }: { initialError?: string }) {
       <Submit pending={pending}>Sign in</Submit>
       <Link
         href="/dashboard/forgot"
-        className="self-center text-body-sm text-paper-300 underline underline-offset-4 hover:text-holo-300"
+        className="self-center text-body-sm text-paper-300 underline underline-offset-4 hover:text-paper-50"
       >
         Forgot your password?
       </Link>
@@ -120,7 +120,7 @@ export function ForgotForm() {
       <Submit pending={pending}>Send reset link</Submit>
       <Link
         href="/dashboard/login"
-        className="self-center text-body-sm text-paper-300 underline underline-offset-4 hover:text-holo-300"
+        className="self-center text-body-sm text-paper-300 underline underline-offset-4 hover:text-paper-50"
       >
         Back to sign in
       </Link>

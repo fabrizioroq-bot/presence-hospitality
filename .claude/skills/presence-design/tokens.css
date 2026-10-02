@@ -1,70 +1,114 @@
 /* Presence Hospitality — design tokens (source of truth: src/styles/globals.css mirrors this block) */
 :root {
-  /* Light surfaces (warm palette, client-approved 01-10). Lavender light is the canvas; light
-     sections alternate with ivory and lavender mist via data-tone (see "Section tones" below). */
-  --mist-bg: #eeeaf3; /* lavender light */
-  --mist-surface: #f7f3ee; /* warm ivory: cards, panels */
-  --mist-raised: #fcfaf7;
-  --ivory: #f7f3ee;
-  --lavender: #cfc7d9; /* lavender mist, brand colour */
-  --blush: #e9cfc4; /* tiny touches only */
-  --ink-900: #221b29; /* 14.1:1 on lavender light, 10.2:1 on lavender mist */
-  --ink-700: #463b52;
-  --ink-500: #584b65; /* captions, ≥ 4.9:1 on every light tone */
-  --line-mist: #73678a; /* ≥ 3:1 UI */
-  --link-mist: #4a36a0;
+  /* "Warm Holographic Navy" (brand/UX research, 02-10). Two systems:
+     - interface reality (the company): warm ivory, white cards, petrol navy text and structure,
+       terracotta CTAs — calm, warm, credible;
+     - holographic reality (the product): blue / cyan / lavender glow, particles and dark scenes,
+       ONLY around the hologram, the Holobox and tech moments.
+     The --ph-* tokens are the source of truth; the older names below alias them so every
+     component keeps working. Every text/background pair is checked in scripts/check-contrast.ts. */
+  --ph-bg-page: #f6f2ec; /* warm ivory, main background */
+  --ph-bg-surface: #ffffff; /* cards */
+  --ph-bg-dark: #0f1d25; /* dark sections, footer */
+  --ph-brand-primary: #173b4d; /* petrol navy: headlines, links, structure */
+  --ph-brand-secondary: #5f7f77; /* muted teal: charts, decoration */
+  --ph-brand-secondary-text: #4a6a62; /* muted teal deepened for text (5.3:1 on ivory) */
+  --ph-brand-hologram-lavender: #cfc7d9;
+  --ph-hologram-blue: #63b8d8; /* tech only */
+  --ph-hologram-cyan: #8bdce5; /* tech only */
+  --ph-hologram-violet: #afa5ce; /* tech only */
+  --ph-live: #3a8f75; /* "online" status dot */
+  --ph-neon: #f6b4a0; /* the "HOTEL" neon sign (decorative) */
+  --ph-accent-on-dark: #9cc2b8; /* muted teal lightened for checks, links and markers on dark (8.9:1) */
+  --ph-text-primary: #172126;
+  --ph-text-secondary: #344249; /* leads and explanatory text (9.3:1 on ivory) */
+  --ph-text-muted: #56636a; /* meta text only (5.6:1 on ivory) */
+  --ph-text-on-dark: #ffffff;
+  --ph-cta-bg: #b74b32; /* terracotta */
+  --ph-cta-bg-hover: #963821;
+  --ph-cta-text: #ffffff;
+  --ph-success: #2f6f5e;
+  --ph-error: #a63d40;
+  --ph-warning: #8a5d16;
+  --ph-border-subtle: #dcd8d2; /* card edges (decorative, paired with a shadow) */
+  --ph-border-strong: #a9a6a0;
+  --ph-border-ui: #858179; /* boundaries that identify a control: ≥ 3:1 on ivory and white */
+  --ph-focus-ring: #173b4d;
+  --ph-font-body-desktop: 1.125rem;
+  --ph-font-body-mobile: 1.0625rem;
+  --ph-font-small: 0.9375rem;
+  --ph-line-height-body: 1.6;
+  --ph-radius-sm: 8px;
+  --ph-radius-md: 14px;
+  --ph-radius-lg: 24px;
+  --ph-content-readable: 68ch;
 
-  /* Dark surfaces: deep plum */
-  --night-900: #1a1420;
-  --night-800: #221a29;
-  --charcoal-700: #2b2233; /* deep plum, dark section canvas */
-  --paper-50: #f6f2f8;
-  --paper-300: #d4cbdd;
-  --paper-500: #aea3ba; /* 6.3:1 on plum */
-  --line-night: #887c95;
+  /* Light surfaces (interface) */
+  --mist-bg: var(--ph-bg-page);
+  --mist-surface: var(--ph-bg-surface);
+  --mist-raised: var(--ph-bg-surface);
+  --ivory: var(--ph-bg-page);
+  --lavender: var(--ph-brand-hologram-lavender); /* hologram only, never a surface */
+  --blush: #e9cfc4;
+  --ink-900: var(--ph-text-primary);
+  --ink-700: var(--ph-text-secondary);
+  --ink-500: var(--ph-text-muted);
+  --line-mist: var(--ph-border-ui);
+  --link-mist: var(--ph-brand-primary);
 
-  /* Holo (technology: hologram, 3D, tech details) — unchanged blue */
-  --holo-100: #e6f2ff;
-  --holo-300: #bfe0ff;
-  --holo-400: #8cc4ff;
-  --holo-500: #5aa8f5;
-  --holo-600: #2f7fd0;
-  /* Highlight tiles, glow buttons, package tabs: lavender-violet → ivory */
-  --holo-gradient: linear-gradient(100deg, #d5c8f2 0%, #f7f3ee 100%);
-  /* Accent gradient blue → violet (CTA / emphasis). White on blue-700 6.50:1, on cyan-700 4.78:1.
-     Emphasis on light: blue-700 → teal-700 (violet) ≥ 5.3:1. On dark: holo-400 → cyan-300 ≥ 6.9:1.
-     (Names kept from the blue accent so every hook keeps working.) */
-  --blue-700: #2f4fd8;
-  --teal-700: #6a4cb4;
-  --cyan-700: #7b61c9;
-  --cyan-300: #b9a2f2;
-  --glow-rgb: 185, 162, 242; /* violet glow */
+  /* Dark surfaces: deep petrol */
+  --night-900: #0a151b; /* Holobox interior, deepest */
+  --night-800: #17272f; /* dark cards */
+  --charcoal-700: var(--ph-bg-dark);
+  --paper-50: var(--ph-text-on-dark);
+  --paper-300: #c7d2d7; /* secondary text on dark */
+  --paper-500: #9dadb4; /* captions on dark */
+  --line-night: #627882; /* ≥ 3:1 UI on dark canvas and cards */
 
+  /* Holo (technology only: hologram, 3D, Holobox, tech details) */
+  --holo-100: #e3f5f8;
+  --holo-300: var(--ph-hologram-cyan);
+  --holo-400: var(--ph-hologram-blue);
+  --holo-500: var(--ph-hologram-blue);
+  --holo-600: #3e8faf;
+  /* Highlight tiles, glow buttons, package tabs: a faint teal tint → white (interface, not neon). */
+  --holo-gradient: linear-gradient(100deg, #e2ebe8 0%, #ffffff 100%);
+  /* Accent hooks (names kept from earlier palettes): petrol and teal on light; on dark the
+     emphasis may keep a subtle holographic gradient (holo-400 → cyan-300). */
+  --blue-700: var(--ph-brand-primary);
+  --teal-700: var(--ph-brand-secondary-text);
+  --cyan-700: var(--ph-brand-secondary);
+  --cyan-300: var(--ph-hologram-cyan);
+  --glow-rgb: 99, 184, 216; /* hologram glow */
+
+  /* Amber: only "paid idle time" in the demand chart */
   --amber-300: #f8c98b;
   --amber-400: #f5a94a;
 
-  --orb-sky: #a9b6f0;
-  --orb-mint: #b9a6e3;
-  --orb-lavender: #c4b5dc;
-  --orb-peach: #e9cfc4;
+  /* Orbs on light sections: warm sand and a whisper of teal (no lavender or blue on the interface).
+     Night sections switch them to the holographic colours (see "Dark sections" below). */
+  --orb-sky: #e6dccd;
+  --orb-mint: #dbe5e1;
+  --orb-lavender: #ece3d6;
+  --orb-peach: #edd6ca;
 
-  --danger-mist: #a8321f;
+  --danger-mist: var(--ph-error);
   --danger-night: #ff8a75;
-  --success-mist: #1e6b45;
+  --success-mist: var(--ph-success);
   --success-night: #7fd9a8;
 
-  --focus: #4535a8;
+  --focus: var(--ph-focus-ring);
 
-  --r-sm: 8px;
-  --r-md: 16px;
-  --r-lg: 32px;
-  --r-xl: 48px;
+  --r-sm: var(--ph-radius-sm);
+  --r-md: var(--ph-radius-md);
+  --r-lg: var(--ph-radius-lg);
+  --r-xl: 48px; /* big outlined panels and the Holobox portal (the 3D scene reads this radius) */
   --r-pill: 999px;
 
-  --shadow-soft: 0 24px 60px -30px rgba(43, 34, 51, 0.32);
+  --shadow-soft: 0 24px 60px -30px rgba(23, 59, 77, 0.3);
   --glow-holo:
-    0 0 0 1px rgba(140, 196, 255, 0.35), 0 0 32px rgba(140, 196, 255, 0.28),
-    0 0 96px rgba(140, 196, 255, 0.14);
+    0 0 0 1px rgba(139, 220, 229, 0.35), 0 0 32px rgba(99, 184, 216, 0.28),
+    0 0 96px rgba(99, 184, 216, 0.14);
   --glow-amber: 0 0 12px rgba(245, 169, 74, 0.6);
 
   --nav-h: 64px;

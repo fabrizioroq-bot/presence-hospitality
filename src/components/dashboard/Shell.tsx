@@ -18,7 +18,7 @@ export function Shell({
         className="pointer-events-none fixed inset-0 -z-10"
         style={{
           background:
-            "radial-gradient(50% 40% at 80% 0%, rgba(141,179,223,0.14), transparent 70%)",
+            "radial-gradient(50% 40% at 80% 0%, rgba(95,127,119,0.14), transparent 70%)",
         }}
       />
       <header className="sticky top-0 z-40 border-b border-line-night/40 bg-night-900/80 backdrop-blur-[14px]">

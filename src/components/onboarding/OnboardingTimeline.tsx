@@ -137,7 +137,7 @@ export function OnboardingTimeline({
       className={cn(
         "step-node relative z-10 grid h-12 w-12 place-items-center rounded-pill text-label transition-[color,background-color,box-shadow] duration-500",
         i < reached
-          ? "bg-ink-900 text-paper-50"
+          ? "bg-petrol text-paper-50"
           : "bg-mist-surface text-ink-700 ring-1 ring-line-mist",
       )}
     >
@@ -170,7 +170,7 @@ export function OnboardingTimeline({
               ref={lineRef}
               aria-hidden
               style={{ transform: "scaleX(0)" }}
-              className="accent-line absolute inset-x-0 top-1/2 h-0.5 origin-left -translate-y-1/2 bg-ink-900"
+              className="accent-line absolute inset-x-0 top-1/2 h-0.5 origin-left -translate-y-1/2 bg-petrol"
             />
             {steps.map((s, i) => {
               const above = i % 2 === 0;

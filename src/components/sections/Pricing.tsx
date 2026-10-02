@@ -70,7 +70,7 @@ export async function Pricing() {
                   <ul className="flex flex-col gap-3 text-body text-ink-700">
                     {col.items.map((it) => (
                       <li key={it} className="flex gap-3">
-                        <span aria-hidden className="mt-[0.6em] h-1.5 w-1.5 shrink-0 rounded-full bg-ink-900" />
+                        <span aria-hidden className="mt-[0.6em] h-1.5 w-1.5 shrink-0 rounded-full bg-petrol" />
                         <span>{it}</span>
                       </li>
                     ))}

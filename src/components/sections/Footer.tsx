@@ -120,7 +120,7 @@ export async function Footer() {
                     <Icon d={icon.phone} />
                     <span>
                       <span className="text-paper-300">{c(ph.key === "sales" ? "phoneSales" : "phoneSupport")}</span>{" "}
-                      <a href={ph.href} className="hover:text-holo-300">
+                      <a href={ph.href} className="underline-offset-4 hover:underline">
                         {ph.display}
                       </a>
                     </span>
@@ -128,7 +128,7 @@ export async function Footer() {
                 ))}
                 <li className="flex gap-3">
                   <Icon d={icon.web} />
-                  <a href={site.domainUrl} className="hover:text-holo-300">
+                  <a href={site.domainUrl} className="underline-offset-4 hover:underline">
                     {site.displayUrl}
                   </a>
                 </li>
@@ -136,7 +136,7 @@ export async function Footer() {
                   <Icon d={icon.mail} />
                   <a
                     href={`mailto:${site.email}`}
-                    className="break-all hover:text-holo-300"
+                    className="break-all underline-offset-4 hover:underline"
                   >
                     {site.email}
                   </a>
@@ -147,9 +147,12 @@ export async function Footer() {
                     href={site.address.mapsHref}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="hover:text-holo-300"
+                    className="underline-offset-4 hover:underline"
                   >
-                    {site.address.street}, {site.address.postalCode} {site.address.city}
+                    {site.address.street},{" "}
+                    <span className="whitespace-nowrap">
+                      {site.address.postalCode} {site.address.city}
+                    </span>
                   </a>
                 </li>
               </ul>
@@ -160,13 +163,13 @@ export async function Footer() {
               <ul className="flex flex-col gap-3 text-body-sm">
                 {NAV.map(([page, key, hash]) => (
                   <li key={key}>
-                    <a href={pagePath(locale as Locale, page, hash)} className="hover:text-holo-300">
+                    <a href={pagePath(locale as Locale, page, hash)} className="underline-offset-4 hover:underline">
                       {n(key)}
                     </a>
                   </li>
                 ))}
                 <li>
-                  <a href={pagePath(locale as Locale, "/demo")} className="hover:text-holo-300">
+                  <a href={pagePath(locale as Locale, "/demo")} className="underline-offset-4 hover:underline">
                     {c("bookDemo")}
                   </a>
                 </li>
@@ -179,13 +182,13 @@ export async function Footer() {
                 <li>
                   <a
                     href={`/${locale}/privacy`}
-                    className="text-paper-50 hover:text-holo-300"
+                    className="text-paper-50 underline-offset-4 hover:underline"
                   >
                     {t("privacy")}
                   </a>
                 </li>
                 <li>
-                  <a href={`/${locale}/cookies`} className="text-paper-50 hover:text-holo-300">
+                  <a href={`/${locale}/cookies`} className="text-paper-50 underline-offset-4 hover:underline">
                     {t("cookies")}
                   </a>
                 </li>
@@ -205,11 +208,11 @@ export async function Footer() {
             <div className="flex flex-col gap-1">
               <span>{t("rights")}</span>
               {/* Credit: deliberately small and quiet. */}
-              <span className="text-[0.75rem] text-paper-500">{t("credit")}</span>
+              <span className="text-body-sm text-paper-500">{t("credit")}</span>
             </div>
             <a
               href="#top"
-              className="inline-flex min-h-11 shrink-0 items-center gap-2 hover:text-holo-300"
+              className="inline-flex min-h-11 shrink-0 items-center gap-2 underline-offset-4 hover:underline"
             >
               {c("backToTop")} <span aria-hidden>↑</span>
             </a>

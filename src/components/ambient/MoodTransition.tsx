@@ -24,7 +24,10 @@ export function MoodTransition({
       data-tone={tone}
       data-band
       className={cn("relative h-14 overflow-hidden sm:h-20 lg:h-60", className)}
-      style={{ background: `linear-gradient(180deg, ${c[from]} 0%, ${c[to]} 100%)` }}
+      // Through petrol-tinted mid tones: a straight ivory → dark fade passes through flat grey.
+      style={{
+        background: `linear-gradient(180deg, ${c[from]} 0%, color-mix(in oklab, ${c[from]} 68%, #173b4d) 38%, color-mix(in oklab, #173b4d 62%, ${c[to]}) 72%, ${c[to]} 100%)`,
+      }}
     >
       <span
         className="orb"

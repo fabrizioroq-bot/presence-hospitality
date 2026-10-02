@@ -50,7 +50,7 @@ export async function WhoPackages() {
             <RevealGroup className="flex flex-col lg:col-span-7" gap={0.1}>
               {roles.map((r, i) => (
                 <RevealItem key={r.title}>
-                  <div className="group grid grid-cols-[3rem_1fr_auto] items-start gap-4 border-b border-line-night py-7 transition-colors duration-300 hover:border-holo-300 lg:py-9">
+                  <div className="group grid grid-cols-[3rem_1fr_auto] items-start gap-4 border-b border-line-night py-7 transition-colors duration-300 hover:border-accent-night lg:py-9">
                     <span className="pt-2 text-label text-paper-500">{String(i + 1).padStart(2, "0")}</span>
                     <div className="flex flex-col gap-2">
                       <h3 className="text-heading-md">{r.title}</h3>
@@ -58,7 +58,7 @@ export async function WhoPackages() {
                     </div>
                     <span
                       aria-hidden
-                      className="pt-2 text-holo-300 opacity-0 transition-[opacity,transform] duration-300 group-hover:translate-x-1 group-hover:opacity-100"
+                      className="pt-2 text-accent-night opacity-0 transition-[opacity,transform] duration-300 group-hover:translate-x-1 group-hover:opacity-100"
                     >
                       →
                     </span>
@@ -74,8 +74,8 @@ export async function WhoPackages() {
                   {fit.map((f) => (
                     <li key={f} className="flex gap-3 text-body text-paper-300">
                       <svg aria-hidden viewBox="0 0 20 20" className="mt-0.5 h-5 w-5 shrink-0" fill="none">
-                        <circle cx="10" cy="10" r="9" stroke="var(--holo-300)" strokeOpacity="0.6" />
-                        <path d="M6 10.5l2.6 2.6L14 7.5" stroke="var(--holo-300)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                        <circle cx="10" cy="10" r="9" stroke="var(--ph-accent-on-dark)" strokeOpacity="0.6" />
+                        <path d="M6 10.5l2.6 2.6L14 7.5" stroke="var(--ph-accent-on-dark)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
                       <span>{f}</span>
                     </li>

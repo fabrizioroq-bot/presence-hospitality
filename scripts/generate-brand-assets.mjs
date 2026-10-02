@@ -10,10 +10,11 @@
 import { chromium } from "playwright";
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 
-const INK = "#221B29";
-const PLUM = "#2B2233";
-const LAV_LIGHT = "#EEEAF3";
-const LAV = "#CFC7D9";
+// "Warm Holographic Navy" (02-10): petrol navy, warm ivory, terracotta.
+const INK = "#173B4D"; // petrol navy
+const PLUM = "#173B4D"; // app-icon tile
+const LAV_LIGHT = "#F6F2EC"; // warm ivory
+const LAV = "#ECE3D6"; // warm sand
 
 const mark = (stroke, size) => `
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="-12 -12 24 24" width="${size}" height="${size}" fill="none" stroke="${stroke}" stroke-width="2">
@@ -37,7 +38,7 @@ const shot = async (html, w, h, path, transparent = false) => {
   return buf;
 };
 
-// App icons: light mark on a plum tile (readable on light and dark result pages).
+// App icons: ivory mark on a petrol tile (readable on light and dark result pages).
 const tile = (size, radius) =>
   page(`<div style="width:${size}px;height:${size}px;border-radius:${radius}px;background:${PLUM};display:grid;place-items:center">${mark(LAV_LIGHT, Math.round(size * 0.7))}</div>`, size, size);
 await shot(tile(192, 40), 192, 192, "src/app/icon1.png", true);
@@ -92,13 +93,13 @@ for (const locale of ["en", "nl"]) {
   const tagline = msg.meta.title.split(" | ")[1];
   const html = page(
     `<div style="position:relative;width:1200px;height:630px;padding:84px 96px;display:flex;flex-direction:column;justify-content:space-between;color:${INK};
-      background:radial-gradient(60% 70% at 88% 12%, #b9a6e3 0%, transparent 60%), radial-gradient(50% 60% at 6% 100%, #a9b6f0 0%, transparent 62%), radial-gradient(40% 50% at 60% 110%, #e9cfc4 0%, transparent 60%), linear-gradient(160deg, ${LAV_LIGHT} 0%, ${LAV} 100%)">
+      background:radial-gradient(60% 70% at 88% 12%, #dbe5e1 0%, transparent 60%), radial-gradient(50% 60% at 6% 100%, #e6dccd 0%, transparent 62%), radial-gradient(40% 50% at 60% 110%, #edd6ca 0%, transparent 60%), linear-gradient(160deg, ${LAV_LIGHT} 0%, ${LAV} 100%)">
       <div style="display:flex;align-items:center;gap:22px">${mark(INK, 76)}
         <span style="font-weight:800;font-size:52px;letter-spacing:-0.04em">Presence Hospitality</span></div>
       <div style="font-weight:800;font-size:68px;line-height:1.02;letter-spacing:-0.035em;max-width:940px">${tagline}</div>
       <div style="display:flex;justify-content:space-between;align-items:center;font-size:26px;font-weight:400">
         <span>presence-hospitality.com</span>
-        <span style="width:220px;height:10px;border-radius:999px;background:linear-gradient(90deg,#2F4FD8,#7B61C9)"></span></div>
+        <span style="width:220px;height:10px;border-radius:999px;background:#B74B32"></span></div>
     </div>`,
     1200,
     630,

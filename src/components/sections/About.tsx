@@ -23,7 +23,7 @@ export async function About() {
     [
       t("office"),
       <a key="office" href={site.address.mapsHref} target="_blank" rel="noopener noreferrer" className="underline-offset-4 hover:underline">
-        {site.address.street}, {site.address.postalCode} {site.address.city}
+        {site.address.street}, <span className="whitespace-nowrap">{site.address.postalCode} {site.address.city}</span>
       </a>,
     ],
     [
@@ -98,7 +98,7 @@ export async function About() {
                 <h3 className="text-heading-md lg:col-span-4">{t(`what.${key}.t`)}</h3>
                 <div className="flex flex-col items-start gap-3 lg:col-span-7">
                   <p className="max-w-[56ch] text-body text-ink-700">{t(`what.${key}.d`)}</p>
-                  <a href={pagePath(locale, `/${key}`)} className="text-body font-semibold text-ink-900 underline underline-offset-4 hover:text-blue-700">
+                  <a href={pagePath(locale, `/${key}`)} className="text-body font-semibold text-ink-900 underline underline-offset-4 hover:text-teal-text">
                     {t(`what.${key}.link`)} <span aria-hidden>→</span>
                   </a>
                 </div>

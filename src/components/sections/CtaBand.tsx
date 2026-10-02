@@ -37,7 +37,7 @@ export async function CtaBand({
             </ButtonLink>
             <span className="text-body-sm text-paper-300">
               {t("or")}{" "}
-              <a href={site.phones[0].href} className="text-paper-50 underline underline-offset-4 hover:text-holo-300">
+              <a href={site.phones[0].href} className="text-paper-50 underline underline-offset-4 hover:text-paper-300">
                 {site.phones[0].display}
               </a>
             </span>

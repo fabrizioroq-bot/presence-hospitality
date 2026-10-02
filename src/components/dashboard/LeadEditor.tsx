@@ -51,7 +51,7 @@ export function LeadEditor({
         <button
           type="submit"
           disabled={pending}
-          className="min-h-11 rounded-pill bg-paper-50 px-6 text-body-sm font-semibold text-ink-900 hover:bg-holo-100 disabled:opacity-60"
+          className="min-h-11 rounded-pill bg-paper-50 px-6 text-body-sm font-semibold text-ink-900 hover:bg-paper-300 disabled:opacity-60"
         >
           {pending ? "Saving…" : "Save changes"}
         </button>

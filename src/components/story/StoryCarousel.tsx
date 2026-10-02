@@ -281,7 +281,7 @@ export function StoryCarousel({ labels }: { labels: CarouselLabels }) {
               <span
                 className={cn(
                   "accent-dot block h-2 rounded-full transition-all duration-300",
-                  idx === i ? "w-6 bg-ink-900" : "w-2 bg-line-mist/60",
+                  idx === i ? "w-6 bg-petrol" : "w-2 bg-line-mist/60",
                 )}
               />
             </button>
@@ -292,7 +292,7 @@ export function StoryCarousel({ labels }: { labels: CarouselLabels }) {
           onClick={() => go(i + 1)}
           disabled={i === n - 1}
           aria-label={labels.next}
-          className="grid h-11 w-11 place-items-center rounded-pill bg-ink-900 text-paper-50 transition-opacity disabled:opacity-35"
+          className="grid h-11 w-11 place-items-center rounded-pill bg-petrol text-paper-50 transition-opacity disabled:opacity-35"
         >
           <svg
             aria-hidden
@@ -313,7 +313,7 @@ export function StoryCarousel({ labels }: { labels: CarouselLabels }) {
       <div aria-hidden className="relative -mt-2 h-0.5 overflow-hidden rounded-full bg-line-mist/30 motion-reduce:hidden">
         <span
           key={`${i}-${autoplay}`}
-          className={cn("accent-bar absolute inset-y-0 left-0 w-full origin-left rounded-full bg-ink-900", autoplay ? "carousel-progress" : "scale-x-0")}
+          className={cn("accent-bar absolute inset-y-0 left-0 w-full origin-left rounded-full bg-petrol", autoplay ? "carousel-progress" : "scale-x-0")}
           style={{ animationDuration: `${AUTOPLAY_MS}ms` }}
         />
       </div>

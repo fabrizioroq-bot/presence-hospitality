@@ -38,7 +38,7 @@ export function Accordion({
                   aria-hidden
                   className={cn(
                     "relative grid h-9 w-9 shrink-0 place-items-center rounded-pill ring-1 transition-[transform,background-color,color] duration-300",
-                    isOpen ? "rotate-45 bg-ink-900 text-paper-50 ring-ink-900" : "text-ink-900 ring-line-mist group-hover:bg-mist-surface",
+                    isOpen ? "rotate-45 bg-petrol text-paper-50 ring-ink-900" : "text-ink-900 ring-line-mist group-hover:bg-mist-surface",
                   )}
                 >
                   <svg viewBox="0 0 16 16" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round">

@@ -178,14 +178,14 @@ function Chart({
       {/* Demand area + curve */}
       <path
         d={area}
-        fill="var(--holo-400)"
+        fill="var(--ph-accent-on-dark)"
         fillOpacity={0.12}
         {...fade(2.1)}
       />
       <path
         d={demand}
         fill="none"
-        stroke="var(--holo-400)"
+        stroke="var(--ph-accent-on-dark)"
         strokeWidth={v.stroke * 2.5}
         strokeLinecap="round"
         {...draw(0.9, 1.2)}
@@ -221,7 +221,7 @@ function Chart({
             x={x(12.5)}
             y={y(DEMAND_SHAPE[12]) - v.font * 2.2}
             textAnchor="middle"
-            fill="var(--holo-300)"
+            fill="var(--ph-accent-on-dark)"
           >
             {labels.demand.toUpperCase()}
           </text>
@@ -254,8 +254,8 @@ export function DemandChart({ labels }: { labels: DemandChartLabels }) {
           <span className="h-0.5 w-5 rounded-full bg-paper-300" />
           {labels.staffed}
         </li>
-        <li className="inline-flex items-center gap-2 text-holo-300">
-          <span className="h-0.5 w-5 rounded-full bg-holo-400" />
+        <li className="inline-flex items-center gap-2 text-accent-night">
+          <span className="h-0.5 w-5 rounded-full bg-accent-night" />
           {labels.demand}
         </li>
         <li className="inline-flex items-center gap-2 text-amber-300">

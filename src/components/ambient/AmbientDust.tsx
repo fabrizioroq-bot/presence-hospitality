@@ -44,11 +44,12 @@ export function AmbientDust({
       g.fillRect(0, 0, 64, 64);
       return s;
     };
-    const cool = mood === "night" ? sprite("191,224,255", 0.9) : sprite("90,168,245", 0.55);
-    // Warm palette: most motes are lavender/violet, the rest holo blue; warm sparks are blush.
-    const violet = mood === "night" ? sprite("201,186,242", 0.9) : sprite("123,97,201", 0.5);
+    // Night (tech): holographic cyan / violet motes. Light sections (interface): faint petrol and
+    // teal dust, never blue or lavender. Warm sparks: blush on night, terracotta on light.
+    const cool = mood === "night" ? sprite("139,220,229", 0.9) : sprite("23,59,77", 0.32);
+    const violet = mood === "night" ? sprite("175,165,206", 0.9) : sprite("95,127,119", 0.42);
     const violetShare = 0.6;
-    const warm = sprite(mood === "night" ? "233,207,196" : "214,150,130", mood === "night" ? 0.85 : 0.6);
+    const warm = sprite(mood === "night" ? "233,207,196" : "183,75,50", mood === "night" ? 0.85 : 0.4);
 
     type Mote = { x: number; y: number; r: number; vy: number; ph: number; depth: number; warm: boolean; violet: boolean };
     let motes: Mote[] = [];

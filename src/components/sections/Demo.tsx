@@ -70,8 +70,8 @@ export async function Demo({ asPage = false }: { asPage?: boolean } = {}) {
                 {reassure.map((r) => (
                   <li key={r} className="flex gap-3 text-body text-paper-50">
                     <svg aria-hidden viewBox="0 0 20 20" className="mt-0.5 h-5 w-5 shrink-0" fill="none">
-                      <circle cx="10" cy="10" r="9" stroke="var(--holo-300)" strokeOpacity="0.6" />
-                      <path d="M6 10.5l2.6 2.6L14 7.5" stroke="var(--holo-300)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+                      <circle cx="10" cy="10" r="9" stroke="var(--ph-accent-on-dark)" strokeOpacity="0.6" />
+                      <path d="M6 10.5l2.6 2.6L14 7.5" stroke="var(--ph-accent-on-dark)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
                     </svg>
                     {r}
                   </li>
@@ -84,15 +84,15 @@ export async function Demo({ asPage = false }: { asPage?: boolean } = {}) {
                 <rect x="1" y="1" width="38" height="62" rx="10" stroke="var(--holo-400)" strokeOpacity="0.7" />
                 <circle cx="20" cy="22" r="4" stroke="var(--holo-300)" />
                 <path d="M13 50v-12c0-4 3-7 7-7s7 3 7 7v12" stroke="var(--holo-300)" />
-                <circle cx="31" cy="9" r="2.5" fill="var(--amber-400)" />
+                <circle cx="31" cy="9" r="2.5" fill="var(--ph-live)" />
               </svg>
               <div className="flex flex-col gap-1 text-body">
                 <span className="text-paper-300">{t("contactLead")}</span>
                 <PhoneLinks
                   labelClassName="text-paper-300"
-                  linkClassName="w-fit text-paper-50 underline decoration-line-night underline-offset-4 hover:decoration-holo-300"
+                  linkClassName="w-fit text-paper-50 underline decoration-line-night underline-offset-4 hover:decoration-paper-50"
                 />
-                <a href={`mailto:${site.email}`} className="w-fit break-all text-paper-50 underline decoration-line-night underline-offset-4 hover:decoration-holo-300">
+                <a href={`mailto:${site.email}`} className="w-fit break-all text-paper-50 underline decoration-line-night underline-offset-4 hover:decoration-paper-50">
                   {site.email}
                 </a>
               </div>

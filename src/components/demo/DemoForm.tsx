@@ -291,7 +291,7 @@ export function DemoForm({
             aria-describedby={consentErr ? "demo-consent-err" : undefined}
             className="demo-check mt-0.5"
           />
-          <label htmlFor="demo-consent" className="text-body-sm text-paper-300 [&_a]:text-holo-300 [&_a]:underline [&_a]:underline-offset-4">
+          <label htmlFor="demo-consent" className="text-body-sm text-paper-300 [&_a]:text-paper-50 [&_a]:underline [&_a]:underline-offset-4">
             {consentLabel}
           </label>
         </div>

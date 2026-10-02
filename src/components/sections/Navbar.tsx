@@ -183,15 +183,15 @@ export function Navbar({
   const night = mood === "night" || open;
   const surface = scrolled && !open
     ? night
-      ? "bg-charcoal-700/72 backdrop-blur-[14px] shadow-[inset_0_-1px_0_rgba(136,124,149,0.3)]"
-      : "bg-mist-bg/72 backdrop-blur-[14px] shadow-[inset_0_-1px_0_rgba(115,103,138,0.3)]"
+      ? "bg-charcoal-700/80 backdrop-blur-[14px] shadow-[inset_0_-1px_0_rgba(98,120,130,0.35)]"
+      : "bg-mist-bg/85 backdrop-blur-[14px] shadow-[inset_0_-1px_0_rgba(220,216,210,0.9)]"
     : "bg-transparent";
 
   return (
     <>
       <a
         href="#main"
-        className="sr-only-focusable fixed top-3 left-3 z-[70] rounded-pill bg-ink-900 px-4 py-2 text-paper-50"
+        className="sr-only-focusable fixed top-3 left-3 z-[70] rounded-pill bg-petrol px-4 py-2 text-paper-50"
       >
         {c("skip")}
       </a>
@@ -217,15 +217,15 @@ export function Navbar({
                     l={l}
                     active={active === l.key}
                     className={cn(
-                      "relative block rounded-pill px-4 py-2 text-[0.9375rem] font-semibold transition-opacity",
-                      active === l.key ? "opacity-100" : "opacity-75 hover:opacity-100",
+                      "relative flex min-h-11 items-center rounded-pill px-3.5 text-[1rem] font-semibold transition-opacity xl:px-4",
+                      active === l.key ? "opacity-100" : "opacity-85 hover:opacity-100",
                     )}
                   >
                     {l.label}
                     <span
                       aria-hidden
                       className={cn(
-                        "nav-ind absolute inset-x-4 -bottom-0.5 h-[2px] origin-left rounded-full bg-holo-500 shadow-[0_0_12px_rgba(90,168,245,0.8)] transition-transform duration-300 ease-out",
+                        "nav-ind absolute inset-x-4 -bottom-0.5 h-[2px] origin-left rounded-full transition-transform duration-300 ease-out",
                         active === l.key ? "scale-x-100" : "scale-x-0",
                       )}
                     />

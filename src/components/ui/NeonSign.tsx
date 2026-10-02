@@ -5,8 +5,8 @@ export function NeonSign({ word = "HOTEL" }: { word?: string }) {
       {word.split("").map((c, i) => (
         <span
           key={i}
-          className="grid h-14 w-12 place-items-center rounded-sm border border-amber-300/70 text-[1.75rem] font-extrabold text-amber-300"
-          style={{ textShadow: "0 0 8px rgba(245,169,74,0.9), 0 0 24px rgba(245,169,74,0.5)", boxShadow: "0 0 14px rgba(245,169,74,0.35), inset 0 0 10px rgba(245,169,74,0.25)" }}
+          className="grid h-14 w-12 place-items-center rounded-sm border border-neon/70 text-[1.75rem] font-extrabold text-neon"
+          style={{ textShadow: "0 0 8px rgba(224,122,95,0.9), 0 0 24px rgba(224,122,95,0.5)", boxShadow: "0 0 14px rgba(224,122,95,0.35), inset 0 0 10px rgba(224,122,95,0.25)" }}
         >
           {c}
         </span>

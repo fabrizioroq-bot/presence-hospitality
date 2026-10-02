@@ -20,7 +20,7 @@ export function SpotlightCard({ children, className, tone = "holo" }: { children
         style={{
           background:
             tone === "holo"
-              ? "radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), rgba(191,224,255,0.16), transparent 70%)"
+              ? "radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.08), transparent 70%)"
               : "radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), rgba(255,255,255,0.45), transparent 70%)",
         }}
       />

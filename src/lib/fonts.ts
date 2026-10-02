@@ -2,7 +2,7 @@ import { Hanken_Grotesk, JetBrains_Mono } from "next/font/google";
 
 export const hanken = Hanken_Grotesk({
   subsets: ["latin"], // Latin-1 covers Dutch diacritics (é, ë, ï)
-  weight: ["300", "400", "600", "800"],
+  weight: ["400", "600", "800"],
   style: ["normal"],
   display: "swap",
   variable: "--font-hanken",

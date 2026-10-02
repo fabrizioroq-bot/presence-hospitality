@@ -66,14 +66,14 @@ export async function Benefits() {
 
           {/* B — cost, ink tile */}
           <RevealItem className="swipe-item lg:col-span-5">
-            <div className={cn(tile, "bg-ink-900 text-paper-50")}>
+            <div className={cn(tile, "bg-petrol text-paper-50")}>
               <h3 className="text-heading-md">{t("bTitle")}</h3>
               {showSavings ? (
                 <p className="flex flex-col gap-2">
                   <span className="text-label text-paper-300">{t("bUpTo")}</span>
                   <span className="text-display-lg lg:text-display-xl">
                     <RangeTicker className="key-figure" from={savings.range![0]} to={savings.range![1]} />
-                    <sup aria-hidden className="ml-1 align-super text-body text-holo-300">
+                    <sup aria-hidden className="ml-1 align-super text-body text-accent-night">
                       ¹
                     </sup>
                   </span>

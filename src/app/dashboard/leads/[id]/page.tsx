@@ -42,7 +42,7 @@ export default async function LeadPage({
       <a
         key="e"
         href={`mailto:${l.email}`}
-        className="text-holo-300 underline underline-offset-4"
+        className="text-accent-night underline underline-offset-4"
       >
         {l.email}
       </a>,
@@ -52,7 +52,7 @@ export default async function LeadPage({
       <a
         key="p"
         href={`tel:${l.phone.replace(/[^\d+]/g, "")}`}
-        className="text-holo-300 underline underline-offset-4"
+        className="text-accent-night underline underline-offset-4"
       >
         {l.phone}
       </a>,

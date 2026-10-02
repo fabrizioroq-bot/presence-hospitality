@@ -75,7 +75,7 @@ export default async function LeadsPage({
           </div>
           <a
             href={`/dashboard/export${filtersToQuery(f, { page: 1 })}`}
-            className="inline-flex min-h-11 items-center gap-2 rounded-pill bg-paper-50 px-5 text-body-sm font-semibold text-ink-900 hover:bg-holo-100"
+            className="inline-flex min-h-11 items-center gap-2 rounded-pill bg-paper-50 px-5 text-body-sm font-semibold text-ink-900 hover:bg-paper-300"
           >
             <svg
               aria-hidden
@@ -117,7 +117,7 @@ export default async function LeadsPage({
               className={cn(
                 "flex min-w-36 flex-col gap-1 rounded-lg border px-4 py-3 transition-colors",
                 f.status === s
-                  ? "border-holo-300 bg-night-800"
+                  ? "border-accent-night bg-night-800"
                   : "border-line-night/60 hover:border-line-night",
               )}
             >
@@ -187,7 +187,7 @@ export default async function LeadsPage({
           <div className="flex gap-2">
             <button
               type="submit"
-              className="min-h-12 rounded-pill bg-paper-50 px-5 text-body-sm font-semibold text-ink-900 hover:bg-holo-100"
+              className="min-h-12 rounded-pill bg-paper-50 px-5 text-body-sm font-semibold text-ink-900 hover:bg-paper-300"
             >
               Apply
             </button>

@@ -193,14 +193,14 @@ export function StoryPinned({ labels }: { labels: StoryLabels }) {
           <div className="col-span-4 flex gap-8">
             <div aria-hidden className="relative flex flex-col items-center gap-5 py-1">
               <span className="absolute top-4 bottom-4 left-1/2 w-px -translate-x-1/2 bg-line-mist/40" />
-              <span ref={fillRef} style={{ transform: "scaleY(0)" }} className="accent-line absolute top-4 bottom-4 left-1/2 w-px origin-top -translate-x-1/2 bg-ink-900" />
+              <span ref={fillRef} style={{ transform: "scaleY(0)" }} className="accent-line absolute top-4 bottom-4 left-1/2 w-px origin-top -translate-x-1/2 bg-petrol" />
               {labels.steps.map((_, i) => (
                 <span
                   key={i}
                   data-lit={i <= step ? "" : undefined}
                   className={cn(
                     "step-node relative grid h-9 w-9 place-items-center rounded-pill text-label transition-colors duration-300",
-                    i <= step ? "bg-ink-900 text-paper-50" : "bg-mist-surface text-ink-700 ring-1 ring-line-mist",
+                    i <= step ? "bg-petrol text-paper-50" : "bg-mist-surface text-ink-700 ring-1 ring-line-mist",
                   )}
                 >
                   {String(i + 1).padStart(2, "0")}
@@ -274,7 +274,7 @@ export function StoryPinned({ labels }: { labels: StoryLabels }) {
                   </span>
                 </div>
                 <div className={cn("absolute inset-0 flex flex-col items-center justify-center gap-[0.6cqw] p-[1.1cqw] text-center transition-opacity duration-500", show(["alert", "calling"]))}>
-                  <span className="grid h-[2.6cqw] w-[2.6cqw] place-items-center rounded-full bg-amber-400 text-[1.5cqw] font-extrabold text-ink-900 shadow-glow-amber">!</span>
+                  <span className="grid h-[2.6cqw] w-[2.6cqw] place-items-center rounded-full bg-terracotta text-[1.5cqw] font-extrabold text-white shadow-[0_0_12px_rgba(183,75,50,0.6)]">!</span>
                   <span className="text-[1cqw] font-semibold">{k.alert}</span>
                   <span className="text-[max(7px,0.72cqw)] text-paper-300">{phase === "calling" ? k.calling : k.alertHint}</span>
                 </div>

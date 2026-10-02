@@ -18,7 +18,7 @@ export function AuthCard({
         className="pointer-events-none absolute inset-0 -z-10"
         style={{
           background:
-            "radial-gradient(60% 50% at 70% 0%, rgba(141,179,223,0.18), transparent 70%), radial-gradient(40% 40% at 10% 100%, rgba(241,199,163,0.1), transparent 70%)",
+            "radial-gradient(60% 50% at 70% 0%, rgba(99,184,216,0.1), transparent 70%), radial-gradient(40% 40% at 10% 100%, rgba(95,127,119,0.14), transparent 70%)",
         }}
       />
       <div className="w-full max-w-md">

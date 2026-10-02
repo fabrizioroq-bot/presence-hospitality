@@ -125,8 +125,8 @@ export function PageTransition() {
       ctx.clearRect(0, 0, w, h);
       // Mist veil with a soft sky glow.
       const g = ctx.createRadialGradient(w * 0.7, h * 0.2, 0, w * 0.7, h * 0.2, Math.max(w, h));
-      g.addColorStop(0, `rgba(207,199,217,${0.9 * veil})`);
-      g.addColorStop(1, `rgba(238,234,243,${veil})`);
+      g.addColorStop(0, `rgba(232,223,210,${0.9 * veil})`);
+      g.addColorStop(1, `rgba(246,242,236,${veil})`);
       ctx.fillStyle = g;
       ctx.fillRect(0, 0, w, h);
       // Particles rising (dissolve), fading with the veil on the way in.
@@ -135,7 +135,7 @@ export function PageTransition() {
         const y = q.y - q.v * secs * 0.55;
         const x = q.x + Math.sin(secs * 3 + q.ph) * 6 * dpr;
         ctx.globalAlpha = alpha * 0.85;
-        ctx.fillStyle = q.warm ? "#D99A86" : q.ph > Math.PI ? "#7B61C9" : "#2F7FD0";
+        ctx.fillStyle = q.warm ? "#D99A86" : q.ph > Math.PI ? "#AFA5CE" : "#63B8D8";
         ctx.beginPath();
         ctx.arc(x, ((y % h) + h) % h, q.r, 0, Math.PI * 2);
         ctx.fill();

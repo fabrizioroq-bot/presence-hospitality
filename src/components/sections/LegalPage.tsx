@@ -55,7 +55,7 @@ export async function LegalPage({
                   <li key={li.slice(0, 24)} className="flex gap-3">
                     <span
                       aria-hidden
-                      className="mt-[0.6em] h-1.5 w-1.5 shrink-0 rounded-full bg-ink-900"
+                      className="mt-[0.6em] h-1.5 w-1.5 shrink-0 rounded-full bg-petrol"
                     />
                     <span>{li}</span>
                   </li>

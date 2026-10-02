@@ -33,14 +33,14 @@ export async function KeyBenefits() {
           <Headline id="key-benefits-title" raw={k.raw("title") as string} className="max-w-[16ch] text-display-xl" />
         </div>
         <RevealGroup id="key-benefits" tabIndex={0} className="swipe-row mt-8 lg:mt-14 lg:grid lg:grid-cols-3 lg:gap-6" gap={0.09}>
-          <RevealItem className={cn(tile, "bg-ink-900 text-paper-50")}>
+          <RevealItem className={cn(tile, "bg-petrol text-paper-50")}>
             <h3 className="text-heading-md">{t("bTitle")}</h3>
             {showSavings ? (
               <p className="flex flex-col gap-2">
                 <span className="text-label text-paper-300">{t("bUpTo")}</span>
                 <span className="text-display-lg">
                   <RangeTicker className="key-figure" from={savings.range![0]} to={savings.range![1]} />
-                  <sup aria-hidden className="ml-1 align-super text-body text-holo-300">¹</sup>
+                  <sup aria-hidden className="ml-1 align-super text-body text-accent-night">¹</sup>
                 </span>
                 <span className="text-body text-paper-300">{t("bSuffix")}</span>
               </p>
