@@ -6,7 +6,6 @@
   "common": {
     "skip": "Ga naar inhoud",
     "bookDemo": "Plan een demo",
-    "companyOf": "Een bedrijf van",
     "switchLocale": "Schakel naar Engels",
     "menuOpen": "Menu openen",
     "menuClose": "Menu sluiten",
@@ -15,9 +14,7 @@
     "language": "Taal",
     "mobileMenu": "Menu",
     "stickyCta": "Plan een demo",
-    "swipeHint": "Swipe voor meer",
-    "phoneSales": "Verkoop",
-    "phoneSupport": "Support"
+    "swipeHint": "Swipe voor meer"
   },
   "nav": {
     "howItWorks": "Hoe het werkt",
@@ -35,7 +32,7 @@
     "title": "Stop met het werven van <em>receptie</em>personeel.",
     "photoStatus": "Receptionist online · 24/7",
     "photoAlt": "Presence Hospitality: een gast loopt met haar koffer door een moderne hotelgang naar haar kamer.",
-    "call": "Of bel sales"
+    "mail": "Of mail ons"
   },
   "footer": {
     "tagline": "Klaar wanneer je gasten dat zijn.",
@@ -338,7 +335,7 @@
     "eyebrow": "FAQ",
     "title": "Vragen die hoteleigenaren <em>ons stellen</em>",
     "still": "Nog vragen?",
-    "stillBody": "Bel of mail ons, we lichten het graag toe.",
+    "stillBody": "Mail ons, we lichten het graag toe.",
     "items": {
       "pms": {
         "q": "Moeten we ons PMS vervangen?",
@@ -413,7 +410,7 @@
       "Een pakketadvies voor je hotel",
       "Vrijblijvend"
     ],
-    "contactLead": "Liever eerst even bellen?",
+    "contactLead": "Liever eerst even mailen?",
     "f": {
       "first_name": "Voornaam",
       "last_name": "Achternaam",
@@ -492,12 +489,12 @@
     },
     "about": {
       "title": "Over ons | Presence Hospitality",
-      "description": "Over Presence Hospitality: de front office op afstand voor hotels. Een bedrijf van [partner], gevestigd in Amsterdam. Wie we zijn, wat we doen en hoe je ons bereikt.",
+      "description": "Over Presence Hospitality: de front office op afstand voor hotels, gevestigd in Amsterdam. Wie we zijn, wat we doen en hoe je ons bereikt.",
       "eyebrow": "Over ons",
       "h1": "Over <em>Presence Hospitality</em>",
       "sub": "We zijn niet begonnen met een hologram. We zijn begonnen met een personeelsprobleem in een hotel.",
       "whoTitle": "We komen uit de hospitality.",
-      "who1": "Presence Hospitality is onderdeel van [partner], een horecagroep uit Amsterdam met restaurants, bars, cafés en hotels. De technologie is nieuw; de operationele kennis van gastvrijheid niet.",
+      "who1": "Presence Hospitality is gevestigd in Amsterdam en opgebouwd door mensen uit restaurants, bars, cafés en hotels. De technologie is nieuw; de operationele kennis van gastvrijheid niet.",
       "who2": "Daarom verkopen we een bemande receptie, geen apparaat. Getrainde receptionisten werken vanuit onze hub in Amsterdam. Gasten checken zelf in, en hebben ze iemand nodig, dan verschijnt er een receptionist als levensgroot hologram in de Holobox in de lobby.",
       "whatTitle": "Wat we doen",
       "what": {
@@ -519,7 +516,6 @@
       },
       "contactTitle": "Contact",
       "company": "Bedrijf",
-      "partOf": "Onderdeel van",
       "office": "Kantoor",
       "email": "E-mail",
       "website": "Website",
@@ -535,7 +531,7 @@
   "ctaBand": {
     "title": "Klaar om het <em>live</em> te zien?",
     "body": "Plan een demo met een echte receptionist in de Holobox.",
-    "or": "of bel"
+    "or": "of mail"
   },
   "cursor": {
     "drag": "Sleep",
@@ -546,7 +542,6 @@
     "label": "Wie er achter Presence Hospitality zit",
     "items": [
       "Gebouwd in Amsterdam",
-      "Een bedrijf van [partner]",
       "Echte receptionisten, geen AI, geen opname",
       "24/7"
     ]

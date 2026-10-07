@@ -2,17 +2,11 @@
 export const site = {
   name: "Presence Hospitality",
   legalName: "Presence Hospitality B.V.",
-  parent: "[partner]",
   // The public domain (root is primary; www and the vercel.app alias redirect to it). Every canonical,
   // hreflang, Open Graph URL, sitemap entry and structured-data URL uses it, on every environment
   // (previews are noindex), so search engines never see a vercel.app URL as the original.
   domainUrl: "https://presence-hospitality.com",
   displayUrl: "www.presence-hospitality.com",
-  // Labels come from messages (`common.phoneSales`, `common.phoneSupport`).
-  phones: [
-    { key: "sales", display: "[removed]", href: "tel:[removed]" },
-    { key: "support", display: "[removed]", href: "tel:[removed]" },
-  ],
   email: "info@presence-hospitality.com",
   address: {
     // CONFIRM: street spelling. Postcode confirmed by the client (02-10).

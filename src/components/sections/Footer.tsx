@@ -8,8 +8,6 @@ import { pagePath } from "@/i18n/paths";
 import type { Locale } from "@/i18n/routing";
 
 const icon = {
-  phone:
-    "M3 3.5C3 2.7 3.7 2 4.5 2h1.3c.4 0 .8.3.9.7l.7 2.4c.1.4 0 .8-.3 1l-1 .9a8 8 0 0 0 3.9 3.9l.9-1c.3-.3.7-.4 1-.3l2.4.7c.4.1.7.5.7.9v1.3c0 .8-.7 1.5-1.5 1.5A11.5 11.5 0 0 1 3 3.5Z",
   web: "M8 1.75a6.25 6.25 0 1 0 0 12.5 6.25 6.25 0 0 0 0-12.5Zm-6.25 6.25h12.5M8 1.75c1.7 1.8 2.5 3.9 2.5 6.25S9.7 12.45 8 14.25C6.3 12.45 5.5 10.35 5.5 8S6.3 3.55 8 1.75Z",
   mail: "M2 4h12v8H2zM2 4.5l6 4.5 6-4.5",
   pin: "M8 14.5s4.5-4.2 4.5-8a4.5 4.5 0 0 0-9 0c0 3.8 4.5 8 4.5 8Zm0-6.3a1.7 1.7 0 1 0 0-3.4 1.7 1.7 0 0 0 0 3.4Z",
@@ -104,28 +102,11 @@ export async function Footer() {
           <div className="mt-6 grid grid-cols-2 gap-x-6 gap-y-8 border-t border-line-night/40 pt-8 lg:mt-16 lg:grid-cols-4 lg:gap-12 lg:pt-12">
             <div className="col-span-2 flex flex-col gap-4 lg:col-span-1">
               <Logo onNight />
-              <p className="text-body-sm text-paper-300">
-                {c("companyOf")}{" "}
-                <span className="font-semibold text-paper-50">
-                  {site.parent}
-                </span>
-              </p>
             </div>
 
             <div className="col-span-2 flex flex-col gap-4 lg:col-span-1">
               <h2 className="text-label text-paper-500">{t("contact")}</h2>
               <ul className="flex flex-col gap-3 text-body-sm">
-                {site.phones.map((ph) => (
-                  <li key={ph.key} className="flex gap-3">
-                    <Icon d={icon.phone} />
-                    <span>
-                      <span className="text-paper-300">{c(ph.key === "sales" ? "phoneSales" : "phoneSupport")}</span>{" "}
-                      <a href={ph.href} className="underline-offset-4 hover:underline">
-                        {ph.display}
-                      </a>
-                    </span>
-                  </li>
-                ))}
                 <li className="flex gap-3">
                   <Icon d={icon.web} />
                   <a href={site.domainUrl} className="underline-offset-4 hover:underline">

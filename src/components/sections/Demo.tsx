@@ -7,7 +7,6 @@ import { DemoForm, type DemoFormLabels } from "@/components/demo/DemoForm";
 import { Headline } from "@/components/ui/Headline";
 import { Reveal } from "@/components/ui/Reveal";
 import { site } from "@/content/site";
-import { PhoneLinks } from "@/components/ui/PhoneLinks";
 
 /** Book a demo: pitch + reassurance on the left, the form card on the right. Night. */
 export async function Demo({ asPage = false }: { asPage?: boolean } = {}) {
@@ -89,10 +88,6 @@ export async function Demo({ asPage = false }: { asPage?: boolean } = {}) {
               </svg>
               <div className="flex flex-col gap-1 text-body">
                 <span className="text-paper-300">{t("contactLead")}</span>
-                <PhoneLinks
-                  labelClassName="text-paper-300"
-                  linkClassName="w-fit text-paper-50 underline decoration-line-night underline-offset-4 hover:decoration-paper-50"
-                />
                 <a href={`mailto:${site.email}`} className="w-fit break-all text-paper-50 underline decoration-line-night underline-offset-4 hover:decoration-paper-50">
                   {site.email}
                 </a>

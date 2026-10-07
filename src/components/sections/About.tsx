@@ -17,11 +17,9 @@ const WHAT = ["solution", "packages", "onboarding"] as const;
  */
 export async function About() {
   const t = await getTranslations("pages.about");
-  const c = await getTranslations("common");
   const locale = (await getLocale()) as Locale;
   const facts: [string, React.ReactNode][] = [
     [t("company"), site.legalName],
-    [t("partOf"), site.parent],
     [
       t("office"),
       <a key="office" href={site.address.mapsHref} target="_blank" rel="noopener noreferrer" className="underline-offset-4 hover:underline">
@@ -34,15 +32,6 @@ export async function About() {
         {site.email}
       </a>,
     ],
-    ...site.phones.map(
-      (ph) =>
-        [
-          c(ph.key === "sales" ? "phoneSales" : "phoneSupport"),
-          <a key={ph.key} href={ph.href} className="underline-offset-4 hover:underline">
-            {ph.display}
-          </a>,
-        ] as [string, React.ReactNode],
-    ),
     [
       t("website"),
       <a key="web" href={site.domainUrl} className="underline-offset-4 hover:underline">

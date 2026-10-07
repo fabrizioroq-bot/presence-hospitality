@@ -3,7 +3,7 @@ import { site } from "@/content/site";
 
 /**
  * Structured data for brand search (every public page via PageShell, EN + NL): one @graph with
- * - Organization: name, legal name, logo, contact points, parent company, official profiles;
+ * - Organization: name, legal name, logo, contact email, official profiles;
  * - ProfessionalService (a schema.org LocalBusiness type): the Amsterdam office;
  * - WebSite: the site name Google shows above the result.
  * Everything comes from src/content/site.ts; `sameAs` renders only when profiles are listed.
@@ -29,9 +29,7 @@ export async function OrgJsonLd() {
     addressLocality: site.address.city,
     addressCountry: site.address.country,
   };
-  const phone = (key: string) => site.phones.find((p) => p.key === key)!.href.replace("tel:", "");
   const sameAs = site.sameAs.length ? { sameAs: site.sameAs } : {};
-  const parent = { "@type": "Organization", name: site.parent };
 
   const data = {
     "@context": "https://schema.org",
@@ -46,16 +44,13 @@ export async function OrgJsonLd() {
         image: { "@id": `${base}/#logo` },
         description: t("description"),
         email: site.email,
-        telephone: phone("sales"),
         address,
-        contactPoint: site.phones.map((p) => ({
+        contactPoint: {
           "@type": "ContactPoint",
-          contactType: p.key === "sales" ? "sales" : "customer support",
-          telephone: p.href.replace("tel:", ""),
+          contactType: "customer support",
           email: site.email,
           availableLanguage: ["English", "Dutch"],
-        })),
-        parentOrganization: parent,
+        },
         ...sameAs,
       },
       {
@@ -67,10 +62,8 @@ export async function OrgJsonLd() {
         image: `${base}${site.logo}`,
         description: t("description"),
         email: site.email,
-        telephone: phone("sales"),
         address,
         areaServed: { "@type": "Country", name: "Netherlands" },
-        parentOrganization: parent,
         ...sameAs,
       },
       {

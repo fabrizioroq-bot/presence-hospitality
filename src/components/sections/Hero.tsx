@@ -16,7 +16,6 @@ export async function Hero() {
   const t = await getTranslations("hero");
   const c = await getTranslations("common");
   const locale = (await getLocale()) as Locale;
-  const sales = site.phones.find((p) => p.key === "sales")!;
 
   return (
     <HeroShell
@@ -64,15 +63,15 @@ export async function Hero() {
             <RevealItem soft>
               <p className="max-w-[52ch] text-body-lg text-ink-700">{t("lead")}</p>
             </RevealItem>
-            {/* One dominant CTA; the sales line stays visible next to it (desktop and mobile). */}
+            {/* One dominant CTA; the contact email stays visible next to it (desktop and mobile). */}
             <RevealItem soft className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6">
               <ButtonLink href={pagePath(locale, "/demo")} arrow>
                 {c("bookDemo")}
               </ButtonLink>
               <p className="text-body text-ink-700">
-                {t("call")}{" "}
-                <a href={sales.href} className="inline-flex min-h-11 items-center font-semibold whitespace-nowrap text-link-mist underline underline-offset-4">
-                  {sales.display}
+                {t("mail")}{" "}
+                <a href={`mailto:${site.email}`} className="inline-flex min-h-11 items-center font-semibold break-all text-link-mist underline underline-offset-4">
+                  {site.email}
                 </a>
               </p>
             </RevealItem>
