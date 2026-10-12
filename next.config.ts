@@ -1,5 +1,6 @@
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
+import { securityHeaders } from "./src/lib/security-headers";
 
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
@@ -12,6 +13,7 @@ const nextConfig: NextConfig = {
   productionBrowserSourceMaps: process.env.ANALYZE === "1",
   async headers() {
     return [
+      { source: "/:path*", headers: securityHeaders },
       {
         source: "/hologram/:file*",
         headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
