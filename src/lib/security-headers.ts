@@ -3,6 +3,8 @@
  * on /dashboard. No server-only imports: next.config.ts loads this file at build time.
  */
 
+import { site } from "../content/site";
+
 const isDev = process.env.NODE_ENV === "development";
 // Vercel's preview toolbar loads from vercel.live; production deployments never show it.
 const isPreview = process.env.VERCEL_ENV === "preview";
@@ -16,6 +18,9 @@ export const securityHeaders = [
   { key: "Cross-Origin-Resource-Policy", value: "same-site" },
   // The legacy XSS auditor is gone from modern browsers and could itself be abused; CSP replaces it.
   { key: "X-XSS-Protection", value: "0" },
+  // Replaces the "*" Vercel's CDN adds to static responses. www redirects to the domain, so the
+  // domain is the only origin that serves pages; nothing is meant to be read cross-origin.
+  { key: "Access-Control-Allow-Origin", value: site.domainUrl },
 ];
 
 /** Enforced. To trial a change without breaking pages, use "Content-Security-Policy-Report-Only". */
