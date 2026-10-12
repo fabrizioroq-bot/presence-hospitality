@@ -1,11 +1,13 @@
 import "server-only";
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
+import { AUTH_COOKIE } from "./cookie";
 
 /** Per-request Supabase client acting as the signed-in dashboard user (RLS applies). */
 export async function supabaseServer() {
   const store = await cookies();
   return createServerClient(process.env.SUPABASE_URL!, process.env.SUPABASE_ANON_KEY!, {
+    cookieOptions: AUTH_COOKIE,
     cookies: {
       getAll: () => store.getAll(),
       setAll: (list) => {

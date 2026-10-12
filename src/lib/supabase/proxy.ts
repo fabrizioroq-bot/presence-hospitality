@@ -1,5 +1,6 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import { AUTH_COOKIE } from "./cookie";
 
 // Dashboard routes reachable without a session.
 const PUBLIC = ["/dashboard/login", "/dashboard/forgot", "/dashboard/auth/confirm"];
@@ -8,6 +9,7 @@ const PUBLIC = ["/dashboard/login", "/dashboard/forgot", "/dashboard/auth/confir
 export async function updateSession(request: NextRequest) {
   let response = NextResponse.next({ request });
   const supabase = createServerClient(process.env.SUPABASE_URL!, process.env.SUPABASE_ANON_KEY!, {
+    cookieOptions: AUTH_COOKIE,
     cookies: {
       getAll: () => request.cookies.getAll(),
       setAll: (list) => {
