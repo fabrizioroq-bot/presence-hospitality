@@ -18,8 +18,8 @@ export const securityHeaders = [
   { key: "X-XSS-Protection", value: "0" },
 ];
 
-/** Report-only while violations are being checked; switch to "Content-Security-Policy" to enforce. */
-export const CSP_HEADER = "Content-Security-Policy-Report-Only";
+/** Enforced. To trial a change without breaking pages, use "Content-Security-Policy-Report-Only". */
+export const CSP_HEADER = "Content-Security-Policy";
 
 /**
  * Everything the browser loads is same-origin: Supabase and Resend are only called server-side,
