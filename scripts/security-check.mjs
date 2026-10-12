@@ -1,5 +1,5 @@
 // Visits every page, scrolls (wakes the WebGL scenes), reports CSP violations, missing security
-// headers, page errors and cookie flags; then checks the language switch persists.
+// headers, a wildcard CORS origin, page errors and cookie flags; then checks the language switch.
 // Usage: node scripts/security-check.mjs <base> [vercelBypassToken]
 import { chromium } from "playwright";
 const [base, bypass] = process.argv.slice(2);
@@ -38,6 +38,7 @@ for (const path of PATHS) {
   await p.waitForTimeout(1200);
   const h = res.headers();
   const missing = WANT.filter((k) => !h[k] && !(k === "strict-transport-security" && base.startsWith("http:")));
+  if (h["access-control-allow-origin"] === "*") missing.push("access-control-allow-origin (is *)");
   const policy = h["content-security-policy"] ?? h["content-security-policy-report-only"] ?? "";
   const csp = h["content-security-policy"] ? "enforced" : policy ? "report-only" : "NONE";
   const v = [...new Set([...(await p.evaluate(() => window.__csp)), ...consoleCsp])];
