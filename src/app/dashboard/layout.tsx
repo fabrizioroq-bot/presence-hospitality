@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { connection } from "next/server";
 import { Grain } from "@/components/brand/Grain";
 import { hanken, hankenItalic, jetbrains } from "@/lib/fonts";
 import "@/styles/globals.css";
@@ -14,11 +15,13 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = { themeColor: "#0F1D25" };
 
-export default function DashboardLayout({
+export default async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // Render every dashboard page per request: the proxy's CSP nonce only reaches dynamic pages.
+  await connection();
   return (
     <html
       lang="en"

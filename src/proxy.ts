@@ -2,12 +2,13 @@ import createMiddleware from "next-intl/middleware";
 import { NextResponse, type NextRequest } from "next/server";
 import { routing } from "./i18n/routing";
 import { updateSession } from "./lib/supabase/proxy";
+import { CSP_HEADER, contentSecurityPolicy } from "./lib/security-headers";
 
 const intl = createMiddleware(routing);
 
 export default async function proxy(request: NextRequest) {
   // The dashboard is English-only and authenticated: no locale prefix, Supabase session instead.
-  if (request.nextUrl.pathname.startsWith("/dashboard")) return updateSession(request);
+  if (request.nextUrl.pathname.startsWith("/dashboard")) return dashboard(request);
   // Auth email links that fell back to the bare Site URL (no redirectTo): send them to the confirm route.
   const q = request.nextUrl.searchParams;
   if (q.has("token_hash") && q.has("type")) {
@@ -24,6 +25,18 @@ export default async function proxy(request: NextRequest) {
       return new NextResponse(null, { status: 308, headers: res.headers });
     }
   }
+  return res;
+}
+
+/**
+ * The dashboard renders per request, so its scripts can carry a nonce: Next.js reads it from the
+ * CSP request header and stamps it on its own scripts, and nothing else may run.
+ */
+async function dashboard(request: NextRequest) {
+  const csp = contentSecurityPolicy(btoa(crypto.randomUUID()));
+  request.headers.set(CSP_HEADER, csp);
+  const res = await updateSession(request);
+  res.headers.set(CSP_HEADER, csp);
   return res;
 }
 

@@ -1,6 +1,6 @@
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
-import { securityHeaders } from "./src/lib/security-headers";
+import { CSP_HEADER, contentSecurityPolicy, securityHeaders } from "./src/lib/security-headers";
 
 const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 
@@ -14,6 +14,11 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       { source: "/:path*", headers: securityHeaders },
+      // The dashboard gets a per-request nonce CSP from the proxy instead.
+      {
+        source: "/:path((?!dashboard).*)",
+        headers: [{ key: CSP_HEADER, value: contentSecurityPolicy() }],
+      },
       {
         source: "/hologram/:file*",
         headers: [{ key: "Cache-Control", value: "public, max-age=31536000, immutable" }],
