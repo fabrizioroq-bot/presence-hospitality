@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useCallback, useEffect, useRef, useState, type MouseEvent, type ReactNode } from "react";
+import { useCallback, useEffect, useRef, useState, useSyncExternalStore, type MouseEvent, type ReactNode } from "react";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { CHAPTERS, LAST, TOTAL_STEPS, fromHash, globalStep, next, prev, reachedSteps, toHash, type Tone } from "./chapters";
 import { ChapterRail } from "./ChapterRail";
@@ -19,6 +19,35 @@ const PitchStage = dynamic(() => import("./stage/PitchStage"), {
   loading: () => <div aria-hidden className="pitch-fallback absolute inset-0" />,
 });
 
+// The start hint shows until the presenter's first key or click, once per browser session.
+const HINT_KEY = "pitch-hint-seen";
+const hintSubs = new Set<() => void>();
+const readHintSeen = () => {
+  try {
+    return sessionStorage.getItem(HINT_KEY) === "1";
+  } catch {
+    return false; // storage blocked: show the hint until the first action of this page view
+  }
+};
+let hintSeenFallback = false;
+const isHintSeen = () => hintSeenFallback || readHintSeen();
+const markHintSeen = () => {
+  if (isHintSeen()) return;
+  hintSeenFallback = true;
+  try {
+    sessionStorage.setItem(HINT_KEY, "1");
+  } catch {
+    // keep the in-memory flag only
+  }
+  hintSubs.forEach((cb) => cb());
+};
+const subscribeHint = (cb: () => void) => {
+  hintSubs.add(cb);
+  return () => {
+    hintSubs.delete(cb);
+  };
+};
+
 const themeOf = (tone: Tone) => (tone === "dark" ? "pitch-dark" : "pitch");
 const INTERACTIVE = "a, button, input, select, textarea, label, [role='slider'], [role='button'], [data-no-advance]";
 
@@ -29,6 +58,7 @@ export function PitchShell({ chapters, strings, slides }: { chapters: ChapterMet
   const [isBlank, setIsBlank] = useState(false);
   const { isFullscreen, toggle: toggleFullscreen, error: fullscreenError } = useFullscreen(root);
   const isOffline = useOffline();
+  const hasSeenHint = useSyncExternalStore(subscribeHint, isHintSeen, () => true);
   const current = chapters[pos.chapter];
 
   // Hash ⇄ position: jump straight to #problem (or #cover/2); keep the hash in sync while presenting.
@@ -49,6 +79,7 @@ export function PitchShell({ chapters, strings, slides }: { chapters: ChapterMet
   const go = useCallback((move: (p: typeof pos) => { chapter: number; step: number }) => setPitch(move(getPitch())), []);
 
   const onAction = (action: PresenterAction) => {
+    markHintSeen();
     if (isBlank) {
       setIsBlank(false); // any key brings the screen back
       return;
@@ -66,6 +97,7 @@ export function PitchShell({ chapters, strings, slides }: { chapters: ChapterMet
   usePresenterKeys(onAction);
 
   const onStageClick = (e: MouseEvent) => {
+    markHintSeen();
     if ((e.target as HTMLElement).closest(INTERACTIVE) || getSelection()?.toString()) return;
     go(next);
   };
@@ -129,14 +161,25 @@ export function PitchShell({ chapters, strings, slides }: { chapters: ChapterMet
         strings={strings}
         isFullscreen={isFullscreen}
         fullscreenError={fullscreenError}
-        isOffline={isOffline}
         onPrev={() => go(prev)}
         onNext={() => go(next)}
         onOverview={() => setIsOverview(true)}
         onFullscreen={toggleFullscreen}
       />
       {isOverview && (
-        <Overview chapters={chapters} current={pos.chapter} strings={strings} onJump={jump} onClose={() => setIsOverview(false)} />
+        <Overview
+          chapters={chapters}
+          current={pos.chapter}
+          strings={strings}
+          isOffline={isOffline}
+          onJump={jump}
+          onClose={() => setIsOverview(false)}
+        />
+      )}
+      {!hasSeenHint && (
+        <p className="pointer-events-none absolute right-[calc(var(--slide-u)*2.4)] bottom-[calc(var(--slide-u)*2.4)] z-20 rounded-pill px-4 py-2 text-slide-small text-ui-muted ring-[1.5px] ring-ui-line/40">
+          {strings.startHint}
+        </p>
       )}
       {isBlank && (
         <div className="absolute inset-0 z-50 grid place-items-center bg-night-900" onClick={() => setIsBlank(false)}>

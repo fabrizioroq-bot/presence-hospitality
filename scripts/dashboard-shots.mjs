@@ -1,7 +1,8 @@
 // Screenshots of authenticated dashboard pages (UI kit, pitch) as a temporary admin, plus any console
 // errors. The admin user is created with the service role key and always deleted afterwards.
 // Usage: node scripts/dashboard-shots.mjs <baseUrl> <out-dir> <path> [path…]
-// Env: VIEWPORT=1920x1080 (default 1440x900), SETTLE_MS=2500 (wait after each navigation for animations).
+// Env: VIEWPORT=1920x1080 (default 1440x900), DPR=2 (device scale, e.g. a 4K TV at 200%),
+//      SETTLE_MS=2500 (wait after each navigation for animations).
 // Paths may carry a hash (/dashboard/pitch#cover/2): the page is reused, so hash changes don't reload it.
 //   e.g. node scripts/dashboard-shots.mjs http://localhost:3000 screenshots/ui-kit /dashboard/ui-kit
 import { chromium } from "playwright";
@@ -32,7 +33,7 @@ let failed = false;
 try {
   const [vw, vh] = (process.env.VIEWPORT ?? "1440x900").split("x").map(Number);
   const settle = Number(process.env.SETTLE_MS ?? 0);
-  const page = await b.newPage({ viewport: { width: vw, height: vh }, deviceScaleFactor: 1 });
+  const page = await b.newPage({ viewport: { width: vw, height: vh }, deviceScaleFactor: Number(process.env.DPR ?? 1) });
   const errors = [];
   page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
   page.on("pageerror", (e) => errors.push(e.message));

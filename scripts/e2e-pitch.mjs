@@ -27,7 +27,10 @@ const check = (label, ok) => {
   if (!ok) failed = true;
 };
 // Every build of every chapter, in order (mirrors src/components/pitch/chapters.ts).
-const POSITIONS = ["#cover", "#cover/2", "#problem", "#solution", "#how-it-works", "#behind-the-scenes", "#packages", "#pricing", "#close"];
+const POSITIONS = [
+  "#cover", "#cover/2", "#problem", "#problem/2", "#problem/3", "#solution", "#solution/2", "#solution/3",
+  "#how-it-works", "#how-it-works/2", "#how-it-works/3", "#behind-the-scenes", "#packages", "#pricing", "#close",
+];
 
 const b = await chromium.launch({ channel: "chrome" });
 try {
@@ -73,6 +76,15 @@ try {
   await page.keyboard.press("End");
   check("End → #close", (await hash()) === "#close");
 
+  // The comparison slider owns the arrow keys while focused (moves the slider, not the presentation).
+  await page.goto(`${base}/dashboard/pitch#solution`, { waitUntil: "networkidle" });
+  const slider = page.getByRole("slider");
+  await slider.focus();
+  const before = Number(await slider.inputValue());
+  await page.keyboard.press("ArrowRight");
+  check("arrow on the focused slider moves it, not the deck", Number(await slider.inputValue()) > before && (await hash()) === "#solution");
+  await page.keyboard.press("Tab");
+
   await page.goto(`${base}/dashboard/pitch#packages`, { waitUntil: "networkidle" });
   check("deep link #packages opens that chapter", (await live())?.includes("Packages"));
 
@@ -98,9 +110,12 @@ try {
   // Offline (production builds): wait for the cache to warm ("Available offline"), reload without network.
   if (process.env.SKIP_OFFLINE !== "1") {
     await page.goto(`${base}/dashboard/pitch#cover`, { waitUntil: "networkidle" });
-    await page.mouse.move(800, 450);
-    const warmed = await page.locator("text=Available offline").waitFor({ timeout: 20000 }).then(() => true, () => false);
-    check("offline cache warmed", warmed);
+    await page.waitForTimeout(7000); // the shell warms the cache ~5 s after load
+    await page.keyboard.press("o"); // the offline indicator lives in the presenter's overview only
+    const warmed = await page.getByRole("img", { name: "Available offline" }).waitFor({ timeout: 15000 }).then(() => true, () => false);
+    check("offline cache warmed (icon in the overview)", warmed);
+    await page.keyboard.press("Escape");
+    check("offline indicator is not shown outside the overview", (await page.getByRole("img", { name: "Available offline" }).count()) === 0);
     await ctx.setOffline(true);
     await page.reload({ waitUntil: "load" }).catch(() => {});
     await page.waitForTimeout(1500);

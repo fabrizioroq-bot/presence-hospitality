@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Chip } from "@/components/ui/Labels";
 import { cx } from "@/lib/cx";
 import type { ShellStrings } from "./shell-types";
 
@@ -12,7 +11,6 @@ export function PresenterControls({
   strings,
   isFullscreen,
   fullscreenError,
-  isOffline,
   onPrev,
   onNext,
   onOverview,
@@ -21,7 +19,6 @@ export function PresenterControls({
   strings: ShellStrings;
   isFullscreen: boolean;
   fullscreenError: boolean;
-  isOffline: boolean;
   onPrev: () => void;
   onNext: () => void;
   onOverview: () => void;
@@ -58,7 +55,6 @@ export function PresenterControls({
         </p>
       )}
       <div className="flex items-center gap-2">
-        {isOffline && <Chip dot="accent">{strings.offlineReady}</Chip>}
         <button type="button" className={button} onClick={onPrev} aria-label={strings.prev}>
           <span aria-hidden>←</span>
         </button>

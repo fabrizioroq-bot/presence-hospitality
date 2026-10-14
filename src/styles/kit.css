@@ -23,10 +23,11 @@
 
   /* Pitch theme palette (used only inside [data-theme^="pitch"]) */
   --pitch-mist: #d5dbe2; /* light chapters */
-  --pitch-charcoal: #3e3e40; /* dark chapters; ink on light (7.65:1 on mist) */
-  --pitch-ink-muted: #55575c; /* meta text on mist (5.19:1) */
+  --pitch-charcoal: #3e3e40; /* dark chapters; meta text on light (7.65:1, 5.1:1 on a washed-out projector) */
+  --pitch-ink: #2e2e30; /* text on light chapters (9.7:1; 5.9:1 projected) */
+  --pitch-ink-muted: var(--pitch-charcoal); /* meta text on mist */
   --pitch-paper-2: #ebecee; /* secondary text on charcoal (9.0:1; 7.7:1 on cards) */
-  --pitch-paper-muted: #b9bbc0; /* meta text on charcoal (5.56:1) */
+  --pitch-paper-muted: #dfe0e3; /* meta text on charcoal (8.1:1; 4.9:1 projected on cards) */
   --pitch-pill-from: #a9cbf3;
   --pitch-pill-to: #e4eefa;
   --pitch-orb-blue: #6fa6e8; /* orbs: decorative only, always blurred */
@@ -129,7 +130,7 @@
   --ui-card-line-w: 1.5px;
   --ui-card-shadow: none;
   --ui-highlight: var(--pitch-gradient);
-  --ui-highlight-ink: var(--pitch-charcoal);
+  --ui-highlight-ink: var(--pitch-ink);
   --ui-dot: var(--pitch-pill-from);
   --ui-btn-shadow-hover: var(--ui-btn-shadow);
 }
@@ -145,10 +146,10 @@
 
 [data-theme="pitch"] {
   --ui-bg: var(--pitch-mist);
-  --ui-ink: var(--pitch-charcoal);
-  --ui-ink-2: var(--pitch-charcoal);
+  --ui-ink: var(--pitch-ink);
+  --ui-ink-2: var(--pitch-ink);
   --ui-muted: var(--pitch-ink-muted);
-  --ui-heading: var(--pitch-charcoal);
+  --ui-heading: var(--pitch-ink);
   --ui-logo: var(--logo-ink);
   --ui-line: var(--pitch-charcoal);
   --ui-rule: var(--pitch-charcoal);
@@ -156,13 +157,13 @@
   --ui-card-bg: rgba(255, 255, 255, 0.3);
   --ui-card-line: #ffffff;
   --ui-num-bg: #ffffff;
-  --ui-num-ink: var(--pitch-charcoal);
-  --ui-num-line: var(--pitch-charcoal);
-  --ui-num-lit-bg: var(--pitch-charcoal);
+  --ui-num-ink: var(--pitch-ink);
+  --ui-num-line: var(--pitch-ink);
+  --ui-num-lit-bg: var(--pitch-ink);
   --ui-num-lit-ink: #ffffff;
   --ui-chip-bg: rgba(255, 255, 255, 0.3);
   --ui-chip-line: #ffffff;
-  --ui-chip-ink: var(--pitch-charcoal);
+  --ui-chip-ink: var(--pitch-ink);
   --ui-btn-bg: var(--pitch-charcoal);
   --ui-btn-bg-hover: #2a2a2c;
   --ui-btn-ink: #ffffff;
@@ -255,7 +256,8 @@
   font-weight: 400;
 }
 @utility text-slide-small {
-  font-size: max(0.9375rem, calc(var(--slide-u) * 1.05));
+  /* 22px at 1080p: footnotes, chips and labels must survive a washed-out projector across a room. */
+  font-size: max(0.9375rem, calc(var(--slide-u) * 1.15));
   line-height: 1.45;
 }
 

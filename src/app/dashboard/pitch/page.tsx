@@ -1,6 +1,9 @@
 import { getTranslations } from "next-intl/server";
 import { Cover } from "@/components/pitch/chapters/Cover";
+import { HowItWorks } from "@/components/pitch/chapters/HowItWorks";
 import { Placeholder } from "@/components/pitch/chapters/Placeholder";
+import { Problem } from "@/components/pitch/chapters/Problem";
+import { Solution } from "@/components/pitch/chapters/Solution";
 import { CHAPTERS } from "@/components/pitch/chapters";
 import { PitchShell } from "@/components/pitch/PitchShell";
 import type { ShellStrings } from "@/components/pitch/shell-types";
@@ -29,6 +32,7 @@ const SHELL_KEYS = [
   "blank",
   "help",
   "offlineReady",
+  "startHint",
 ] as const satisfies readonly (keyof ShellStrings)[];
 
 export default async function PitchPage() {
@@ -39,7 +43,10 @@ export default async function PitchPage() {
   const strings = Object.fromEntries(SHELL_KEYS.map((k) => [k, t.raw(`shell.${k}`) as string])) as ShellStrings;
   const slides = [
     <Cover key="cover" />,
-    ...chapters.slice(1).map((c) => <Placeholder key={c.id} title={c.title} note={t("placeholder")} />),
+    <Problem key="problem" />,
+    <Solution key="solution" />,
+    <HowItWorks key="how" />,
+    ...chapters.slice(4).map((c) => <Placeholder key={c.id} title={c.title} note={t("placeholder")} />),
   ];
   return <PitchShell chapters={chapters} strings={strings} slides={slides} />;
 }

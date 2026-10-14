@@ -42,9 +42,9 @@ export function Chip({
 }
 
 const NUM_SIZE = {
-  sm: "h-9 text-[0.9375rem]",
-  md: "h-12 text-[1.25rem]",
-  lg: "h-16 text-[1.75rem]",
+  sm: "h-9 w-9 text-[0.9375rem]",
+  md: "h-12 w-12 text-[1.25rem]",
+  lg: "h-16 w-16 text-[1.75rem]",
 } as const;
 
 /** Numbered circle ("01"). Decorative by default: the step's heading carries the meaning. */

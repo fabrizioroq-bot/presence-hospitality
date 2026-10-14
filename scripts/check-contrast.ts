@@ -96,7 +96,7 @@ pairs.push([T.cta, T.dark, 3, "terracotta button edge on dark canvas (UI)"], [T.
 // Pitch theme (kit.css, [data-theme="pitch" | "pitch-dark"]). Card and chip fills are translucent
 // white, so they are checked as blended over their canvas (30% on mist, 6% on charcoal).
 const P = {
-  mist: "#D5DBE2", charcoal: "#3E3E40", inkMuted: "#55575C", paper2: "#EBECEE", paperMuted: "#B9BBC0",
+  mist: "#D5DBE2", charcoal: "#3E3E40", ink: "#2E2E30", inkMuted: "#3E3E40", paper2: "#EBECEE", paperMuted: "#DFE0E3",
   pillFrom: "#A9CBF3", pillTo: "#E4EEFA", white: "#FFFFFF",
 };
 const blend = (fg: string, bg: string, a: number) =>
@@ -105,7 +105,7 @@ const mistCard = blend(P.white, P.mist, 0.3);
 const charcoalCard = blend(P.white, P.charcoal, 0.06);
 for (const [name, bg] of [["pitch mist", P.mist], ["pitch card on mist", mistCard]] as const) {
   pairs.push(
-    [P.charcoal, bg, AAA, `charcoal text on ${name}`],
+    [P.ink, bg, AAA, `text on ${name}`],
     [P.inkMuted, bg, 4.5, `muted text on ${name}`],
     [T.petrol, bg, 3, `logo (petrol) on ${name} (UI)`],
     [P.charcoal, bg, 3, `focus ring / control line on ${name} (UI)`],
@@ -120,13 +120,39 @@ for (const [name, bg] of [["pitch charcoal", P.charcoal], ["pitch card on charco
   );
 }
 pairs.push(
-  [P.charcoal, P.pillFrom, 4.5, "charcoal on pill / highlight gradient start"],
-  [P.charcoal, P.pillTo, AAA, "charcoal on pill / highlight gradient end"],
-  [P.charcoal, P.white, AAA, "charcoal on number circle / white button"],
+  [P.ink, P.pillFrom, AAA, "ink on pill / highlight gradient start"],
+  [P.ink, P.pillTo, AAA, "ink on pill / highlight gradient end"],
+  [P.ink, P.white, AAA, "ink on number circle"],
+  [P.charcoal, P.white, AAA, "charcoal on white button"],
   [P.white, P.charcoal, AAA, "white on charcoal button / lit number"],
 );
 
-let failed = 0;
+// Washed-out projector (pitch only): a lit room lifts the black level to ~1/10 of white, i.e. every
+// luminance gains K = 1/9. Text must still reach 4.5:1 under that model.
+const K = 1 / 9;
+const projected = (a: string, b: string) => {
+  const [hi, lo] = [lum(a), lum(b)].sort((x, y) => y - x);
+  return (hi + K) / (lo + K);
+};
+const projector: [string, string, string][] = [
+  [P.ink, P.mist, "text on pitch mist"],
+  [P.inkMuted, P.mist, "meta text on pitch mist"],
+  [P.ink, mistCard, "text on pitch card on mist"],
+  [P.white, P.charcoal, "white text on pitch charcoal"],
+  [P.paper2, P.charcoal, "secondary text on pitch charcoal"],
+  [P.paperMuted, P.charcoal, "meta text on pitch charcoal"],
+  [P.paperMuted, charcoalCard, "meta text on pitch card on charcoal"],
+  [P.ink, P.pillFrom, "ink on pill gradient start"],
+  [P.ink, P.white, "ink on number circle"],
+];
+let projectorFailed = 0;
+for (const [fg, bg, label] of projector) {
+  const r = projected(fg, bg);
+  if (r < 4.5) projectorFailed++;
+  console.log(`${r >= 4.5 ? "PASS" : "FAIL"}  ${r.toFixed(2).padStart(5)}:1  (min 4.5, projector)  ${label}`);
+}
+
+let failed = projectorFailed;
 for (const [fg, bg, min, label] of pairs) {
   const r = ratio(fg, bg);
   const ok = r >= min;

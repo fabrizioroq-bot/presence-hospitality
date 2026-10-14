@@ -34,7 +34,8 @@ export function Background({ colors, motion }: { colors: StageColors; motion: nu
   useFrame((_, dt) => {
     const u = material.current?.uniforms;
     if (!u) return;
-    const target = sceneFor(getPitch().chapter);
+    const { chapter, step } = getPitch();
+    const target = sceneFor(chapter, step);
     const instant = motion === 0;
     u.uRes.value.set(size.width, size.height);
     u.uTime.value += dt;

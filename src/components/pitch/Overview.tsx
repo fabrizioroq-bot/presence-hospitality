@@ -10,12 +10,15 @@ export function Overview({
   chapters,
   current,
   strings,
+  isOffline,
   onJump,
   onClose,
 }: {
   chapters: ChapterMeta[];
   current: number;
   strings: ShellStrings;
+  /** The pitch is cached for offline use (presenter-only indicator). */
+  isOffline: boolean;
   onJump: (chapter: number) => void;
   onClose: () => void;
 }) {
@@ -35,9 +38,19 @@ export function Overview({
       className="absolute inset-0 z-40 flex flex-col gap-[calc(var(--slide-u)*3)] overflow-auto bg-ui-bg px-[calc(var(--slide-u)*5)] py-[calc(var(--slide-u)*4)]"
     >
       <div className="flex items-center justify-between gap-6">
-        <h2 id="pitch-overview-title" className="text-slide-h3">
-          {strings.overviewTitle}
-        </h2>
+        <div className="flex items-center gap-3">
+          <h2 id="pitch-overview-title" className="text-slide-h3">
+            {strings.overviewTitle}
+          </h2>
+          {isOffline && (
+            <span role="img" aria-label={strings.offlineReady} title={strings.offlineReady} className="text-ui-muted">
+              <svg aria-hidden viewBox="0 0 20 20" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth={1.6} strokeLinecap="round" strokeLinejoin="round">
+                <path d="M5.5 15.5h9a3.5 3.5 0 0 0 .4-7A5 5 0 0 0 5.2 9.3 3.1 3.1 0 0 0 5.5 15.5Z" />
+                <path d="m7.8 11.8 1.6 1.6 3-3.2" />
+              </svg>
+            </span>
+          )}
+        </div>
         <button
           type="button"
           onClick={onClose}

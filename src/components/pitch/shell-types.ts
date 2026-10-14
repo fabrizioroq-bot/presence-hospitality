@@ -20,6 +20,7 @@ export type ShellStrings = {
   blank: string;
   help: string;
   offlineReady: string;
+  startHint: string;
 };
 
 /** Fills "{n} of {total}"-style templates from messages. */

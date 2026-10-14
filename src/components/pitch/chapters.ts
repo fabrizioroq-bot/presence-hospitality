@@ -4,9 +4,9 @@
  */
 export const CHAPTERS = [
   { id: "cover", hash: "cover", tone: "light", steps: 2 },
-  { id: "problem", hash: "problem", tone: "dark", steps: 1 },
-  { id: "solution", hash: "solution", tone: "light", steps: 1 },
-  { id: "how", hash: "how-it-works", tone: "light", steps: 1 },
+  { id: "problem", hash: "problem", tone: "dark", steps: 3 },
+  { id: "solution", hash: "solution", tone: "light", steps: 3 },
+  { id: "how", hash: "how-it-works", tone: "light", steps: 3 },
   { id: "behind", hash: "behind-the-scenes", tone: "light", steps: 1 },
   { id: "packages", hash: "packages", tone: "dark", steps: 1 },
   { id: "pricing", hash: "pricing", tone: "light", steps: 1 },

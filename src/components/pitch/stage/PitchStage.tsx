@@ -1,36 +1,23 @@
 "use client";
 
-import { Canvas, useFrame, useThree } from "@react-three/fiber";
-import { useEffect, useState } from "react";
+import { Canvas } from "@react-three/fiber";
+import { useState } from "react";
 import { cx } from "@/lib/cx";
 import { hasWebGL2 } from "@/lib/perf-tier";
 import { useReducedMotion } from "@/lib/hooks";
+import { Anchors } from "./Anchors";
 import { Background } from "./Background";
+import { CameraRig } from "./CameraRig";
+import { Desk } from "./Desk";
+import { applyEnvironment } from "./environment";
 import { Holobox } from "./Holobox";
+import { LOBBY_ANCHORS, Lobby } from "./Lobby";
 import { readStageColors, type StageColors } from "./tokens";
-
-const PARALLAX = 0.22; // camera drift with the mouse, in world units
-
-/** Pauses rendering while the tab is hidden; gentle mouse parallax on the camera. */
-function CameraRig({ motion }: { motion: number }) {
-  const setFrameloop = useThree((s) => s.setFrameloop);
-  useEffect(() => {
-    const onVisibility = () => setFrameloop(document.hidden ? "never" : "always");
-    document.addEventListener("visibilitychange", onVisibility);
-    return () => document.removeEventListener("visibilitychange", onVisibility);
-  }, [setFrameloop]);
-  useFrame(({ camera, pointer }, dt) => {
-    const k = 1 - Math.exp(-2 * dt);
-    camera.position.x += (pointer.x * PARALLAX * motion - camera.position.x) * k;
-    camera.position.y += (pointer.y * PARALLAX * 0.6 * motion - camera.position.y) * k;
-    camera.lookAt(0, 0, 0);
-  });
-  return null;
-}
 
 /**
  * The single, persistent WebGL canvas behind all chapters (loaded lazily by PitchShell). Scene state
- * comes from the pitch store, so chapters never remount it. Without WebGL2: a static CSS backdrop.
+ * comes from the pitch store, so chapters never remount it. World units are metres. Without WebGL2:
+ * a static CSS backdrop.
  */
 export default function PitchStage() {
   const reduced = useReducedMotion();
@@ -46,14 +33,24 @@ export default function PitchStage() {
       <Canvas
         className={cx("absolute! inset-0 transition-opacity duration-(--dur-slow)", isReady ? "opacity-100" : "opacity-0")}
         dpr={[1, 1.5]}
-        camera={{ fov: 30, position: [0, 0, 12], near: 0.1, far: 50 }}
-        gl={{ antialias: true, powerPreference: "high-performance" }}
-        onCreated={() => requestAnimationFrame(() => setIsReady(true))}
+        camera={{ fov: 30, position: [0, 1.2, 6.4], near: 0.1, far: 60 }}
+        gl={{ antialias: true, powerPreference: "high-performance", localClippingEnabled: true }}
+        onCreated={({ gl, scene }) => {
+          gl.localClippingEnabled = true; // the before/after split (stage/clip.ts)
+          applyEnvironment(gl, scene);
+          requestAnimationFrame(() => setIsReady(true));
+        }}
       >
-        <hemisphereLight args={[colors.pillTo, colors.charcoal, 1.1]} />
-        <directionalLight position={[-4, 5, 8]} intensity={1.6} />
+        <hemisphereLight args={[colors.pillTo, colors.charcoal, 0.8]} />
+        <directionalLight position={[-3, 4, 5]} intensity={1.3} />
+        {/* cool rim light from behind: separates the dark cabinet from charcoal chapters */}
+        <directionalLight position={[3, 2.5, -4]} intensity={2} color={colors.pillTo} />
+        <directionalLight position={[-3.5, 2, -3]} intensity={1.1} />
         <Background colors={colors} motion={motion} />
         <Holobox colors={colors} motion={motion} />
+        <Desk colors={colors} motion={motion} />
+        <Lobby colors={colors} motion={motion} />
+        <Anchors points={LOBBY_ANCHORS} />
         <CameraRig motion={motion} />
       </Canvas>
     </div>

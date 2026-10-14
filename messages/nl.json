@@ -664,7 +664,8 @@
       "overviewTitle": "All chapters",
       "blank": "Screen blanked. Press B or any key to continue.",
       "help": "→ or Space: next · ←: back · F: full screen · O: overview · B: blank screen",
-      "offlineReady": "Available offline"
+      "offlineReady": "Available offline",
+      "startHint": "→ to start · F for full screen"
     },
     "chapters": {
       "cover": "Cover",
@@ -692,6 +693,90 @@
     },
     "footnotes": {
       "savings": "Estimate based on our operating model; actual savings depend on property size, service hours and volume."
+    },
+    "problem": {
+      "title": "Margins are <em>under pressure</em>",
+      "intro": "In a market where labour costs are rising and taxes keep increasing, hotels are under pressure to maintain service levels while protecting margins. In cities like Amsterdam, higher tourist tax and VAT on accommodation leave less and less room for operational inefficiencies. Presence Hospitality helps hotels adapt by centralising reception operations, without sacrificing the guest experience.",
+      "chart": {
+        "title": "24 hours at the front desk",
+        "staffed": "Staffed hours",
+        "demand": "Guest demand",
+        "idle": "Paid idle time",
+        "illustrative": "Illustrative",
+        "time": "Time of day",
+        "desc": "Illustrative chart: the desk is staffed at the same level for all 24 hours, while guest demand peaks around check-out in the morning and check-in in the late afternoon and drops close to zero at night. The gaps at night are paid idle time."
+      },
+      "pillars": {
+        "cost": {
+          "title": "Structural cost pressure",
+          "body": "Rising labour costs combined with increasing tax pressure (e.g. city tax + VAT) significantly reduce margins. Maintaining a fully staffed 24/7 front desk becomes financially inefficient, especially for smaller properties."
+        },
+        "staffing": {
+          "title": "Inefficient staffing model",
+          "body": "Traditional front desk operations suffer from high idle time during nights and off-peak hours, while still requiring full coverage. This leads to a mismatch between staffing costs and actual guest demand."
+        },
+        "fragmentation": {
+          "title": "Operational fragmentation",
+          "body": "Staff shortages, high turnover and multi-location complexity make it difficult to maintain consistent service quality. Hotels struggle to standardise operations and ensure the same guest experience across shifts and properties."
+        }
+      }
+    },
+    "solution": {
+      "title": "Our solution",
+      "compare": {
+        "label": "Compare the front desk",
+        "traditional": "Traditional front desk",
+        "presence": "With Presence",
+        "time": "3:00 AM"
+      },
+      "savings": "potential savings on front office costs",
+      "pillars": {
+        "experience": {
+          "title": "Premium guest experience, centralised",
+          "body": "Real, trained receptionists deliver a high-end 4K telepresence experience across all locations. Hospitality-first processes and training ensure consistent service quality without the limitations of on-site staffing."
+        },
+        "cost": {
+          "title": "Structural cost reduction",
+          "body": "By centralising operations and eliminating idle time, hotels achieve up to {savings} savings on front office costs while maintaining full service coverage.",
+          "bodyNoFigure": "By centralising operations and eliminating idle time, hotels lower front office costs while maintaining full service coverage."
+        },
+        "scale": {
+          "title": "Scalable & future-proof operations",
+          "body": "Open integrations, full data ownership and a proven tech stack allow hotels to scale across multiple locations without vendor lock-in or operational complexity."
+        }
+      },
+      "integrationsLabel": "Works with",
+      "integrations": [
+        "Mews",
+        "Hotek",
+        "Payments"
+      ]
+    },
+    "how": {
+      "title": "How it works",
+      "steps": {
+        "checkin": {
+          "title": "Check in at the kiosk",
+          "body": "Booking found, ID verified, payment taken, key encoded."
+        },
+        "call": {
+          "title": "Need help? One tap on Call",
+          "body": "Whenever a guest wants a person, they press Call on the Holobox."
+        },
+        "receptionist": {
+          "title": "A real receptionist sorts it",
+          "body": "A trained receptionist from our Amsterdam hub appears live, life-size, and resolves it."
+        }
+      },
+      "kiosk": {
+        "title": "Check-in",
+        "items": [
+          "Booking found",
+          "ID verified",
+          "Payment taken",
+          "Key encoded"
+        ]
+      }
     }
   }
 }
