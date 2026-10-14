@@ -13,6 +13,14 @@ Full spec: `PROMPT_SITIO.md`. Open items: `PENDING.md`. Both are **local only** 
 - No JS animation library: reveals are CSS (`Reveal.tsx`, `data-rv`), scroll/springs via `src/lib/anim.ts`, hooks in `src/lib/hooks.ts`. Animate only transform/opacity/filter/clip-path. Respect reduced motion. Initial JS ≤ 180 KB per page (`node scripts/js-size.mjs`).
 - Client components use `cx` (`@/lib/cx`, no tailwind-merge); server components may use `cn`.
 
+## Git workflow
+- Remote: `origin` = github.com/fabrizioroq-bot/presence-hospitality, **public**. Never commit internal notes, contacts, client details, secrets or lead data (`PENDING.md`, `PROMPT_SITIO.md`, `docs/`, `screenshots/`, `reports/`, `.env*` stay local). Check the staged diff before every push.
+- `main` = production. No direct commits, no force-push (the one exception was replacing the old prototype, 14-10).
+- One branch per task from an up-to-date `main`: `feat/<task>`, `fix/<task>` or `chore/<task>`.
+- One commit per phase, Conventional Commits (`feat(scope): summary` + a short body), only after `npm run check` and `npm run build` pass. Author: the repo-level GitHub noreply address.
+- Release: preview → approval → `git switch main && git pull` → `git merge --ff-only <branch>` (if it refuses, rebase the branch on `main` first) → `git push` → production deploy → verify live → delete the merged branch.
+- Deploy: Vercel CLI for now (`vercel deploy` = preview, `vercel deploy --prod` = production).
+
 ## Stack
 Next.js 16 (App Router, Turbopack) · TypeScript strict · Tailwind CSS v4 (`src/styles/globals.css`) · React Three Fiber · next-intl (`/en`, `/nl`) · Supabase · Resend. Package manager: npm.
 
