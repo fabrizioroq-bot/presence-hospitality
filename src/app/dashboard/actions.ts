@@ -23,6 +23,25 @@ export async function signIn(_: FormState, fd: FormData): Promise<FormState> {
   redirect("/dashboard");
 }
 
+const LINK_TYPES = ["invite", "recovery"] as const;
+type LinkType = (typeof LINK_TYPES)[number];
+
+/**
+ * Second step of invite / password-reset links: only this explicit click verifies the one-time token.
+ * Opening the link (GET) never does, so link previews and mail scanners can't use it up.
+ */
+export async function acceptLink(fd: FormData) {
+  const tokenHash = String(fd.get("token_hash") ?? "");
+  const type = String(fd.get("type") ?? "");
+  if (!/^[a-f0-9]{20,128}$/i.test(tokenHash) || !LINK_TYPES.includes(type as LinkType)) {
+    redirect("/dashboard/login?error=link");
+  }
+  const supabase = await supabaseServer();
+  const { error } = await supabase.auth.verifyOtp({ type: type as LinkType, token_hash: tokenHash });
+  if (error) redirect("/dashboard/login?error=link");
+  redirect("/dashboard/set-password");
+}
+
 export async function signOut() {
   const supabase = await supabaseServer();
   await supabase.auth.signOut();

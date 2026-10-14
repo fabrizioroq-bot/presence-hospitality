@@ -2,7 +2,9 @@
 
 import Link from "next/link";
 import { useActionState } from "react";
+import { useFormStatus } from "react-dom";
 import {
+  acceptLink,
   requestReset,
   setPassword,
   signIn,
@@ -167,6 +169,22 @@ export function SetPasswordForm() {
         />
       </div>
       <Submit pending={pending}>Save password</Submit>
+    </form>
+  );
+}
+
+function ContinueButton() {
+  const { pending } = useFormStatus();
+  return <Submit pending={pending}>Continue</Submit>;
+}
+
+/** Invite / reset links: the one-time token is only used when this button is clicked. */
+export function AcceptLinkForm({ tokenHash, type }: { tokenHash: string; type: "invite" | "recovery" }) {
+  return (
+    <form action={acceptLink}>
+      <input type="hidden" name="token_hash" value={tokenHash} />
+      <input type="hidden" name="type" value={type} />
+      <ContinueButton />
     </form>
   );
 }

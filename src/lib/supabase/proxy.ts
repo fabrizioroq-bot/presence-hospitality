@@ -3,7 +3,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { AUTH_COOKIE } from "./cookie";
 
 // Dashboard routes reachable without a session.
-const PUBLIC = ["/dashboard/login", "/dashboard/forgot", "/dashboard/auth/confirm"];
+const PUBLIC = ["/dashboard/login", "/dashboard/forgot", "/dashboard/auth/confirm", "/dashboard/auth/accept"];
 
 /** Refreshes the Supabase session cookie on /dashboard requests and gates unauthenticated users. */
 export async function updateSession(request: NextRequest) {
