@@ -132,8 +132,15 @@
   --ui-highlight-ink: var(--pitch-charcoal);
   --ui-dot: var(--pitch-pill-from);
   --ui-btn-shadow-hover: var(--ui-btn-shadow);
-  background-color: var(--ui-bg);
-  color: var(--ui-ink);
+}
+
+/* Theme surfaces in the base layer, so a utility (e.g. bg-transparent over the pitch canvas) wins. */
+@layer base {
+  [data-theme="pitch"],
+  [data-theme="pitch-dark"] {
+    background-color: var(--ui-bg);
+    color: var(--ui-ink);
+  }
 }
 
 [data-theme="pitch"] {
@@ -207,6 +214,49 @@
   --color-pitch-charcoal: var(--pitch-charcoal);
   --ease-out: var(--ease-out);
   --ease-in-out: var(--ease-in-out);
+}
+
+/* ---- Presentation scale (pitch) -------------------------------------------------------------
+   Inside [data-slide-scale], sizes follow --slide-u = 1% of the largest 16:9 frame that fits the
+   viewport, so a chapter scales like a slide from a laptop to a big screen. Text never drops below
+   the site's readability floors (body 17px, small 15px). */
+[data-slide-scale] {
+  --slide-u: min(1vw, 1.7778vh);
+}
+@utility text-slide-hero {
+  font-size: calc(var(--slide-u) * 7);
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+  font-weight: var(--ui-display-weight, 800);
+}
+@utility text-slide-title {
+  font-size: calc(var(--slide-u) * 5.4);
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  font-weight: var(--ui-display-weight, 800);
+}
+@utility text-slide-h3 {
+  font-size: max(1.375rem, calc(var(--slide-u) * 2.1));
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-weight: var(--ui-display-weight, 800);
+}
+@utility text-slide-stat {
+  font-size: calc(var(--slide-u) * 4.4);
+}
+@utility text-slide-lead {
+  font-size: max(1.125rem, calc(var(--slide-u) * 1.75));
+  line-height: 1.45;
+  font-weight: 400;
+}
+@utility text-slide-body {
+  font-size: max(1.0625rem, calc(var(--slide-u) * 1.3));
+  line-height: 1.5;
+  font-weight: 400;
+}
+@utility text-slide-small {
+  font-size: max(0.9375rem, calc(var(--slide-u) * 1.05));
+  line-height: 1.45;
 }
 
 /* ---- 3. Components -------------------------------------------------------------------------- */

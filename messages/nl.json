@@ -642,5 +642,56 @@
     "title": "Maak kennis met het receptieteam dat <em>vanavond je gasten kan helpen.</em>",
     "body": "Plan een live demo en spreek een Presence-receptionist via de Holobox.",
     "button": "Plan een live demo"
+  },
+  "pitch": {
+    "meta": {
+      "title": "Pitch"
+    },
+    "shell": {
+      "label": "Presence Hospitality pitch",
+      "chapterOf": "Chapter {n} of {total}: {title}",
+      "counter": "{n} / {total}",
+      "progress": "Progress through the pitch",
+      "rail": "Chapters",
+      "goTo": "Go to chapter {n}: {title}",
+      "next": "Next",
+      "prev": "Previous",
+      "fullscreen": "Full screen (F)",
+      "exitFullscreen": "Exit full screen (F)",
+      "fullscreenUnavailable": "Full screen isn't available in this browser.",
+      "overview": "Overview (O)",
+      "closeOverview": "Close overview (Esc)",
+      "overviewTitle": "All chapters",
+      "blank": "Screen blanked. Press B or any key to continue.",
+      "help": "→ or Space: next · ←: back · F: full screen · O: overview · B: blank screen",
+      "offlineReady": "Available offline"
+    },
+    "chapters": {
+      "cover": "Cover",
+      "problem": "The problem",
+      "solution": "Our solution",
+      "how": "How it works",
+      "behind": "Behind the scenes",
+      "packages": "Packages",
+      "pricing": "Pricing & onboarding",
+      "close": "Let's talk"
+    },
+    "placeholder": "This chapter is built in the next phase.",
+    "cover": {
+      "title": "Stop hiring <em>front desk</em> staff.",
+      "sub": "Real receptionists, live as a life-size hologram in your lobby. Day and night, from one central hub in Amsterdam.",
+      "chips": {
+        "live": "Live in Amsterdam",
+        "people": "Real people, not AI"
+      },
+      "stats": {
+        "coverage": "live coverage",
+        "savings": "potential savings on front office costs",
+        "oneTap": "from kiosk to a real person"
+      }
+    },
+    "footnotes": {
+      "savings": "Estimate based on our operating model; actual savings depend on property size, service hours and volume."
+    }
   }
 }

@@ -1,5 +1,6 @@
 import { AuthCard } from "@/components/dashboard/AuthCard";
 import { LoginForm } from "@/components/dashboard/AuthForms";
+import { ClearPitchOffline } from "@/components/pitch/ClearPitchOffline";
 
 export const metadata = { title: "Sign in" };
 
@@ -16,6 +17,7 @@ export default async function LoginPage({
   return (
     <AuthCard title="Sign in" lead="Access is by invitation only.">
       <LoginForm initialError={err} />
+      <ClearPitchOffline />
     </AuthCard>
   );
 }

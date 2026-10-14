@@ -5,6 +5,8 @@ const VALUE_SIZE = {
   md: "text-[clamp(2rem,1.6rem+1.6vw,3rem)]",
   lg: "text-display-lg",
   xl: "text-display-xl",
+  /** Presentation scale (inside [data-slide-scale]). */
+  slide: "text-slide-stat",
 } as const;
 
 /**
@@ -35,7 +37,7 @@ export function Stat({
           </sup>
         )}
       </span>
-      <span className="max-w-[24ch] text-body text-ui-ink-2">{label}</span>
+      <span className={cn("max-w-[24ch] text-ui-ink-2", size === "slide" ? "text-slide-body" : "text-body")}>{label}</span>
     </div>
   );
 }

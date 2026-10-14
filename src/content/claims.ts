@@ -1,6 +1,6 @@
 // Every figure that may appear on the site lives here. Components render a claim only when `enabled`.
 export type Claim = {
-  id: "savings" | "amsterdamTax" | "coverage";
+  id: "savings" | "amsterdamTax" | "coverage" | "oneTap";
   en: string;
   nl: string;
   source: string | null;
@@ -33,6 +33,14 @@ export const claims: Record<Claim["id"], Claim> = {
     en: "24/7",
     nl: "24/7",
     source: "Business plan + pitch",
+    enabled: true,
+    status: "OK",
+  },
+  oneTap: {
+    id: "oneTap",
+    en: "1 tap",
+    nl: "1 tik",
+    source: "Product: one Call button on the Holobox reaches the hub",
     enabled: true,
     status: "OK",
   },

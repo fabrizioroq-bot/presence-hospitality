@@ -1,0 +1,105 @@
+/* Pitch route styles (/dashboard/pitch only; imported by its page, so public CSS never grows).
+   Tokens come from kit.css. Animate only transform-like properties, opacity and filter. */
+
+/* ---- Chapters: stacked layers; the active one fades in just after the previous fades out ---- */
+.pitch-chapter {
+  position: absolute;
+  inset: 0;
+  padding: calc(var(--slide-u) * 9.5) calc(var(--slide-u) * 5) calc(var(--slide-u) * 4.5);
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity var(--dur-base) var(--ease-out),
+    visibility 0s linear var(--dur-base);
+}
+.pitch-chapter[data-state="active"] {
+  opacity: 1;
+  visibility: visible;
+  transition:
+    opacity var(--dur-slow) var(--ease-out) 120ms,
+    visibility 0s;
+}
+
+/* ---- Builds: [data-build="n"] shows once step n is reached ([data-reached~="n"] on the chapter).
+   Stagger with --i (× --stagger) and/or a fixed --d delay. ---- */
+.pitch-chapter [data-build] {
+  opacity: 0;
+  translate: 0 calc(var(--slide-u) * 1.4);
+  filter: blur(6px);
+  transition:
+    opacity var(--dur-slow) var(--ease-out),
+    translate var(--dur-slow) var(--ease-out),
+    filter var(--dur-slow) var(--ease-out);
+  transition-delay: calc(var(--d, 0ms) + var(--i, 0) * var(--stagger));
+}
+[data-reached~="0"] [data-build="0"],
+[data-reached~="1"] [data-build="1"],
+[data-reached~="2"] [data-build="2"],
+[data-reached~="3"] [data-build="3"],
+[data-reached~="4"] [data-build="4"],
+[data-reached~="5"] [data-build="5"] {
+  opacity: 1;
+  translate: 0 0;
+  filter: none;
+}
+
+/* ---- Headlines: masked words rise in sequence; the italic emphasis settles from a slant ---- */
+.pitch-word {
+  display: inline-block;
+  overflow: clip;
+  padding: 0 0.08em 0.12em;
+  margin: 0 -0.08em -0.12em;
+  vertical-align: top;
+}
+.pitch-word > span {
+  display: inline-block;
+  translate: 0 115%;
+  transition: translate var(--dur-slow) var(--ease-out);
+  transition-delay: calc(140ms + var(--i) * 80ms);
+}
+.pitch-headline em {
+  display: inline-block;
+  transform: skewX(-9deg);
+  transform-origin: 0 100%;
+  transition: transform calc(var(--dur-slow) * 1.4) var(--ease-out);
+  transition-delay: calc(260ms + var(--i) * 80ms);
+}
+[data-reached~="0"] [data-words="0"] .pitch-word > span,
+[data-reached~="1"] [data-words="1"] .pitch-word > span,
+[data-reached~="2"] [data-words="2"] .pitch-word > span {
+  translate: 0 0;
+}
+[data-reached~="0"] [data-words="0"] em,
+[data-reached~="1"] [data-words="1"] em,
+[data-reached~="2"] [data-words="2"] em {
+  transform: none;
+}
+
+/* ---- Before WebGL (or without it): a static backdrop from the same tokens ---- */
+.pitch-fallback {
+  background:
+    radial-gradient(42% 52% at 74% 44%, color-mix(in oklab, var(--pitch-orb-blue) 50%, transparent), transparent 70%),
+    radial-gradient(24% 30% at 96% 8%, color-mix(in oklab, var(--pitch-orb-aqua) 45%, transparent), transparent 70%),
+    radial-gradient(22% 28% at 86% 92%, color-mix(in oklab, var(--pitch-orb-peach) 40%, transparent), transparent 70%),
+    var(--ui-bg);
+}
+
+/* ---- Reduced motion: chapters crossfade; nothing moves or blurs ---- */
+@media (prefers-reduced-motion: reduce) {
+  .pitch-chapter,
+  .pitch-chapter[data-state="active"] {
+    transition-duration: var(--dur-fast);
+    transition-delay: 0s;
+  }
+  .pitch-chapter [data-build] {
+    translate: none;
+    filter: none;
+    transition: opacity var(--dur-fast) linear;
+  }
+  .pitch-word > span,
+  .pitch-headline em {
+    translate: none;
+    transform: none;
+    transition: none;
+  }
+}

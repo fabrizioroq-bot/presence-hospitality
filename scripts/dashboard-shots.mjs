@@ -1,6 +1,8 @@
 // Screenshots of authenticated dashboard pages (UI kit, pitch) as a temporary admin, plus any console
 // errors. The admin user is created with the service role key and always deleted afterwards.
 // Usage: node scripts/dashboard-shots.mjs <baseUrl> <out-dir> <path> [path…]
+// Env: VIEWPORT=1920x1080 (default 1440x900), SETTLE_MS=2500 (wait after each navigation for animations).
+// Paths may carry a hash (/dashboard/pitch#cover/2): the page is reused, so hash changes don't reload it.
 //   e.g. node scripts/dashboard-shots.mjs http://localhost:3000 screenshots/ui-kit /dashboard/ui-kit
 import { chromium } from "playwright";
 import { createClient } from "@supabase/supabase-js";
@@ -28,7 +30,9 @@ if (error) throw error;
 const b = await chromium.launch({ channel: "chrome" });
 let failed = false;
 try {
-  const page = await b.newPage({ viewport: { width: 1440, height: 900 }, deviceScaleFactor: 1 });
+  const [vw, vh] = (process.env.VIEWPORT ?? "1440x900").split("x").map(Number);
+  const settle = Number(process.env.SETTLE_MS ?? 0);
+  const page = await b.newPage({ viewport: { width: vw, height: vh }, deviceScaleFactor: 1 });
   const errors = [];
   page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
   page.on("pageerror", (e) => errors.push(e.message));
@@ -40,7 +44,8 @@ try {
   for (const path of paths) {
     await page.goto(base + path, { waitUntil: "networkidle" });
     await page.evaluate(() => document.fonts.ready);
-    const name = path.replace(/^\/dashboard\/?/, "").replace(/[^a-z0-9]+/gi, "-") || "dashboard";
+    if (settle) await page.waitForTimeout(settle);
+    const name = path.replace(/^\/dashboard\/?/, "").replace(/[^a-z0-9]+/gi, "-").replace(/-$/, "") || "dashboard";
     await page.screenshot({ path: `${out}/${name}.png`, fullPage: true });
     console.log(`shot  ${path} → ${out}/${name}.png`);
   }

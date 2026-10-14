@@ -10,6 +10,7 @@ export function SectionHeader({
   meta,
   href,
   hasRule = true,
+  size = "md",
   className,
 }: {
   /** Right-hand text: chapter title, date, page number. */
@@ -17,9 +18,11 @@ export function SectionHeader({
   /** Makes the logo a link (e.g. to the overview). */
   href?: string;
   hasRule?: boolean;
+  /** "slide": presentation scale (inside [data-slide-scale]). */
+  size?: "md" | "slide";
   className?: string;
 }) {
-  const logo = <Logo className="h-6 lg:h-7" />;
+  const logo = <Logo className={size === "slide" ? "h-[max(1.5rem,calc(var(--slide-u)*2.3))]" : "h-6 lg:h-7"} />;
   return (
     <div className={cn("flex flex-col gap-4", className)}>
       <div className="flex min-h-11 items-center justify-between gap-6">
@@ -30,7 +33,11 @@ export function SectionHeader({
         ) : (
           logo
         )}
-        {meta && <div className="text-right text-body-sm font-semibold text-ui-ink-2">{meta}</div>}
+        {meta && (
+          <div className={cn("text-right font-semibold text-ui-ink-2", size === "slide" ? "text-slide-small" : "text-body-sm")}>
+            {meta}
+          </div>
+        )}
       </div>
       {hasRule && <hr className="ui-rule" />}
     </div>

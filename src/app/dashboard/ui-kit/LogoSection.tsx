@@ -1,37 +1,6 @@
 import { Logo, LogoMark, LOGO_RULES } from "@/components/brand/Logo";
-import { LOCKUP, MARK_PATH } from "@/components/brand/logo-paths";
-import { Chip } from "@/components/ui/Labels";
+import { LOCKUP } from "@/components/brand/logo-paths";
 import { ContextGrid, KitSection, KitSub } from "./ContextGrid";
-
-// Comparison only (decision pending, see PENDING.md): A is the provisional mark the site used until
-// now, B the official deck vector, C the same vector rotated 45°. Delete A/C once a choice is made.
-function ProvisionalMark({ className }: { className: string }) {
-  return (
-    <svg viewBox="-12 -12 24 24" className={className} fill="none" stroke="currentColor" strokeWidth={2} aria-hidden>
-      {[45, 135, 225, 315].map((r) => (
-        <rect key={r} x={-3.4} y={-10.4} width={6.8} height={12.4} rx={3.4} transform={`rotate(${r})`} />
-      ))}
-    </svg>
-  );
-}
-function DeckMark({ className, rotate = 0 }: { className: string; rotate?: number }) {
-  return (
-    <svg viewBox="-50 -50 100 100" className={className} fill="currentColor" aria-hidden>
-      <path fillRule="evenodd" transform={`rotate(${rotate})`} d={MARK_PATH} />
-    </svg>
-  );
-}
-
-const OPTIONS = [
-  { id: "A", title: "Website until now", note: "Provisional recreation: four uniform-stroke pills on the diagonals.", Mark: ProvisionalMark },
-  { id: "B", title: "Pitch deck — official vector", note: "Extracted from the Canva deck as is. Recommended.", Mark: DeckMark },
-  {
-    id: "C",
-    title: "Official vector, rotated 45°",
-    note: "Same vector, loops on the diagonals like A.",
-    Mark: ({ className }: { className: string }) => <DeckMark className={className} rotate={45} />,
-  },
-] as const;
 
 const DOWNLOADS = [
   ["presence-hospitality-logo-on-light", "Logo · for light backgrounds"],
@@ -58,41 +27,7 @@ export function LogoSection() {
       }
     >
       <div className="flex flex-col gap-4">
-        <div className="flex flex-wrap items-center gap-3">
-          <KitSub>Mark — decision pending</KitSub>
-          <span data-mood="night">
-            <Chip dot="live">Waiting for your choice</Chip>
-          </span>
-        </div>
-        <div className="grid gap-4 lg:grid-cols-3">
-          {OPTIONS.map(({ id, title, note, Mark }) => (
-            <div key={id} className="flex flex-col gap-4 rounded-lg border border-line-night/50 p-5">
-              <p className="text-heading-sm text-paper-50">
-                {id} · {title}
-              </p>
-              <p className="text-body-sm text-paper-300">{note}</p>
-              <div className="grid grid-cols-2 gap-2">
-                {(["mist", "night"] as const).map((mood) =>
-                  (["site", "pitch"] as const).map((sys) => (
-                    <div
-                      key={mood + sys}
-                      {...(sys === "site" ? { "data-mood": mood } : { "data-theme": mood === "mist" ? "pitch" : "pitch-dark" })}
-                      className="flex items-end gap-4 rounded-md bg-ui-bg p-4 text-ui-logo"
-                    >
-                      <Mark className="h-14 w-14" />
-                      <Mark className="h-6 w-6" />
-                      <Mark className="h-4 w-4" />
-                    </div>
-                  )),
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
-      </div>
-
-      <div className="flex flex-col gap-4">
-        <KitSub>Canonical logo (option B) in every context</KitSub>
+        <KitSub>Logo and mark in every context</KitSub>
         <ContextGrid>
           {() => (
             <div className="flex flex-wrap items-center gap-x-10 gap-y-6">
