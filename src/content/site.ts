@@ -1,6 +1,8 @@
 // Single source for contact and legal data. Items marked PENDING/CONFIRM are tracked in PENDING.md.
 export const site = {
   name: "Presence Hospitality",
+  // Home-screen label (iOS "Add to Home Screen", web manifest short_name).
+  shortName: "Presence",
   legalName: "Presence Hospitality B.V.",
   // The public domain (root is primary; www and the vercel.app alias redirect to it). Every canonical,
   // hreflang, Open Graph URL, sitemap entry and structured-data URL uses it, on every environment

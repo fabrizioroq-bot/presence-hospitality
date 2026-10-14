@@ -40,6 +40,8 @@ export async function generateMetadata({
       languages: { en: "/en", nl: "/nl", "x-default": "/en" },
     },
     applicationName: site.name,
+    // iOS home-screen label. capable: false keeps Safari's normal browser UI (Next defaults it to true).
+    appleWebApp: { title: site.shortName, capable: false },
     // Search Console / Bing Webmaster ownership tags, rendered once the codes are set in site.ts.
     verification: {
       ...(site.verification.google ? { google: site.verification.google } : {}),

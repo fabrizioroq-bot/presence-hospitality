@@ -5,7 +5,7 @@ import { site } from "@/content/site";
 export default function manifest(): MetadataRoute.Manifest {
   return {
     name: site.name,
-    short_name: "Presence",
+    short_name: site.shortName,
     description: "Presence Hospitality: remote front office and holographic reception for hotels.",
     start_url: "/en",
     scope: "/",
