@@ -44,3 +44,7 @@ next-env.d.ts
 /reports/
 .DS_Store
 /docs/
+
+# Internal, local only (never pushed: the GitHub repo is public)
+/PENDING.md
+/PROMPT_SITIO.md

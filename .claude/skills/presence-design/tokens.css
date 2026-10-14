@@ -1,4 +1,5 @@
 /* Presence Hospitality — design tokens (source of truth: src/styles/globals.css mirrors this block) */
+/* UI kit layer (logo ink, scoped pitch palette, --ui-* context roles, motion): src/styles/kit.css. */
 :root {
   /* "Warm Holographic Navy" (brand/UX research, 02-10). Two systems:
      - interface reality (the company): warm ivory, white cards, petrol navy text and structure,

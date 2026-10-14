@@ -244,7 +244,7 @@ content_path = "./supabase/templates/recovery.html"
 
 # Auth emails go through Resend (required on the free plan for custom templates).
 # Sender onboarding@resend.dev is permanent (client decision 27-09); it delivers to the Resend
-# account owner only, which is the admin (the admin account). More admins → verify a domain.
+# account owner only, which is the admin account. More admins → verify a domain.
 [auth.email.smtp]
 enabled = true
 host = "smtp.resend.com"

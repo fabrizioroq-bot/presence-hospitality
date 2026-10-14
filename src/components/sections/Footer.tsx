@@ -101,7 +101,7 @@ export async function Footer() {
 
           <div className="mt-6 grid grid-cols-2 gap-x-6 gap-y-8 border-t border-line-night/40 pt-8 lg:mt-16 lg:grid-cols-4 lg:gap-12 lg:pt-12">
             <div className="col-span-2 flex flex-col gap-4 lg:col-span-1">
-              <Logo onNight />
+              <Logo on="dark" className="h-6 self-start" />
             </div>
 
             <div className="col-span-2 flex flex-col gap-4 lg:col-span-1">

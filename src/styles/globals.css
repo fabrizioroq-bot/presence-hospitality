@@ -1,4 +1,6 @@
 @import "tailwindcss";
+/* UI kit: brand primitives, context roles (--ui-*) and shared component classes. */
+@import "./kit.css";
 
 /* Pinned scroll scenes on desktop (≥650px tall; the scene scales down to fit) when motion is allowed. */
 @custom-variant pin (@media (min-width: 1024px) and (min-height: 650px) and (prefers-reduced-motion: no-preference));
@@ -185,25 +187,25 @@
   font-size: clamp(3rem, 1.2rem + 7.6vw, 8rem);
   line-height: 0.92;
   letter-spacing: -0.045em;
-  font-weight: 800;
+  font-weight: var(--ui-display-weight, 800);
 }
 @utility text-display-xl {
   font-size: clamp(2.5rem, 1.2rem + 5vw, 5.75rem);
   line-height: 0.95;
   letter-spacing: -0.04em;
-  font-weight: 800;
+  font-weight: var(--ui-display-weight, 800);
 }
 @utility text-display-lg {
   font-size: clamp(2rem, 1.3rem + 2.8vw, 3.75rem);
   line-height: 1;
   letter-spacing: -0.035em;
-  font-weight: 800;
+  font-weight: var(--ui-display-weight, 800);
 }
 @utility text-heading-md {
   font-size: clamp(1.375rem, 1.15rem + 0.9vw, 1.875rem);
   line-height: 1.15;
   letter-spacing: -0.02em;
-  font-weight: 800;
+  font-weight: var(--ui-display-weight, 800);
 }
 @utility text-heading-sm {
   font-size: 1.125rem;
@@ -215,7 +217,7 @@
   font-size: clamp(1rem, 0.9rem + 0.4vw, 1.25rem);
   line-height: 1.1;
   letter-spacing: -0.01em;
-  font-weight: 800;
+  font-weight: var(--ui-display-weight, 800);
   text-transform: uppercase;
 }
 /* Readability (50+ visitors): body 17px mobile / 18px desktop, line-height 1.6, no light weights,
@@ -310,12 +312,12 @@
     color: var(--ink-900);
   }
   :focus-visible {
-    outline: 2px solid var(--focus);
+    outline: 2px solid var(--ui-focus, var(--focus));
     outline-offset: 3px;
     border-radius: 4px;
   }
   [data-mood="night"] :focus-visible {
-    outline-color: var(--paper-50);
+    outline-color: var(--ui-focus, var(--paper-50));
   }
   [data-mood="night"] {
     background: var(--charcoal-700);
@@ -324,7 +326,7 @@
   em.emph {
     font-family: var(--font-hanken-italic), var(--font-hanken), sans-serif;
     font-style: italic;
-    font-weight: 800;
+    font-weight: var(--ui-display-weight, 800);
   }
 }
 
@@ -392,7 +394,7 @@
   animation: sheet-in 250ms ease-out;
 }
 .sheet-item {
-  animation: sheet-item 400ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: sheet-item 400ms var(--ease-out) both;
 }
 
 /* Night sections: a slow diagonal band of light. */
@@ -607,7 +609,7 @@ select.demo-input option {
   }
 }
 .success-title {
-  animation: success-in 700ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  animation: success-in 700ms var(--ease-out) both;
 }
 @keyframes burst {
   from {
@@ -631,7 +633,7 @@ select.demo-input option {
   border-radius: 999px;
   background: var(--holo-300);
   box-shadow: var(--glow-holo);
-  animation: burst 900ms cubic-bezier(0.16, 1, 0.3, 1) var(--d) both;
+  animation: burst 900ms var(--ease-out) var(--d) both;
 }
 .success-burst i.warm {
   background: var(--ph-cta-bg);
@@ -693,7 +695,7 @@ select.demo-input option {
 
 /* Holobox: the DOM fill + poster fade out once the WebGL scene paints the panel. */
 .portal-fill {
-  transition: opacity 600ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 600ms var(--ease-out);
 }
 [data-webgl="ready"] .portal-fill {
   opacity: 0;
@@ -740,18 +742,18 @@ select.demo-input option {
 /* Conversion CTA: solid terracotta pill, white text (5.2:1), a soft warm glow on hover. */
 .btn-cta {
   position: relative;
-  color: var(--ph-cta-text);
-  background: var(--ph-cta-bg);
-  box-shadow: 0 6px 18px -12px rgba(150, 56, 33, 0.7);
+  color: var(--ui-btn-ink);
+  background: var(--ui-btn-bg);
+  box-shadow: var(--ui-btn-shadow);
   transition:
     background-color 0.2s,
     box-shadow 0.25s,
-    translate 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+    translate 0.45s var(--ease-out),
     scale 0.15s;
 }
 .btn-cta:hover {
-  background: var(--ph-cta-bg-hover);
-  box-shadow: 0 10px 28px -10px rgba(183, 75, 50, 0.55);
+  background: var(--ui-btn-bg-hover);
+  box-shadow: var(--ui-btn-shadow-hover);
 }
 
 /* Headlines on light surfaces: petrol navy (headings inside dark islands keep their own colour). */
@@ -759,27 +761,37 @@ select.demo-input option {
   color: var(--ph-brand-primary);
 }
 
-/* Emphasis and figures on light: solid colours */
-[data-mood="mist"] em.emph {
-  color: var(--teal-700);
+/* Emphasis and figures take their paint from the nearest context (roles in kit.css): solid teal /
+   petrol on light, a subtle holographic gradient on dark and on dark tiles, plain ink in the pitch.
+   Role-based, so a light panel nested in a dark page (or the reverse) still gets its own paint. */
+:is([data-mood], [data-theme^="pitch"]) em.emph,
+:is([data-mood], [data-theme^="pitch"]) .key-figure {
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
 }
-[data-mood="mist"] .key-figure,
+:is([data-mood], [data-theme^="pitch"]) em.emph {
+  color: var(--ui-emph-ink);
+  background-image: var(--ui-emph-paint);
+}
+:is([data-mood], [data-theme^="pitch"]) .key-figure {
+  color: var(--ui-figure-ink);
+  background-image: var(--ui-figure-paint);
+}
+.bg-ink-900,
+.bg-petrol {
+  --ui-figure-ink: transparent;
+  --ui-figure-paint: var(--holo-text-gradient);
+}
 .step-num {
   color: var(--ph-brand-primary);
 }
-
-/* On dark (tech moments, dark sections): a subtle holographic gradient */
-[data-mood="night"] em.emph,
-[data-mood="night"] .key-figure,
-.bg-ink-900 .key-figure,
-.bg-petrol .key-figure,
 .step-num-dark {
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
-  background-image: linear-gradient(100deg, var(--holo-400) 0%, var(--cyan-300) 100%);
+  background-image: var(--holo-text-gradient);
 }
 
 /* Steps, progress, dots, navbar */
@@ -845,7 +857,7 @@ select.demo-input option {
   border: 1px solid rgba(23, 33, 38, 0.35);
   transform: scale(0.62);
   transition:
-    transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.3s var(--ease-out),
     border-color 0.25s,
     background-color 0.25s,
     opacity 0.2s;
@@ -890,7 +902,7 @@ select.demo-input option {
   transform: translateY(4px) scale(0.9);
   transition:
     opacity 0.2s,
-    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    transform 0.25s var(--ease-out);
 }
 .cursor-ring[data-state="label"] > span {
   opacity: 1;
@@ -903,7 +915,7 @@ select.demo-input option {
     background-color, color, border-color, box-shadow, filter, translate, scale;
   transition-duration: 0.2s, 0.2s, 0.2s, 0.25s, 0.2s, 0.45s, 0.15s;
   transition-timing-function:
-    ease, ease, ease, ease, ease, cubic-bezier(0.16, 1, 0.3, 1), ease;
+    ease, ease, ease, ease, ease, var(--ease-out), ease;
 }
 .magnetic:active,
 .btn-cta:active {
@@ -922,10 +934,10 @@ select.demo-input option {
    --------------------------------------------------------------------------------------------- */
 html.rv [data-rv] {
   transition:
-    opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-    filter 0.7s cubic-bezier(0.16, 1, 0.3, 1),
-    clip-path 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    opacity 0.7s var(--ease-out),
+    transform 0.7s var(--ease-out),
+    filter 0.7s var(--ease-out),
+    clip-path 0.8s var(--ease-out);
   transition-delay: calc(
     var(--rv-delay, 0s) + var(--rv-i, 0) * var(--rv-step, 0.07s)
   );

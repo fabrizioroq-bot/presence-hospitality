@@ -1,0 +1,345 @@
+/* =============================================================================================
+   UI kit — brand foundation shared by the website and the sales pitch (/dashboard/pitch).
+   Reference page: /dashboard/ui-kit. Rules: .claude/skills/presence-design/SKILL.md §4.12.
+
+   Layers:
+   1. Primitives  — brand ink, the scoped pitch palette, motion. Raw values live only here and in
+                    globals.css :root; components never use hex.
+   2. Roles       — --ui-* tokens, resolved by context. Four contexts:
+                      site light   :root, [data-mood="mist"]
+                      site dark    [data-mood="night"]
+                      pitch light  [data-theme="pitch"]
+                      pitch dark   [data-theme="pitch-dark"]
+                    A component reads roles only, so the same markup works in all four.
+   3. Components  — .ui-card, .ui-pill, .ui-num, .ui-chip, .ui-stat-*, .ui-footnote, .ui-rule.
+   Every text/background pair is verified in scripts/check-contrast.ts.
+   ============================================================================================= */
+
+/* ---- 1. Primitives -------------------------------------------------------------------------- */
+:root {
+  /* Logo: one ink on light backgrounds, white on dark. Same values in the public/brand exports. */
+  --logo-ink: var(--ph-brand-primary);
+  --logo-ink-inverse: #ffffff;
+
+  /* Pitch theme palette (used only inside [data-theme^="pitch"]) */
+  --pitch-mist: #d5dbe2; /* light chapters */
+  --pitch-charcoal: #3e3e40; /* dark chapters; ink on light (7.65:1 on mist) */
+  --pitch-ink-muted: #55575c; /* meta text on mist (5.19:1) */
+  --pitch-paper-2: #ebecee; /* secondary text on charcoal (9.0:1; 7.7:1 on cards) */
+  --pitch-paper-muted: #b9bbc0; /* meta text on charcoal (5.56:1) */
+  --pitch-pill-from: #a9cbf3;
+  --pitch-pill-to: #e4eefa;
+  --pitch-orb-blue: #6fa6e8; /* orbs: decorative only, always blurred */
+  --pitch-orb-aqua: #8fe3d6;
+  --pitch-orb-peach: #f4b183;
+  --pitch-orb-pink: #e2aad6;
+  --pitch-gradient: linear-gradient(100deg, var(--pitch-pill-from) 0%, var(--pitch-pill-to) 100%);
+
+  /* Holographic text gradient: emphasis and key figures on the site's dark surfaces. */
+  --holo-text-gradient: linear-gradient(100deg, var(--holo-400) 0%, var(--cyan-300) 100%);
+
+  /* Motion. Mirrored for JS in src/lib/motion-tokens.ts. */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1); /* default: reveals, settles, hovers */
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1); /* scene and chapter transitions */
+  --ease-in: cubic-bezier(0.7, 0, 0.84, 0); /* exits only */
+  --dur-instant: 120ms; /* press feedback */
+  --dur-fast: 200ms; /* hover, focus, small state changes */
+  --dur-base: 450ms; /* panels, pills, toggles */
+  --dur-slow: 700ms; /* reveals */
+  --dur-scene: 900ms; /* chapter / scene transitions */
+  --stagger: 70ms; /* between items of a group */
+}
+
+/* ---- 2. Roles ------------------------------------------------------------------------------- */
+:root,
+[data-mood="mist"] {
+  --ui-bg: var(--mist-bg);
+  --ui-ink: var(--ink-900);
+  --ui-ink-2: var(--ink-700);
+  --ui-muted: var(--ink-500);
+  --ui-heading: var(--ph-brand-primary);
+  --ui-emph-ink: var(--teal-700);
+  --ui-emph-paint: none;
+  --ui-figure-ink: var(--ph-brand-primary);
+  --ui-figure-paint: none;
+  --ui-logo: var(--logo-ink);
+  --ui-line: var(--line-mist); /* control boundaries, ≥ 3:1 */
+  --ui-rule: var(--ph-border-strong); /* hairlines and dividers (decorative) */
+  --ui-focus: var(--ph-focus-ring);
+  --ui-card-bg: var(--ph-bg-surface);
+  --ui-card-line: var(--ph-border-subtle);
+  --ui-card-line-w: 1px;
+  --ui-card-shadow: 0 22px 44px -30px rgba(23, 59, 77, 0.3), 0 2px 6px -3px rgba(23, 33, 38, 0.06);
+  --ui-highlight: var(--holo-gradient);
+  --ui-highlight-ink: var(--ink-900);
+  --ui-num-bg: var(--ph-bg-surface);
+  --ui-num-ink: var(--ph-brand-primary);
+  --ui-num-line: var(--ph-brand-primary);
+  --ui-num-lit-bg: var(--ph-brand-primary);
+  --ui-num-lit-ink: #ffffff;
+  --ui-chip-bg: transparent;
+  --ui-chip-line: var(--line-mist);
+  --ui-chip-ink: var(--ink-700);
+  --ui-dot: var(--ph-brand-secondary);
+  --ui-btn-bg: var(--ph-cta-bg);
+  --ui-btn-bg-hover: var(--ph-cta-bg-hover);
+  --ui-btn-ink: var(--ph-cta-text);
+  --ui-btn-shadow: 0 6px 18px -12px rgba(150, 56, 33, 0.7);
+  --ui-btn-shadow-hover: 0 10px 28px -10px rgba(183, 75, 50, 0.55);
+  --ui-hover: var(--mist-surface);
+  /* Type: same family everywhere; display weight 800 on the site, 900 in the pitch. */
+  --ui-display-weight: 800;
+}
+
+[data-mood="night"] {
+  --ui-bg: var(--charcoal-700);
+  --ui-ink: var(--paper-50);
+  --ui-ink-2: var(--paper-300);
+  --ui-muted: var(--paper-500);
+  --ui-heading: var(--paper-50);
+  --ui-emph-ink: transparent;
+  --ui-emph-paint: var(--holo-text-gradient);
+  --ui-figure-ink: transparent;
+  --ui-figure-paint: var(--holo-text-gradient);
+  --ui-logo: var(--logo-ink-inverse);
+  --ui-line: var(--line-night);
+  --ui-rule: var(--line-night);
+  --ui-focus: var(--paper-50);
+  --ui-card-bg: var(--night-800);
+  --ui-card-line: rgba(255, 255, 255, 0.08);
+  --ui-card-shadow: none;
+  --ui-num-bg: var(--night-900);
+  --ui-num-ink: var(--paper-50);
+  --ui-num-line: var(--line-night);
+  --ui-num-lit-bg: var(--paper-50);
+  --ui-num-lit-ink: var(--night-900);
+  --ui-chip-line: var(--line-night);
+  --ui-chip-ink: var(--paper-300);
+  --ui-dot: var(--ph-accent-on-dark);
+  --ui-hover: var(--night-800);
+}
+
+[data-theme="pitch"],
+[data-theme="pitch-dark"] {
+  --ui-display-weight: 900;
+  --ui-emph-ink: currentColor;
+  --ui-emph-paint: none;
+  --ui-figure-ink: currentColor;
+  --ui-figure-paint: none;
+  --ui-card-line-w: 1.5px;
+  --ui-card-shadow: none;
+  --ui-highlight: var(--pitch-gradient);
+  --ui-highlight-ink: var(--pitch-charcoal);
+  --ui-dot: var(--pitch-pill-from);
+  --ui-btn-shadow-hover: var(--ui-btn-shadow);
+  background-color: var(--ui-bg);
+  color: var(--ui-ink);
+}
+
+[data-theme="pitch"] {
+  --ui-bg: var(--pitch-mist);
+  --ui-ink: var(--pitch-charcoal);
+  --ui-ink-2: var(--pitch-charcoal);
+  --ui-muted: var(--pitch-ink-muted);
+  --ui-heading: var(--pitch-charcoal);
+  --ui-logo: var(--logo-ink);
+  --ui-line: var(--pitch-charcoal);
+  --ui-rule: var(--pitch-charcoal);
+  --ui-focus: var(--pitch-charcoal);
+  --ui-card-bg: rgba(255, 255, 255, 0.3);
+  --ui-card-line: #ffffff;
+  --ui-num-bg: #ffffff;
+  --ui-num-ink: var(--pitch-charcoal);
+  --ui-num-line: var(--pitch-charcoal);
+  --ui-num-lit-bg: var(--pitch-charcoal);
+  --ui-num-lit-ink: #ffffff;
+  --ui-chip-bg: rgba(255, 255, 255, 0.3);
+  --ui-chip-line: #ffffff;
+  --ui-chip-ink: var(--pitch-charcoal);
+  --ui-btn-bg: var(--pitch-charcoal);
+  --ui-btn-bg-hover: #2a2a2c;
+  --ui-btn-ink: #ffffff;
+  --ui-btn-shadow: 0 10px 24px -14px rgba(62, 62, 64, 0.8);
+  --ui-hover: rgba(255, 255, 255, 0.4);
+}
+
+[data-theme="pitch-dark"] {
+  --ui-bg: var(--pitch-charcoal);
+  --ui-ink: #ffffff;
+  --ui-ink-2: var(--pitch-paper-2);
+  --ui-muted: var(--pitch-paper-muted);
+  --ui-heading: #ffffff;
+  --ui-logo: var(--logo-ink-inverse);
+  --ui-line: #ffffff;
+  --ui-rule: rgba(255, 255, 255, 0.55);
+  --ui-focus: #ffffff;
+  --ui-card-bg: rgba(255, 255, 255, 0.06);
+  --ui-card-line: #ffffff;
+  --ui-num-bg: #ffffff;
+  --ui-num-ink: var(--pitch-charcoal);
+  --ui-num-line: #ffffff;
+  --ui-num-lit-bg: var(--pitch-pill-from);
+  --ui-num-lit-ink: var(--pitch-charcoal);
+  --ui-chip-bg: rgba(255, 255, 255, 0.06);
+  --ui-chip-line: #ffffff;
+  --ui-chip-ink: #ffffff;
+  --ui-btn-bg: #ffffff;
+  --ui-btn-bg-hover: var(--pitch-pill-to);
+  --ui-btn-ink: var(--pitch-charcoal);
+  --ui-btn-shadow: none;
+  --ui-hover: rgba(255, 255, 255, 0.1);
+}
+
+/* Utilities for the roles (text-ui-ink, bg-ui-bg, border-ui-line, text-logo-ink…). */
+@theme inline {
+  --color-ui-bg: var(--ui-bg);
+  --color-ui-ink: var(--ui-ink);
+  --color-ui-ink-2: var(--ui-ink-2);
+  --color-ui-muted: var(--ui-muted);
+  --color-ui-heading: var(--ui-heading);
+  --color-ui-line: var(--ui-line);
+  --color-ui-rule: var(--ui-rule);
+  --color-ui-hover: var(--ui-hover);
+  --color-ui-logo: var(--ui-logo);
+  --color-logo-ink: var(--logo-ink);
+  --color-logo-ink-inverse: var(--logo-ink-inverse);
+  --color-pitch-mist: var(--pitch-mist);
+  --color-pitch-charcoal: var(--pitch-charcoal);
+  --ease-out: var(--ease-out);
+  --ease-in-out: var(--ease-in-out);
+}
+
+/* ---- 3. Components -------------------------------------------------------------------------- */
+@layer components {
+  /* Headings inside a pitch theme take the role colour (the site's heading rule targets mist only). */
+  :is([data-theme="pitch"], [data-theme="pitch-dark"]) :is(h1, h2, h3) {
+    color: var(--ui-heading);
+  }
+
+  /* Outlined card. data-variant="highlight": the gradient fill (at most one per group). */
+  .ui-card {
+    position: relative;
+    border-radius: var(--r-lg);
+    background: var(--ui-card-bg);
+    box-shadow:
+      inset 0 0 0 var(--ui-card-line-w) var(--ui-card-line),
+      var(--ui-card-shadow);
+    color: var(--ui-ink);
+  }
+  .ui-card[data-variant="highlight"] {
+    --ui-ink: var(--ui-highlight-ink);
+    --ui-ink-2: var(--ui-highlight-ink);
+    --ui-heading: var(--ui-highlight-ink);
+    background: var(--ui-highlight);
+    color: var(--ui-highlight-ink);
+  }
+  /* Columns inside a card, separated by dividers (stacked with top dividers below lg). */
+  .ui-card-cols {
+    display: grid;
+  }
+  .ui-card-cols > * + * {
+    border-top: var(--ui-card-line-w) solid var(--ui-rule);
+  }
+  @media (min-width: 1024px) {
+    .ui-card-cols {
+      grid-auto-flow: column;
+      grid-auto-columns: minmax(0, 1fr);
+    }
+    .ui-card-cols > * + * {
+      border-top: 0;
+      border-left: var(--ui-card-line-w) solid var(--ui-rule);
+    }
+  }
+
+  /* Gradient pill label (packages, steps). Always dark ink on the light gradient. */
+  .ui-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    border-radius: var(--r-pill);
+    background: var(--ui-highlight);
+    color: var(--ui-highlight-ink);
+    font-weight: var(--ui-display-weight);
+    letter-spacing: -0.02em;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  /* Numbered circle: white disc, 1.5px outline, heavy tabular figures. data-lit = active step. */
+  .ui-num {
+    display: inline-grid;
+    place-items: center;
+    flex-shrink: 0;
+    aspect-ratio: 1;
+    border-radius: var(--r-pill);
+    background: var(--ui-num-bg);
+    color: var(--ui-num-ink);
+    box-shadow: inset 0 0 0 1.5px var(--ui-num-line);
+    font-weight: var(--ui-display-weight);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    transition:
+      background-color var(--dur-base) var(--ease-out),
+      color var(--dur-base) var(--ease-out),
+      scale var(--dur-base) var(--ease-out);
+  }
+  .ui-num[data-lit] {
+    background: var(--ui-num-lit-bg);
+    color: var(--ui-num-lit-ink);
+    box-shadow: inset 0 0 0 1.5px var(--ui-num-lit-bg);
+  }
+
+  /* Chip / tag: short facts ("24/7", "Real people, not AI"). Outlined, never interactive. */
+  .ui-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2.25rem;
+    padding: 0.375rem 0.875rem;
+    border-radius: var(--r-pill);
+    background: var(--ui-chip-bg);
+    box-shadow: inset 0 0 0 var(--ui-card-line-w) var(--ui-chip-line);
+    color: var(--ui-chip-ink);
+    font-size: var(--ph-font-small);
+    font-weight: 600;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+  .ui-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    flex-shrink: 0;
+    border-radius: var(--r-pill);
+    background: var(--ui-dot);
+  }
+
+  /* Stat block: a big figure, its label, an optional footnote marker. */
+  .ui-stat-value {
+    font-weight: var(--ui-display-weight);
+    letter-spacing: -0.04em;
+    line-height: 0.95;
+    font-variant-numeric: tabular-nums;
+  }
+  .ui-stat-mark {
+    margin-left: 0.08em;
+    font-size: 0.45em;
+    vertical-align: super;
+    letter-spacing: 0;
+  }
+
+  /* Footnote: the qualifier line for a marked figure. */
+  .ui-footnote {
+    max-width: 80ch;
+    color: var(--ui-muted);
+    font-size: var(--ph-font-small);
+    line-height: 1.5;
+  }
+
+  /* Hairline rule (section header, dividers). */
+  .ui-rule {
+    height: 0;
+    border: 0;
+    border-top: 1.5px solid var(--ui-rule);
+  }
+}

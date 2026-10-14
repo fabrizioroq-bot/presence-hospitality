@@ -2,7 +2,8 @@ import { cx as cn } from "@/lib/cx";
 import type { ComponentProps } from "react";
 
 type Variant = "primary" | "glow" | "ghost";
-type Mood = "mist" | "night";
+/** "auto" reads the context roles (kit.css), so the same button fits site and pitch themes. */
+type Mood = "mist" | "night" | "auto";
 
 const base =
   "magnetic group inline-flex min-h-11 items-center justify-center gap-2 rounded-pill px-6 py-3 text-[1rem] font-semibold tracking-[-0.01em] transition-[background-color,color,border-color,box-shadow] duration-200 disabled:cursor-not-allowed disabled:opacity-60";
@@ -18,6 +19,11 @@ const styles: Record<Mood, Record<Variant, string>> = {
     primary: "btn-cta",
     glow: "bg-holo-gradient text-ink-900 hover:shadow-glow-holo",
     ghost: "text-paper-50 ring-1 ring-line-night hover:bg-night-800",
+  },
+  auto: {
+    primary: "btn-cta",
+    glow: "bg-(image:--ui-highlight) text-(--ui-highlight-ink) hover:shadow-soft",
+    ghost: "text-ui-ink ring-(length:--ui-card-line-w) ring-ui-line hover:bg-ui-hover",
   },
 };
 

@@ -2,7 +2,7 @@
 
 # Presence Hospitality — website
 
-Full spec: `PROMPT_SITIO.md`. Open items: `PENDING.md`.
+Full spec: `PROMPT_SITIO.md`. Open items: `PENDING.md`. Both are **local only** (git-ignored, never pushed: the GitHub repo is public); keep internal notes, contacts and client details there, not in tracked files.
 
 ## Rules
 - **Always follow the `presence-design` skill** (`.claude/skills/presence-design/`) for any UI work. Only token colours; no hex values in components.
@@ -20,7 +20,8 @@ Next.js 16 (App Router, Turbopack) · TypeScript strict · Tailwind CSS v4 (`src
 - `npm run dev` — dev server
 - `npm run build && npm start` — production
 - `npm run check` — typecheck + lint + contrast + i18n
-- `/en/styleguide` — dev-only design reference
+- `/dashboard/ui-kit` — admin-only UI kit: logo, tokens, shared components (site + pitch)
+- `npm run brand` — regenerate logo files, favicons and OG images from the canonical logo paths
 
 ## Folder map
 - `src/app/[locale]/` pages · `src/app/actions/` server actions

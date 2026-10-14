@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { connection } from "next/server";
 import { Grain } from "@/components/brand/Grain";
+import { LogoSymbols } from "@/components/brand/Logo";
 import { hanken, hankenItalic, jetbrains } from "@/lib/fonts";
 import "@/styles/globals.css";
 
@@ -28,6 +29,7 @@ export default async function DashboardLayout({
       className={`${hanken.variable} ${hankenItalic.variable} ${jetbrains.variable}`}
     >
       <body data-mood="night" className="min-h-svh bg-night-900 text-paper-50">
+        <LogoSymbols />
         {children}
         <Grain />
       </body>

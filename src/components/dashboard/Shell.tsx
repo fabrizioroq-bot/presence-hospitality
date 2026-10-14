@@ -6,9 +6,12 @@ import { Logo } from "@/components/brand/Logo";
 /** Dashboard chrome: header with brand, signed-in user and sign out. */
 export function Shell({
   email,
+  section = "Leads",
   children,
 }: {
   email: string;
+  /** Label after the logo ("/ Leads", "/ UI kit"). */
+  section?: string;
   children: ReactNode;
 }) {
   return (
@@ -24,9 +27,9 @@ export function Shell({
       <header className="sticky top-0 z-40 border-b border-line-night/40 bg-night-900/80 backdrop-blur-[14px]">
         <div className="container-site flex h-16 items-center justify-between gap-4">
           <Link href="/dashboard" className="flex items-center gap-3">
-            <Logo onNight />
+            <Logo on="dark" decorative />
             <span className="hidden text-label text-paper-500 sm:inline">
-              / Leads
+              / {section}
             </span>
           </Link>
           <div className="flex items-center gap-4">

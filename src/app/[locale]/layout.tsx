@@ -7,6 +7,7 @@ import { hanken, hankenItalic, jetbrains } from "@/lib/fonts";
 import { BOOT_SCRIPT } from "@/lib/boot-script";
 import { Intro } from "@/components/intro/Intro";
 import { Grain } from "@/components/brand/Grain";
+import { LogoSymbols } from "@/components/brand/Logo";
 import { SmoothScroll } from "@/components/providers/SmoothScroll";
 import { CursorGlow } from "@/components/ambient/CursorGlow";
 import { CursorRing } from "@/components/ambient/CursorRing";
@@ -68,6 +69,7 @@ export default async function LocaleLayout({
         <script dangerouslySetInnerHTML={{ __html: BOOT_SCRIPT }} />
       </head>
       <body>
+        <LogoSymbols />
         <Intro caption={hero("tagline")} />
         {/* No NextIntlClientProvider: client components receive their strings as props. */}
         {children}

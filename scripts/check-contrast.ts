@@ -93,6 +93,39 @@ for (const [name, bg] of [
 // (5.2:1) identifies it, which WCAG 1.4.11 accepts for text buttons.
 pairs.push([T.cta, T.dark, 3, "terracotta button edge on dark canvas (UI)"], [T.cta, T.darkDusk, 3, "terracotta button edge on dark dusk (UI)"]);
 
+// Pitch theme (kit.css, [data-theme="pitch" | "pitch-dark"]). Card and chip fills are translucent
+// white, so they are checked as blended over their canvas (30% on mist, 6% on charcoal).
+const P = {
+  mist: "#D5DBE2", charcoal: "#3E3E40", inkMuted: "#55575C", paper2: "#EBECEE", paperMuted: "#B9BBC0",
+  pillFrom: "#A9CBF3", pillTo: "#E4EEFA", white: "#FFFFFF",
+};
+const blend = (fg: string, bg: string, a: number) =>
+  "#" + [0, 2, 4].map((i) => Math.round(a * parseInt(fg.slice(1 + i, 3 + i), 16) + (1 - a) * parseInt(bg.slice(1 + i, 3 + i), 16)).toString(16).padStart(2, "0")).join("");
+const mistCard = blend(P.white, P.mist, 0.3);
+const charcoalCard = blend(P.white, P.charcoal, 0.06);
+for (const [name, bg] of [["pitch mist", P.mist], ["pitch card on mist", mistCard]] as const) {
+  pairs.push(
+    [P.charcoal, bg, AAA, `charcoal text on ${name}`],
+    [P.inkMuted, bg, 4.5, `muted text on ${name}`],
+    [T.petrol, bg, 3, `logo (petrol) on ${name} (UI)`],
+    [P.charcoal, bg, 3, `focus ring / control line on ${name} (UI)`],
+  );
+}
+for (const [name, bg] of [["pitch charcoal", P.charcoal], ["pitch card on charcoal", charcoalCard]] as const) {
+  pairs.push(
+    [P.white, bg, AAA, `white text on ${name}`],
+    [P.paper2, bg, AAA, `secondary text on ${name}`],
+    [P.paperMuted, bg, 4.5, `muted text on ${name}`],
+    [P.white, bg, 3, `focus ring / outline on ${name} (UI)`],
+  );
+}
+pairs.push(
+  [P.charcoal, P.pillFrom, 4.5, "charcoal on pill / highlight gradient start"],
+  [P.charcoal, P.pillTo, AAA, "charcoal on pill / highlight gradient end"],
+  [P.charcoal, P.white, AAA, "charcoal on number circle / white button"],
+  [P.white, P.charcoal, AAA, "white on charcoal button / lit number"],
+);
+
 let failed = 0;
 for (const [fg, bg, min, label] of pairs) {
   const r = ratio(fg, bg);

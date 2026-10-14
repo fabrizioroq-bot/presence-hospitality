@@ -206,7 +206,7 @@ export function Navbar({
       >
         <div className="container-site flex h-full items-center justify-between gap-6">
           <Link href={homeHref} className="rounded-sm" aria-label="Presence Hospitality — home">
-            <Logo onNight={night} />
+            <Logo decorative on={night ? "dark" : "light"} />
           </Link>
 
           <nav aria-label={c("primaryNav")} className="hidden lg:block">

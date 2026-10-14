@@ -37,3 +37,21 @@ export const claims: Record<Claim["id"], Claim> = {
     status: "OK",
   },
 };
+
+/**
+ * Service windows per package, for the pitch's 24-hour ring. CONFIRM: no fixed windows yet, so the
+ * ring shows unlabelled "Night" and "Day + Evening" bands marked "Illustrative" until these are filled
+ * in (hours 0–24, local time; a window may wrap past midnight, e.g. [23, 7]).
+ */
+export type HoursWindow = readonly [start: number, end: number];
+export const packageHours: {
+  nightOnly: HoursWindow | null;
+  dayEvening: HoursWindow | null;
+  source: string | null;
+  status: "OK" | "CONFIRM";
+} = {
+  nightOnly: null,
+  dayEvening: null,
+  source: null,
+  status: "CONFIRM",
+};

@@ -22,7 +22,7 @@ export function AuthCard({
         }}
       />
       <div className="w-full max-w-md">
-        <Logo onNight className="mb-10" />
+        <Logo on="dark" className="mb-10 h-6" />
         <div className="rounded-xl border border-line-night bg-night-800 p-8 sm:p-10">
           <p className="text-label text-paper-500">Leads dashboard</p>
           <h1 className="mt-4 text-display-lg">{title}</h1>

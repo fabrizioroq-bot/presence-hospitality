@@ -144,7 +144,7 @@ export function BeamDiagram({
 
         <div ref={hubRef} className="relative z-10 grid h-24 w-24 place-items-center rounded-full bg-petrol text-paper-50 shadow-glow-holo">
           <span className="hub-ring absolute inset-0 rounded-full" />
-          <LogoMark gradient className="h-9 w-9" />
+          <LogoMark on="dark" className="h-9 w-9" />
           <span className="absolute -bottom-8 text-label whitespace-nowrap text-ink-900">{hub}</span>
         </div>
 
