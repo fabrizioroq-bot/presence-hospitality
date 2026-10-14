@@ -33,7 +33,7 @@ let failed = false;
 try {
   const [vw, vh] = (process.env.VIEWPORT ?? "1440x900").split("x").map(Number);
   const settle = Number(process.env.SETTLE_MS ?? 0);
-  const page = await b.newPage({ viewport: { width: vw, height: vh }, deviceScaleFactor: Number(process.env.DPR ?? 1) });
+  const page = await b.newPage({ viewport: { width: vw, height: vh }, deviceScaleFactor: Number(process.env.DPR ?? 1), reducedMotion: process.env.REDUCED ? "reduce" : "no-preference" });
   const errors = [];
   page.on("console", (m) => m.type() === "error" && errors.push(m.text()));
   page.on("pageerror", (e) => errors.push(e.message));

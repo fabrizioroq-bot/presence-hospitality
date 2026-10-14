@@ -1,13 +1,14 @@
 import type { CSSProperties } from "react";
 import { getTranslations } from "next-intl/server";
+import type { Locale } from "@/i18n/routing";
 import { PackageRing, type PackageStrings } from "../PackageRing";
 import { SlideHeadline } from "../SlideHeadline";
 
 const CHAPTER = 5;
 
 /** Chapter 6 (charcoal). Builds: Night-Only → Day + Evening → 24/7 Premium with the add-ons. */
-export async function Packages() {
-  const t = await getTranslations({ locale: "en", namespace: "pitch.packages" });
+export async function Packages({ locale }: { locale: Locale }) {
+  const t = await getTranslations({ locale, namespace: "pitch.packages" });
   const strings: PackageStrings = {
     items: t.raw("items") as PackageStrings["items"],
     bands: t.raw("bands") as PackageStrings["bands"],

@@ -33,6 +33,7 @@ Next.js 16 (App Router, Turbopack) · TypeScript strict · Tailwind CSS v4 (`src
 
 ## Folder map
 - `src/app/[locale]/` pages · `src/app/actions/` server actions
+- `src/components/pitch/` sales pitch at `/dashboard/pitch` (shell, chapters, WebGL `stage/`; content in `messages/*.json` → `pitch`; smoke test `node scripts/e2e-pitch.mjs <base>`)
 - `src/components/sections/` one file per page section · `hologram/` R3F scene · `brand/` logo, orbs, grain · `ui/` primitives
 - `src/content/` site data, claims, packages, FAQ, onboarding
 - `src/i18n/` routing · `messages/` translations · `scripts/` checks and generators

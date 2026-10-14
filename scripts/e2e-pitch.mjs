@@ -88,6 +88,16 @@ try {
   check("arrow on the focused slider moves it, not the deck", Number(await slider.inputValue()) > before && (await hash()) === "#solution");
   await page.keyboard.press("Tab");
 
+  // L switches to Dutch at the same position, and back.
+  await page.goto(`${base}/dashboard/pitch#problem`, { waitUntil: "networkidle" });
+  await Promise.all([page.waitForURL(/lang=nl/), page.keyboard.press("l")]);
+  await page.waitForLoadState("networkidle");
+  check("L opens the Dutch version at the same chapter", (await hash()) === "#problem" && (await page.locator('[lang="nl"] h2').first().textContent())?.includes("onder druk"));
+  await Promise.all([page.waitForURL((u) => !u.search.includes("lang=nl")), page.keyboard.press("l")]);
+  await page.waitForLoadState("networkidle");
+  await page.waitForFunction(() => document.querySelector("[aria-live='polite']")?.textContent?.includes("Chapter 2"));
+  check("L switches back to English", (await page.locator('[data-slide-scale][lang="en"]').count()) === 1);
+
   await page.goto(`${base}/dashboard/pitch#packages`, { waitUntil: "networkidle" });
   check("deep link #packages opens that chapter", (await live())?.includes("Packages"));
 

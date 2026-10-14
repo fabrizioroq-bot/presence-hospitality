@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import { getTranslations } from "next-intl/server";
+import type { Locale } from "@/i18n/routing";
 import { site } from "@/content/site";
 import { Card } from "@/components/ui/Card";
 import { QrCode } from "../QrCode";
@@ -12,8 +13,8 @@ const delay = (ms: number): CSSProperties => ({ "--d": `${ms}ms` }) as CSSProper
  * Build 1: the invitation, contacts (site.ts only: no phone, no partner names) and a QR code to the
  * website. Build 2: "thank you" while the receptionist nods.
  */
-export async function Close() {
-  const t = await getTranslations({ locale: "en", namespace: "pitch.close" });
+export async function Close({ locale }: { locale: Locale }) {
+  const t = await getTranslations({ locale, namespace: "pitch.close" });
   const { email, displayUrl, domainUrl, address } = site;
   return (
     <div className="flex h-full max-w-[56%] flex-col justify-end gap-[calc(var(--slide-u)*2.4)]">

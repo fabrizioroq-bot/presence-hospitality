@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import { getTranslations } from "next-intl/server";
+import type { Locale } from "@/i18n/routing";
 import { Card, CardColumns } from "@/components/ui/Card";
 import { Chip, NumberBadge, Pill } from "@/components/ui/Labels";
 import { SlideHeadline } from "../SlideHeadline";
@@ -13,8 +14,8 @@ const NODE_MS = 650;
  * Chapter 7. Build 1: the price structure as an equation (no figures) and the early-adopter offer.
  * Build 2: the four onboarding steps light up along the line; the handover promise closes it.
  */
-export async function Pricing() {
-  const t = await getTranslations({ locale: "en", namespace: "pitch.pricing" });
+export async function Pricing({ locale }: { locale: Locale }) {
+  const t = await getTranslations({ locale, namespace: "pitch.pricing" });
   return (
     <div className="flex h-full flex-col gap-[calc(var(--slide-u)*2.6)]">
       <div className="grid">

@@ -2,7 +2,7 @@
 
 import { useEffect, useRef } from "react";
 
-export type PresenterAction = "next" | "prev" | "first" | "last" | "fullscreen" | "overview" | "notes" | "escape" | "blank";
+export type PresenterAction = "next" | "prev" | "first" | "last" | "fullscreen" | "overview" | "notes" | "language" | "escape" | "blank";
 
 /** Clickers send PageDown/PageUp (some send arrows, "b" or "."); keyboards use arrows and Space. */
 const KEYS: Record<string, PresenterAction> = {
@@ -22,6 +22,8 @@ const KEYS: Record<string, PresenterAction> = {
   O: "overview",
   n: "notes",
   N: "notes",
+  l: "language",
+  L: "language",
   Escape: "escape",
   b: "blank",
   B: "blank",

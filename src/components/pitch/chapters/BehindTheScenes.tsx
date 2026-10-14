@@ -1,5 +1,6 @@
 import type { CSSProperties, ReactNode } from "react";
 import { getTranslations } from "next-intl/server";
+import type { Locale } from "@/i18n/routing";
 import { Card } from "@/components/ui/Card";
 import { Chip, NumberBadge } from "@/components/ui/Labels";
 import { cx } from "@/lib/cx";
@@ -69,8 +70,8 @@ function Node({ title, body, highlight, i }: { title: string; body: string; high
  * packets flowing. Build 2: the main line fails and the backup carries the traffic. Build 3: the five
  * things that are included.
  */
-export async function BehindTheScenes() {
-  const t = await getTranslations({ locale: "en", namespace: "pitch" });
+export async function BehindTheScenes({ locale }: { locale: Locale }) {
+  const t = await getTranslations({ locale, namespace: "pitch" });
   const d = (k: string) => t(`behind.diagram.${k}`);
   const card = (id: ItemId, i: number, className: string, extra?: ReactNode) => (
     <li key={id} data-build="2" style={order(i)} className={className}>

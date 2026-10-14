@@ -247,7 +247,7 @@
         ]
       }
     ],
-    "startHere": "Hier beginnen veel hotels",
+    "startHere": "Aanbevolen start",
     "addonsTitle": "Uitbreidingen bij elk pakket",
     "includes": "Wat erbij zit"
   },
@@ -355,7 +355,7 @@
       },
       "staff": {
         "q": "Hebben we nog personeel op locatie nodig?",
-        "a": "Dat bepaal je zelf. Tijdens de onboarding spreken we precies af wat op locatie blijft en wat de hub doet. Veel hotels beginnen met alleen de nacht."
+        "a": "Dat bepaal je zelf. Tijdens de onboarding spreken we precies af wat op locatie blijft en wat de hub doet. Wij raden aan te beginnen met alleen de nacht."
       },
       "channels": {
         "q": "Welke kanalen verzorgen jullie?",
@@ -391,7 +391,7 @@
       },
       "nights": {
         "q": "Kan ik alleen met de nacht beginnen?",
-        "a": "Ja. Veel hotels beginnen met Night-Only: late aankomsten, gastvragen en incidenten worden op afstand afgehandeld, zonder nachtpersoneel op locatie. Later kun je overstappen op Day + Evening of 24/7."
+        "a": "Ja. Wij raden aan te beginnen met Night-Only: late aankomsten, gastvragen en incidenten worden op afstand afgehandeld, zonder nachtpersoneel op locatie. Later kun je overstappen op Day + Evening of 24/7."
       },
       "acceptance": {
         "q": "Accepteren gasten een receptionist op afstand?",
@@ -614,7 +614,7 @@
   "startSmall": {
     "eyebrow": "Klein beginnen",
     "title": "Begin met de nacht. <em>Breid later uit als het werkt.</em>",
-    "body": "Veel hotels beginnen met Night-Only: late aankomsten, vragen en incidenten op afstand afgehandeld, zonder nachtpersoneel op locatie. Day + Evening en 24/7 staan klaar wanneer jij dat wilt.",
+    "body": "Wij raden aan te beginnen met Night-Only: late aankomsten, vragen en incidenten op afstand afgehandeld, zonder nachtpersoneel op locatie. Day + Evening en 24/7 staan klaar wanneer jij dat wilt.",
     "more": "Vergelijk de pakketten",
     "photoAlt": "Een wand met hotelsleutels in warm verlichte houten vakjes."
   },
@@ -648,389 +648,401 @@
       "title": "Pitch"
     },
     "shell": {
-      "label": "Presence Hospitality pitch",
-      "chapterOf": "Chapter {n} of {total}: {title}",
+      "label": "Presence Hospitality-pitch",
+      "chapterOf": "Hoofdstuk {n} van {total}: {title}",
       "counter": "{n} / {total}",
-      "progress": "Progress through the pitch",
-      "rail": "Chapters",
-      "goTo": "Go to chapter {n}: {title}",
-      "next": "Next",
-      "prev": "Previous",
-      "fullscreen": "Full screen (F)",
-      "exitFullscreen": "Exit full screen (F)",
-      "fullscreenUnavailable": "Full screen isn't available in this browser.",
-      "overview": "Overview (O)",
-      "closeOverview": "Close overview (Esc)",
-      "overviewTitle": "All chapters",
-      "blank": "Screen blanked. Press B or any key to continue.",
-      "help": "→ or Space: next · ←: back · F: full screen · O: overview · N: notes · B: blank screen",
-      "offlineReady": "Available offline",
-      "startHint": "→ to start · F for full screen",
-      "notes": "Presenter notes",
-      "notesToggle": "N: notes"
+      "progress": "Voortgang van de pitch",
+      "rail": "Hoofdstukken",
+      "goTo": "Ga naar hoofdstuk {n}: {title}",
+      "next": "Volgende",
+      "prev": "Vorige",
+      "fullscreen": "Volledig scherm (F)",
+      "exitFullscreen": "Volledig scherm sluiten (F)",
+      "fullscreenUnavailable": "Volledig scherm is in deze browser niet beschikbaar.",
+      "overview": "Overzicht (O)",
+      "closeOverview": "Overzicht sluiten (Esc)",
+      "overviewTitle": "Alle hoofdstukken",
+      "blank": "Scherm leeg. Druk op B of een andere toets om verder te gaan.",
+      "help": "→ of spatie: volgende · ←: terug · F: volledig scherm · O: overzicht · N: notities · B: leeg scherm",
+      "offlineReady": "Offline beschikbaar",
+      "startHint": "→ om te starten · F voor volledig scherm",
+      "notes": "Notities voor de presentator",
+      "notesToggle": "N: notities",
+      "language": "English"
     },
     "chapters": {
-      "cover": "Cover",
-      "problem": "The problem",
-      "solution": "Our solution",
-      "how": "How it works",
-      "behind": "Behind the scenes",
-      "packages": "Packages",
-      "pricing": "Pricing & onboarding",
-      "close": "Let's talk"
+      "cover": "Start",
+      "problem": "Het probleem",
+      "solution": "Onze oplossing",
+      "how": "Hoe het werkt",
+      "behind": "Achter de schermen",
+      "packages": "Pakketten",
+      "pricing": "Prijs en onboarding",
+      "close": "Laten we praten"
     },
     "cover": {
-      "title": "Stop hiring <em>front desk</em> staff.",
-      "sub": "Real receptionists, live as a life-size hologram in your lobby. Day and night, from one central hub in Amsterdam.",
+      "title": "Stop met het werven van <em>receptie</em>personeel.",
+      "sub": "Echte receptionisten, live als levensgroot hologram in je lobby. Dag en nacht, vanuit één centrale hub in Amsterdam.",
       "chips": {
         "live": "Live in Amsterdam",
-        "people": "Real people, not AI"
+        "people": "Echte mensen, geen AI"
       },
       "stats": {
-        "coverage": "live coverage",
-        "savings": "potential savings on front office costs",
-        "oneTap": "from kiosk to a real person"
+        "coverage": "live bemanning",
+        "savings": "mogelijke besparing op front-office-kosten",
+        "oneTap": "van kiosk naar een echt mens"
       }
     },
     "footnotes": {
-      "savings": "Estimate based on our operating model; actual savings depend on property size, service hours and volume."
+      "savings": "Schatting op basis van ons bedrijfsmodel; de werkelijke besparing hangt af van de grootte van het hotel, de service-uren en het volume."
     },
     "problem": {
-      "title": "Margins are <em>under pressure</em>",
-      "intro": "In a market where labour costs are rising and taxes keep increasing, hotels are under pressure to maintain service levels while protecting margins. In cities like Amsterdam, higher tourist tax and VAT on accommodation leave less and less room for operational inefficiencies. Presence Hospitality helps hotels adapt by centralising reception operations, without sacrificing the guest experience.",
+      "title": "Marges staan <em>onder druk</em>",
+      "intro": "In een markt waarin loonkosten stijgen en belastingen blijven toenemen, staan hotels onder druk om hun serviceniveau vast te houden en tegelijk hun marges te beschermen. In steden als Amsterdam laten een hogere toeristenbelasting en btw op overnachtingen steeds minder ruimte voor inefficiëntie. Presence Hospitality helpt hotels zich aan te passen door de receptie centraal te organiseren, zonder in te leveren op de gastbeleving.",
       "chart": {
-        "title": "24 hours at the front desk",
-        "staffed": "Staffed hours",
-        "demand": "Guest demand",
-        "idle": "Paid idle time",
-        "illustrative": "Illustrative",
-        "time": "Time of day",
-        "desc": "Illustrative chart: the desk is staffed at the same level for all 24 hours, while guest demand peaks around check-out in the morning and check-in in the late afternoon and drops close to zero at night. The gaps at night are paid idle time."
+        "title": "24 uur aan de receptie",
+        "staffed": "Bemande uren",
+        "demand": "Vraag van gasten",
+        "idle": "Betaalde stilstand",
+        "illustrative": "Illustratief",
+        "time": "Tijdstip",
+        "desc": "Illustratieve grafiek: de receptie is alle 24 uur even zwaar bemand, terwijl de vraag van gasten piekt rond het uitchecken in de ochtend en het inchecken aan het eind van de middag, en 's nachts bijna nul is. Het verschil 's nachts is betaalde stilstand."
       },
       "pillars": {
         "cost": {
-          "title": "Structural cost pressure",
-          "body": "Rising labour costs combined with increasing tax pressure (e.g. city tax + VAT) significantly reduce margins. Maintaining a fully staffed 24/7 front desk becomes financially inefficient, especially for smaller properties."
+          "title": "Structurele kostendruk",
+          "body": "Stijgende loonkosten en een toenemende belastingdruk (zoals toeristenbelasting en btw) drukken de marges flink. Een receptie die 24/7 volledig bemand is, wordt financieel inefficiënt, zeker voor kleinere hotels."
         },
         "staffing": {
-          "title": "Inefficient staffing model",
-          "body": "Traditional front desk operations suffer from high idle time during nights and off-peak hours, while still requiring full coverage. This leads to a mismatch between staffing costs and actual guest demand."
+          "title": "Inefficiënt personeelsmodel",
+          "body": "Een traditionele receptie heeft 's nachts en buiten de piekuren veel stilstand, maar moet toch volledig bemand zijn. Daardoor sluiten de personeelskosten niet aan op de werkelijke vraag van gasten."
         },
         "fragmentation": {
-          "title": "Operational fragmentation",
-          "body": "Staff shortages, high turnover and multi-location complexity make it difficult to maintain consistent service quality. Hotels struggle to standardise operations and ensure the same guest experience across shifts and properties."
+          "title": "Operationele versnippering",
+          "body": "Personeelstekort, veel verloop en meerdere locaties maken een constante servicekwaliteit lastig. Hotels hebben moeite hun werkwijze te standaardiseren en overal dezelfde gastbeleving te bieden, in elke dienst en op elke locatie."
         }
       }
     },
     "solution": {
-      "title": "Our solution",
+      "title": "Onze oplossing",
       "compare": {
-        "label": "Compare the front desk",
-        "traditional": "Traditional front desk",
-        "presence": "With Presence",
-        "time": "3:00 AM"
+        "label": "Vergelijk de receptie",
+        "traditional": "Traditionele receptie",
+        "presence": "Met Presence",
+        "time": "03:00 uur"
       },
-      "savings": "potential savings on front office costs",
+      "savings": "mogelijke besparing op front-office-kosten",
       "pillars": {
         "experience": {
-          "title": "Premium guest experience, centralised",
-          "body": "Real, trained receptionists deliver a high-end 4K telepresence experience across all locations. Hospitality-first processes and training ensure consistent service quality without the limitations of on-site staffing."
+          "title": "Premium gastbeleving, centraal georganiseerd",
+          "body": "Echte, getrainde receptionisten bieden op al je locaties een hoogwaardige 4K-telepresence-ervaring. Processen en training vanuit gastvrijheid zorgen voor een constante servicekwaliteit, zonder de beperkingen van personeel op locatie."
         },
         "cost": {
-          "title": "Structural cost reduction",
-          "body": "By centralising operations and eliminating idle time, hotels achieve up to {savings} savings on front office costs while maintaining full service coverage.",
-          "bodyNoFigure": "By centralising operations and eliminating idle time, hotels lower front office costs while maintaining full service coverage."
+          "title": "Structurele kostenverlaging",
+          "body": "Door de operatie te centraliseren en stilstand te schrappen, besparen hotels tot {savings} op front-office-kosten, met volledige servicedekking.",
+          "bodyNoFigure": "Door de operatie te centraliseren en stilstand te schrappen, verlagen hotels hun front-office-kosten, met volledige servicedekking."
         },
         "scale": {
-          "title": "Scalable & future-proof operations",
-          "body": "Open integrations, full data ownership and a proven tech stack allow hotels to scale across multiple locations without vendor lock-in or operational complexity."
+          "title": "Schaalbaar en toekomstbestendig",
+          "body": "Open koppelingen, volledig eigendom van je data en een beproefde techniek maken het mogelijk om naar meerdere locaties op te schalen, zonder vendor lock-in of extra complexiteit."
         }
       },
-      "integrationsLabel": "Works with",
+      "integrationsLabel": "Werkt met",
       "integrations": [
         "Mews",
         "Hotek",
-        "Payments"
+        "Betalingen"
       ]
     },
     "how": {
-      "title": "How it works",
+      "title": "Hoe het werkt",
       "steps": {
         "checkin": {
-          "title": "Check in at the kiosk",
-          "body": "Booking found, ID verified, payment taken, key encoded."
+          "title": "Inchecken bij de kiosk",
+          "body": "Boeking gevonden, ID gecontroleerd, betaling voldaan, sleutel gecodeerd."
         },
         "call": {
-          "title": "Need help? One tap on Call",
-          "body": "Whenever a guest wants a person, they press Call on the Holobox."
+          "title": "Hulp nodig? Eén tik op Bellen",
+          "body": "Wil een gast iemand spreken, dan drukt die op Bellen op de Holobox."
         },
         "receptionist": {
-          "title": "A real receptionist sorts it",
-          "body": "A trained receptionist from our Amsterdam hub appears live, life-size, and resolves it."
+          "title": "Een echte receptionist lost het op",
+          "body": "Een getrainde receptionist uit onze hub in Amsterdam verschijnt live en levensgroot en helpt de gast verder."
         }
       },
       "kiosk": {
-        "title": "Check-in",
+        "title": "Inchecken",
         "items": [
-          "Booking found",
-          "ID verified",
-          "Payment taken",
-          "Key encoded"
+          "Boeking gevonden",
+          "ID gecontroleerd",
+          "Betaling voldaan",
+          "Sleutel gecodeerd"
         ]
       }
     },
     "behind": {
-      "title": "Behind the <em>scenes</em>",
+      "title": "Achter de <em>schermen</em>",
       "diagram": {
         "lobby": {
-          "title": "Your lobby",
+          "title": "Jouw lobby",
           "body": "Holobox + kiosk"
         },
-        "link": "Secure VPN · redundant internet",
+        "link": "Beveiligde VPN · dubbele internetverbinding",
         "hub": {
-          "title": "Amsterdam hub",
-          "body": "Live receptionists 24/7 · your hotel's playbook"
+          "title": "Hub in Amsterdam",
+          "body": "Live receptionisten 24/7 · het draaiboek van jouw hotel"
         },
-        "systemsLink": "PMS · keys · payments",
+        "systemsLink": "PMS · sleutels · betalingen",
         "systems": {
-          "title": "Your systems",
-          "body": "PMS, keys, payments"
+          "title": "Jouw systemen",
+          "body": "PMS, sleutels, betalingen"
         },
-        "failover": "Main line down: the backup line takes over.",
-        "desc": "Diagram: your lobby connects to the Amsterdam hub over a secure VPN with a redundant internet connection; the hub works with your systems (PMS, keys, payments)."
+        "failover": "Hoofdlijn valt uit: de back-uplijn neemt het over.",
+        "desc": "Diagram: je lobby is via een beveiligde VPN met een dubbele internetverbinding verbonden met de hub in Amsterdam; de hub werkt met jouw systemen (PMS, sleutels, betalingen)."
       },
-      "includedTitle": "What's included",
+      "includedTitle": "Wat is inbegrepen",
       "items": {
         "holobox": {
-          "title": "Holobox installation",
-          "body": "In the lobby or at reception (Mini or full-size), with a redundant internet connection."
+          "title": "Holobox-installatie",
+          "body": "In de lobby of bij de receptie (Mini of volledig formaat), met een dubbele internetverbinding."
         },
         "connection": {
-          "title": "Secure connection",
-          "body": "To the Presence Hospitality hub (VPN), with monitoring and privacy signage."
+          "title": "Beveiligde verbinding",
+          "body": "Met de Presence Hospitality-hub (VPN), inclusief monitoring en privacybordjes."
         },
         "service": {
           "title": "Live service",
-          "body": "Check-in and check-out, ID verification, key resets, payments, Q&A and upsells."
+          "body": "In- en uitchecken, ID-controle, sleutels resetten, betalingen, vragen en upsell."
         },
         "fallback": {
-          "title": "Fallback & incidents",
-          "body": "SLA playbooks, a local contact and security escalation."
+          "title": "Uitwijk en incidenten",
+          "body": "SLA-draaiboeken, een lokale contactpersoon en escalatie naar beveiliging."
         },
         "dashboards": {
-          "title": "Dashboards & reporting",
-          "body": "Audit logs and quality reviews.",
+          "title": "Dashboards en rapportage",
+          "body": "Auditlogs en kwaliteitscontroles.",
           "kpis": [
-            "Wait times",
-            "First-contact resolution",
+            "Wachttijden",
+            "Opgelost bij eerste contact",
             "NPS"
           ]
         }
       },
-      "stackLabel": "Works with your stack"
+      "stackLabel": "Werkt met jouw systemen"
     },
     "packages": {
-      "title": "Packages",
-      "illustrative": "Illustrative",
-      "ringLabel": "Hours covered",
+      "title": "Pakketten",
+      "illustrative": "Illustratief",
+      "ringLabel": "Gedekte uren",
       "bands": {
-        "night": "Night",
-        "dayEvening": "Day + Evening",
+        "night": "Nacht",
+        "dayEvening": "Dag + avond",
         "allDay": "24/7",
-        "addons": "On top of any package"
+        "addons": "Bovenop elk pakket"
       },
-      "startHere": "Most hotels start here",
+      "startHere": "Aanbevolen start",
       "items": {
         "night": {
           "name": "Night-Only",
           "points": [
-            "Remote handling of all late arrivals, guest questions and incidents",
-            "No on-site night staff required",
-            "Security escalation framework with clear protocols",
-            "Coordination with a local contact or security partner if needed",
-            "Ideal for smaller hotels or low night-time activity"
+            "Alle late aankomsten, gastvragen en incidenten op afstand afgehandeld",
+            "Geen nachtpersoneel op locatie nodig",
+            "Escalatieprotocol voor beveiliging met heldere afspraken",
+            "Afstemming met een lokale contactpersoon of beveiligingspartner wanneer nodig",
+            "Ideaal voor kleinere hotels of rustige nachten"
           ]
         },
         "day": {
           "name": "Day + Evening",
           "points": [
-            "Full operational coverage during peak guest hours",
-            "Check-in, check-out, guest support and communication",
-            "Multilingual agents available",
-            "Structured upsell flows (upgrades, late check-out, add-ons)",
-            "Reduces front desk staffing while maintaining service level"
+            "Volledige dekking tijdens de drukste uren",
+            "Inchecken, uitchecken, gastondersteuning en communicatie",
+            "Meertalige medewerkers beschikbaar",
+            "Gestructureerde upsell (upgrades, late check-out, extra's)",
+            "Minder receptiepersoneel nodig, met behoud van serviceniveau"
           ]
         },
         "premium": {
           "name": "24/7 Premium",
           "points": [
-            "Fully managed, always-on reception model",
-            "Dedicated SLA and priority routing",
-            "Consistent agent team familiar with your hotel",
-            "Quarterly business reviews and performance tracking",
-            "Continuous optimisation of operations and guest experience"
+            "Volledig verzorgde receptie, altijd bereikbaar",
+            "Eigen SLA en voorrang bij doorverbinden",
+            "Een vast team dat jouw hotel kent",
+            "Kwartaalgesprekken en prestatiemetingen",
+            "Doorlopende verbetering van operatie en gastbeleving"
           ]
         },
         "addons": {
           "name": "Add-ons",
           "points": [
-            "Additional language profiles",
-            "On-site assistance",
+            "Extra taalprofielen",
+            "Ondersteuning op locatie",
             "Revenue management",
-            "Full-stack tech support",
-            "Advanced analytics & reporting"
+            "Volledige technische ondersteuning",
+            "Uitgebreide analyses en rapportage"
           ]
         }
       }
     },
     "pricing": {
-      "title": "Pricing <em>structure</em>",
+      "title": "Opbouw van de <em>prijs</em>",
       "columns": {
         "setup": {
-          "title": "One-time setup",
+          "title": "Eenmalige opstartkosten",
           "points": [
-            "Holobox hardware (or lease model)",
-            "Installation and network setup",
-            "Integration (PMS, access systems, payments)"
+            "Holobox-hardware (of leasemodel)",
+            "Installatie en netwerk",
+            "Integratie (PMS, toegangssystemen, betalingen)"
           ]
         },
         "monthly": {
-          "title": "Monthly service fee",
-          "lead": "Based on:",
+          "title": "Maandelijkse servicefee",
+          "lead": "Op basis van:",
           "points": [
-            "Number of rooms",
-            "Service hours (Night / Day / 24/7)",
-            "Expected volume (arrivals, departures, interactions)"
+            "Aantal kamers",
+            "Service-uren (nacht / dag / 24/7)",
+            "Verwacht volume (aankomsten, vertrekken, contactmomenten)"
           ]
         },
         "variable": {
-          "title": "Variable component",
-          "tag": "Optional",
+          "title": "Variabel deel",
+          "tag": "Optioneel",
           "points": [
-            "Per interaction or per check-in model",
-            "Performance-based pricing (linked to KPIs or savings)"
+            "Per contactmoment of per check-in",
+            "Prestatiegebonden prijs (gekoppeld aan KPI's of besparing)"
           ]
         }
       },
-      "cta": "Ask us for our early-adopter pricing",
-      "onboardingTitle": "Fast <em>onboarding</em>",
+      "cta": "Vraag naar onze early-adopterprijs",
+      "onboardingTitle": "Snelle <em>onboarding</em>",
       "steps": {
         "intake": {
-          "title": "Intake & site survey",
-          "detail": "How your hotel runs today"
+          "title": "Intake & locatiebezoek",
+          "detail": "Hoe je hotel nu werkt"
         },
         "install": {
-          "title": "Holobox installation",
-          "detail": "+ network setup"
+          "title": "Holobox-installatie",
+          "detail": "+ netwerk"
         },
         "integration": {
-          "title": "Integration",
-          "detail": "PMS, access systems, payments"
+          "title": "Integratie",
+          "detail": "PMS, toegangssystemen, betalingen"
         },
         "golive": {
-          "title": "Go-live playbook",
-          "detail": "Test scenarios and KPI tracking"
+          "title": "Playbook voor livegang",
+          "detail": "Testscenario's en KPI-metingen"
         }
       },
-      "handover": "We only hand over the desk after everything is tested."
+      "handover": "We nemen de receptie pas over als alles getest is."
     },
     "close": {
-      "title": "Let's make your front desk <em>work smarter.</em>",
-      "sub": "See it live in Amsterdam, or start with a Night-Only pilot.",
+      "title": "Laten we je receptie <em>slimmer laten werken.</em>",
+      "sub": "Bekijk het live in Amsterdam, of begin met een Night-Only-pilot.",
       "contactLabel": "Contact",
-      "qr": "Scan for presence-hospitality.com",
-      "thanks": "Thank you for your time and attention."
+      "qr": "Scan voor presence-hospitality.com",
+      "thanks": "Bedankt voor je tijd en aandacht."
     },
     "notes": {
       "cover": [
         [
-          "Open with the problem every owner knows: staffing the desk around the clock.",
-          "Presence: real receptionists, live as a life-size hologram, from one hub in Amsterdam."
+          "Open met het probleem dat elke eigenaar kent: de receptie dag en nacht bemand houden.",
+          "Presence: echte receptionisten, live als levensgroot hologram, vanuit één hub in Amsterdam."
         ],
         [
-          "Three numbers to remember: 24/7 coverage, 40–65% potential savings, one tap to a real person.",
-          "The savings are an estimate: they depend on size, service hours and volume."
+          "Drie getallen om te onthouden: 24/7 bemanning, 40–65% mogelijke besparing, één tik naar een echt mens.",
+          "De besparing is een schatting: die hangt af van grootte, service-uren en volume."
         ]
       ],
       "problem": [
         [
-          "Costs keep rising: wages, tourist tax, VAT. Margins get squeezed.",
-          "Ask them: how many hours a night is your desk staffed?"
+          "De kosten blijven stijgen: lonen, toeristenbelasting, btw. De marges worden smaller.",
+          "Vraag: hoeveel uur per nacht is jullie receptie bemand?"
         ],
         [
-          "A typical day: demand peaks at check-out and check-in.",
-          "At night you pay for a full desk while almost nobody comes. That is paid idle time."
+          "Een gewone dag: de vraag piekt bij uitchecken en inchecken.",
+          "'s Nachts betaal je een volle receptie terwijl er bijna niemand komt. Dat is betaalde stilstand."
         ],
         [
-          "Three pressures: structural cost, a staffing model that doesn't match demand, and fragmentation across shifts and properties."
+          "Drie drukpunten: structurele kosten, een personeelsmodel dat niet bij de vraag past, en versnippering over diensten en locaties."
         ]
       ],
       "solution": [
         [
-          "This is your desk at 3 AM: lit, paid for, and empty."
+          "Dit is je receptie om 3 uur 's nachts: verlicht, betaald en leeg."
         ],
         [
-          "Same lobby with Presence: the Holobox is ready, the hub is on call.",
-          "That's where the potential saving comes from: no idle hours on site."
+          "Dezelfde lobby met Presence: de Holobox staat klaar, de hub is bereikbaar.",
+          "Daar komt de mogelijke besparing vandaan: geen lege uren op locatie."
         ],
         [
-          "Three things: a premium guest experience, structural cost reduction, and operations that scale.",
-          "Open integrations (Mews, Hotek, payments) and no vendor lock-in."
+          "Drie dingen: een premium gastbeleving, structureel lagere kosten en een operatie die meegroeit.",
+          "Open koppelingen (Mews, Hotek, betalingen) en geen vendor lock-in."
         ]
       ],
       "how": [
         [
-          "Most guests never need help: they check in at the kiosk. Booking, ID, payment, key."
+          "De meeste gasten hebben geen hulp nodig: ze checken in bij de kiosk. Boeking, ID, betaling, sleutel."
         ],
         [
-          "When they do want a person, it's one tap on Call."
+          "Willen ze toch iemand spreken, dan is het één tik op Bellen."
         ],
         [
-          "A trained receptionist from Amsterdam appears life-size and sorts it out.",
-          "Real people, not AI."
+          "Een getrainde receptionist uit Amsterdam verschijnt levensgroot en lost het op.",
+          "Echte mensen, geen AI."
         ]
       ],
       "behind": [
         [
-          "Your lobby connects to our Amsterdam hub over a secure VPN, on a redundant internet line.",
-          "The hub works with your systems: PMS, keys, payments."
+          "Je lobby is via een beveiligde VPN, met een dubbele internetverbinding, verbonden met onze hub in Amsterdam.",
+          "De hub werkt met jouw systemen: PMS, sleutels, betalingen."
         ],
         [
-          "If the main line drops, the backup takes over. The guest doesn't notice."
+          "Valt de hoofdlijn uit, dan neemt de back-up het over. De gast merkt er niets van."
         ],
         [
-          "What's included: the Holobox, the secure connection, the live service, fallback and incident handling, and dashboards."
+          "Wat is inbegrepen: de Holobox, de beveiligde verbinding, de live service, uitwijk en incidenten, en dashboards."
         ]
       ],
       "packages": [
         [
-          "Most hotels start with Night-Only: we cover the quiet hours, your team keeps the day."
+          "We raden aan te beginnen met Night-Only: wij doen de rustige uren, jouw team de dag."
         ],
         [
-          "Day + Evening covers the busy hours: check-in, check-out and upsells."
+          "Day + Evening dekt de drukke uren: inchecken, uitchecken en upsell."
         ],
         [
-          "24/7 Premium is the fully managed desk with a dedicated SLA.",
-          "Add-ons on top: extra languages, on-site help, revenue management, analytics."
+          "24/7 Premium is de volledig verzorgde receptie met een eigen SLA.",
+          "Add-ons daarbovenop: extra talen, hulp op locatie, revenue management, analyses."
         ]
       ],
       "pricing": [
         [
-          "Three parts: a one-time setup, a monthly fee based on rooms, hours and volume, and an optional variable part.",
-          "No numbers here: offer the early-adopter pricing conversation."
+          "Drie delen: eenmalige opstartkosten, een maandelijkse fee op basis van kamers, uren en volume, en een optioneel variabel deel.",
+          "Geen bedragen hier: bied het gesprek over de early-adopterprijs aan."
         ],
         [
-          "Onboarding in four steps, and we only hand over the desk after everything is tested."
+          "Onboarding in vier stappen, en we nemen de receptie pas over als alles getest is."
         ]
       ],
       "close": [
         [
-          "Invite them to see it live in Amsterdam, or to start with a Night-Only pilot.",
-          "The QR code goes to the website."
+          "Nodig ze uit om het live te zien in Amsterdam, of om te beginnen met een Night-Only-pilot.",
+          "De QR-code gaat naar de website."
         ],
         [
-          "Thank them, and agree on the next step before you leave."
+          "Bedank ze, en spreek de volgende stap af voordat je weggaat."
         ]
+      ]
+    },
+    "guide": {
+      "title": "Zo presenteer je",
+      "items": [
+        "Toetsen: → of spatie volgende · ← terug · Home / End eerste / laatste · O dit overzicht · N notities · F volledig scherm · L English · B leeg scherm.",
+        "Clicker: de meeste clickers sturen Page Down / Page Up; die werken als volgende en terug. Probeer je clicker vóór de afspraak.",
+        "Volledig scherm: druk op F zodra de pitch geladen is; F of Esc sluit het. Notities verdwijnen bij volledig scherm: druk op N om ze te zien.",
+        "Vóór een afspraak: open de pitch één keer mét internet en wacht op het offline-icoon naast deze titel (een wolk met een vinkje). Log niet uit: uitloggen wist de offline kopie.",
+        "Geen internet in het hotel: open dezelfde browser en ga naar presence-hospitality.com/dashboard/pitch; de opgeslagen kopie opent. Niet voorbereid? Gebruik de hotspot van je telefoon.",
+        "Laptop: sluit de oplader aan, sluit andere apps en zet meldingen uit. Op een 4K-tv: zet de weergave op 200%."
       ]
     }
   }

@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import { getTranslations } from "next-intl/server";
+import type { Locale } from "@/i18n/routing";
 import { Card } from "@/components/ui/Card";
 import { NumberBadge } from "@/components/ui/Labels";
 import { SlideHeadline } from "../SlideHeadline";
@@ -13,8 +14,8 @@ const TICKS = [600, 1300, 2000, 2700];
  * to the 3D kiosk screen), 2 one tap on Call (ripple on the Holobox), 3 a receptionist forms, life-size.
  * The pinned panel must not sit inside a positioned wrapper: the chapter layer is its origin.
  */
-export async function HowItWorks() {
-  const t = await getTranslations({ locale: "en", namespace: "pitch.how" });
+export async function HowItWorks({ locale }: { locale: Locale }) {
+  const t = await getTranslations({ locale, namespace: "pitch.how" });
   const items = t.raw("kiosk.items") as string[];
   return (
     <div className="h-full">

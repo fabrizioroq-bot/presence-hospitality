@@ -247,7 +247,7 @@
         ]
       }
     ],
-    "startHere": "Many hotels start here",
+    "startHere": "Recommended start",
     "addonsTitle": "Add-ons for any package",
     "includes": "What's included"
   },
@@ -355,7 +355,7 @@
       },
       "staff": {
         "q": "Do we still need staff on site?",
-        "a": "That's your choice. During onboarding we agree exactly what stays on site and what the hub handles. Many hotels start with nights only."
+        "a": "That's your choice. During onboarding we agree exactly what stays on site and what the hub handles. We recommend starting with nights only."
       },
       "channels": {
         "q": "Which channels do you cover?",
@@ -391,7 +391,7 @@
       },
       "nights": {
         "q": "Can I start with nights only?",
-        "a": "Yes. Many hotels start with Night-Only: late arrivals, guest questions and incidents are handled remotely, with no night staff on site. You can move to Day + Evening or 24/7 later."
+        "a": "Yes. We recommend starting with Night-Only: late arrivals, guest questions and incidents are handled remotely, with no night staff on site. You can move to Day + Evening or 24/7 later."
       },
       "acceptance": {
         "q": "Will guests accept a remote receptionist?",
@@ -614,7 +614,7 @@
   "startSmall": {
     "eyebrow": "Start small",
     "title": "Start with nights. <em>Expand later if it works.</em>",
-    "body": "Many hotels start with Night-Only: late arrivals, questions and incidents handled remotely, with no night staff on site. Day + Evening and 24/7 are there when you want them.",
+    "body": "We recommend starting with Night-Only: late arrivals, questions and incidents handled remotely, with no night staff on site. Day + Evening and 24/7 are there when you want them.",
     "more": "Compare the packages",
     "photoAlt": "A wall of hotel room keys in warmly lit wooden cubbies."
   },
@@ -667,7 +667,8 @@
       "offlineReady": "Available offline",
       "startHint": "→ to start · F for full screen",
       "notes": "Presenter notes",
-      "notesToggle": "N: notes"
+      "notesToggle": "N: notes",
+      "language": "Nederlands"
     },
     "chapters": {
       "cover": "Cover",
@@ -839,7 +840,7 @@
         "allDay": "24/7",
         "addons": "On top of any package"
       },
-      "startHere": "Most hotels start here",
+      "startHere": "Recommended start",
       "items": {
         "night": {
           "name": "Night-Only",
@@ -1004,7 +1005,7 @@
       ],
       "packages": [
         [
-          "Most hotels start with Night-Only: we cover the quiet hours, your team keeps the day."
+          "We recommend starting with Night-Only: we cover the quiet hours, your team keeps the day."
         ],
         [
           "Day + Evening covers the busy hours: check-in, check-out and upsells."
@@ -1031,6 +1032,17 @@
         [
           "Thank them, and agree on the next step before you leave."
         ]
+      ]
+    },
+    "guide": {
+      "title": "How to present",
+      "items": [
+        "Keys: → or Space next · ← back · Home / End first / last · O this overview · N notes · F full screen · L Nederlands · B blank screen.",
+        "Clicker: most clickers send Page Down / Page Up, which work as next and back. Try yours before the meeting.",
+        "Full screen: press F once the pitch has loaded; F or Esc leaves it. Notes hide in full screen: press N to see them.",
+        "Before a meeting: open the pitch once with internet and wait for the offline icon next to this title (a cloud with a tick). Don't sign out: signing out removes the offline copy.",
+        "No internet at the hotel: open the same browser and go to presence-hospitality.com/dashboard/pitch; the saved copy opens. Not prepared? Use your phone's hotspot.",
+        "Laptop: plug in the charger, close other apps and turn off notifications. On a 4K TV, set the display to 200%."
       ]
     }
   }

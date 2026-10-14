@@ -15,6 +15,7 @@ export function PresenterControls({
   onNext,
   onOverview,
   onFullscreen,
+  onLanguage,
 }: {
   strings: ShellStrings;
   isFullscreen: boolean;
@@ -23,6 +24,7 @@ export function PresenterControls({
   onNext: () => void;
   onOverview: () => void;
   onFullscreen: () => void;
+  onLanguage: () => void;
 }) {
   const [isIdle, setIsIdle] = useState(true);
   useEffect(() => {
@@ -60,6 +62,9 @@ export function PresenterControls({
         </button>
         <button type="button" className={button} onClick={onNext} aria-label={strings.next}>
           <span aria-hidden>→</span>
+        </button>
+        <button type="button" className={button} onClick={onLanguage}>
+          {strings.language} (L)
         </button>
         <button type="button" className={button} onClick={onOverview}>
           {strings.overview}

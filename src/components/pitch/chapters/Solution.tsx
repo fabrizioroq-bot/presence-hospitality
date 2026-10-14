@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import { getTranslations } from "next-intl/server";
+import type { Locale } from "@/i18n/routing";
 import { claims } from "@/content/claims";
 import { Card, CardColumns } from "@/components/ui/Card";
 import { Chip, NumberBadge } from "@/components/ui/Labels";
@@ -16,8 +17,8 @@ const order = (i: number): CSSProperties => ({ "--i": i }) as CSSProperties;
  * Chapter 3. Build 1: the empty traditional desk (slider left). Build 2: the slider wipes to the
  * Holobox and 40–65% counts up. Build 3: the slider and figure give way to the three pillars.
  */
-export async function Solution() {
-  const t = await getTranslations({ locale: "en", namespace: "pitch" });
+export async function Solution({ locale }: { locale: Locale }) {
+  const t = await getTranslations({ locale, namespace: "pitch" });
   const { savings } = claims;
   const figure = savings.enabled && savings.range ? `${savings.range[0]}–${savings.range[1]}%*` : null;
   const body = (id: (typeof PILLARS)[number]) =>

@@ -9,12 +9,13 @@ import { Problem } from "@/components/pitch/chapters/Problem";
 import { Solution } from "@/components/pitch/chapters/Solution";
 import { CHAPTERS } from "@/components/pitch/chapters";
 import { PitchShell } from "@/components/pitch/PitchShell";
-import type { PresenterNotesMap, ShellStrings } from "@/components/pitch/shell-types";
+import type { PresenterGuide, PresenterNotesMap, ShellStrings } from "@/components/pitch/shell-types";
+import type { Locale } from "@/i18n/routing";
 import { requireAdmin } from "@/lib/dashboard/auth";
 import "@/styles/pitch.css";
 
-// Admin-only, full-screen sales pitch (noindex via the dashboard layout). English for now; the NL
-// keys exist and mirror EN until translated (PENDING.md).
+// Admin-only, full-screen sales pitch (noindex via the dashboard layout). English by default;
+// ?lang=nl (the L key) renders the Dutch draft (PENDING.md: needs native review).
 export const metadata = { title: "Pitch" };
 
 const SHELL_KEYS = [
@@ -38,24 +39,27 @@ const SHELL_KEYS = [
   "startHint",
   "notes",
   "notesToggle",
+  "language",
 ] as const satisfies readonly (keyof ShellStrings)[];
 
-export default async function PitchPage() {
+export default async function PitchPage({ searchParams }: PageProps<"/dashboard/pitch">) {
   await requireAdmin();
-  const t = await getTranslations({ locale: "en", namespace: "pitch" });
+  const locale: Locale = (await searchParams).lang === "nl" ? "nl" : "en";
+  const t = await getTranslations({ locale, namespace: "pitch" });
   const chapters = CHAPTERS.map((c) => ({ id: c.id, tone: c.tone, title: t(`chapters.${c.id}`) }));
   // Raw templates ("{n} / {total}"): the shell fills them on the client.
   const strings = Object.fromEntries(SHELL_KEYS.map((k) => [k, t.raw(`shell.${k}`) as string])) as ShellStrings;
   const slides = [
-    <Cover key="cover" />,
-    <Problem key="problem" />,
-    <Solution key="solution" />,
-    <HowItWorks key="how" />,
-    <BehindTheScenes key="behind" />,
-    <Packages key="packages" />,
-    <Pricing key="pricing" />,
-    <Close key="close" />,
+    <Cover key="cover" locale={locale} />,
+    <Problem key="problem" locale={locale} />,
+    <Solution key="solution" locale={locale} />,
+    <HowItWorks key="how" locale={locale} />,
+    <BehindTheScenes key="behind" locale={locale} />,
+    <Packages key="packages" locale={locale} />,
+    <Pricing key="pricing" locale={locale} />,
+    <Close key="close" locale={locale} />,
   ];
   const notes = t.raw("notes") as PresenterNotesMap;
-  return <PitchShell chapters={chapters} strings={strings} notes={notes} slides={slides} />;
+  const guide = t.raw("guide") as PresenterGuide;
+  return <PitchShell locale={locale} chapters={chapters} strings={strings} notes={notes} guide={guide} slides={slides} />;
 }

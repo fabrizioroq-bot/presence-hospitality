@@ -3,13 +3,14 @@
 import dynamic from "next/dynamic";
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore, type MouseEvent, type ReactNode } from "react";
 import { SectionHeader } from "@/components/ui/SectionHeader";
+import type { Locale } from "@/i18n/routing";
 import { CHAPTERS, LAST, TOTAL_STEPS, fromHash, globalStep, next, prev, reachedSteps, toHash, type Tone } from "./chapters";
 import { ChapterRail } from "./ChapterRail";
 import { Overview } from "./Overview";
 import { PresenterControls } from "./PresenterControls";
 import { PresenterNotes } from "./PresenterNotes";
 import { getPitch, setPitch, usePitch } from "./pitch-store";
-import { fmt, type ChapterMeta, type PresenterNotesMap, type ShellStrings } from "./shell-types";
+import { fmt, type ChapterMeta, type PresenterGuide, type PresenterNotesMap, type ShellStrings } from "./shell-types";
 import { useFullscreen } from "./use-fullscreen";
 import { useOffline } from "./use-offline";
 import { usePresenterKeys, type PresenterAction } from "./use-presenter-keys";
@@ -53,14 +54,18 @@ const themeOf = (tone: Tone) => (tone === "dark" ? "pitch-dark" : "pitch");
 const INTERACTIVE = "a, button, input, select, textarea, label, [role='slider'], [role='button'], [data-no-advance]";
 
 export function PitchShell({
+  locale,
   chapters,
   strings,
   notes,
+  guide,
   slides,
 }: {
+  locale: Locale;
   chapters: ChapterMeta[];
   strings: ShellStrings;
   notes: PresenterNotesMap;
+  guide: PresenterGuide;
   slides: ReactNode[];
 }) {
   const root = useRef<HTMLDivElement>(null);
@@ -97,6 +102,14 @@ export function PitchShell({
 
   const go = useCallback((move: (p: typeof pos) => { chapter: number; step: number }) => setPitch(move(getPitch())), []);
 
+  // L: reload the same position (the hash) in the other language (?lang=nl is Dutch).
+  const switchLanguage = () => {
+    const url = new URL(location.href);
+    if (locale === "nl") url.searchParams.delete("lang");
+    else url.searchParams.set("lang", "nl");
+    location.assign(url);
+  };
+
   const onAction = (action: PresenterAction) => {
     markHintSeen();
     if (isBlank) {
@@ -106,6 +119,7 @@ export function PitchShell({
     if (action === "fullscreen") return void toggleFullscreen();
     if (action === "overview") return setIsOverview((v) => !v);
     if (action === "notes") return setIsNotes((v) => !v);
+    if (action === "language") return switchLanguage();
     if (action === "escape") return setIsOverview(false);
     if (action === "blank") return setIsBlank(true);
     if (isOverview) return; // the overview grid owns arrows and Enter
@@ -131,6 +145,7 @@ export function PitchShell({
     <div
       ref={root}
       data-slide-scale
+      lang={locale}
       data-theme={themeOf(current.tone)}
       aria-roledescription="presentation"
       aria-label={strings.label}
@@ -185,6 +200,7 @@ export function PitchShell({
         onNext={() => go(next)}
         onOverview={() => setIsOverview(true)}
         onFullscreen={toggleFullscreen}
+        onLanguage={switchLanguage}
       />
       {isOverview && (
         <Overview
@@ -192,6 +208,7 @@ export function PitchShell({
           current={pos.chapter}
           strings={strings}
           isOffline={isOffline}
+          guide={guide}
           onJump={jump}
           onClose={() => setIsOverview(false)}
         />

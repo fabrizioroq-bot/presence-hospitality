@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { Card } from "@/components/ui/Card";
 import { NumberBadge } from "@/components/ui/Labels";
-import type { ChapterMeta, ShellStrings } from "./shell-types";
+import type { ChapterMeta, PresenterGuide, ShellStrings } from "./shell-types";
 
 /** The "O" overview: every chapter as a card; Enter or click jumps there, Esc closes. */
 export function Overview({
@@ -11,6 +11,7 @@ export function Overview({
   current,
   strings,
   isOffline,
+  guide,
   onJump,
   onClose,
 }: {
@@ -19,6 +20,7 @@ export function Overview({
   strings: ShellStrings;
   /** The pitch is cached for offline use (presenter-only indicator). */
   isOffline: boolean;
+  guide: PresenterGuide;
   onJump: (chapter: number) => void;
   onClose: () => void;
 }) {
@@ -59,7 +61,8 @@ export function Overview({
           {strings.closeOverview}
         </button>
       </div>
-      <ol className="grid flex-1 grid-cols-2 gap-[calc(var(--slide-u)*1.6)] lg:grid-cols-4">
+      <div className="grid flex-1 gap-[calc(var(--slide-u)*2.4)] lg:grid-cols-[minmax(0,2.4fr)_minmax(0,1fr)]">
+      <ol className="grid grid-cols-2 gap-[calc(var(--slide-u)*1.6)] lg:grid-cols-4">
         {chapters.map((c, i) => (
           <li key={c.id} data-theme={c.tone === "dark" ? "pitch-dark" : "pitch"} className="rounded-lg">
             <button
@@ -79,6 +82,17 @@ export function Overview({
           </li>
         ))}
       </ol>
+      <section aria-labelledby="pitch-guide-title" className="flex flex-col gap-3">
+        <h3 id="pitch-guide-title" className="text-[1.25rem] font-black">
+          {guide.title}
+        </h3>
+        <ul className="flex list-disc flex-col gap-2 pl-5 text-[1rem] leading-snug text-ui-ink-2">
+          {guide.items.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ul>
+      </section>
+      </div>
     </div>
   );
 }

@@ -22,8 +22,11 @@ async function cachePut(request, response) {
   await cache.put(request, response);
 }
 
+// One cache entry per language version (?lang=nl); other query parameters are ignored.
+const pageKey = (url) => new Request(url.searchParams.get("lang") === "nl" ? `${PAGE}?lang=nl` : PAGE);
+
 async function pageNetworkFirst(request) {
-  const key = new Request(PAGE);
+  const key = pageKey(new URL(request.url));
   try {
     const response = await Promise.race([
       fetch(request),
@@ -62,7 +65,7 @@ self.addEventListener("message", (event) => {
         await Promise.all(
           urls.map(async (u) => {
             const url = new URL(u, self.location.origin);
-            const key = url.pathname === PAGE ? new Request(PAGE) : new Request(url.href);
+            const key = url.pathname === PAGE ? pageKey(url) : new Request(url.href);
             if (url.origin !== self.location.origin || (await cache.match(key))) return;
             try {
               await cachePut(key, await fetch(url.href, { credentials: "same-origin" }));

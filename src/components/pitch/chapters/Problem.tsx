@@ -1,5 +1,6 @@
 import type { CSSProperties } from "react";
 import { getTranslations } from "next-intl/server";
+import type { Locale } from "@/i18n/routing";
 import { DemandSweep, type DemandSweepStrings } from "../DemandSweep";
 import { SlideHeadline } from "../SlideHeadline";
 
@@ -11,8 +12,8 @@ const order = (i: number): CSSProperties => ({ "--i": i }) as CSSProperties;
  * Chapter 2 (charcoal). Build 1: title + intro. Build 2: the 24-hour chart sweeps. Build 3: the intro
  * gives way to the three pillars (same column, so nothing jumps).
  */
-export async function Problem() {
-  const t = await getTranslations({ locale: "en", namespace: "pitch.problem" });
+export async function Problem({ locale }: { locale: Locale }) {
+  const t = await getTranslations({ locale, namespace: "pitch.problem" });
   const chart = t.raw("chart") as DemandSweepStrings;
   return (
     <div className="grid h-full grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] items-end gap-[calc(var(--slide-u)*5)]">

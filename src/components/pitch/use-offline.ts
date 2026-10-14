@@ -6,11 +6,11 @@ const SW_URL = "/pitch-sw.js";
 const SCOPE = "/dashboard/pitch";
 const WARM_DELAY_MS = 5000; // after the 3D stage and fonts have loaded
 
-/** Same-origin files the page has loaded so far (scripts, styles, fonts, point clouds) plus the page. */
+/** Same-origin files the page has loaded so far (scripts, styles, fonts, point clouds) plus both language versions of the page. */
 function loadedUrls() {
   const entries = performance.getEntriesByType("resource") as PerformanceResourceTiming[];
   const urls = entries.map((e) => e.name).filter((u) => u.startsWith(location.origin));
-  return [...new Set([...urls, location.origin + SCOPE])];
+  return [...new Set([...urls, location.origin + SCOPE, `${location.origin}${SCOPE}?lang=nl`])];
 }
 
 /**

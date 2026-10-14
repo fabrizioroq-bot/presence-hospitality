@@ -5,6 +5,7 @@ import { useState } from "react";
 import { cx } from "@/lib/cx";
 import { hasWebGL2 } from "@/lib/perf-tier";
 import { useReducedMotion } from "@/lib/hooks";
+import { AdaptiveDpr } from "./AdaptiveDpr";
 import { Anchors } from "./Anchors";
 import { Background } from "./Background";
 import { CameraRig } from "./CameraRig";
@@ -52,6 +53,7 @@ export default function PitchStage() {
         <Lobby colors={colors} motion={motion} />
         <Anchors points={LOBBY_ANCHORS} />
         <CameraRig motion={motion} />
+        <AdaptiveDpr />
       </Canvas>
     </div>
   );
