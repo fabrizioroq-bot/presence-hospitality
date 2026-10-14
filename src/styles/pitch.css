@@ -118,6 +118,90 @@
   cursor: grabbing;
 }
 
+/* ---- Behind the scenes: build 2 breaks the main line; the backup carries the packets ---- */
+.net-redundant :is(.net-primary, .net-primary-packets, .net-backup-packets, .net-break) {
+  transition: opacity var(--dur-base) var(--ease-out);
+}
+.net-redundant .net-backup-packets {
+  opacity: 0;
+}
+[data-reached~="1"] .net-redundant .net-primary {
+  opacity: 0.25;
+}
+[data-reached~="1"] .net-redundant .net-primary-packets {
+  opacity: 0;
+}
+[data-reached~="1"] .net-redundant :is(.net-break, .net-backup-packets) {
+  opacity: 1;
+}
+[data-reached~="1"] .net-redundant .net-backup {
+  stroke-dasharray: none;
+}
+
+/* ---- Onboarding: the line fills (scaleX) and each step lights up as it passes ---- */
+.pitch-timeline {
+  --gap: calc(var(--slide-u) * 2);
+}
+.pitch-timeline-track,
+.pitch-timeline-fill {
+  position: absolute;
+  top: calc(var(--slide-u) * 0.4 + 2rem - 1.5px);
+  left: 2rem;
+  right: calc((100% - 3 * var(--gap)) / 4 - 2rem);
+  height: 3px;
+  border-radius: var(--r-pill);
+}
+.pitch-timeline-track {
+  background: var(--ui-rule);
+  opacity: 0.3;
+}
+.pitch-timeline-fill {
+  background: var(--ui-ink);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 2.6s var(--ease-in-out) 300ms;
+}
+[data-reached~="1"] .pitch-timeline-fill {
+  transform: scaleX(1);
+}
+.pitch-timeline [data-node] .ui-num {
+  scale: 0.85;
+  transition-delay: var(--d);
+}
+[data-reached~="1"] .pitch-timeline [data-node] .ui-num {
+  scale: 1;
+  background: var(--ui-num-lit-bg);
+  color: var(--ui-num-lit-ink);
+  box-shadow: inset 0 0 0 1.5px var(--ui-num-lit-bg);
+}
+
+/* ---- Packages ring: the covered band lights up; panels swap with a short fade ---- */
+.pitch-ring-band {
+  opacity: 0.1;
+  transition: opacity var(--dur-base) var(--ease-out);
+}
+.pitch-ring-band.is-on {
+  opacity: 1;
+}
+.pitch-swap {
+  animation: pitch-swap var(--dur-base) var(--ease-out);
+}
+@keyframes pitch-swap {
+  from {
+    opacity: 0;
+    translate: 0 0.4rem;
+  }
+}
+
+/* ---- Close: the QR code opens from its centre ---- */
+.pitch-qr {
+  clip-path: circle(0% at 50% 50%);
+  transition: clip-path var(--dur-slow) var(--ease-out) 1100ms;
+}
+[data-reached~="0"] .pitch-qr {
+  clip-path: circle(75% at 50% 50%);
+}
+
 /* ---- Headlines: masked words rise in sequence; the italic emphasis settles from a slant ---- */
 .pitch-word {
   display: inline-block;
@@ -177,5 +261,16 @@
     translate: none;
     transform: none;
     transition: none;
+  }
+  .net-packets {
+    display: none;
+  }
+  .pitch-timeline-fill,
+  .pitch-qr,
+  .pitch-timeline [data-node] .ui-num {
+    transition: none;
+  }
+  .pitch-swap {
+    animation: none;
   }
 }

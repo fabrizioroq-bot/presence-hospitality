@@ -5,10 +5,10 @@ import { useEffect, useMemo, useRef } from "react";
 import { AdditiveBlending, Color, NormalBlending, type Group, type ShaderMaterial } from "three";
 import { RoundedBoxGeometry } from "three/examples/jsm/geometries/RoundedBoxGeometry.js";
 import { getPitch } from "../pitch-store";
-import { Agent } from "./Agent";
 import { HOLOBOX_CLIP } from "./clip";
 import { beat, setOpacity } from "./fade";
 import { approach, sceneFor } from "./scene-state";
+import { Receptionist } from "./Receptionist";
 import { planeVertex, poolFragment, screenFragment } from "./shaders";
 import type { StageColors } from "./tokens";
 
@@ -146,7 +146,7 @@ export function Holobox({ colors, motion }: { colors: StageColors; motion: numbe
           clippingPlanes={HOLOBOX_CLIP}
         />
       </mesh>
-      <Agent motion={motion} />
+      <Receptionist motion={motion} />
     </group>
   );
 }

@@ -2,7 +2,7 @@
 // errors. The admin user is created with the service role key and always deleted afterwards.
 // Usage: node scripts/dashboard-shots.mjs <baseUrl> <out-dir> <path> [path…]
 // Env: VIEWPORT=1920x1080 (default 1440x900), DPR=2 (device scale, e.g. a 4K TV at 200%),
-//      SETTLE_MS=2500 (wait after each navigation for animations).
+//      SETTLE_MS=2500 (wait after each navigation for animations), PRESS=n (keys pressed once after load).
 // Paths may carry a hash (/dashboard/pitch#cover/2): the page is reused, so hash changes don't reload it.
 //   e.g. node scripts/dashboard-shots.mjs http://localhost:3000 screenshots/ui-kit /dashboard/ui-kit
 import { chromium } from "playwright";
@@ -42,8 +42,10 @@ try {
   await page.fill("#password", password);
   await page.click('button[type="submit"]');
   await page.waitForURL(`${base}/dashboard`);
-  for (const path of paths) {
+  for (const [i, path] of paths.entries()) {
     await page.goto(base + path, { waitUntil: "networkidle" });
+    // PRESS=n,o: keys pressed once after the first page loads (e.g. to open a panel for the shots).
+    if (i === 0 && process.env.PRESS) for (const key of process.env.PRESS.split(",")) await page.keyboard.press(key);
     await page.evaluate(() => document.fonts.ready);
     if (settle) await page.waitForTimeout(settle);
     const name = path.replace(/^\/dashboard\/?/, "").replace(/[^a-z0-9]+/gi, "-").replace(/-$/, "") || "dashboard";

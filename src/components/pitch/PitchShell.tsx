@@ -7,8 +7,9 @@ import { CHAPTERS, LAST, TOTAL_STEPS, fromHash, globalStep, next, prev, reachedS
 import { ChapterRail } from "./ChapterRail";
 import { Overview } from "./Overview";
 import { PresenterControls } from "./PresenterControls";
+import { PresenterNotes } from "./PresenterNotes";
 import { getPitch, setPitch, usePitch } from "./pitch-store";
-import { fmt, type ChapterMeta, type ShellStrings } from "./shell-types";
+import { fmt, type ChapterMeta, type PresenterNotesMap, type ShellStrings } from "./shell-types";
 import { useFullscreen } from "./use-fullscreen";
 import { useOffline } from "./use-offline";
 import { usePresenterKeys, type PresenterAction } from "./use-presenter-keys";
@@ -51,15 +52,33 @@ const subscribeHint = (cb: () => void) => {
 const themeOf = (tone: Tone) => (tone === "dark" ? "pitch-dark" : "pitch");
 const INTERACTIVE = "a, button, input, select, textarea, label, [role='slider'], [role='button'], [data-no-advance]";
 
-export function PitchShell({ chapters, strings, slides }: { chapters: ChapterMeta[]; strings: ShellStrings; slides: ReactNode[] }) {
+export function PitchShell({
+  chapters,
+  strings,
+  notes,
+  slides,
+}: {
+  chapters: ChapterMeta[];
+  strings: ShellStrings;
+  notes: PresenterNotesMap;
+  slides: ReactNode[];
+}) {
   const root = useRef<HTMLDivElement>(null);
   const pos = usePitch();
   const [isOverview, setIsOverview] = useState(false);
   const [isBlank, setIsBlank] = useState(false);
+  const [isNotes, setIsNotes] = useState(false);
   const { isFullscreen, toggle: toggleFullscreen, error: fullscreenError } = useFullscreen(root);
   const isOffline = useOffline();
   const hasSeenHint = useSyncExternalStore(subscribeHint, isHintSeen, () => true);
   const current = chapters[pos.chapter];
+
+  // Notes hide on entering fullscreen (clients see that screen); N brings them back there.
+  const [wasFullscreen, setWasFullscreen] = useState(false);
+  if (isFullscreen !== wasFullscreen) {
+    setWasFullscreen(isFullscreen);
+    if (isFullscreen) setIsNotes(false);
+  }
 
   // Hash ⇄ position: jump straight to #problem (or #cover/2); keep the hash in sync while presenting.
   useEffect(() => {
@@ -86,6 +105,7 @@ export function PitchShell({ chapters, strings, slides }: { chapters: ChapterMet
     }
     if (action === "fullscreen") return void toggleFullscreen();
     if (action === "overview") return setIsOverview((v) => !v);
+    if (action === "notes") return setIsNotes((v) => !v);
     if (action === "escape") return setIsOverview(false);
     if (action === "blank") return setIsBlank(true);
     if (isOverview) return; // the overview grid owns arrows and Enter
@@ -174,6 +194,14 @@ export function PitchShell({ chapters, strings, slides }: { chapters: ChapterMet
           isOffline={isOffline}
           onJump={jump}
           onClose={() => setIsOverview(false)}
+        />
+      )}
+      {isNotes && (
+        <PresenterNotes
+          points={notes[current.id]?.[pos.step] ?? []}
+          chapterTitle={current.title}
+          position={`${pos.chapter + 1} / ${chapters.length} · ${pos.step + 1}`}
+          strings={strings}
         />
       )}
       {!hasSeenHint && (

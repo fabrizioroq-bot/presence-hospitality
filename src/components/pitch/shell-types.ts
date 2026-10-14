@@ -2,6 +2,8 @@ import type { ChapterId, Tone } from "./chapters";
 
 /** Props shared by the shell and its controls (kept apart from PitchShell to avoid circular imports). */
 export type ChapterMeta = { id: ChapterId; title: string; tone: Tone };
+/** Talking points per chapter, one list per build step (messages: pitch.notes). */
+export type PresenterNotesMap = Record<ChapterId, string[][]>;
 export type ShellStrings = {
   label: string;
   chapterOf: string;
@@ -21,6 +23,8 @@ export type ShellStrings = {
   help: string;
   offlineReady: string;
   startHint: string;
+  notes: string;
+  notesToggle: string;
 };
 
 /** Fills "{n} of {total}"-style templates from messages. */

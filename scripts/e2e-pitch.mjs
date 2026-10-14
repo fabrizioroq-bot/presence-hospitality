@@ -29,8 +29,10 @@ const check = (label, ok) => {
 // Every build of every chapter, in order (mirrors src/components/pitch/chapters.ts).
 const POSITIONS = [
   "#cover", "#cover/2", "#problem", "#problem/2", "#problem/3", "#solution", "#solution/2", "#solution/3",
-  "#how-it-works", "#how-it-works/2", "#how-it-works/3", "#behind-the-scenes", "#packages", "#pricing", "#close",
+  "#how-it-works", "#how-it-works/2", "#how-it-works/3", "#behind-the-scenes", "#behind-the-scenes/2",
+  "#behind-the-scenes/3", "#packages", "#packages/2", "#packages/3", "#pricing", "#pricing/2", "#close", "#close/2",
 ];
+const LAST = POSITIONS.at(-1);
 
 const b = await chromium.launch({ channel: "chrome" });
 try {
@@ -62,10 +64,11 @@ try {
   }
   check("aria-live announces the last chapter", (await live())?.includes("Chapter 8 of 8"));
   await page.keyboard.press("ArrowRight");
-  check("stays on the last build at the end", (await hash()) === "#close");
+  check("stays on the last build at the end", (await hash()) === LAST);
+  check("closing QR code is rendered", (await page.getByRole("img", { name: /Scan for/ }).count()) === 1);
 
   await page.keyboard.press("PageUp");
-  check("back (PageUp) → #pricing", (await hash()) === "#pricing");
+  check("back (PageUp) → #close", (await hash()) === "#close");
   await page.keyboard.press("Home");
   check("Home → #cover", (await hash()) === "#cover");
   await page.mouse.click(400, 500);
@@ -74,7 +77,7 @@ try {
   await page.keyboard.press("ArrowLeft");
   check("back past the first build stays on #cover", (await hash()) === "#cover");
   await page.keyboard.press("End");
-  check("End → #close", (await hash()) === "#close");
+  check(`End → ${LAST}`, (await hash()) === LAST);
 
   // The comparison slider owns the arrow keys while focused (moves the slider, not the presentation).
   await page.goto(`${base}/dashboard/pitch#solution`, { waitUntil: "networkidle" });
@@ -87,6 +90,14 @@ try {
 
   await page.goto(`${base}/dashboard/pitch#packages`, { waitUntil: "networkidle" });
   check("deep link #packages opens that chapter", (await live())?.includes("Packages"));
+
+  const premium = page.getByRole("button", { name: "24/7 Premium" });
+  await premium.click();
+  check("clicking a package selects it without advancing", (await premium.getAttribute("aria-pressed")) === "true" && (await hash()) === "#packages");
+
+  await page.keyboard.press("n");
+  const notes = page.getByRole("complementary", { name: "Presenter notes" });
+  check("N shows the presenter notes", await notes.isVisible());
 
   await page.keyboard.press("o");
   check("O opens the overview", await page.getByRole("dialog").isVisible());
@@ -101,6 +112,10 @@ try {
   await page.keyboard.press("f");
   await page.waitForTimeout(400);
   check("F enters fullscreen", await page.evaluate(() => document.fullscreenElement !== null));
+  check("notes hide automatically in fullscreen", (await notes.count()) === 0);
+  await page.keyboard.press("n");
+  check("N shows the notes again in fullscreen", await notes.isVisible());
+  await page.keyboard.press("n");
   await page.keyboard.press("f");
   await page.waitForTimeout(400);
   check("F leaves fullscreen", await page.evaluate(() => document.fullscreenElement === null));

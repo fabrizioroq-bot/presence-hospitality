@@ -1,12 +1,15 @@
 import { getTranslations } from "next-intl/server";
+import { BehindTheScenes } from "@/components/pitch/chapters/BehindTheScenes";
+import { Close } from "@/components/pitch/chapters/Close";
 import { Cover } from "@/components/pitch/chapters/Cover";
 import { HowItWorks } from "@/components/pitch/chapters/HowItWorks";
-import { Placeholder } from "@/components/pitch/chapters/Placeholder";
+import { Packages } from "@/components/pitch/chapters/Packages";
+import { Pricing } from "@/components/pitch/chapters/Pricing";
 import { Problem } from "@/components/pitch/chapters/Problem";
 import { Solution } from "@/components/pitch/chapters/Solution";
 import { CHAPTERS } from "@/components/pitch/chapters";
 import { PitchShell } from "@/components/pitch/PitchShell";
-import type { ShellStrings } from "@/components/pitch/shell-types";
+import type { PresenterNotesMap, ShellStrings } from "@/components/pitch/shell-types";
 import { requireAdmin } from "@/lib/dashboard/auth";
 import "@/styles/pitch.css";
 
@@ -33,6 +36,8 @@ const SHELL_KEYS = [
   "help",
   "offlineReady",
   "startHint",
+  "notes",
+  "notesToggle",
 ] as const satisfies readonly (keyof ShellStrings)[];
 
 export default async function PitchPage() {
@@ -46,7 +51,11 @@ export default async function PitchPage() {
     <Problem key="problem" />,
     <Solution key="solution" />,
     <HowItWorks key="how" />,
-    ...chapters.slice(4).map((c) => <Placeholder key={c.id} title={c.title} note={t("placeholder")} />),
+    <BehindTheScenes key="behind" />,
+    <Packages key="packages" />,
+    <Pricing key="pricing" />,
+    <Close key="close" />,
   ];
-  return <PitchShell chapters={chapters} strings={strings} slides={slides} />;
+  const notes = t.raw("notes") as PresenterNotesMap;
+  return <PitchShell chapters={chapters} strings={strings} notes={notes} slides={slides} />;
 }

@@ -1,6 +1,6 @@
 // Offline cache for the sales pitch (/dashboard/pitch). Registered by the pitch shell with that scope;
 // cleared and unregistered by the login page (sign-out or expired session).
-// - Hashed build files, fonts, point clouds and brand files: cache first (their URLs change per build).
+// - Hashed build files, fonts, point clouds, brand files and media clips: cache first.
 // - The pitch page: network first (4 s timeout), cached copy when offline. Redirects are never cached.
 // The cached page keeps its own Content-Security-Policy header, so its nonce still matches.
 const CACHE = "pitch-v1";
@@ -9,13 +9,15 @@ const TIMEOUT_MS = 4000;
 
 const isAsset = (url) =>
   url.origin === self.location.origin &&
-  (url.pathname.startsWith("/_next/static/") || url.pathname.startsWith("/hologram/") || url.pathname.startsWith("/brand/"));
+  ["/_next/static/", "/hologram/", "/brand/", "/media/"].some((prefix) => url.pathname.startsWith(prefix));
 
 self.addEventListener("install", () => self.skipWaiting());
 self.addEventListener("activate", (event) => event.waitUntil(self.clients.claim()));
 
 async function cachePut(request, response) {
-  if (!response || !response.ok || response.redirected || response.type === "opaqueredirect") return;
+  // Only complete responses: redirects aren't cached, and video Range replies (206) can't be (the
+  // warm-up fetches clips whole instead).
+  if (!response || response.status !== 200 || response.redirected || response.type === "opaqueredirect") return;
   const cache = await caches.open(CACHE);
   await cache.put(request, response);
 }

@@ -663,9 +663,11 @@
       "closeOverview": "Close overview (Esc)",
       "overviewTitle": "All chapters",
       "blank": "Screen blanked. Press B or any key to continue.",
-      "help": "→ or Space: next · ←: back · F: full screen · O: overview · B: blank screen",
+      "help": "→ or Space: next · ←: back · F: full screen · O: overview · N: notes · B: blank screen",
       "offlineReady": "Available offline",
-      "startHint": "→ to start · F for full screen"
+      "startHint": "→ to start · F for full screen",
+      "notes": "Presenter notes",
+      "notesToggle": "N: notes"
     },
     "chapters": {
       "cover": "Cover",
@@ -677,7 +679,6 @@
       "pricing": "Pricing & onboarding",
       "close": "Let's talk"
     },
-    "placeholder": "This chapter is built in the next phase.",
     "cover": {
       "title": "Stop hiring <em>front desk</em> staff.",
       "sub": "Real receptionists, live as a life-size hologram in your lobby. Day and night, from one central hub in Amsterdam.",
@@ -777,6 +778,260 @@
           "Key encoded"
         ]
       }
+    },
+    "behind": {
+      "title": "Behind the <em>scenes</em>",
+      "diagram": {
+        "lobby": {
+          "title": "Your lobby",
+          "body": "Holobox + kiosk"
+        },
+        "link": "Secure VPN · redundant internet",
+        "hub": {
+          "title": "Amsterdam hub",
+          "body": "Live receptionists 24/7 · your hotel's playbook"
+        },
+        "systemsLink": "PMS · keys · payments",
+        "systems": {
+          "title": "Your systems",
+          "body": "PMS, keys, payments"
+        },
+        "failover": "Main line down: the backup line takes over.",
+        "desc": "Diagram: your lobby connects to the Amsterdam hub over a secure VPN with a redundant internet connection; the hub works with your systems (PMS, keys, payments)."
+      },
+      "includedTitle": "What's included",
+      "items": {
+        "holobox": {
+          "title": "Holobox installation",
+          "body": "In the lobby or at reception (Mini or full-size), with a redundant internet connection."
+        },
+        "connection": {
+          "title": "Secure connection",
+          "body": "To the Presence Hospitality hub (VPN), with monitoring and privacy signage."
+        },
+        "service": {
+          "title": "Live service",
+          "body": "Check-in and check-out, ID verification, key resets, payments, Q&A and upsells."
+        },
+        "fallback": {
+          "title": "Fallback & incidents",
+          "body": "SLA playbooks, a local contact and security escalation."
+        },
+        "dashboards": {
+          "title": "Dashboards & reporting",
+          "body": "Audit logs and quality reviews.",
+          "kpis": [
+            "Wait times",
+            "First-contact resolution",
+            "NPS"
+          ]
+        }
+      },
+      "stackLabel": "Works with your stack"
+    },
+    "packages": {
+      "title": "Packages",
+      "illustrative": "Illustrative",
+      "ringLabel": "Hours covered",
+      "bands": {
+        "night": "Night",
+        "dayEvening": "Day + Evening",
+        "allDay": "24/7",
+        "addons": "On top of any package"
+      },
+      "startHere": "Most hotels start here",
+      "items": {
+        "night": {
+          "name": "Night-Only",
+          "points": [
+            "Remote handling of all late arrivals, guest questions and incidents",
+            "No on-site night staff required",
+            "Security escalation framework with clear protocols",
+            "Coordination with a local contact or security partner if needed",
+            "Ideal for smaller hotels or low night-time activity"
+          ]
+        },
+        "day": {
+          "name": "Day + Evening",
+          "points": [
+            "Full operational coverage during peak guest hours",
+            "Check-in, check-out, guest support and communication",
+            "Multilingual agents available",
+            "Structured upsell flows (upgrades, late check-out, add-ons)",
+            "Reduces front desk staffing while maintaining service level"
+          ]
+        },
+        "premium": {
+          "name": "24/7 Premium",
+          "points": [
+            "Fully managed, always-on reception model",
+            "Dedicated SLA and priority routing",
+            "Consistent agent team familiar with your hotel",
+            "Quarterly business reviews and performance tracking",
+            "Continuous optimisation of operations and guest experience"
+          ]
+        },
+        "addons": {
+          "name": "Add-ons",
+          "points": [
+            "Additional language profiles",
+            "On-site assistance",
+            "Revenue management",
+            "Full-stack tech support",
+            "Advanced analytics & reporting"
+          ]
+        }
+      }
+    },
+    "pricing": {
+      "title": "Pricing <em>structure</em>",
+      "columns": {
+        "setup": {
+          "title": "One-time setup",
+          "points": [
+            "Holobox hardware (or lease model)",
+            "Installation and network setup",
+            "Integration (PMS, access systems, payments)"
+          ]
+        },
+        "monthly": {
+          "title": "Monthly service fee",
+          "lead": "Based on:",
+          "points": [
+            "Number of rooms",
+            "Service hours (Night / Day / 24/7)",
+            "Expected volume (arrivals, departures, interactions)"
+          ]
+        },
+        "variable": {
+          "title": "Variable component",
+          "tag": "Optional",
+          "points": [
+            "Per interaction or per check-in model",
+            "Performance-based pricing (linked to KPIs or savings)"
+          ]
+        }
+      },
+      "cta": "Ask us for our early-adopter pricing",
+      "onboardingTitle": "Fast <em>onboarding</em>",
+      "steps": {
+        "intake": {
+          "title": "Intake & site survey",
+          "detail": "How your hotel runs today"
+        },
+        "install": {
+          "title": "Holobox installation",
+          "detail": "+ network setup"
+        },
+        "integration": {
+          "title": "Integration",
+          "detail": "PMS, access systems, payments"
+        },
+        "golive": {
+          "title": "Go-live playbook",
+          "detail": "Test scenarios and KPI tracking"
+        }
+      },
+      "handover": "We only hand over the desk after everything is tested."
+    },
+    "close": {
+      "title": "Let's make your front desk <em>work smarter.</em>",
+      "sub": "See it live in Amsterdam, or start with a Night-Only pilot.",
+      "contactLabel": "Contact",
+      "qr": "Scan for presence-hospitality.com",
+      "thanks": "Thank you for your time and attention."
+    },
+    "notes": {
+      "cover": [
+        [
+          "Open with the problem every owner knows: staffing the desk around the clock.",
+          "Presence: real receptionists, live as a life-size hologram, from one hub in Amsterdam."
+        ],
+        [
+          "Three numbers to remember: 24/7 coverage, 40–65% potential savings, one tap to a real person.",
+          "The savings are an estimate: they depend on size, service hours and volume."
+        ]
+      ],
+      "problem": [
+        [
+          "Costs keep rising: wages, tourist tax, VAT. Margins get squeezed.",
+          "Ask them: how many hours a night is your desk staffed?"
+        ],
+        [
+          "A typical day: demand peaks at check-out and check-in.",
+          "At night you pay for a full desk while almost nobody comes. That is paid idle time."
+        ],
+        [
+          "Three pressures: structural cost, a staffing model that doesn't match demand, and fragmentation across shifts and properties."
+        ]
+      ],
+      "solution": [
+        [
+          "This is your desk at 3 AM: lit, paid for, and empty."
+        ],
+        [
+          "Same lobby with Presence: the Holobox is ready, the hub is on call.",
+          "That's where the potential saving comes from: no idle hours on site."
+        ],
+        [
+          "Three things: a premium guest experience, structural cost reduction, and operations that scale.",
+          "Open integrations (Mews, Hotek, payments) and no vendor lock-in."
+        ]
+      ],
+      "how": [
+        [
+          "Most guests never need help: they check in at the kiosk. Booking, ID, payment, key."
+        ],
+        [
+          "When they do want a person, it's one tap on Call."
+        ],
+        [
+          "A trained receptionist from Amsterdam appears life-size and sorts it out.",
+          "Real people, not AI."
+        ]
+      ],
+      "behind": [
+        [
+          "Your lobby connects to our Amsterdam hub over a secure VPN, on a redundant internet line.",
+          "The hub works with your systems: PMS, keys, payments."
+        ],
+        [
+          "If the main line drops, the backup takes over. The guest doesn't notice."
+        ],
+        [
+          "What's included: the Holobox, the secure connection, the live service, fallback and incident handling, and dashboards."
+        ]
+      ],
+      "packages": [
+        [
+          "Most hotels start with Night-Only: we cover the quiet hours, your team keeps the day."
+        ],
+        [
+          "Day + Evening covers the busy hours: check-in, check-out and upsells."
+        ],
+        [
+          "24/7 Premium is the fully managed desk with a dedicated SLA.",
+          "Add-ons on top: extra languages, on-site help, revenue management, analytics."
+        ]
+      ],
+      "pricing": [
+        [
+          "Three parts: a one-time setup, a monthly fee based on rooms, hours and volume, and an optional variable part.",
+          "No numbers here: offer the early-adopter pricing conversation."
+        ],
+        [
+          "Onboarding in four steps, and we only hand over the desk after everything is tested."
+        ]
+      ],
+      "close": [
+        [
+          "Invite them to see it live in Amsterdam, or to start with a Night-Only pilot.",
+          "The QR code goes to the website."
+        ],
+        [
+          "Thank them, and agree on the next step before you leave."
+        ]
+      ]
     }
   }
 }

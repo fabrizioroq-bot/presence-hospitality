@@ -26,15 +26,17 @@ export type SceneTarget = {
   kioskLeft: number;
   /** Holobox screen: 0 = glowing idle screen, 1 = dark interior (a receptionist is on). */
   screenStage: number;
-  /** 1 while the receptionist is formed in the Holobox. */
+  /** 1 while the receptionist is on in the Holobox. */
   agent: number;
+  /** 1 when the receptionist greets (a nod and a glow): the closing "thank you". */
+  greet: number;
   /** 1 while the Call button ripples. */
   call: number;
   /** The before/after split follows the comparison slider (Our solution). */
   compare: boolean;
 };
 
-const HIDDEN = { holobox: 0, desk: 0, wall: 0, kiosks: 0, kioskLeft: 0, screenStage: 0, agent: 0, call: 0, compare: false } as const;
+const HIDDEN = { holobox: 0, desk: 0, wall: 0, kiosks: 0, kioskLeft: 0, screenStage: 0, agent: 0, greet: 0, call: 0, compare: false } as const;
 const COVER_SHOT: Shot = { focus: [0, 1.12, 0], distance: 6.4, screenX: 0.5 };
 
 const BASE: Record<ChapterId, SceneTarget> = {
@@ -63,7 +65,8 @@ const BASE: Record<ChapterId, SceneTarget> = {
   behind: { ...HIDDEN, tone: 0, shot: COVER_SHOT, orbs: [[0.9, 0.5, 0.38], [0.1, 0.9, 0.22], [0.3, 0.05, 0.2], [0.6, 0.98, 0.16]] },
   packages: { ...HIDDEN, tone: 1, shot: COVER_SHOT, orbs: [[0.15, 0.8, 0.36], [0.9, 0.85, 0.25], [0.8, 0.1, 0.22], [0.4, 0.05, 0.16]] },
   pricing: { ...HIDDEN, tone: 0, shot: COVER_SHOT, orbs: [[0.85, 0.3, 0.36], [0.2, 0.95, 0.22], [0.05, 0.1, 0.2], [0.98, 0.95, 0.16]] },
-  close: { ...HIDDEN, tone: 0, shot: COVER_SHOT, orbs: [[0.5, 0.5, 0.45], [0.75, 0.85, 0.24], [0.3, 0.15, 0.22], [0.85, 0.15, 0.18]] },
+  // The bookend: the Holobox from the cover returns, now with a receptionist in it.
+  close: { ...HIDDEN, tone: 0, holobox: 1, agent: 1, screenStage: 1, shot: COVER_SHOT, orbs: [[0.5, 0.5, 0.45], [0.75, 0.85, 0.24], [0.3, 0.15, 0.22], [0.85, 0.15, 0.18]] },
 };
 
 /** Per-step changes on top of a chapter's base (camera moves and story beats). */
@@ -76,6 +79,8 @@ const STEPS: Partial<Record<ChapterId, Partial<SceneTarget>[]>> = {
     { shot: { focus: [0, 1.05, 0], distance: 5.1, screenX: 0.44 }, call: 1, kioskLeft: 0 },
     { shot: { focus: [0, 1.1, 0], distance: 5.6, screenX: 0.45 }, agent: 1, screenStage: 1, kioskLeft: 0 },
   ],
+  // 1 invitation, contacts and QR · 2 "thank you": the receptionist nods.
+  close: [{}, { greet: 1 }],
 };
 
 export function sceneFor(chapter: number, step = 0): SceneTarget {

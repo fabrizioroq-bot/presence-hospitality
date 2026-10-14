@@ -7,10 +7,10 @@ export const CHAPTERS = [
   { id: "problem", hash: "problem", tone: "dark", steps: 3 },
   { id: "solution", hash: "solution", tone: "light", steps: 3 },
   { id: "how", hash: "how-it-works", tone: "light", steps: 3 },
-  { id: "behind", hash: "behind-the-scenes", tone: "light", steps: 1 },
-  { id: "packages", hash: "packages", tone: "dark", steps: 1 },
-  { id: "pricing", hash: "pricing", tone: "light", steps: 1 },
-  { id: "close", hash: "close", tone: "light", steps: 1 },
+  { id: "behind", hash: "behind-the-scenes", tone: "light", steps: 3 },
+  { id: "packages", hash: "packages", tone: "dark", steps: 3 },
+  { id: "pricing", hash: "pricing", tone: "light", steps: 2 },
+  { id: "close", hash: "close", tone: "light", steps: 2 },
 ] as const;
 
 export type ChapterId = (typeof CHAPTERS)[number]["id"];
