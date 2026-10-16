@@ -9,6 +9,8 @@ const intl = createMiddleware(routing);
 export default async function proxy(request: NextRequest) {
   // The dashboard is English-only and authenticated: no locale prefix, Supabase session instead.
   if (request.nextUrl.pathname.startsWith("/dashboard")) return dashboard(request);
+  // Onboarding intake links: no locale prefix (the invite sets the language), never indexed.
+  if (request.nextUrl.pathname.startsWith("/intake/")) return intake(request);
   // Auth email links that fell back to the bare Site URL (no redirectTo): send them to the confirm route.
   const q = request.nextUrl.searchParams;
   if (q.has("token_hash") && q.has("type")) {
@@ -37,6 +39,18 @@ async function dashboard(request: NextRequest) {
   request.headers.set(CSP_HEADER, csp);
   const res = await updateSession(request);
   res.headers.set(CSP_HEADER, csp);
+  return res;
+}
+
+/** Same nonce CSP as the dashboard; the token in the URL must never leak through a Referer header. */
+function intake(request: NextRequest) {
+  const csp = contentSecurityPolicy(btoa(crypto.randomUUID()));
+  request.headers.set(CSP_HEADER, csp);
+  const res = NextResponse.next({ request });
+  res.headers.set(CSP_HEADER, csp);
+  res.headers.set("X-Robots-Tag", "noindex, nofollow");
+  res.headers.set("Referrer-Policy", "no-referrer");
+  res.headers.set("Cache-Control", "private, no-store");
   return res;
 }
 

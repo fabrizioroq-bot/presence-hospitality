@@ -1,0 +1,209 @@
+/* Client onboarding intake (/intake/<token>): form controls for the light interface (ivory page,
+   white cards). Loaded only by the intake layout. Colours come from the --ph-* tokens. */
+
+.intake-input {
+  width: 100%;
+  min-height: 48px;
+  border-radius: var(--r-sm);
+  background: var(--ph-bg-surface);
+  color: var(--ph-text-primary);
+  padding: 12px 14px;
+  font-size: var(--ph-font-body-mobile);
+  line-height: 1.45;
+  box-shadow: inset 0 0 0 1px var(--ph-border-ui);
+  transition: box-shadow 200ms;
+}
+textarea.intake-input {
+  min-height: 120px;
+  resize: vertical;
+}
+.intake-input::placeholder {
+  color: var(--ph-text-muted);
+}
+.intake-input:hover {
+  box-shadow: inset 0 0 0 1px var(--ph-text-secondary);
+}
+.intake-input:focus-visible,
+.intake-date:focus-within .intake-input {
+  outline: none;
+  box-shadow:
+    inset 0 0 0 2px var(--ph-focus-ring),
+    0 0 0 4px color-mix(in srgb, var(--ph-focus-ring) 14%, transparent);
+}
+.intake-input[aria-invalid="true"] {
+  box-shadow: inset 0 0 0 2px var(--ph-error);
+}
+
+/* Date: the native picker sits invisibly on top of a box that shows the date in the form's language. */
+.intake-date {
+  position: relative;
+}
+.intake-date input[type="date"] {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+.intake-date input[type="date"]::-webkit-calendar-picker-indicator {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+
+/* Checkbox rows (multi-select groups) */
+.intake-option {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  min-height: 48px;
+  padding: 12px 14px;
+  border-radius: var(--r-sm);
+  box-shadow: inset 0 0 0 1px var(--ph-border-subtle);
+  background: var(--ph-bg-surface);
+  cursor: pointer;
+  transition:
+    box-shadow 200ms,
+    background-color 200ms;
+}
+.intake-option:hover {
+  box-shadow: inset 0 0 0 1px var(--ph-border-ui);
+}
+.intake-option:has(input:checked) {
+  background: color-mix(in srgb, var(--ph-brand-primary) 6%, var(--ph-bg-surface));
+  box-shadow: inset 0 0 0 1.5px var(--ph-brand-primary);
+}
+.intake-option:has(input:focus-visible) {
+  box-shadow:
+    inset 0 0 0 2px var(--ph-focus-ring),
+    0 0 0 4px color-mix(in srgb, var(--ph-focus-ring) 14%, transparent);
+}
+.intake-check {
+  appearance: none;
+  flex-shrink: 0;
+  margin-top: 2px;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: var(--ph-bg-surface);
+  box-shadow: inset 0 0 0 1.5px var(--ph-border-ui);
+  display: grid;
+  place-content: center;
+  cursor: pointer;
+}
+.intake-check::after {
+  content: "";
+  width: 11px;
+  height: 6px;
+  border: solid var(--ph-text-on-dark);
+  border-width: 0 0 2px 2px;
+  transform: rotate(-45deg) translate(1px, -1px) scale(0);
+  transition: transform 150ms;
+}
+.intake-check:checked {
+  background: var(--ph-brand-primary);
+  box-shadow: none;
+}
+.intake-check:checked::after {
+  transform: rotate(-45deg) translate(1px, -1px) scale(1);
+}
+.intake-check:focus-visible {
+  outline: none;
+}
+
+/* Yes / No / Unknown: segmented pills over real radio inputs */
+.intake-choice {
+  position: relative;
+  display: inline-flex;
+  min-height: 44px;
+  min-width: 72px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 18px;
+  border-radius: var(--r-pill);
+  box-shadow: inset 0 0 0 1px var(--ph-border-ui);
+  background: var(--ph-bg-surface);
+  color: var(--ph-text-primary);
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background-color 200ms,
+    color 200ms,
+    box-shadow 200ms;
+}
+.intake-choice input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+.intake-choice:hover {
+  box-shadow: inset 0 0 0 1px var(--ph-text-secondary);
+}
+.intake-choice:has(input:checked) {
+  background: var(--ph-brand-primary);
+  color: var(--ph-text-on-dark);
+  box-shadow: none;
+}
+.intake-choice:has(input:focus-visible) {
+  outline: 2px solid var(--ph-focus-ring);
+  outline-offset: 3px;
+}
+
+/* Progress bar (transform only) */
+.intake-progress {
+  height: 4px;
+  overflow: hidden;
+  border-radius: var(--r-pill);
+  background: var(--ph-border-subtle);
+}
+.intake-progress > span {
+  display: block;
+  height: 100%;
+  background: var(--ph-brand-primary);
+  transform-origin: left;
+  transform: scaleX(var(--p, 0));
+  transition: transform 400ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Step chips in the sticky bar */
+.intake-step {
+  display: inline-flex;
+  min-height: 40px;
+  min-width: 40px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  padding: 0 12px;
+  border-radius: var(--r-pill);
+  font-family: var(--font-mono);
+  font-size: 0.9375rem;
+  color: var(--ph-text-secondary);
+  box-shadow: inset 0 0 0 1px var(--ph-border-subtle);
+  transition:
+    background-color 200ms,
+    color 200ms;
+}
+.intake-step:hover {
+  box-shadow: inset 0 0 0 1px var(--ph-border-ui);
+}
+.intake-step[data-done] {
+  color: var(--ph-brand-primary);
+  box-shadow: inset 0 0 0 1px var(--ph-brand-primary);
+}
+.intake-step[aria-current="step"] {
+  background: var(--ph-brand-primary);
+  color: var(--ph-text-on-dark);
+  box-shadow: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .intake-progress > span,
+  .intake-option,
+  .intake-choice,
+  .intake-check::after {
+    transition: none;
+  }
+}
