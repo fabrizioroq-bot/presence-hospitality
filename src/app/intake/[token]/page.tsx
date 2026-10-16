@@ -39,9 +39,10 @@ export default async function IntakePage({ params, searchParams }: PageProps<"/i
         <div className="flex max-w-[68ch] flex-col gap-4">
           <h1 className="text-display-lg text-(--ph-brand-primary)">{t("thanksTitle")}</h1>
           <p className="text-body-lg text-(--ph-text-secondary)">{doc.closing}</p>
-          {sentOn && <p className="text-body-sm text-(--ph-text-muted)">{fill(t.raw("sentOn") as string, { date: sentOn })}</p>}
+          {sentOn && !intake.isPastExpiry && <p className="text-body-sm text-(--ph-text-muted)">{fill(t.raw("sentOn") as string, { date: sentOn })}</p>}
         </div>
-        <IntakeSummary doc={doc} answers={intake.answers} lang={lang} notAnswered={t("notAnswered")} />
+        {/* The answers stay visible through the link only until it expires; after that, thanks only. */}
+        {!intake.isPastExpiry && <IntakeSummary doc={doc} answers={intake.answers} lang={lang} notAnswered={t("notAnswered")} />}
       </main>
     );
   }

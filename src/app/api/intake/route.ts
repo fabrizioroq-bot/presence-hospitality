@@ -3,6 +3,7 @@ import { intakeProgress, missingRequired, sanitizeAnswers, ANSWERS_MAX_BYTES } f
 import { INTAKE_TOKEN_FORMAT, inviteMeta, openIntake, saveIntake, submitIntake } from "@/lib/intake/invites";
 import { notifyIntakeSubmitted } from "@/lib/intake/notify";
 import type { IntakeResult } from "@/lib/intake/protocol";
+import { site } from "@/content/site";
 
 // Public endpoint of /intake/<token> (open, autosave, submit). No session: every call validates the
 // token and the payload, and the database function re-checks the invite (expiry, revoked, submitted)
@@ -47,11 +48,12 @@ export async function POST(request: NextRequest) {
   if (missing.length) return reply({ status: "invalid", missing }, 422);
   const status = await submitIntake(token, clean.answers, progress);
   if (status === "ok") {
-    const origin = request.nextUrl.origin;
+    // Production links point at the domain, never at a caller-supplied Host; previews link to themselves.
+    const origin = process.env.VERCEL_ENV === "production" ? site.domainUrl : request.nextUrl.origin;
     // After the response: the client sees "Thank you" without waiting for the email.
     after(async () => {
       const meta = await inviteMeta(token);
-      if (meta) await notifyIntakeSubmitted(meta, progress, origin);
+      if (meta) await notifyIntakeSubmitted(meta, clean.answers, progress, origin);
     });
   }
   return reply({ status, progress });

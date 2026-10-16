@@ -30,6 +30,8 @@ export type LoadedIntake = {
   /** Server copy's last save (ISO), so the browser can tell whether its local draft is newer. */
   updatedAt: string | null;
   submittedAt: string | null;
+  /** Past the link's expiry date (a submitted link then shows the thank-you without the answers). */
+  isPastExpiry: boolean;
 };
 
 type InviteRow = {
@@ -65,6 +67,7 @@ export async function loadIntake(token: string): Promise<LoadedIntake | null> {
     answers: data.onboarding_responses?.answers ?? {},
     updatedAt: data.onboarding_responses?.updated_at ?? null,
     submittedAt: data.submitted_at,
+    isPastExpiry: new Date(data.expires_at).getTime() <= Date.now(),
   };
 }
 
@@ -85,13 +88,13 @@ export const saveIntake = (token: string, answers: Answers, progress: number) =>
 export const submitIntake = (token: string, answers: Answers, progress: number) =>
   rpc("onboarding_submit", { p_token_hash: hashIntakeToken(token), p_answers: answers, p_progress: progress });
 
-export type InviteMeta = { id: string; property_name: string; contact_email: string | null; language: IntakeLang; is_test: boolean };
+export type InviteMeta = { id: string; property_name: string; contact_email: string | null; language: IntakeLang; is_test: boolean; expires_at: string };
 
 /** Who submitted, for the team notification (read after a successful submit). */
 export async function inviteMeta(token: string): Promise<InviteMeta | null> {
   const { data, error } = await supabaseAdmin()
     .from("onboarding_invites")
-    .select("id,property_name,contact_email,language,is_test")
+    .select("id,property_name,contact_email,language,is_test,expires_at")
     .eq("token_hash", hashIntakeToken(token))
     .maybeSingle<InviteMeta>();
   if (error) console.error("[intake] loading invite meta failed", error.message);
