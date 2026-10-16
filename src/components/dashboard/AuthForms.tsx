@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useActionState } from "react";
 import { useFormStatus } from "react-dom";
 import {
+  acceptAccess,
   acceptLink,
   requestReset,
   setPassword,
@@ -176,6 +177,16 @@ export function SetPasswordForm() {
 function ContinueButton() {
   const { pending } = useFormStatus();
   return <Submit pending={pending}>Continue</Submit>;
+}
+
+/** Dashboard access links ("Generate link"): the person is signed in only when this button is clicked. */
+export function AcceptAccessForm({ token }: { token: string }) {
+  return (
+    <form action={acceptAccess}>
+      <input type="hidden" name="t" value={token} />
+      <ContinueButton />
+    </form>
+  );
 }
 
 /** Invite / reset links: the one-time token is only used when this button is clicked. */

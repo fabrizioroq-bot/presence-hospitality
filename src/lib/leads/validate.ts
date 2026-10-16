@@ -23,7 +23,7 @@ export type FieldErrors = Partial<Record<LeadField, ErrorCode>>;
 
 export const LIMITS = { name: 80, email: 254, phoneMin: 6, phoneMax: 32, hotel: 120, pms: 80, descMin: 10, descMax: 2000 };
 
-const EMAIL = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+export const EMAIL = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
 const PHONE = /^[+0-9 ()\-.]+$/;
 
 const str = (v: unknown) => (typeof v === "string" ? v.trim() : "");

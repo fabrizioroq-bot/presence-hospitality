@@ -1,7 +1,9 @@
 import Link from "next/link";
+import { AccessLinkButton } from "@/components/dashboard/AccessLinkButton";
 import { Shell } from "@/components/dashboard/Shell";
 import { StatusBadge } from "@/components/dashboard/StatusBadge";
 import { cn } from "@/lib/cn";
+import { ACCESS_LINK_DAYS } from "@/lib/dashboard/access-token";
 import { requireAdmin } from "@/lib/dashboard/auth";
 import {
   applyFilters,
@@ -73,24 +75,45 @@ export default async function LeadsPage({
             <p className="text-label text-paper-500">Demo requests</p>
             <h1 className="mt-3 text-display-lg">Leads</h1>
           </div>
-          <a
-            href={`/dashboard/export${filtersToQuery(f, { page: 1 })}`}
-            className="inline-flex min-h-11 items-center gap-2 rounded-pill bg-paper-50 px-5 text-body-sm font-semibold text-ink-900 hover:bg-paper-300"
-          >
-            <svg
-              aria-hidden
-              viewBox="0 0 16 16"
-              className="h-4 w-4"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth={1.6}
-              strokeLinecap="round"
-              strokeLinejoin="round"
+          <div className="flex flex-wrap items-center gap-3">
+            <Link
+              href="/dashboard/pitch"
+              className="inline-flex min-h-11 items-center gap-2 rounded-pill px-5 text-body-sm font-semibold ring-1 ring-line-night hover:bg-night-800"
             >
-              <path d="M8 2.5v8M4.5 7.5 8 11l3.5-3.5M3 13.5h10" />
-            </svg>
-            Export CSV{filtered ? " (filtered)" : ""}
-          </a>
+              <svg
+                aria-hidden
+                viewBox="0 0 16 16"
+                className="h-4 w-4"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={1.6}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M2.5 3h11v7.5h-11zM8 10.5V13M5.5 13h5" />
+              </svg>
+              Pitch
+            </Link>
+            <AccessLinkButton validDays={ACCESS_LINK_DAYS} />
+            <a
+              href={`/dashboard/export${filtersToQuery(f, { page: 1 })}`}
+              className="inline-flex min-h-11 items-center gap-2 rounded-pill bg-paper-50 px-5 text-body-sm font-semibold text-ink-900 hover:bg-paper-300"
+            >
+              <svg
+                aria-hidden
+                viewBox="0 0 16 16"
+                className="h-4 w-4"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth={1.6}
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M8 2.5v8M4.5 7.5 8 11l3.5-3.5M3 13.5h10" />
+              </svg>
+              Export CSV{filtered ? " (filtered)" : ""}
+            </a>
+          </div>
         </div>
 
         {sp.deleted === "1" && (
