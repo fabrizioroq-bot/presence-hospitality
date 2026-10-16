@@ -1087,6 +1087,7 @@
     "expiredTitle": "Deze link is verlopen",
     "expiredBody": "Vraag een nieuwe link aan via {email}. Uw eerdere antwoorden blijven bewaard.",
     "revokedTitle": "Deze link is niet meer actief",
-    "revokedBody": "Neem contact met ons op via {email}."
+    "revokedBody": "Neem contact met ons op via {email}.",
+    "inviteMessage": "Beste,\n\nAls eerste stap in uw onboarding met Presence Hospitality vragen we u deze korte intake voor {property} in te vullen. Het gaat over uw doelen, de huidige werkwijze en de technische inrichting. Uw antwoorden worden automatisch opgeslagen, dus u kunt tussendoor stoppen en later verdergaan. Wat u niet weet, mag u leeg laten.\n\n{link}\n\nDe link is geldig tot {expires}. Vragen? Beantwoord dit bericht of mail naar {email}.\n\nMet vriendelijke groet,\nPresence Hospitality"
   }
 }

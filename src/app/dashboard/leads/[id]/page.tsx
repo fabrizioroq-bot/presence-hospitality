@@ -1,9 +1,11 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { DeleteLead, LeadEditor } from "@/components/dashboard/LeadEditor";
+import { InviteStatusBadge, ProgressMeter } from "@/components/dashboard/onboarding/InviteStatusBadge";
 import { Shell } from "@/components/dashboard/Shell";
 import { StatusBadge } from "@/components/dashboard/StatusBadge";
 import { requireAdmin } from "@/lib/dashboard/auth";
+import { displayStatus, listInvites } from "@/lib/intake/admin";
 import {
   POSITION_LABEL,
   STATUS_LABEL,
@@ -33,6 +35,7 @@ export default async function LeadPage({
     .maybeSingle();
   if (!data) notFound();
   const l = data as Lead;
+  const { invites } = await listInvites(supabase, { showTest: true, leadId: l.id, limit: 20 });
 
   const rows: [string, React.ReactNode][] = [
     ["Name", `${l.first_name} ${l.last_name}`],
@@ -122,6 +125,38 @@ export default async function LeadPage({
                 }))}
               />
             </div>
+          </div>
+          <div className="rounded-xl border border-line-night/60 p-6 sm:p-8">
+            <h2 className="text-heading-sm font-extrabold">Onboarding</h2>
+            {invites.length === 0 ? (
+              <p className="mt-2 text-body-sm text-paper-300">
+                No intake form sent yet.
+              </p>
+            ) : (
+              <ul className="mt-4 flex flex-col divide-y divide-line-night/40">
+                {invites.map((inv) => (
+                  <li key={inv.id} className="flex flex-wrap items-center justify-between gap-3 py-3">
+                    <Link
+                      href={`/dashboard/onboarding/${inv.id}`}
+                      className="text-body-sm font-semibold underline-offset-4 hover:underline"
+                    >
+                      {inv.property_name}
+                      {inv.is_test ? " (test)" : ""}
+                    </Link>
+                    <span className="flex items-center gap-4 text-body-sm">
+                      <ProgressMeter value={inv.onboarding_responses?.progress ?? 0} />
+                      <InviteStatusBadge status={displayStatus(inv)} />
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            )}
+            <Link
+              href={`/dashboard/onboarding/new?lead=${l.id}`}
+              className="mt-5 inline-flex min-h-11 items-center rounded-pill px-5 text-body-sm font-semibold ring-1 ring-line-night hover:bg-night-800"
+            >
+              + New onboarding link
+            </Link>
           </div>
           <div className="rounded-xl border border-line-night/60 p-6 sm:p-8">
             <h2 className="text-heading-sm font-extrabold">Danger zone</h2>

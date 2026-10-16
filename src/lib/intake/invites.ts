@@ -84,3 +84,16 @@ export const saveIntake = (token: string, answers: Answers, progress: number) =>
 
 export const submitIntake = (token: string, answers: Answers, progress: number) =>
   rpc("onboarding_submit", { p_token_hash: hashIntakeToken(token), p_answers: answers, p_progress: progress });
+
+export type InviteMeta = { id: string; property_name: string; contact_email: string | null; language: IntakeLang; is_test: boolean };
+
+/** Who submitted, for the team notification (read after a successful submit). */
+export async function inviteMeta(token: string): Promise<InviteMeta | null> {
+  const { data, error } = await supabaseAdmin()
+    .from("onboarding_invites")
+    .select("id,property_name,contact_email,language,is_test")
+    .eq("token_hash", hashIntakeToken(token))
+    .maybeSingle<InviteMeta>();
+  if (error) console.error("[intake] loading invite meta failed", error.message);
+  return data;
+}

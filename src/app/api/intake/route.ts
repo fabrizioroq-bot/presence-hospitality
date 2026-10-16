@@ -1,6 +1,7 @@
-import { NextResponse, type NextRequest } from "next/server";
+import { after, NextResponse, type NextRequest } from "next/server";
 import { intakeProgress, missingRequired, sanitizeAnswers, ANSWERS_MAX_BYTES } from "@/lib/intake/answers";
-import { INTAKE_TOKEN_FORMAT, openIntake, saveIntake, submitIntake } from "@/lib/intake/invites";
+import { INTAKE_TOKEN_FORMAT, inviteMeta, openIntake, saveIntake, submitIntake } from "@/lib/intake/invites";
+import { notifyIntakeSubmitted } from "@/lib/intake/notify";
 import type { IntakeResult } from "@/lib/intake/protocol";
 
 // Public endpoint of /intake/<token> (open, autosave, submit). No session: every call validates the
@@ -44,5 +45,14 @@ export async function POST(request: NextRequest) {
   }
   const missing = missingRequired(clean.answers);
   if (missing.length) return reply({ status: "invalid", missing }, 422);
-  return reply({ status: await submitIntake(token, clean.answers, progress), progress });
+  const status = await submitIntake(token, clean.answers, progress);
+  if (status === "ok") {
+    const origin = request.nextUrl.origin;
+    // After the response: the client sees "Thank you" without waiting for the email.
+    after(async () => {
+      const meta = await inviteMeta(token);
+      if (meta) await notifyIntakeSubmitted(meta, progress, origin);
+    });
+  }
+  return reply({ status, progress });
 }

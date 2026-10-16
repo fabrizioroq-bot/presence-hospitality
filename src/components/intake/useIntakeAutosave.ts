@@ -10,7 +10,11 @@ export type LockReason = "expired" | "revoked" | "submitted" | "not_found";
 
 const DEBOUNCE_MS = 800;
 const RETRY_MS = 5000;
-const RATE_LIMIT_RETRY_MS = 15000;
+/** Rate limited (90 saves per token per minute on the server): back off 5 s, 10 s, 20 s … up to 60 s. */
+const BACKOFF_BASE_MS = 5000;
+const BACKOFF_MAX_MS = 60_000;
+const backoffMs = (attempt: number) =>
+  Math.min(BACKOFF_MAX_MS, BACKOFF_BASE_MS * 2 ** attempt) + Math.round(Math.random() * 1000);
 
 // ---- Local draft (backup on this device) --------------------------------------------------------
 type Draft = { answers: Answers; at: string; synced: boolean };
@@ -50,6 +54,9 @@ export function useIntakeAutosave(token: string, answers: Answers, onLocked: (re
   const latest = useRef(answers);
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const isFirst = useRef(true);
+  /** While rate limited: no request before this time (ms since epoch), however much the client types. */
+  const blockedUntil = useRef(0);
+  const backoffAttempt = useRef(0);
   const onLockedRef = useRef(onLocked);
 
   useEffect(() => {
@@ -73,13 +80,17 @@ export function useIntakeAutosave(token: string, answers: Answers, onLocked: (re
     try {
       const res = await intakeSave(token, sending);
       if (res.status === "ok") {
+        backoffAttempt.current = 0;
         if (latest.current === sending) writeDraft(token, { answers: sending, at: new Date().toISOString(), synced: true });
         setStatus(latest.current === sending ? "saved" : "saving");
         return;
       }
       if (res.status === "rate_limited") {
-        setStatus("retrying");
-        schedule(RATE_LIMIT_RETRY_MS);
+        // Not an error for the client: the local draft holds everything; keep "Saving…" and retry quietly.
+        const wait = backoffMs(backoffAttempt.current++);
+        blockedUntil.current = Date.now() + wait;
+        setStatus("saving");
+        schedule(wait);
         return;
       }
       if (res.status === "expired" || res.status === "revoked" || res.status === "submitted" || res.status === "not_found") {
@@ -107,12 +118,12 @@ export function useIntakeAutosave(token: string, answers: Answers, onLocked: (re
       return;
     }
     writeDraft(token, { answers, at: new Date().toISOString(), synced: false });
-    schedule(DEBOUNCE_MS);
+    schedule(Math.max(DEBOUNCE_MS, blockedUntil.current - Date.now()));
   }, [answers, token, schedule]);
 
   useEffect(() => {
     const flushIfPending = () => {
-      if (readDraft(token)?.synced === false) void save();
+      if (readDraft(token)?.synced === false && Date.now() >= blockedUntil.current) void save();
     };
     // Leaving the tab or closing the laptop: don't wait for the pause.
     const onHidden = () => document.visibilityState === "hidden" && flushIfPending();

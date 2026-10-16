@@ -1,16 +1,21 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { signOut } from "@/app/dashboard/actions";
-import { Logo } from "@/components/brand/Logo";
+import { Logo, LogoMark } from "@/components/brand/Logo";
 
-/** Dashboard chrome: header with brand, signed-in user and sign out. */
+const NAV = [
+  { href: "/dashboard", label: "Leads" },
+  { href: "/dashboard/onboarding", label: "Onboarding" },
+] as const;
+
+/** Dashboard chrome: header with brand, sections, signed-in user and sign out. */
 export function Shell({
   email,
   section = "Leads",
   children,
 }: {
   email: string;
-  /** Label after the logo ("/ Leads", "/ UI kit"). */
+  /** Current section: highlights its nav link ("Leads", "Onboarding"); other pages pass their own name. */
   section?: string;
   children: ReactNode;
 }) {
@@ -26,12 +31,25 @@ export function Shell({
       />
       <header className="sticky top-0 z-40 border-b border-line-night/40 bg-night-900/80 backdrop-blur-[14px]">
         <div className="container-site flex h-16 items-center justify-between gap-4">
-          <Link href="/dashboard" className="flex items-center gap-3">
-            <Logo on="dark" decorative />
-            <span className="hidden text-label text-paper-500 sm:inline">
-              / {section}
-            </span>
-          </Link>
+          <div className="flex items-center gap-3 sm:gap-6">
+            <Link href="/dashboard" aria-label="Dashboard home" className="flex items-center gap-3">
+              {/* Below the lockup's minimum width budget (phones), the mark alone. */}
+              <LogoMark on="dark" className="h-6 w-6 sm:hidden" />
+              <Logo on="dark" decorative className="hidden h-6 sm:block" />
+            </Link>
+            <nav aria-label="Dashboard" className="flex gap-1">
+              {NAV.map((n) => (
+                <Link
+                  key={n.href}
+                  href={n.href}
+                  aria-current={section === n.label ? "page" : undefined}
+                  className="inline-flex min-h-10 items-center rounded-pill px-3 text-body-sm font-semibold text-paper-300 hover:text-paper-50 aria-[current=page]:bg-night-800 aria-[current=page]:text-paper-50"
+                >
+                  {n.label}
+                </Link>
+              ))}
+            </nav>
+          </div>
           <div className="flex items-center gap-4">
             <span className="hidden text-body-sm text-paper-300 md:inline">
               {email}

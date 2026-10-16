@@ -14,9 +14,9 @@ const nextConfig: NextConfig = {
   async headers() {
     return [
       { source: "/:path*", headers: securityHeaders },
-      // The dashboard gets a per-request nonce CSP from the proxy instead.
+      // The dashboard and the onboarding intake get a per-request nonce CSP from the proxy instead.
       {
-        source: "/:path((?!dashboard).*)",
+        source: "/:path((?!dashboard|intake/).*)",
         headers: [{ key: CSP_HEADER, value: contentSecurityPolicy() }],
       },
       {

@@ -1,0 +1,20 @@
+/* Printable onboarding answers (/dashboard/onboarding/[id]/print): "Save as PDF" from the browser. */
+@media print {
+  @page {
+    margin: 14mm;
+  }
+  body {
+    background: var(--ph-bg-surface) !important;
+  }
+  .grain,
+  .no-print {
+    display: none !important;
+  }
+  .ui-card {
+    box-shadow: none !important;
+    break-inside: avoid-page;
+  }
+  dl > div {
+    break-inside: avoid;
+  }
+}

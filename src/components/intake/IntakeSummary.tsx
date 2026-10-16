@@ -1,30 +1,7 @@
-import {
-  CHOICE_LABELS,
-  INTAKE_FIELDS,
-  otherTextKey,
-  type IntakeDoc,
-  type IntakeItem,
-  type IntakeLang,
-} from "@/content/onboarding-form";
+import { INTAKE_FIELDS, type IntakeDoc, type IntakeItem, type IntakeLang } from "@/content/onboarding-form";
 import type { Answers } from "@/lib/intake/answers";
-import { formatIntakeDate } from "@/lib/intake/format";
+import { answerText } from "@/lib/intake/summary";
 import { cx } from "@/lib/cx";
-
-/** The answer as text, or null when the field is unanswered. */
-export function answerText(item: IntakeItem, answers: Answers, lang: IntakeLang): string | null {
-  const v = answers[item.key];
-  if (v === undefined || v === "" || v === false) return null;
-  const kind = INTAKE_FIELDS[item.key].kind;
-  if (kind === "date" && typeof v === "string") return formatIntakeDate(v, lang);
-  if ((kind === "yesNo" || kind === "yesNoUnknown") && typeof v === "string") {
-    return CHOICE_LABELS[lang][v as keyof (typeof CHOICE_LABELS)["en"]] ?? v;
-  }
-  if (kind === "checkOther") {
-    const text = answers[otherTextKey(item.key)];
-    return typeof text === "string" && text ? text : "✓";
-  }
-  return v === true ? "✓" : String(v);
-}
 
 function Row({ item, answers, lang, notAnswered }: { item: IntakeItem; answers: Answers; lang: IntakeLang; notAnswered: string }) {
   const text = answerText(item, answers, lang);

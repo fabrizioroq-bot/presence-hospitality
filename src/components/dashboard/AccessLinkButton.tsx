@@ -3,15 +3,14 @@
 import { useActionState, useEffect, useId, useRef, useState } from "react";
 import { sendAccessLink, type AccessLinkState } from "@/app/dashboard/actions";
 import { cx } from "@/lib/cx";
+import { CopyButton } from "./CopyButton";
 
 const INIT: AccessLinkState = {};
-const COPIED_MS = 2000;
 const ghost = "inline-flex min-h-11 items-center gap-2 rounded-pill px-5 text-body-sm font-semibold ring-1 ring-line-night hover:bg-night-800";
 
 /** "Generate link": emails a dashboard access link to any address, with copy / mail-app fallbacks. */
 export function AccessLinkButton({ validDays }: { validDays: number }) {
   const [open, setOpen] = useState(false);
-  const [copied, setCopied] = useState(false);
   const [state, action, pending] = useActionState(sendAccessLink, INIT);
   const panelId = useId();
   const root = useRef<HTMLDivElement>(null);
@@ -27,22 +26,6 @@ export function AccessLinkButton({ validDays }: { validDays: number }) {
       document.removeEventListener("pointerdown", onDown);
     };
   }, [open]);
-
-  useEffect(() => {
-    if (!copied) return;
-    const id = setTimeout(() => setCopied(false), COPIED_MS);
-    return () => clearTimeout(id);
-  }, [copied]);
-
-  const copy = async () => {
-    if (!state.link) return;
-    try {
-      await navigator.clipboard.writeText(state.link);
-      setCopied(true);
-    } catch {
-      // Clipboard blocked: the link stays selectable in the field below.
-    }
-  };
 
   return (
     <div ref={root} className="relative">
@@ -88,9 +71,7 @@ export function AccessLinkButton({ validDays }: { validDays: number }) {
             <div className="mt-4 flex flex-col gap-2">
               <input readOnly value={state.link} aria-label="Access link" onFocus={(e) => e.currentTarget.select()} className="demo-input text-body-sm" />
               <div className="flex flex-wrap gap-2">
-                <button type="button" onClick={copy} className={ghost}>
-                  {copied ? "Copied" : "Copy link"}
-                </button>
+                <CopyButton text={state.link} label="Copy link" className={ghost} />
                 {state.mailto && (
                   <a href={state.mailto} className={ghost}>
                     Open in mail app

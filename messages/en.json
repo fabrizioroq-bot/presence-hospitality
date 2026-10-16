@@ -1087,6 +1087,7 @@
     "expiredTitle": "This link has expired",
     "expiredBody": "Ask us for a new link at {email}. The answers you already gave are kept.",
     "revokedTitle": "This link is no longer active",
-    "revokedBody": "Please contact us at {email}."
+    "revokedBody": "Please contact us at {email}.",
+    "inviteMessage": "Hello,\n\nAs a first step in your onboarding with Presence Hospitality, could you fill in this short intake for {property}? It covers your goals, your current operation and your technical setup. Answers are saved as you go, so you can stop and continue later. Leave blank what you don't know.\n\n{link}\n\nThe link is valid until {expires}. Questions? Reply to this message or email {email}.\n\nKind regards,\nPresence Hospitality"
   }
 }
