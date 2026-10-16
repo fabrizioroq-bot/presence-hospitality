@@ -1,6 +1,7 @@
 import { after, NextResponse, type NextRequest } from "next/server";
 import { intakeProgress, missingRequired, sanitizeAnswers, ANSWERS_MAX_BYTES } from "@/lib/intake/answers";
 import { INTAKE_TOKEN_FORMAT, inviteMeta, openIntake, saveIntake, submitIntake } from "@/lib/intake/invites";
+import { clientIp, createRateLimiter } from "@/lib/intake/ip-limit";
 import { notifyIntakeSubmitted } from "@/lib/intake/notify";
 import type { IntakeResult } from "@/lib/intake/protocol";
 import { site } from "@/content/site";
@@ -14,10 +15,17 @@ import { site } from "@/content/site";
 /** Answers plus JSON overhead; anything bigger is refused before the body is read. */
 const MAX_BODY_BYTES = ANSWERS_MAX_BYTES + 1024;
 
-const reply = (result: IntakeResult, status = 200) =>
-  NextResponse.json(result, { status, headers: { "Cache-Control": "no-store", "X-Robots-Tag": "noindex" } });
+/** Per IP, before anything else (body, token, database). A client autosaving uses ~1 request a second. */
+const IP_LIMIT_PER_MINUTE = 120;
+const ipLimit = createRateLimiter({ limit: IP_LIMIT_PER_MINUTE, windowMs: 60_000 });
+
+const reply = (result: IntakeResult, status = 200, headers: Record<string, string> = {}) =>
+  NextResponse.json(result, { status, headers: { "Cache-Control": "no-store", "X-Robots-Tag": "noindex", ...headers } });
 
 export async function POST(request: NextRequest) {
+  const ip = ipLimit(clientIp(request.headers));
+  // The form treats 429 like the per-token limit: "Saving…", local copy kept, quiet back-off.
+  if (!ip.isAllowed) return reply({ status: "rate_limited" }, 429, { "Retry-After": String(ip.retryAfterS) });
   const length = Number(request.headers.get("content-length") ?? "0");
   if (!length || length > MAX_BODY_BYTES) return reply({ status: "invalid" }, 413);
   let body: { action?: unknown; token?: unknown; answers?: unknown };

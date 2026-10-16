@@ -1,6 +1,7 @@
 // End-to-end: client onboarding intake (/intake/<token>) and its dashboard section.
 // Creates its own temporary admin, lead and TEST invites (is_test) and deletes exactly those at the end.
 // Usage: node scripts/e2e-onboarding.mjs [baseUrl=http://localhost:3000]
+// The last check fills this machine's per-IP limit on /api/intake (120/min): wait a minute between runs.
 import { chromium } from "playwright";
 import { createClient } from "@supabase/supabase-js";
 import { createHash, randomBytes } from "node:crypto";
@@ -245,6 +246,18 @@ try {
   check("manage: no session → sent to login", noSession.status() === 307);
   const exportAnon = await anon.request.get(`${base}/dashboard/onboarding/${invite.id}/export?format=json`, { maxRedirects: 0 });
   check("export: no session → blocked", exportAnon.status() === 307 || exportAnon.status() === 403);
+
+  // ---- Per-IP limit (last: it uses up this machine's quota for a minute) -------------------------
+  // Valid-format unknown tokens: refused with 429 before any database lookup once the IP passes 120/min.
+  const fake = randomBytes(32).toString("base64url");
+  let firstBlocked = 0;
+  let blocked = null;
+  for (let i = 1; i <= 140 && !blocked; i++) {
+    const r = await anon.request.post(`${base}/api/intake`, { headers: { "content-type": "application/json" }, data: { action: "open", token: fake } });
+    if (r.status() === 429) [firstBlocked, blocked] = [i, r];
+  }
+  check(`per-IP limit: 429 after at most 120 requests a minute (blocked at #${firstBlocked} of this burst)`, Boolean(blocked) && firstBlocked <= 121);
+  check("per-IP limit: 429 says rate_limited with Retry-After", blocked && (await blocked.json()).status === "rate_limited" && Number(blocked.headers()["retry-after"]) > 0);
 } finally {
   await b.close();
   const { data: gone } = await db.from("onboarding_invites").delete().like("property_name", `${run}%`).eq("is_test", true).select("id");
